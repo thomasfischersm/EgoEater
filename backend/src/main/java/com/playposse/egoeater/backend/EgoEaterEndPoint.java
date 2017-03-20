@@ -9,6 +9,8 @@ package com.playposse.egoeater.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.playposse.egoeater.backend.serveractions.SignInServerAction;
+import com.playposse.egoeater.backend.beans.UserBean;
 
 import javax.inject.Named;
 
@@ -16,7 +18,7 @@ import javax.inject.Named;
  * An endpoint class we are exposing
  */
 @Api(
-        name = "myApi",
+        name = "egoEaterApi",
         version = "v1",
         namespace = @ApiNamespace(
                 ownerDomain = "backend.egoeater.playposse.com",
@@ -24,17 +26,17 @@ import javax.inject.Named;
                 packagePath = ""
         )
 )
-public class MyEndpoint {
+public class EgoEaterEndPoint {
 
     /**
      * A simple endpoint method that takes a name and says Hi back
      */
-    @ApiMethod(name = "sayHi")
-    public MyBean sayHi(@Named("name") String name) {
-        MyBean response = new MyBean();
-        response.setData("Hi, " + name);
+    @ApiMethod(name = "signIn")
+    public UserBean signIn(
+            @Named("fbAccessToken") String fbAccessToken,
+            @Named("firebaseToken") String firebaseToken) {
 
-        return response;
+        return SignInServerAction.signIn(fbAccessToken, firebaseToken);
     }
 
 }

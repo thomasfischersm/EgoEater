@@ -13,6 +13,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.clientactions.ApiClientAction;
+import com.playposse.egoeater.clientactions.SignInClientAction;
 
 import java.io.ByteArrayOutputStream;
 
@@ -34,7 +37,7 @@ public class LoginActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        
+
         loginButton.setReadPermissions("public_profile", "email");
         callbackManager = CallbackManager.Factory.create();
 
@@ -44,7 +47,7 @@ public class LoginActivity extends ParentActivity {
                 Log.i(LOG_TAG, "Facebook login successful: " + loginResult.getAccessToken());
                 Log.i(LOG_TAG, "app id " + loginResult.getAccessToken().getApplicationId());
                 Log.i(LOG_TAG, "token " + loginResult.getAccessToken().getToken().length());
-                handleLoginCompleted();
+                onFbLoginCompleted(loginResult);
             }
 
             @Override
@@ -75,8 +78,23 @@ public class LoginActivity extends ParentActivity {
         Log.i(LOG_TAG, "LoginActivity.onActivityResult has been called.");
     }
 
-    private void handleLoginCompleted() {
-        Log.i(LOG_TAG, "handleLoginCompleted: Got FB login.");
+    private void onFbLoginCompleted(LoginResult loginResult) {
+        Log.i(LOG_TAG, "onFbLoginCompleted: Got FB login.");
+        new SignInClientAction(
+                this,
+                loginResult.getAccessToken().getToken(),
+                /* TODO */ "null",
+                new ApiClientAction.Callback<UserBean>() {
+                    @Override
+                    public void onResult(UserBean data) {
+                        onCloudSignInCompleted(data);
+                    }
+                }).execute();
+    }
+
+    private void onCloudSignInCompleted(UserBean data) {
+        Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
+                + data.getSessionId());
     }
 
     public static void debug() {
