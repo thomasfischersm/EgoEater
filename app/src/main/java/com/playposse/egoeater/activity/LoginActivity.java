@@ -1,7 +1,8 @@
-package com.playposse.egoeater;
+package com.playposse.egoeater.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.playposse.egoeater.R;
 
 public class LoginActivity extends ParentActivity {
 

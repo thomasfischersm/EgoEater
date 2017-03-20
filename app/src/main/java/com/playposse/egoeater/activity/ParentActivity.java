@@ -1,4 +1,4 @@
-package com.playposse.egoeater;
+package com.playposse.egoeater.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.playposse.egoeater.EgoEaterApplication;
+import com.playposse.egoeater.R;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
