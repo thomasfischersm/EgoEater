@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "13045481354",
+    "project_id": "ego-eater"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13045481354:android:ad3da74763306807",
+        "android_client_info": {
+          "package_name": "com.playposse.egoeater"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo61zUBhLx9cGP8wJAnwOvLBlNPHnkKI8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-92561975-4"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
