@@ -80,6 +80,7 @@ public class LoginActivity extends ParentActivity {
 
     private void onFbLoginCompleted(LoginResult loginResult) {
         Log.i(LOG_TAG, "onFbLoginCompleted: Got FB login.");
+        showLoadingProgress();
         new SignInClientAction(
                 this,
                 loginResult.getAccessToken().getToken(),
@@ -95,6 +96,7 @@ public class LoginActivity extends ParentActivity {
     private void onCloudSignInCompleted(UserBean data) {
         Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
                 + data.getSessionId());
+        dismissLoadingProgress();
     }
 
     public static void debug() {

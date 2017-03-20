@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Ego Eater</string>
     <string name="facebook_app_id">1840650169531250</string>
+
+    <!-- Progress loading dialog -->
+    <string name="progress_dialog_title">Loading data…</string>
+    <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
 </resources>

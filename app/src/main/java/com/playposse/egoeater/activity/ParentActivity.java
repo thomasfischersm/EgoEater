@@ -1,5 +1,6 @@
 package com.playposse.egoeater.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import com.playposse.egoeater.R;
  * toolbar.
  */
 public abstract class ParentActivity extends AppCompatActivity {
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,5 +69,30 @@ public abstract class ParentActivity extends AppCompatActivity {
         Tracker tracker = application.getDefaultTracker();
         tracker.setScreenName(getClass().getSimpleName());
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    protected void showLoadingProgress() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog = new ProgressDialog(ParentActivity.this);
+                progressDialog.setTitle(R.string.progress_dialog_title);
+                progressDialog.setMessage(getString(R.string.progress_dialog_message));
+                progressDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
+                progressDialog.show();
+            }
+        });
+    }
+
+    protected void dismissLoadingProgress() {
+        if (progressDialog != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    progressDialog = null;
+                }
+            });
+        }
     }
 }
