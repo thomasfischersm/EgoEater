@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.playposse.egoeater">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".EgoEaterApplication"
@@ -17,6 +17,9 @@
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
             android:resource="@xml/analytics_global_config" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <!--
              Optionally, register AnalyticsReceiver and AnalyticsService to support background
