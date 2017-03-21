@@ -21,13 +21,18 @@ public class UpdateFirebaseTokenInCloudClientAction extends ApiClientAction<Void
     @Override
     protected Void executeAsync() throws IOException {
         String firebaseToken = FirebaseInstanceId.getInstance().getToken();
-        long sessionId = EgoEaterPreferences.getSessionId(context);
+        Long sessionId = EgoEaterPreferences.getSessionId(context);
 
         EgoEaterPreferences.setFirebaseToken(context, firebaseToken);
 
-        getApi()
-                .updateFireBaseToken(sessionId, firebaseToken)
-                .execute();
+        if (sessionId != null) {
+            // The sessionId may not have been set if the user has never logged in. So, skip the
+            // call to the cloud. The user will register eventually. That call will set the
+            // Firebase token in the cloud.
+            getApi()
+                    .updateFireBaseToken(sessionId, firebaseToken)
+                    .execute();
+        }
 
         return null;
     }
