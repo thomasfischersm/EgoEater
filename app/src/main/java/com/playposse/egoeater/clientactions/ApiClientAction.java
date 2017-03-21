@@ -2,12 +2,15 @@ package com.playposse.egoeater.clientactions;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 
 import java.io.IOException;
@@ -23,14 +26,20 @@ public abstract class ApiClientAction<D> {
     private static EgoEaterApi api;
 
     @Nullable
-    private Callback<D> callback;
+    private final Callback<D> callback;
+    private final Context context;
+
     @Nullable
     private D returnedData;
 
-    public ApiClientAction() {
+    public ApiClientAction(Context context) {
+        this.context = context;
+
+        callback = null;
     }
 
-    public ApiClientAction(Callback<D> callback) {
+    public ApiClientAction(Context context, Callback<D> callback) {
+        this.context = context;
         this.callback = callback;
     }
 
@@ -71,6 +80,10 @@ public abstract class ApiClientAction<D> {
     protected void postExecute() {
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     /**
      * An {@link AsyncTask} to deal with the threading.
      */
@@ -89,7 +102,7 @@ public abstract class ApiClientAction<D> {
                 Log.i(LOG_TAG, "Finished execution client action: " + actionName);
             } catch (IOException ex) {
                 Log.e(LOG_TAG, "Failed to execute: " + this.getClass().getName(), ex);
-                // TODO: Reset session
+                GlobalRouting.onCloudError(context);
             }
 
             return null;

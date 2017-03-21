@@ -25,6 +25,9 @@ public final class EgoEaterPreferences {
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
     private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
+    private static final String HAS_FIRST_PROFILE_PHOTO_KEY = "hasFirstProfilePhoto";
+
+    private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
 
     private static final String NULL_STRING = "-1";
     public static final int NULL_VALUE = -1;
@@ -48,6 +51,10 @@ public final class EgoEaterPreferences {
                 .setName(getString(context, NAME_KEY));
     }
 
+    public static void clearSessionId(Context context) {
+        setLong(context, SESSION_ID_KEY, null);
+    }
+
     public static Long getSessionId(Context context) {
         return getLong(context, SESSION_ID_KEY);
     }
@@ -62,6 +69,17 @@ public final class EgoEaterPreferences {
 
     public static String getFirebaseToken(Context context) {
         return getString(context, FIREBASE_TOKEN_KEY);
+    }
+
+    public static void setHasFirstProfilePhoto(Context context, boolean hasFirstProfilePhoto) {
+        setBoolean(context, HAS_FIRST_PROFILE_PHOTO_KEY, hasFirstProfilePhoto);
+    }
+
+    public static boolean hasFirstProfilePhoto(Context context) {
+        return getBoolean(
+                context,
+                HAS_FIRST_PROFILE_PHOTO_KEY,
+                HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE);
     }
 
     private static String getString(Context context, String key) {

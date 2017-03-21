@@ -20,8 +20,8 @@
     <com.edmodo.cropper.CropImageView
         xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cropImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         custom:aspectRatioX="8"
         custom:aspectRatioY="9"
         custom:guidelines="onTouch" />

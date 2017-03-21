@@ -12,18 +12,16 @@ import java.io.IOException;
  */
 public class UpdateFirebaseTokenInCloudClientAction extends ApiClientAction<Void> {
 
-    private final Context context;
-
     public UpdateFirebaseTokenInCloudClientAction(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     protected Void executeAsync() throws IOException {
         String firebaseToken = FirebaseInstanceId.getInstance().getToken();
-        Long sessionId = EgoEaterPreferences.getSessionId(context);
+        Long sessionId = EgoEaterPreferences.getSessionId(getContext());
 
-        EgoEaterPreferences.setFirebaseToken(context, firebaseToken);
+        EgoEaterPreferences.setFirebaseToken(getContext(), firebaseToken);
 
         if (sessionId != null) {
             // The sessionId may not have been set if the user has never logged in. So, skip the

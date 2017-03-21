@@ -23,7 +23,7 @@ public class SignInClientAction extends ApiClientAction<UserBean> {
             String fbAccessToken,
             @Nullable Callback<UserBean> callback) {
 
-        super(callback);
+        super(context, callback);
 
         this.context = context;
         this.fbAccessToken = fbAccessToken;

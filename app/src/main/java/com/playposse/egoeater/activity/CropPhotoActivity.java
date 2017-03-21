@@ -43,12 +43,8 @@ public class CropPhotoActivity extends ParentActivity {
         Glide
                 .with(this)
                 .load(fbPhotoUrl)
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-//                        cropImageView.setImageBitmap(bitmap);
-//                    }
-//                })
                 .into(cropImageView);
+
+        setTitle(R.string.crop_photo_activity_title);
     }
 }

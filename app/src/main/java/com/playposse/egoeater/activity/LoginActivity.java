@@ -14,6 +14,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
@@ -99,6 +100,7 @@ public class LoginActivity extends ParentActivity {
         Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
                 + data.getSessionId());
         dismissLoadingProgress();
+        GlobalRouting.onLoginComplete(this);
     }
 
     public static void debug() {
