@@ -1,6 +1,7 @@
 package com.playposse.egoeater.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -12,12 +13,14 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SignInClientAction;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class LoginActivity extends ParentActivity {
 
@@ -84,7 +87,6 @@ public class LoginActivity extends ParentActivity {
         new SignInClientAction(
                 this,
                 loginResult.getAccessToken().getToken(),
-                /* TODO */ "null",
                 new ApiClientAction.Callback<UserBean>() {
                     @Override
                     public void onResult(UserBean data) {
@@ -97,6 +99,18 @@ public class LoginActivity extends ParentActivity {
         Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
                 + data.getSessionId());
         dismissLoadingProgress();
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
     }
 
     public static void debug() {

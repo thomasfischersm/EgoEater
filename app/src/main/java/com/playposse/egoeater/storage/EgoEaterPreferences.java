@@ -23,6 +23,7 @@ public final class EgoEaterPreferences {
     private static final String FIRST_NAME_KEY = "firstName";
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
+    private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
 
     private static final String NULL_STRING = "-1";
     public static final int NULL_VALUE = -1;
@@ -42,6 +43,18 @@ public final class EgoEaterPreferences {
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY));
+    }
+
+    public static Long getSessionId(Context context) {
+        return getLong(context, SESSION_ID_KEY);
+    }
+
+    public static void setFirebaseToken(Context context, String firebaseToken) {
+        setString(context, FIREBASE_TOKEN_KEY, firebaseToken);
+    }
+
+    public static String getFirebaseToken(Context context) {
+        return getString(context, FIREBASE_TOKEN_KEY);
     }
 
     private static String getString(Context context, String key) {

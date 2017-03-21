@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "13045481354",
-    "project_id": "ego-eater"
+    "firebase_url": "https://ego-eater.firebaseio.com",
+    "project_id": "ego-eater",
+    "storage_bucket": "ego-eater.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,24 @@
           "package_name": "com.playposse.egoeater"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "13045481354-haqgq11qhj54gvetc2b404bb13ag7pot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playposse.egoeater",
+            "certificate_hash": "aed65211cee2fbac3ea9edafc34bda04478c8474"
+          }
+        },
+        {
+          "client_id": "13045481354-i7oegf3t59intka8i5ku8skb9s2ltub8.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "13045481354-27ss2iie201sl7b98hc6lkj44p0j64jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBo61zUBhLx9cGP8wJAnwOvLBlNPHnkKI8"
@@ -29,7 +48,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

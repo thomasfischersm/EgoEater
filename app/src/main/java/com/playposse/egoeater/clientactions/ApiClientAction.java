@@ -54,6 +54,7 @@ public abstract class ApiClientAction<D> {
     /**
      * Child classes can override this to execute code on the UI thread before calling the server.
      */
+    @UiThread
     protected void preExecute() {
     }
 
@@ -82,7 +83,10 @@ public abstract class ApiClientAction<D> {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                String actionName = ApiClientAction.this.getClass().getSimpleName();
+                Log.i(LOG_TAG, "Executing client action: " + actionName);
                 returnedData = executeAsync();
+                Log.i(LOG_TAG, "Finished execution client action: " + actionName);
             } catch (IOException ex) {
                 Log.e(LOG_TAG, "Failed to execute: " + this.getClass().getName(), ex);
                 // TODO: Reset session
