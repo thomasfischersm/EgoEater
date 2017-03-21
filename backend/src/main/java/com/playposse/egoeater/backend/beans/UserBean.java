@@ -9,6 +9,7 @@ public class UserBean {
 
     private long userId;
     private long sessionId;
+    private String fbProfileId;
     private String firstName;
     private String lastName;
     private String name;
@@ -19,6 +20,7 @@ public class UserBean {
     public UserBean(EgoEaterUser egoEaterUser) {
         userId = egoEaterUser.getId();
         sessionId = egoEaterUser.getSessionId();
+        fbProfileId = egoEaterUser.getFbProfileId();
         firstName = egoEaterUser.getFirstName();
         lastName = egoEaterUser.getLastName();
         name = egoEaterUser.getName();
@@ -30,6 +32,10 @@ public class UserBean {
 
     public long getSessionId() {
         return sessionId;
+    }
+
+    public String getFbProfileId() {
+        return fbProfileId;
     }
 
     public String getFirstName() {

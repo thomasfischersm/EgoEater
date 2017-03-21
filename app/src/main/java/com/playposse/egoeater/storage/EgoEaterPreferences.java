@@ -20,6 +20,7 @@ public final class EgoEaterPreferences {
 
     private static final String USER_ID_KEY = "userId";
     private static final String SESSION_ID_KEY = "sessionId";
+    private static final String FB_PROFILE_ID_KEY = "fbProfileId";
     private static final String FIRST_NAME_KEY = "firstName";
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
@@ -31,6 +32,7 @@ public final class EgoEaterPreferences {
     public static void setUser(Context context, UserBean userBean) {
         setLong(context, USER_ID_KEY, userBean.getUserId());
         setLong(context, SESSION_ID_KEY, userBean.getSessionId());
+        setString(context, FB_PROFILE_ID_KEY, userBean.getFbProfileId());
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
@@ -40,6 +42,7 @@ public final class EgoEaterPreferences {
         return new UserBean()
                 .setUserId(getLong(context, USER_ID_KEY))
                 .setSessionId(getLong(context, SESSION_ID_KEY))
+                .setFbProfileId(getString(context, FB_PROFILE_ID_KEY))
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY));
@@ -47,6 +50,10 @@ public final class EgoEaterPreferences {
 
     public static Long getSessionId(Context context) {
         return getLong(context, SESSION_ID_KEY);
+    }
+
+    public static String getFbProfileId(Context context) {
+        return getString(context, FB_PROFILE_ID_KEY);
     }
 
     public static void setFirebaseToken(Context context, String firebaseToken) {

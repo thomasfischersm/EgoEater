@@ -99,18 +99,6 @@ public class LoginActivity extends ParentActivity {
         Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
                 + data.getSessionId());
         dismissLoadingProgress();
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    FirebaseInstanceId.getInstance().deleteInstanceId();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute();
     }
 
     public static void debug() {
