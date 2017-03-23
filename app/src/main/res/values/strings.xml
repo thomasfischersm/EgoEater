@@ -4,6 +4,7 @@
 
     <!-- CropPhotoActivity -->
     <string name="crop_photo_activity_title">Crop profile photo</string>
+    <string name="delete_button_label">Delete</string>
     <string name="cancel_button_label">Cancel</string>
     <string name="save_button_label">Save</string>
 

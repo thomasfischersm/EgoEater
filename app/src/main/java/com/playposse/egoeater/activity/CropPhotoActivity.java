@@ -35,6 +35,7 @@ public class CropPhotoActivity extends ParentActivity {
     private boolean hasFirstProfilePhoto;
 
     private CropImageView cropImageView;
+    private Button deleteButton;
     private Button cancelButton;
     private Button saveButton;
 
@@ -51,20 +52,27 @@ public class CropPhotoActivity extends ParentActivity {
         hasFirstProfilePhoto = EgoEaterPreferences.hasFirstProfilePhoto(this);
 
         cropImageView = (CropImageView) findViewById(R.id.cropImageView);
+        deleteButton = (Button) findViewById(R.id.deleteButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        if (!hasFirstProfilePhoto) {
-            // If the user hasn't picked a profile photo yet, the user must pick a profile photo to
-            // continue.
-            cancelButton.setVisibility(View.GONE);
-        }
+        // If the user hasn't picked a profile photo yet, the user must pick a profile photo to
+        // continue.
+        cancelButton.setVisibility(hasFirstProfilePhoto ? View.VISIBLE : View.GONE);
+        deleteButton.setVisibility((photoIndex > 0) ? View.VISIBLE : View.GONE);
 
         // TODO: Add to entry paths, one for FB photo and one for picking a photo from the gallery.
 
         loadFbProfilePhoto();
 
         setTitle(R.string.crop_photo_activity_title);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Delete photo and return to profile activity.
+            }
+        });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
