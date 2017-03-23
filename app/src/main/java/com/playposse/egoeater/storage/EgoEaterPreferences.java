@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,7 +18,7 @@ public final class EgoEaterPreferences {
 
     private static final String LOG_CAT = EgoEaterPreferences.class.getSimpleName();
 
-    public static final String PREFS_NAME = "EgoEaterPreferences";
+    private static final String PREFS_NAME = "EgoEaterPreferences";
 
     private static final String USER_ID_KEY = "userId";
     private static final String SESSION_ID_KEY = "sessionId";
@@ -25,12 +27,14 @@ public final class EgoEaterPreferences {
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
     private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
+    private static final String PROFILE_PHOTO_URL_KEY = "profilePhotoUrl";
     private static final String HAS_FIRST_PROFILE_PHOTO_KEY = "hasFirstProfilePhoto";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
+    private static final int MAX_PROFILE_PHOTO_COUNT = 3;
 
     private static final String NULL_STRING = "-1";
-    public static final int NULL_VALUE = -1;
+    private static final int NULL_VALUE = -1;
 
     public static void setUser(Context context, UserBean userBean) {
         setLong(context, USER_ID_KEY, userBean.getUserId());
@@ -39,16 +43,40 @@ public final class EgoEaterPreferences {
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
+
+        List<String> photoUrls = userBean.getProfilePhotoUrls();
+        if (photoUrls != null) {
+            for (int i = 0; i < MAX_PROFILE_PHOTO_COUNT; i++) {
+                if (i < photoUrls.size()) {
+                    setString(context, PROFILE_PHOTO_URL_KEY + i, photoUrls.get(i));
+                } else {
+                    setString(context, PROFILE_PHOTO_URL_KEY + i, null);
+                }
+            }
+        }
     }
 
     public static UserBean getUser(Context context) {
-        return new UserBean()
+        UserBean userBean = new UserBean()
                 .setUserId(getLong(context, USER_ID_KEY))
                 .setSessionId(getLong(context, SESSION_ID_KEY))
                 .setFbProfileId(getString(context, FB_PROFILE_ID_KEY))
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY));
+
+        ArrayList<String> profilePhotoUrls = new ArrayList<>();
+        userBean.setProfilePhotoUrls(profilePhotoUrls);
+        for (int i = 0; i < MAX_PROFILE_PHOTO_COUNT; i++) {
+            String photoUrl = getString(context, PROFILE_PHOTO_URL_KEY + i);
+            if (photoUrl != null) {
+                profilePhotoUrls.add(photoUrl);
+            } else {
+                break;
+            }
+        }
+
+        return userBean;
     }
 
     public static void clearSessionId(Context context) {

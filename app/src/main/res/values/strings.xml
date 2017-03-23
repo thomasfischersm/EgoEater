@@ -4,8 +4,10 @@
 
     <!-- CropPhotoActivity -->
     <string name="crop_photo_activity_title">Crop profile photo</string>
+    <string name="cancel_button_label">Cancel</string>
+    <string name="save_button_label">Save</string>
 
     <!-- Progress loading dialog -->
-    <string name="progress_dialog_title">Loading data…</string>
+    <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
 </resources>

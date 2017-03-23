@@ -17,12 +17,33 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <com.edmodo.cropper.CropImageView
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
+    <com.edmodo.cropper.CropImageView xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cropImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         custom:aspectRatioX="8"
         custom:aspectRatioY="9"
+        custom:fixAspectRatio="true"
         custom:guidelines="onTouch" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_button_label" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_button_label" />
+    </LinearLayout>
 </LinearLayout>

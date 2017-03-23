@@ -10,6 +10,8 @@ import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 
@@ -45,10 +47,18 @@ public abstract class ApiClientAction<D> {
 
     protected EgoEaterApi getApi() {
         if (api == null) {
+            HttpRequestInitializer httpRequestInitializer = new HttpRequestInitializer() {
+                @Override
+                public void initialize(HttpRequest httpRequest) throws IOException {
+                    httpRequest.setConnectTimeout(200 * 1000);
+                    httpRequest.setReadTimeout(100 * 1000);
+                }
+            };
+
             api = new EgoEaterApi.Builder(
                     AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(),
-                    null)
+                    httpRequestInitializer)
                     .setApplicationName("Ego Eater")
                     .setRootUrl("https://ego-eater.appspot.com/_ah/api/")
                     .build();

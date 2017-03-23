@@ -10,9 +10,13 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
+import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
+import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
+
+import java.util.logging.Logger;
 
 import javax.inject.Named;
 
@@ -30,6 +34,8 @@ import javax.inject.Named;
 )
 public class EgoEaterEndPoint {
 
+    private static final Logger log = Logger.getLogger(EgoEaterEndPoint.class.getName());
+
     @ApiMethod(name = "signIn")
     public UserBean signIn(
             @Named("fbAccessToken") String fbAccessToken,
@@ -44,5 +50,15 @@ public class EgoEaterEndPoint {
             @Named("firebaseToken") String firebaseToken) throws BadRequestException {
 
         UpdateFirebaseTokenServerAction.updateFireBaseToken(sessionId, firebaseToken);
+    }
+
+    @ApiMethod(name = "uploadProfilePhoto")
+    public UserBean uploadProfilePhoto(
+            @Named("sessionId") long sessionId,
+            @Named("photoIndex") int photoIndex,
+            PhotoBean photoBean) throws BadRequestException {
+
+        log.info("got a photo of size " + photoBean.getBytes().length);
+        return UploadProfilePhotoServerAction.uploadProfilePhoto(sessionId, photoIndex, photoBean);
     }
 }

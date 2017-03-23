@@ -1,6 +1,10 @@
 package com.playposse.egoeater.backend.beans;
 
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+import com.playposse.egoeater.backend.schema.ProfilePhoto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A transport bean that carries user information.
@@ -13,6 +17,7 @@ public class UserBean {
     private String firstName;
     private String lastName;
     private String name;
+    private List<String> profilePhotoUrls = new ArrayList<>();
 
     public UserBean() {
     }
@@ -24,6 +29,10 @@ public class UserBean {
         firstName = egoEaterUser.getFirstName();
         lastName = egoEaterUser.getLastName();
         name = egoEaterUser.getName();
+
+        for (ProfilePhoto profilePhoto : egoEaterUser.getProfilePhotos()) {
+            profilePhotoUrls.add(profilePhoto.getUrl());
+        }
     }
 
     public long getUserId() {
@@ -48,5 +57,9 @@ public class UserBean {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getProfilePhotoUrls() {
+        return profilePhotoUrls;
     }
 }
