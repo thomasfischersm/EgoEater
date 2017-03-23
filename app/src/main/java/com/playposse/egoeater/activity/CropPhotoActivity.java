@@ -66,6 +66,13 @@ public class CropPhotoActivity extends ParentActivity {
 
         setTitle(R.string.crop_photo_activity_title);
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Return to profile activity.
+            }
+        });
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
