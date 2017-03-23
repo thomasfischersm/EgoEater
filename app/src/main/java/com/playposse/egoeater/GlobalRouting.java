@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.playposse.egoeater.activity.CropPhotoActivity;
+import com.playposse.egoeater.activity.EditProfileActivity;
 import com.playposse.egoeater.activity.LoginActivity;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
@@ -38,7 +39,7 @@ public class GlobalRouting {
         if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else {
-            // TODO: ranking activity
+            context.startActivity(new Intent(context, EditProfileActivity.class));
         }
     }
 

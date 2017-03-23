@@ -44,8 +44,8 @@ public class UploadProfilePhotoClientAction extends ApiClientAction<Void> {
         PhotoBean photoBean = new PhotoBean().setBytes(base64);
 
         // Upload bytes to the cloud.
-        Long sessionId = EgoEaterPreferences.getSessionId(getContext());
-        UserBean userBean = getApi().uploadProfilePhoto(sessionId, photoIndex, photoBean).execute();
+        UserBean userBean =
+                getApi().uploadProfilePhoto(getSessionId(), photoIndex, photoBean).execute();
         Log.i(LOG_TAG, "executeAsync: Done sending");
 
         // Update the preferences with the new profile photo.

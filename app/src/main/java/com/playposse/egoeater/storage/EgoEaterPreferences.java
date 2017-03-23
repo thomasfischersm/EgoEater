@@ -44,6 +44,7 @@ public final class EgoEaterPreferences {
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
 
+        boolean hasAtLeastOneProfilePhoto = false;
         List<String> photoUrls = userBean.getProfilePhotoUrls();
         if (photoUrls != null) {
             for (int i = 0; i < MAX_PROFILE_PHOTO_COUNT; i++) {
@@ -53,6 +54,10 @@ public final class EgoEaterPreferences {
                     setString(context, PROFILE_PHOTO_URL_KEY + i, null);
                 }
             }
+        }
+
+        if (hasAtLeastOneProfilePhoto) {
+            setHasFirstProfilePhoto(context, true);
         }
     }
 
@@ -97,6 +102,18 @@ public final class EgoEaterPreferences {
 
     public static String getFirebaseToken(Context context) {
         return getString(context, FIREBASE_TOKEN_KEY);
+    }
+
+    public static String getProfilePhotoUrl0(Context context) {
+        return getString(context, PROFILE_PHOTO_URL_KEY + 0);
+    }
+
+    public static String getProfilePhotoUrl1(Context context) {
+        return getString(context, PROFILE_PHOTO_URL_KEY + 1);
+    }
+
+    public static String getProfilePhotoUrl2(Context context) {
+        return getString(context, PROFILE_PHOTO_URL_KEY + 2);
     }
 
     public static void setHasFirstProfilePhoto(Context context, boolean hasFirstProfilePhoto) {

@@ -26,8 +26,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  */
 public class UploadProfilePhotoServerAction extends AbstractServerAction {
 
-    private static final String BUCKET_NAME = "ego-eater.appspot.com";
-
     private static final Random random = new Random();
     public static final String PNG_FILE_EXTENSION = ".png";
 
@@ -45,12 +43,7 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
 
         // Remove old photo if necessary.
         Storage storage = StorageOptions.getDefaultInstance().getService();
-        List<ProfilePhoto> profilePhotos = egoEaterUser.getProfilePhotos();
-        if (photoIndex < profilePhotos.size() ) {
-            ProfilePhoto oldProfilePhoto = profilePhotos.get(photoIndex);
-            deleteFile(oldProfilePhoto.getFileName(), storage);
-            profilePhotos.remove(photoIndex);
-        }
+        List<ProfilePhoto> profilePhotos = deleteProfilePhoto(photoIndex, egoEaterUser, storage);
 
         // Store new photo in Cloud Storage.
         String fileName = generateUniqueFilename();
@@ -70,11 +63,6 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
 
     private static String generateUniqueFilename() {
         return System.currentTimeMillis() + "" + random.nextLong() + PNG_FILE_EXTENSION;
-    }
-
-    private static void deleteFile(String fileName, Storage storage) {
-        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
-        storage.delete(blobId);
     }
 
     private static String createFile(String fileName, byte[] fileContent, Storage storage) {

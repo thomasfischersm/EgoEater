@@ -16,7 +16,7 @@ public class ExtraConstants {
         return intent.getIntExtra(PHOTO_INDEX_ID, 0);
     }
 
-    public static Intent getCropPhotoIntent(Context context, int photoIndex) {
+    public static Intent createCropPhotoIntent(Context context, int photoIndex) {
         return new Intent(context, CropPhotoActivity.class)
                 .putExtra(PHOTO_INDEX_ID, photoIndex);
     }

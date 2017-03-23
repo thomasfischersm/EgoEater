@@ -19,7 +19,7 @@ public class UpdateFirebaseTokenInCloudClientAction extends ApiClientAction<Void
     @Override
     protected Void executeAsync() throws IOException {
         String firebaseToken = FirebaseInstanceId.getInstance().getToken();
-        Long sessionId = EgoEaterPreferences.getSessionId(getContext());
+        Long sessionId = getSessionId();
 
         EgoEaterPreferences.setFirebaseToken(getContext(), firebaseToken);
 

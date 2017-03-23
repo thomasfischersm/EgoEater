@@ -14,6 +14,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 import java.io.IOException;
 
@@ -90,8 +91,12 @@ public abstract class ApiClientAction<D> {
     protected void postExecute() {
     }
 
-    public Context getContext() {
+    protected Context getContext() {
         return context;
+    }
+
+    protected Long getSessionId() {
+        return EgoEaterPreferences.getSessionId(getContext());
     }
 
     /**
