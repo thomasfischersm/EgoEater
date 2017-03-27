@@ -29,6 +29,7 @@ public final class EgoEaterPreferences {
     private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
     private static final String PROFILE_PHOTO_URL_KEY = "profilePhotoUrl";
     private static final String HAS_FIRST_PROFILE_PHOTO_KEY = "hasFirstProfilePhoto";
+    private static final String PROFILE_TEXT = "profileText";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
@@ -43,6 +44,7 @@ public final class EgoEaterPreferences {
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
+        setString(context, PROFILE_TEXT, userBean.getProfileText());
 
         boolean hasAtLeastOneProfilePhoto = false;
         List<String> photoUrls = userBean.getProfilePhotoUrls();
@@ -50,6 +52,7 @@ public final class EgoEaterPreferences {
             for (int i = 0; i < MAX_PROFILE_PHOTO_COUNT; i++) {
                 if (i < photoUrls.size()) {
                     setString(context, PROFILE_PHOTO_URL_KEY + i, photoUrls.get(i));
+                    hasAtLeastOneProfilePhoto = true;
                 } else {
                     setString(context, PROFILE_PHOTO_URL_KEY + i, null);
                 }
@@ -68,7 +71,8 @@ public final class EgoEaterPreferences {
                 .setFbProfileId(getString(context, FB_PROFILE_ID_KEY))
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
-                .setName(getString(context, NAME_KEY));
+                .setName(getString(context, NAME_KEY))
+                .setProfileText(getString(context, PROFILE_TEXT));
 
         ArrayList<String> profilePhotoUrls = new ArrayList<>();
         userBean.setProfilePhotoUrls(profilePhotoUrls);
@@ -125,6 +129,10 @@ public final class EgoEaterPreferences {
                 context,
                 HAS_FIRST_PROFILE_PHOTO_KEY,
                 HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE);
+    }
+
+    public static String getProfileText(Context context) {
+        return getString(context, PROFILE_TEXT);
     }
 
     private static String getString(Context context, String key) {

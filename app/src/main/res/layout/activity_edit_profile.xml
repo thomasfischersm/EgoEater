@@ -48,6 +48,20 @@
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_insert_emoticon_black_24dp" />
-
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/profileEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="textMultiLine"
+        android:maxLength="2000"
+        android:maxLines="20" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_button_label"/>
 </LinearLayout>

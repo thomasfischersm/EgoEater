@@ -6,7 +6,6 @@
     <string name="crop_photo_activity_title">Crop profile photo</string>
     <string name="delete_button_label">Delete</string>
     <string name="cancel_button_label">Cancel</string>
-    <string name="save_button_label">Save</string>
     <string name="select_profile_photo_chooser">Select profile photo</string>
 
     <!-- EditProfileActivity -->
@@ -15,4 +14,7 @@
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
+
+    <!-- Common text -->
+    <string name="save_button_label">Save</string>
 </resources>

@@ -12,6 +12,7 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
@@ -69,5 +70,13 @@ public class EgoEaterEndPoint {
             @Named("photoIndex") int photoIndex) throws BadRequestException {
 
         return DeleteProfilePhotoServerAction.deleteProfilePhoto(sessionId, photoIndex);
+    }
+
+    @ApiMethod(name = "saveProfile")
+    public UserBean saveProfile(
+            @Named("sessionId") long sessionId,
+            @Named("profileText") String profileText) throws BadRequestException {
+
+        return SaveProfileServerAction.saveProfile(sessionId, profileText);
     }
 }

@@ -217,11 +217,11 @@ public class CropPhotoActivity extends ParentActivity {
     private void onServerActionComplete() {
         dismissLoadingProgress();
 
-        finish();
         startEditProfileActivity();
     }
 
     private void startEditProfileActivity() {
+        finish();
         startActivity(new Intent(this, EditProfileActivity.class));
     }
 

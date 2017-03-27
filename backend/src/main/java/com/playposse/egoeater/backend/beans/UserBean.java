@@ -17,7 +17,9 @@ public class UserBean {
     private String firstName;
     private String lastName;
     private String name;
+    private String profileText;
     private List<String> profilePhotoUrls = new ArrayList<>();
+
 
     public UserBean() {
     }
@@ -29,6 +31,7 @@ public class UserBean {
         firstName = egoEaterUser.getFirstName();
         lastName = egoEaterUser.getLastName();
         name = egoEaterUser.getName();
+        profileText = egoEaterUser.getProfileText();
 
         for (ProfilePhoto profilePhoto : egoEaterUser.getProfilePhotos()) {
             profilePhotoUrls.add(profilePhoto.getUrl());
@@ -57,6 +60,10 @@ public class UserBean {
 
     public String getName() {
         return name;
+    }
+
+    public String getProfileText() {
+        return profileText;
     }
 
     public List<String> getProfilePhotoUrls() {
