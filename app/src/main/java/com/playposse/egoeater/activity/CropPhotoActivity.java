@@ -12,7 +12,6 @@ import android.widget.Button;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.edmodo.cropper.CropImageView;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
@@ -20,6 +19,7 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 
@@ -71,8 +71,6 @@ public class CropPhotoActivity extends ParentActivity {
         // continue.
         cancelButton.setVisibility(hasFirstProfilePhoto ? View.VISIBLE : View.GONE);
         deleteButton.setVisibility((photoIndex > 0) ? View.VISIBLE : View.GONE);
-
-        loadFbProfilePhoto();
 
         setTitle(R.string.crop_photo_activity_title);
 
@@ -219,6 +217,7 @@ public class CropPhotoActivity extends ParentActivity {
     private void onServerActionComplete() {
         dismissLoadingProgress();
 
+        finish();
         startEditProfileActivity();
     }
 

@@ -24,23 +24,29 @@
 
         <ImageButton
             android:id="@+id/profilePhoto0Button"
-            android:layout_width="0dp" android:scaleType="fitCenter" android:adjustViewBounds="true"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_insert_emoticon_black_24dp" />
 
         <ImageButton
             android:id="@+id/profilePhoto1Button"
-            android:layout_width="0dp" android:scaleType="fitCenter" android:adjustViewBounds="true"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_insert_emoticon_black_24dp" />
 
         <ImageButton
             android:id="@+id/profilePhoto2Button"
-            android:layout_width="0dp" android:scaleType="fitCenter" android:adjustViewBounds="true"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_insert_emoticon_black_24dp" />
 
     </LinearLayout>
