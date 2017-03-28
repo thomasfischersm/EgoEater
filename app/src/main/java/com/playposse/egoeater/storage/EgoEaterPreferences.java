@@ -29,7 +29,12 @@ public final class EgoEaterPreferences {
     private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
     private static final String PROFILE_PHOTO_URL_KEY = "profilePhotoUrl";
     private static final String HAS_FIRST_PROFILE_PHOTO_KEY = "hasFirstProfilePhoto";
-    private static final String PROFILE_TEXT = "profileText";
+    private static final String PROFILE_TEXT_KEY = "profileText";
+    private static final String LONGITUDE_KEY = "longitude";
+    private static final String LATITUDE_KEY = "latitude";
+    private static final String CITY_KEY = "city";
+    private static final String STATE_KEY = "state";
+    private static final String COUNTRY_KEY = "country";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
@@ -44,7 +49,12 @@ public final class EgoEaterPreferences {
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
-        setString(context, PROFILE_TEXT, userBean.getProfileText());
+        setString(context, PROFILE_TEXT_KEY, userBean.getProfileText());
+        setDouble(context, LONGITUDE_KEY, userBean.getLongitude());
+        setDouble(context, LATITUDE_KEY, userBean.getLatitude());
+        setString(context, CITY_KEY, userBean.getCity());
+        setString(context, STATE_KEY, userBean.getState());
+        setString(context, COUNTRY_KEY, userBean.getCountry());
 
         boolean hasAtLeastOneProfilePhoto = false;
         List<String> photoUrls = userBean.getProfilePhotoUrls();
@@ -72,7 +82,12 @@ public final class EgoEaterPreferences {
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY))
-                .setProfileText(getString(context, PROFILE_TEXT));
+                .setProfileText(getString(context, PROFILE_TEXT_KEY))
+                .setLongitude(getDouble(context, LONGITUDE_KEY))
+                .setLatitude(getDouble(context, LATITUDE_KEY))
+                .setCity(getString(context, CITY_KEY))
+                .setState(getString(context, STATE_KEY))
+                .setCountry(getString(context, COUNTRY_KEY));
 
         ArrayList<String> profilePhotoUrls = new ArrayList<>();
         userBean.setProfilePhotoUrls(profilePhotoUrls);
@@ -132,7 +147,15 @@ public final class EgoEaterPreferences {
     }
 
     public static String getProfileText(Context context) {
-        return getString(context, PROFILE_TEXT);
+        return getString(context, PROFILE_TEXT_KEY);
+    }
+
+    public static Double getLongitude(Context context) {
+        return getDouble(context, LONGITUDE_KEY);
+    }
+
+    public static Double getLatitude(Context context) {
+        return getDouble(context, LATITUDE_KEY);
     }
 
     private static String getString(Context context, String key) {
@@ -260,6 +283,19 @@ public final class EgoEaterPreferences {
             sharedPreferences.edit().putLong(key, value).commit();
         } else {
             sharedPreferences.edit().remove(key).commit();
+        }
+    }
+
+    private static Double getDouble(Context context, String key) {
+        String str = getString(context, key);
+        return (str != null) ? Double.parseDouble(str) : null;
+    }
+
+    private static void setDouble(Context context, String key, Double value) {
+        if (value != null) {
+            setString(context, key, value.toString());
+        } else {
+            setString(context, key, null);
         }
     }
 }

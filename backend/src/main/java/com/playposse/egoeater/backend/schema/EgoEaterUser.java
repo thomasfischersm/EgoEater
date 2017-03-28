@@ -29,8 +29,13 @@ public class EgoEaterUser {
     private String name;
     private String email;
     private String profileText;
-    // TODO: Add GPS
-    // TODO: Add photos
+    @Index
+    private double latitude;
+    @Index
+    private double longitude;
+    private String city;
+    private String state;
+    private String country;
     // TODO: Add age
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
 
@@ -134,7 +139,47 @@ public class EgoEaterUser {
         this.profileText = profileText;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public List<ProfilePhoto> getProfilePhotos() {
         return profilePhotos;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

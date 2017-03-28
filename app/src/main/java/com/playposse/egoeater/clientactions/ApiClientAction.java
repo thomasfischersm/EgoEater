@@ -36,13 +36,13 @@ public abstract class ApiClientAction<D> {
     private D returnedData;
 
     public ApiClientAction(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
 
         callback = null;
     }
 
     public ApiClientAction(Context context, Callback<D> callback) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.callback = callback;
     }
 

@@ -15,6 +15,11 @@
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
 
+    <!-- Location permission dialog -->
+    <string name="location_permission_dialog_title">Hoohoo, where are you?</string>
+    <string name="location_permission_dialog_message">To match you up with local hotties, we gotta know where you are. Please, enable the location service.</string>
+
     <!-- Common text -->
     <string name="save_button_label">Save</string>
+    <string name="dismiss_button_label">Dismiss</string>
 </resources>

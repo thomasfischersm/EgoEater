@@ -18,6 +18,11 @@ public class UserBean {
     private String lastName;
     private String name;
     private String profileText;
+    private double latitude;
+    private double longitude;
+    private String city;
+    private String state;
+    private String country;
     private List<String> profilePhotoUrls = new ArrayList<>();
 
 
@@ -32,6 +37,11 @@ public class UserBean {
         lastName = egoEaterUser.getLastName();
         name = egoEaterUser.getName();
         profileText = egoEaterUser.getProfileText();
+        longitude = egoEaterUser.getLongitude();
+        latitude = egoEaterUser.getLatitude();
+        city = egoEaterUser.getCity();
+        state = egoEaterUser.getState();
+        country = egoEaterUser.getCountry();
 
         for (ProfilePhoto profilePhoto : egoEaterUser.getProfilePhotos()) {
             profilePhotoUrls.add(profilePhoto.getUrl());
@@ -66,7 +76,27 @@ public class UserBean {
         return profileText;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     public List<String> getProfilePhotoUrls() {
         return profilePhotoUrls;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCountry() {
+        return country;
     }
 }

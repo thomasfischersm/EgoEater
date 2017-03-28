@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.playposse.egoeater.clientactions.UpdateFirebaseTokenInCloudClientAction;
+import com.playposse.egoeater.clientactions.UpdateFirebaseTokenClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 /**
@@ -42,6 +42,6 @@ public class EgoEaterFirebaseInstanceIDService extends FirebaseInstanceIdService
     }
 
     private void updateFireBaseTokenInCloud(Context context) {
-        new UpdateFirebaseTokenInCloudClientAction(context).execute();
+        new UpdateFirebaseTokenClientAction(context).execute();
     }
 }

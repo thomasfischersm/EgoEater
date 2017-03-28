@@ -16,6 +16,7 @@ import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
+import com.playposse.egoeater.backend.serveractions.UpdateLocationServerAction;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
 
 import java.util.logging.Logger;
@@ -78,5 +79,23 @@ public class EgoEaterEndPoint {
             @Named("profileText") String profileText) throws BadRequestException {
 
         return SaveProfileServerAction.saveProfile(sessionId, profileText);
+    }
+
+    @ApiMethod(name = "updateLocation")
+    public UserBean updateLocation(
+            @Named("sessionId") long sessionId,
+            @Named("latitude") double latitude,
+            @Named("longitude") double longitude,
+            @Named("city") String city,
+            @Named("state") String state,
+            @Named("country") String country) throws BadRequestException {
+
+        return UpdateLocationServerAction.updateLocation(
+                sessionId,
+                latitude,
+                longitude,
+                city,
+                state,
+                country);
     }
 }

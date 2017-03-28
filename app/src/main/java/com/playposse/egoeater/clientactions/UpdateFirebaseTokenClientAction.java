@@ -10,9 +10,9 @@ import java.io.IOException;
 /**
  * A client action that updates the Firebase token in the cloud.
  */
-public class UpdateFirebaseTokenInCloudClientAction extends ApiClientAction<Void> {
+public class UpdateFirebaseTokenClientAction extends ApiClientAction<Void> {
 
-    public UpdateFirebaseTokenInCloudClientAction(Context context) {
+    public UpdateFirebaseTokenClientAction(Context context) {
         super(context);
     }
 
