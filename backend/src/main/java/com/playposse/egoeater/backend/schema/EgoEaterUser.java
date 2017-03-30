@@ -36,7 +36,10 @@ public class EgoEaterUser {
     private String city;
     private String state;
     private String country;
-    // TODO: Add age
+    // FB stores the birthday as mm/dd/yyyy, yyyy, or mm/dd depending on privacy settings.
+    private String birthday;
+    // FB stores this as 'male', 'female', or a custom value.
+    private String gender;
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
 
     public EgoEaterUser() {
@@ -49,7 +52,9 @@ public class EgoEaterUser {
             String firstName,
             String lastName,
             String name,
-            String email) {
+            String email,
+            String birthday,
+            String gender) {
 
         this.fbProfileId = fbProfileId;
         this.sessionId = sessionId;
@@ -58,6 +63,8 @@ public class EgoEaterUser {
         this.lastName = lastName;
         this.name = name;
         this.email = email;
+        this.birthday = birthday;
+        this.gender = gender;
 
         created = System.currentTimeMillis();
         lastLogin = System.currentTimeMillis();
@@ -181,5 +188,21 @@ public class EgoEaterUser {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

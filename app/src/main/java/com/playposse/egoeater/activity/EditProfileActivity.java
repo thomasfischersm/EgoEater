@@ -15,6 +15,7 @@ import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.DataMunchUtil;
 import com.playposse.egoeater.util.StringUtil;
 
 /**
@@ -108,7 +109,15 @@ public class EditProfileActivity extends ParentWithLocationCheckActivity {
     }
 
     private String formatHeadline(UserBean userBean) {
-        return userBean.getFirstName(); // TODO: Add age
+        StringBuilder sb = new StringBuilder();
+        sb.append(userBean.getFirstName());
+
+        Integer age = DataMunchUtil.getAge(userBean.getBirthday());
+        if (age != null) {
+            sb.append(getString(R.string.age_speparator));
+            sb.append(age);
+        }
+        return sb.toString();
     }
 
     private String formatSubHead(UserBean userBean) {

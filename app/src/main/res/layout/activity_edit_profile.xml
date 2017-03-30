@@ -53,7 +53,8 @@
     <TextView
         android:id="@+id/headlineTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
     <TextView
         android:id="@+id/subHeadTextView"
@@ -73,5 +74,5 @@
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save_button_label"/>
+        android:text="@string/save_button_label" />
 </LinearLayout>

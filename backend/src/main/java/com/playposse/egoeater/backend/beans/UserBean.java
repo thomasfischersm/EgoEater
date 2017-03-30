@@ -23,6 +23,8 @@ public class UserBean {
     private String city;
     private String state;
     private String country;
+    private String birthday;
+    private String gender;
     private List<String> profilePhotoUrls = new ArrayList<>();
 
 
@@ -42,6 +44,8 @@ public class UserBean {
         city = egoEaterUser.getCity();
         state = egoEaterUser.getState();
         country = egoEaterUser.getCountry();
+        birthday = egoEaterUser.getBirthday();
+        gender = egoEaterUser.getGender();
 
         for (ProfilePhoto profilePhoto : egoEaterUser.getProfilePhotos()) {
             profilePhotoUrls.add(profilePhoto.getUrl());
@@ -98,5 +102,13 @@ public class UserBean {
 
     public String getCountry() {
         return country;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getGender() {
+        return gender;
     }
 }

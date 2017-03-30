@@ -42,7 +42,7 @@ public class LoginActivity extends ParentActivity {
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        loginButton.setReadPermissions("public_profile", "email");
+        loginButton.setReadPermissions("public_profile", "email", "user_birthday");
         callbackManager = CallbackManager.Factory.create();
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

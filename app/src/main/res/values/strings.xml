@@ -10,6 +10,7 @@
 
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile</string>
+    <string name="age_speparator">, </string>
 
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
@@ -18,6 +19,9 @@
     <!-- Location permission dialog -->
     <string name="location_permission_dialog_title">Hoohoo, where are you?</string>
     <string name="location_permission_dialog_message">To match you up with local hotties, we gotta know where you are. Please, enable the location service.</string>
+
+    <!-- Options menu -->
+    <string name="logout_menu">Logout</string>
 
     <!-- Common text -->
     <string name="save_button_label">Save</string>

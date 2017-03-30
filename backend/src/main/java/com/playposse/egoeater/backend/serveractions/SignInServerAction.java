@@ -61,7 +61,9 @@ public class SignInServerAction {
                 fbUser.getFirstName(),
                 fbUser.getLastName(),
                 fbUser.getName(),
-                fbUser.getEmail());
+                fbUser.getEmail(),
+                fbUser.getBirthday(),
+                fbUser.getGender());
 
         ofy().save().entity(egoEaterUser).now();
 
@@ -82,6 +84,8 @@ public class SignInServerAction {
         egoEaterUser.setLastName(fbUser.getLastName());
         egoEaterUser.setName(fbUser.getName());
         egoEaterUser.setEmail(fbUser.getEmail());
+        egoEaterUser.setBirthday(fbUser.getBirthday());
+        egoEaterUser.setGender(fbUser.getGender());
 
         ofy().save().entity(egoEaterUser).now();
 
@@ -95,6 +99,9 @@ public class SignInServerAction {
                 User.class,
                 Parameter.with(
                         "fields",
-                        "id,name,link,first_name,last_name,cover,picture.type(large),email"));
+                        "id,name,link,first_name,last_name,email,birthday,gender"));
+        // TODO: Only allow 'verified' FB users into the system to avoid fake profiles.
+        // TODO: If the gender is not 'male' or 'female' tell tell the user that the system doesn't
+        // work for them.
     }
 }

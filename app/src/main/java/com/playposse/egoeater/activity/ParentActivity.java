@@ -13,6 +13,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
@@ -33,33 +34,26 @@ public abstract class ParentActivity extends AppCompatActivity {
 
     protected abstract int getLayoutResId();
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.options_menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//            case R.id.help_menu_item:
-//                startActivity(new Intent(this, HelpActivity.class));
-//                return true;
-//            case R.id.settings_menu_item:
-//                startActivity(new Intent(this, SettingsActivity.class));
-//                return true;
-//            case R.id.send_feedback_menu_item:
-//                EmailUtil.sendFeedbackAction(this);
-//                return true;
-//            case R.id.about_menu_item:
-//                startActivity(new Intent(this, AboutActivity.class));
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout_menu_item:
+                EgoEaterPreferences.clearSessionId(this);
+                finish();
+                startActivity(new Intent(this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onResume() {

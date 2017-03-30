@@ -35,6 +35,8 @@ public final class EgoEaterPreferences {
     private static final String CITY_KEY = "city";
     private static final String STATE_KEY = "state";
     private static final String COUNTRY_KEY = "country";
+    private static final String BIRTHDAY_KEY = "birthday";
+    private static final String GENDER = "gender";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
@@ -55,6 +57,8 @@ public final class EgoEaterPreferences {
         setString(context, CITY_KEY, userBean.getCity());
         setString(context, STATE_KEY, userBean.getState());
         setString(context, COUNTRY_KEY, userBean.getCountry());
+        setString(context, BIRTHDAY_KEY, userBean.getBirthday());
+        setString(context, GENDER, userBean.getGender());
 
         boolean hasAtLeastOneProfilePhoto = false;
         List<String> photoUrls = userBean.getProfilePhotoUrls();
@@ -87,7 +91,9 @@ public final class EgoEaterPreferences {
                 .setLatitude(getDouble(context, LATITUDE_KEY))
                 .setCity(getString(context, CITY_KEY))
                 .setState(getString(context, STATE_KEY))
-                .setCountry(getString(context, COUNTRY_KEY));
+                .setCountry(getString(context, COUNTRY_KEY))
+                .setBirthday(getString(context, BIRTHDAY_KEY))
+                .setGender(getString(context, GENDER));
 
         ArrayList<String> profilePhotoUrls = new ArrayList<>();
         userBean.setProfilePhotoUrls(profilePhotoUrls);
