@@ -27,7 +27,6 @@ public class UserBean {
     private String gender;
     private List<String> profilePhotoUrls = new ArrayList<>();
 
-
     public UserBean() {
     }
 
