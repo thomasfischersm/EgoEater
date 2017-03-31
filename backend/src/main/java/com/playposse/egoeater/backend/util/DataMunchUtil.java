@@ -20,6 +20,8 @@ public class DataMunchUtil {
     private static final String FULL_FB_DATE_FORMAT = "MM/dd/yyyy";
     private static final char DATE_SEPARATOR = '/';
     private static final double METERS_IN_A_MILE = 1609.34;
+    private static final String MALE_GENDER = "male";
+    private static final String FEMALE_GENDER = "female";
 
     /**
      * Calculates the birthday based on the FB provided information. If it cannot be determined,
@@ -92,5 +94,16 @@ public class DataMunchUtil {
         distance = Math.pow(distance, 2);
 
         return Math.sqrt(distance) / METERS_IN_A_MILE;
+    }
+
+    public static String getOppositeGender(String gender) {
+        switch (gender) {
+            case MALE_GENDER:
+                return FEMALE_GENDER;
+            case FEMALE_GENDER:
+                return MALE_GENDER;
+            default:
+                return null;
+        }
     }
 }

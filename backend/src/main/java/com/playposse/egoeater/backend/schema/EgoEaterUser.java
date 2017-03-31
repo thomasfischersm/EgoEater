@@ -39,6 +39,7 @@ public class EgoEaterUser {
     // FB stores the birthday as mm/dd/yyyy, yyyy, or mm/dd depending on privacy settings.
     private String birthday;
     // FB stores this as 'male', 'female', or a custom value.
+    @Index
     private String gender;
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
 

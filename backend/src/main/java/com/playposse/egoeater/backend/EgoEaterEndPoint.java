@@ -11,7 +11,11 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.PhotoBean;
+import com.playposse.egoeater.backend.beans.ProfileBean;
+import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.GetProfilesByDistanceServerAction;
+import com.playposse.egoeater.backend.serveractions.GetProfilesByIdServerAction;
 import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
 import com.playposse.egoeater.backend.beans.UserBean;
@@ -19,6 +23,7 @@ import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAct
 import com.playposse.egoeater.backend.serveractions.UpdateLocationServerAction;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Named;
@@ -97,5 +102,23 @@ public class EgoEaterEndPoint {
                 city,
                 state,
                 country);
+    }
+
+    @ApiMethod(name = "getProfileIdsByDistance")
+    public ProfileIdList getProfileIdsByDistance(
+            @Named("sessionId") long sessionId,
+            @Named("latitude") double delta) throws BadRequestException {
+
+        return new ProfileIdList(GetProfilesByDistanceServerAction.getProfileIdsByDistance(
+                sessionId,
+                delta));
+    }
+
+    @ApiMethod(name = "getProfilesById")
+    public List<ProfileBean> getProfilesById(
+            @Named("sessionId") long sessionId,
+            @Named("profileIds")List<Long> profileIds) throws BadRequestException {
+
+        return GetProfilesByIdServerAction.getProfilesById(sessionId, profileIds);
     }
 }
