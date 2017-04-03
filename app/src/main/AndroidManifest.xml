@@ -23,6 +23,11 @@
         <meta-data
             android:name="com.playposse.egoeater.glide.EgoEaterGlideModule"
             android:value="GlideModule" />
+        
+        <provider
+            android:authorities="com.playposse.egoeater.provider"
+            android:name=".contentprovider.EgoEaterContentProvider"
+            android:exported="false" />
 
         <service android:name=".firebase.EgoEaterFirebaseMessagingService">
             <intent-filter>
