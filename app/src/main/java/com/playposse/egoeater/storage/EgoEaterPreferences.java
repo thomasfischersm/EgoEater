@@ -36,10 +36,12 @@ public final class EgoEaterPreferences {
     private static final String STATE_KEY = "state";
     private static final String COUNTRY_KEY = "country";
     private static final String BIRTHDAY_KEY = "birthday";
-    private static final String GENDER = "gender";
+    private static final String GENDER_KEY = "gender";
+    private static final String QUERY_RADIUS_KEY = "queryRadius";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
+    private static final int QUERY_RADIUS_DEFAULT = 0;
 
     private static final String NULL_STRING = "-1";
     private static final int NULL_VALUE = -1;
@@ -58,7 +60,7 @@ public final class EgoEaterPreferences {
         setString(context, STATE_KEY, userBean.getState());
         setString(context, COUNTRY_KEY, userBean.getCountry());
         setString(context, BIRTHDAY_KEY, userBean.getBirthday());
-        setString(context, GENDER, userBean.getGender());
+        setString(context, GENDER_KEY, userBean.getGender());
 
         boolean hasAtLeastOneProfilePhoto = false;
         List<String> photoUrls = userBean.getProfilePhotoUrls();
@@ -93,7 +95,7 @@ public final class EgoEaterPreferences {
                 .setState(getString(context, STATE_KEY))
                 .setCountry(getString(context, COUNTRY_KEY))
                 .setBirthday(getString(context, BIRTHDAY_KEY))
-                .setGender(getString(context, GENDER));
+                .setGender(getString(context, GENDER_KEY));
 
         ArrayList<String> profilePhotoUrls = new ArrayList<>();
         userBean.setProfilePhotoUrls(profilePhotoUrls);
@@ -162,6 +164,15 @@ public final class EgoEaterPreferences {
 
     public static Double getLatitude(Context context) {
         return getDouble(context, LATITUDE_KEY);
+    }
+
+    public static int getQueryRadius(Context context) {
+        Integer queryRadius = getInt(context, QUERY_RADIUS_KEY);
+        return (queryRadius != null) ? queryRadius : QUERY_RADIUS_DEFAULT;
+    }
+
+    public static void setQueryRadius(Context context, int queryRadius) {
+        setInt(context, QUERY_RADIUS_KEY, queryRadius);
     }
 
     private static String getString(Context context, String key) {

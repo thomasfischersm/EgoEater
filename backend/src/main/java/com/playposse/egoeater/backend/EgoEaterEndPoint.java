@@ -107,7 +107,7 @@ public class EgoEaterEndPoint {
     @ApiMethod(name = "getProfileIdsByDistance")
     public ProfileIdList getProfileIdsByDistance(
             @Named("sessionId") long sessionId,
-            @Named("latitude") double delta) throws BadRequestException {
+            @Named("delta") double delta) throws BadRequestException {
 
         return new ProfileIdList(GetProfilesByDistanceServerAction.getProfileIdsByDistance(
                 sessionId,

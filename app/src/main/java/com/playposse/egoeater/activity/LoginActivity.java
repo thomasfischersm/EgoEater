@@ -19,6 +19,7 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SignInClientAction;
+import com.playposse.egoeater.services.PopulatePipelineService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -99,6 +100,10 @@ public class LoginActivity extends ParentActivity {
     private void onCloudSignInCompleted(UserBean data) {
         Log.i(LOG_TAG, "onCloudSignInCompleted: Got session id from the server: "
                 + data.getSessionId());
+
+        // Kick off building the pipeline.
+        startService(new Intent(this, PopulatePipelineService.class));
+
         dismissLoadingProgress();
         GlobalRouting.onLoginComplete(this);
     }
