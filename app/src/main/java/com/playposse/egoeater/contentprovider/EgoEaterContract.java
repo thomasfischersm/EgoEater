@@ -63,7 +63,7 @@ public class EgoEaterContract {
         public static final String PHOTO_URL_2_COLUMN = "photo_url_2";
         public static final String WINS_COLUMN = "wins";
         public static final String LOSSES_COLUMN = "losses";
-        public static final String WINS_LOSSES_SUM_COLUMN = "winS_losses_sum";
+        public static final String WINS_LOSSES_SUM_COLUMN = "wins_losses_sum";
 
         public static final String[] COLUMN_NAMES = new String[]{
                 ID_COLUMN,
@@ -128,22 +128,22 @@ public class EgoEaterContract {
         public static final String WINNER_ID_COLUMN = "winner_id";
         public static final String LOSER_ID_COLUMN = "loser_id";
         public static final String CREATED_COLUMN = "created";
-        public static final String IS_SYNCHED_TO_CLOUD_COLUMN = "is_synched_to_cloud";
+        public static final String IS_SYNCED_TO_CLOUD_COLUMN = "is_synced_to_cloud";
 
         public static final String[] COLUMN_NAMES = new String[]{
                 ID_COLUMN,
                 WINNER_ID_COLUMN,
                 LOSER_ID_COLUMN,
                 CREATED_COLUMN,
-                IS_SYNCHED_TO_CLOUD_COLUMN};
+                IS_SYNCED_TO_CLOUD_COLUMN};
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE RATING "
                         + "(_ID INTEGER PRIMARY KEY, "
                         + "WINNER_ID INTEGER, "
                         + "LOSER_ID INTEGER, "
-                        + "CREATED DATETIME, "
-                        + "IS_SYNCHED_TO_CLOUD BOOLEAN)";
+                        + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                        + "IS_SYNCED_TO_CLOUD BOOLEAN DEFAULT FALSE)";
     }
 
     public static final class PipelineTable implements BaseColumns {

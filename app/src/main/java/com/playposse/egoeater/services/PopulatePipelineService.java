@@ -402,6 +402,7 @@ public class PopulatePipelineService extends IntentService {
         Glide.with(getApplicationContext())
                 .load(photoUrl)
                 .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+        // TODO: Find out if we need to call get() on the Future.
     }
 
     /**

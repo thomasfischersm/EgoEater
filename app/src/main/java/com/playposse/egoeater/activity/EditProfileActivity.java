@@ -16,15 +16,16 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.DataMunchUtil;
+import com.playposse.egoeater.util.EgoEaterConstants;
 import com.playposse.egoeater.util.StringUtil;
+
+import static com.playposse.egoeater.util.EgoEaterConstants.LOCATION_SEPARATOR;
+import static com.playposse.egoeater.util.EgoEaterConstants.USA_COUNTRY;
 
 /**
  * An {@link android.app.Activity} to edit the profile.
  */
 public class EditProfileActivity extends ParentWithLocationCheckActivity {
-
-    private static final String USA_COUNTRY = "United States";
-    public static final String LOCATION_SEPARATOR = ", ";
 
     private ImageButton profilePhoto0Button;
     private ImageButton profilePhoto1Button;

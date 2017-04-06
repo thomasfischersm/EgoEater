@@ -16,6 +16,7 @@ import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByDistanceServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByIdServerAction;
+import com.playposse.egoeater.backend.serveractions.ReportRankingServerAction;
 import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
 import com.playposse.egoeater.backend.beans.UserBean;
@@ -120,5 +121,14 @@ public class EgoEaterEndPoint {
             @Named("profileIds")List<Long> profileIds) throws BadRequestException {
 
         return GetProfilesByIdServerAction.getProfilesById(sessionId, profileIds);
+    }
+
+    @ApiMethod(name = "reportRanking")
+    public void reportRanking(
+            @Named("sessionId") long sessionId,
+            @Named("winnerId") long winnerId,
+            @Named("loserId") long loserId) throws BadRequestException {
+
+        ReportRankingServerAction.reportRanking(sessionId, winnerId, loserId);
     }
 }
