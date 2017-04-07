@@ -97,6 +97,8 @@
         <activity
             android:name=".activity.RatingActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.NoMorePairingsActivity"></activity>
     </application>
 
 </manifest>

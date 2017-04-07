@@ -1,5 +1,6 @@
 package com.playposse.egoeater.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -21,7 +22,10 @@ public class RatingActivity
 
     private static final String LOG_TAG = RatingActivity.class.getSimpleName();
 
-    private LinearLayout fragmentContainer;
+    private static final String PAIRING_KEY = "pairing";
+    private static final String LEFT_PROFILE_KEY = "leftProfile";
+    private static final String RIGHT_PROFILE_KEY = "rightProfile";
+
     private ProfileFragment leftProfileFragment;
     private ProfileFragment rightProfileFragment;
 
@@ -38,7 +42,6 @@ public class RatingActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fragmentContainer = (LinearLayout) findViewById(R.id.fragmentContainer);
         leftProfileFragment =
                 (ProfileFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.leftProfileFragment);
@@ -47,6 +50,24 @@ public class RatingActivity
                         .findFragmentById(R.id.rightProfileFragment);
 
         new LoadPairingAsyncTask().execute();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        pairing = savedInstanceState.getParcelable(PAIRING_KEY);
+        leftProfile = savedInstanceState.getParcelable(LEFT_PROFILE_KEY);
+        rightProfile = savedInstanceState.getParcelable(RIGHT_PROFILE_KEY);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(PAIRING_KEY, pairing);
+        outState.putParcelable(LEFT_PROFILE_KEY, leftProfile);
+        outState.putParcelable(RIGHT_PROFILE_KEY, rightProfile);
     }
 
     @Override
@@ -67,6 +88,13 @@ public class RatingActivity
         @Override
         protected Void doInBackground(Void... params) {
             pairing = QueryUtil.getNextPairing(getContentResolver());
+
+            if (pairing == null) {
+                // No more pairings. Re-direct to a page to inform the user.
+                startActivity(new Intent(getApplicationContext(), NoMorePairingsActivity.class));
+                return null;
+            }
+
             leftProfile = QueryUtil.getProfileByProfileId(
                     getContentResolver(),
                     pairing.getProfileId0());

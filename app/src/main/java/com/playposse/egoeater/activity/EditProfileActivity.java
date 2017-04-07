@@ -106,7 +106,8 @@ public class EditProfileActivity extends ParentWithLocationCheckActivity {
 
     private void onSaveCompleted() {
         dismissLoadingProgress();
-        // TODO: Go to ranking activity
+
+        startActivity(new Intent(this, RatingActivity.class));
     }
 
     private String formatHeadline(UserBean userBean) {

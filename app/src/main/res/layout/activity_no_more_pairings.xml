@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.playposse.egoeater.activity.RatingActivity">
+    tools:context="com.playposse.egoeater.activity.NoMorePairingsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -17,25 +17,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <LinearLayout
+    <TextView
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <fragment
-            android:id="@+id/leftProfileFragment"
-            android:name="com.playposse.egoeater.activity.ProfileFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:layout="@layout/fragment_profile" />
-
-        <fragment
-            android:id="@+id/rightProfileFragment"
-            android:name="com.playposse.egoeater.activity.ProfileFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:layout="@layout/fragment_profile" />
-    </LinearLayout>
+        android:text="@string/no_more_pairings_message"/>
 </LinearLayout>

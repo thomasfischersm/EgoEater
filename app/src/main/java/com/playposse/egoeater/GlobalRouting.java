@@ -6,7 +6,9 @@ import android.content.Intent;
 import com.playposse.egoeater.activity.CropPhotoActivity;
 import com.playposse.egoeater.activity.EditProfileActivity;
 import com.playposse.egoeater.activity.LoginActivity;
+import com.playposse.egoeater.activity.RatingActivity;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.StringUtil;
 
 /**
  * A global class that routes the user to the right {@link android.app.Activity} when key events
@@ -38,8 +40,10 @@ public class GlobalRouting {
     public static void onLoginComplete(Context context) {
         if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
-        } else {
+        } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
             context.startActivity(new Intent(context, EditProfileActivity.class));
+        } else {
+            context.startActivity(new Intent(context, RatingActivity.class));
         }
     }
 

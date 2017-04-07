@@ -12,6 +12,9 @@
     <string name="edit_profile_activity_title">Edit profile</string>
     <string name="age_speparator">, </string>
 
+    <!-- No more pairings available activity -->
+    <string name="no_more_pairings_message">No more pairings are available!\n\nEgo Eater has only recently launched. Your support is critical for starting profiles.\n\nUnfortunately, there are no more users in your area to vote on. Please, stick with us.\n\nWe\'ll notify you if someone new signs up in your area.</string>
+
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>

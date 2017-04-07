@@ -46,10 +46,6 @@ public class ProfileFragment extends Fragment {
     public void setProfile(ProfileParcelable profile) {
         this.profile = profile;
 
-        Bundle args = new Bundle();
-        args.putParcelable(PROFILE_PARAM, profile);
-        setArguments(args);
-
         refreshView();
     }
 
@@ -105,33 +101,44 @@ public class ProfileFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(PROFILE_PARAM, profile);
+    }
+
     private void refreshView() {
         mainImageIndex = 0;
-        loadImages();
-        headlineTextView.setText(formatHeadline());
-        subHeadTextView.setText(formatSubHead());
+        if (profile != null) {
+            loadImages();
+            headlineTextView.setText(formatHeadline());
+            subHeadTextView.setText(formatSubHead());
+        }
     }
 
     private void loadImages() {
-        switch (mainImageIndex) {
-            case 0:
-                loadImage(0, 0);
-                loadImage(1, 1);
-                loadImage(2, 2);
-                break;
-            case 1:
-                loadImage(0, 0);
-                loadImage(1, 1);
-                loadImage(2, 2);
-                break;
-            case 2:
-                loadImage(0, 0);
-                loadImage(1, 1);
-                loadImage(2, 2);
-                break;
-            default:
-                Log.e(LOG_TAG, "loadImages: Unexpected mainImageIndex: " + mainImageIndex);
-                break;
+        if (profile != null) {
+            switch (mainImageIndex) {
+                case 0:
+                    loadImage(0, 0);
+                    loadImage(1, 1);
+                    loadImage(2, 2);
+                    break;
+                case 1:
+                    loadImage(0, 0);
+                    loadImage(1, 1);
+                    loadImage(2, 2);
+                    break;
+                case 2:
+                    loadImage(0, 0);
+                    loadImage(1, 1);
+                    loadImage(2, 2);
+                    break;
+                default:
+                    Log.e(LOG_TAG, "loadImages: Unexpected mainImageIndex: " + mainImageIndex);
+                    break;
+            }
         }
     }
 
