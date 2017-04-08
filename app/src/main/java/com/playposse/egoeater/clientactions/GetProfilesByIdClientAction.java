@@ -2,9 +2,11 @@ package com.playposse.egoeater.clientactions;
 
 import android.content.Context;
 
+import com.playposse.egoeater.backend.egoEaterApi.model.LongListWrapper;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +28,10 @@ public class GetProfilesByIdClientAction extends ApiClientAction<List<ProfileBea
 
     @Override
     protected List<ProfileBean> executeAsync() throws IOException {
-        return getApi().getProfilesById(getSessionId(), profileIds).execute().getItems();
+        if ((profileIds == null) || (profileIds.size() == 0)) {
+            return new ArrayList<>(0);
+        } else {
+            return getApi().getProfilesById(profileIds, getSessionId()).execute().getItems();
+        }
     }
 }

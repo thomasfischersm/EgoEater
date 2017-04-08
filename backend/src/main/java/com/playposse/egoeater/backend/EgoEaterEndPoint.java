@@ -115,7 +115,10 @@ public class EgoEaterEndPoint {
                 delta));
     }
 
-    @ApiMethod(name = "getProfilesById")
+    @ApiMethod(
+            name = "getProfilesById",
+            path = "getProfilesById",
+            httpMethod = ApiMethod.HttpMethod.POST)
     public List<ProfileBean> getProfilesById(
             @Named("sessionId") long sessionId,
             @Named("profileIds")List<Long> profileIds) throws BadRequestException {

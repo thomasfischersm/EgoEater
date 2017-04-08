@@ -29,6 +29,10 @@
             android:authorities="com.playposse.egoeater.provider"
             android:exported="false" />
 
+        <service
+            android:name=".services.PopulatePipelineService"
+            android:exported="false" />
+
         <service android:name=".firebase.EgoEaterFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

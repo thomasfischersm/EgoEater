@@ -34,6 +34,8 @@ public class PopulatePipelineService extends IntentService {
 
     private static final String LOG_TAG = PopulatePipelineService.class.getSimpleName();
 
+    private static final String SERVICE_NAME = "PopulatePipelineService";
+
     /**
      * The minimum number of pipelines that have to be in the pipeline.
      */
@@ -56,8 +58,8 @@ public class PopulatePipelineService extends IntentService {
 
     private boolean isActive = false;
 
-    public PopulatePipelineService(String name) {
-        super(name);
+    public PopulatePipelineService() {
+        super(SERVICE_NAME);
     }
 
     @Override
