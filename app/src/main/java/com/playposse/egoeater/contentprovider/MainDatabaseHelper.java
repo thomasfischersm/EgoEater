@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * A helper class that accesses the SQLLite instance.
  */
-class MainDatabaseHelper extends SQLiteOpenHelper {
+public class MainDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "egoEaterDb";
     private static final int DB_VERSION = 1;
 
-    MainDatabaseHelper(Context context) {
+    public MainDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
