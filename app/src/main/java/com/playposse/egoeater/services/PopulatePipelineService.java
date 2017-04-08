@@ -18,7 +18,9 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.DatabaseDumper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +82,7 @@ public class PopulatePipelineService extends IntentService {
                     Log.e(LOG_TAG, "run: Failed to rebuild pipeline.", ex);
                 }
                 cacheProfilePhotos();
+                DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
             }
         });
 
@@ -287,8 +290,11 @@ public class PopulatePipelineService extends IntentService {
     }
 
     private void loadProfileIds(final int minProfileIdCount, final Runnable runnable) {
-        int queryRadius = EgoEaterPreferences.getQueryRadius(getApplicationContext()) + 1;
-        queryRadius = Math.min(MAX_SEARCH_RADIUS, queryRadius);
+        int queryRadius = EgoEaterPreferences.getQueryRadius(getApplicationContext());
+        if (queryRadius < MAX_SEARCH_RADIUS) {
+            queryRadius++;
+            EgoEaterPreferences.setQueryRadius(getApplicationContext(), queryRadius);
+        }
 
         new GetProfileIdsByDistanceClientAction(
                 getApplicationContext(),
