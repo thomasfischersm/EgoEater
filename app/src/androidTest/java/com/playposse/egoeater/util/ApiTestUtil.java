@@ -177,38 +177,47 @@ public class ApiTestUtil {
         for (final FakeUser fakeUser : fBUserIdToFakeUserMap.values()) {
             // Find GPS information.
             final CompletableFuture<Void> future = new CompletableFuture<>();
+            futures.add(future);
+            Log.i(LOG_TAG, "updateLocation: Initiate getting location for " + fakeUser.getName());
             HttpGeoCoder.geoCode(context, fakeUser.getAddress(), new HttpGeoCoder.GeoCodeCallback() {
                 @Override
-                public void onGeoResponse(String gpsCoordinate) {
-                    try {
-                        String[] coordinates = gpsCoordinate.split(",");
-                        double latitude = Double.valueOf(coordinates[0]);
-                        double longitude = Double.valueOf(coordinates[1]);
+                public void onGeoResponse(final String gpsCoordinate) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                String[] coordinates = gpsCoordinate.split(",");
+                                double latitude = Double.valueOf(coordinates[0]);
+                                double longitude = Double.valueOf(coordinates[1]);
 
-                        // Find address information.
-                        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-                        List<Address> addresses1 =
-                                geocoder.getFromLocation(latitude, longitude, 1);
-                        String city = addresses1.get(0).getLocality();
-                        String state = addresses1.get(0).getAdminArea();
-                        String country = addresses1.get(0).getCountryName();
+                                // Find address information.
+                                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                                List<Address> addresses1 =
+                                        geocoder.getFromLocation(latitude, longitude, 1);
+                                String city = addresses1.get(0).getLocality();
+                                String state = addresses1.get(0).getAdminArea();
+                                String country = addresses1.get(0).getCountryName();
 
-                        // Update cloud.
-                        api.updateLocation(
-                                fakeUser.getSessionId(),
-                                latitude,
-                                longitude,
-                                city,
-                                state,
-                                country);
-                    } catch (IOException ex) {
-                        Log.e(
-                                LOG_TAG,
-                                "onGeoResponse: Failed to update location for "
-                                        + fakeUser.getAddress(),
-                                ex);
-                    }
-                    future.complete(null);
+                                // Update cloud.
+                                api.updateLocation(
+                                        fakeUser.getSessionId(),
+                                        latitude,
+                                        longitude,
+                                        city,
+                                        state,
+                                        country).execute();
+                            } catch (IOException ex) {
+                                Log.e(
+                                        LOG_TAG,
+                                        "onGeoResponse: Failed to update location for "
+                                                + fakeUser.getAddress(),
+                                        ex);
+                            }
+                            Log.i(LOG_TAG, "run: Done processing location for "
+                                    + fakeUser.getName());
+                            future.complete(null);
+                        }
+                    }).start();
                 }
             });
         }

@@ -88,7 +88,7 @@ public class HttpGeoCoder {
 
 
         VolleySingleton volleySingleton = VolleySingleton.getInstance(context);
-        volleySingleton.getRequestQueue().cancelAll(VOLLEY_TAG);
+//        volleySingleton.getRequestQueue().cancelAll(VOLLEY_TAG);
         request.setTag(VOLLEY_TAG);
         volleySingleton.addToRequestQueue(request);
     }
