@@ -24,6 +24,11 @@
     <string name="location_permission_dialog_message">To match you up with local hotties, we gotta know where you are. Please, enable the location service.</string>
 
     <!-- Options menu -->
+    <string name="profile_menu">Profile</string>
+    <string name="rating_menu">Rating</string>
+    <string name="matches_menu">Matches</string>
+    <string name="send_feedback_menu">Send feedback</string>
+    <string name="about_menu">About</string>
     <string name="logout_menu">Logout</string>
 
     <!-- Common text -->

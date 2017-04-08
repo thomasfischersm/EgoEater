@@ -45,6 +45,24 @@ public abstract class ParentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.profile_menu_item:
+                finish();
+                startActivity(new Intent(this, EditProfileActivity.class));
+                return true;
+            case R.id.rating_menu_item:
+                finish();
+                startActivity(new Intent(this, RatingActivity.class));
+                return true;
+            case R.id.matches_menu_item:
+                finish();
+                // TODO: Start matches activity
+                return true;
+            case R.id.send_feedback_menu_item:
+                // TODO
+                return true;
+            case R.id.about_menu_item:
+                // TODO
+                return true;
             case R.id.logout_menu_item:
                 EgoEaterPreferences.clearSessionId(this);
                 finish();
