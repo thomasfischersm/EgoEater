@@ -118,7 +118,8 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return ContentUris.withAppendedId(EgoEaterContract.RatingTable.CONTENT_URI, ratingId);
             case PIPELINE_TABLE_KEY:
                 long pipelineId = database.insert(EgoEaterContract.PipelineTable.TABLE_NAME, null, values);
-                ContentUris.withAppendedId(EgoEaterContract.PipelineTable.CONTENT_URI, pipelineId);
+                getContext().getContentResolver().notifyChange(EgoEaterContract.PipelineTable.CONTENT_URI, null);
+                return ContentUris.withAppendedId(EgoEaterContract.PipelineTable.CONTENT_URI, pipelineId);
         }
 
         return null;
