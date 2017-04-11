@@ -8,9 +8,11 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.DatabaseDumper;
 
 /**
  * An {@link android.app.Activity} that shows two profiles side by side. The user should choose the
@@ -133,6 +135,8 @@ public class RatingActivity
                     new LoadPairingAsyncTask().execute();
                 }
             });
+
+            DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
 
             return null;
         }

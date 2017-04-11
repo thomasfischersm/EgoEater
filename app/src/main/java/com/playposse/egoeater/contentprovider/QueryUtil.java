@@ -103,6 +103,6 @@ public final class QueryUtil {
                 new String[]{Long.toString(loserId)});
 
         // Report the result to the cloud.
-        new ReportRankingClientAction(context, winnerId, loserId);
+        new ReportRankingClientAction(context, winnerId, loserId).execute();
     }
 }

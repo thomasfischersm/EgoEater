@@ -21,7 +21,7 @@ public class ReportRankingClientAction extends ApiClientAction<Void> {
 
     @Override
     protected Void executeAsync() throws IOException {
-        getApi().reportRanking(getSessionId(), winnerId, loserId);
+        getApi().reportRanking(getSessionId(), winnerId, loserId).execute();
         return null;
     }
 }
