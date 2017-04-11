@@ -171,8 +171,12 @@ public class EgoEaterContract {
                         + "ARE_PHOTOS_CACHED BOOLEAN DEFAULT FALSE)";
     }
 
-    private static final String PROFILE_PATH = "profiles";
-    private static final String RATING_PATH = "ratings";
-    private static final String PIPELINE_PATH = "pipeline";
+    public static final class DeleteDuplicateProfiles {
 
+        public static final String PATH = "deleteDuplicateProfiles";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        static final String SQL = "delete from " + ProfileTable.TABLE_NAME
+                + " where rowid not in (select max(rowid) from " + ProfileTable.TABLE_NAME
+                + " group by " + ProfileTable.PROFILE_ID_COLUMN + ");";
+    }
 }

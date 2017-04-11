@@ -18,6 +18,7 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.DeleteDuplicateProfiles;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -317,6 +318,9 @@ public class PopulatePipelineService extends IntentService {
         Log.i(LOG_TAG, "saveProfiles: Saved profiles to the device: " + contentValuesArray.length);
 
         markProfileIdsAsDownloaded(profiles);
+
+        // Delete duplicate profiles just in case
+        getContentResolver().delete(DeleteDuplicateProfiles.CONTENT_URI, null, null);
     }
 
     private void markProfileIdsAsDownloaded(List<ProfileBean> profiles)
