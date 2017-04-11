@@ -2,6 +2,7 @@ package com.playposse.egoeater.backend.util;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+import com.playposse.egoeater.backend.schema.GeoTest;
 import com.playposse.egoeater.backend.schema.Rating;
 
 import javax.servlet.ServletContextEvent;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes
+    autoGenerate="true">
+    <datastore-index kind="EgoEaterUser" ancestor="false" source="manual">
+        <property name="gender" direction="asc"/>
+        <property name="longitude" direction="asc"/>
+    </datastore-index>
+    <datastore-index kind="EgoEaterUser" ancestor="false" source="manual">
+        <property name="__key__" direction="asc"/>
+        <property name="latitude" direction="asc"/>
+    </datastore-index>
+    <!--<datastore-index kind="GeoTest"  source="manual">-->
+        <!--<property name="geoPt" mode="geospatial"/>-->
+    <!--</datastore-index>-->
+</datastore-indexes>
