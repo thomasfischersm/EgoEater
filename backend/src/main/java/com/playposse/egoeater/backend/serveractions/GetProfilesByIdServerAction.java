@@ -47,6 +47,9 @@ public class GetProfilesByIdServerAction extends AbstractServerAction {
         for (EgoEaterUser profile : egoEaterUsers) {
             profileBeans.add(new ProfileBean(profile, egoEaterUser));
         }
+
+        log.info("Received request for " + profileIds.size()
+                + " profiles and returned " + profileBeans.size());
         return profileBeans;
     }
 }

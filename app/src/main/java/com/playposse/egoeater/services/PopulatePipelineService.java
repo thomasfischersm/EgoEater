@@ -18,6 +18,7 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.DatabaseDumper;
@@ -111,6 +112,8 @@ public class PopulatePipelineService extends IntentService {
 
             }
         } finally {
+            Log.i(LOG_TAG, "rebuildPipeline: Found old pipeline size: "
+                    + deleteOldPipelineOperations.size());
             oldPipelineCursor.close();
         }
 
@@ -131,11 +134,14 @@ public class PopulatePipelineService extends IntentService {
             while (cursor.moveToNext()) {
                 long profileId = cursor.getLong(0);
                 int winLossesSum = cursor.getInt(1);
-                if (profileIdsByRankStatus.containsKey(winLossesSum)) {
-                    profileIdsByRankStatus.get(winLossesSum).add(profileId);
+                if (!profileIdsByRankStatus.containsKey(winLossesSum)) {
+                    profileIdsByRankStatus.put(winLossesSum, new ArrayList<Long>());
                 }
+                profileIdsByRankStatus.get(winLossesSum).add(profileId);
             }
         } finally {
+            Log.i(LOG_TAG, "rebuildPipeline: Found ranked profiles: "
+                    + profileIdsByRankStatus.size());
             cursor.close();
         }
 
@@ -156,6 +162,7 @@ public class PopulatePipelineService extends IntentService {
                         contentValues.put(
                                 EgoEaterContract.PipelineTable.PROFILE_1_ID_COLUMN,
                                 otherProfileId);
+                        contentValuesList.add(contentValues);
                         break;
                     }
                 }
@@ -168,11 +175,14 @@ public class PopulatePipelineService extends IntentService {
         getContentResolver().bulkInsert(
                 EgoEaterContract.PipelineTable.CONTENT_URI,
                 contentValuesArray);
+        Log.i(LOG_TAG, "rebuildPipeline: Created new pairings: " + contentValuesArray.length);
 
         // Delete old pairings
         getContentResolver().applyBatch(
                 EgoEaterContract.AUTHORITY,
                 deleteOldPipelineOperations);
+        Log.i(LOG_TAG, "rebuildPipeline: Deleted old pipeline "
+                + deleteOldPipelineOperations.size());
 
         return contentValuesList.size();
     }
@@ -193,22 +203,25 @@ public class PopulatePipelineService extends IntentService {
         final int rowCount;
         try {
             rowCount = profileCursor.getCount();
+            Log.i(LOG_TAG, "loadProfilesIfNecessary: Found profiles that need to be ranked: "
+                    + rowCount);
         } finally {
             profileCursor.close();
         }
 
         // Find out if we need more profiles.
         if (rowCount > MIN_PROFILES_CACHED) {
+            Log.i(LOG_TAG, "loadProfilesIfNecessary: We found enough unranked profiles. Skip!");
             return;
         }
 
         // Find unloaded profile ids.
         Cursor profileIdCursor = getContentResolver().query(
-                EgoEaterContract.ProfileIdTable.CONTENT_URI,
-                new String[]{EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN},
-                EgoEaterContract.ProfileIdTable.IS_PROFILE_LOADED_COLUMN + " = ?",
-                new String[]{"true"},
-                EgoEaterContract.ProfileIdTable.ID_COLUMN + " asc");
+                ProfileIdTable.CONTENT_URI,
+                new String[]{ProfileIdTable.PROFILE_ID_COLUMN},
+                "not " + ProfileIdTable.IS_PROFILE_LOADED_COLUMN,
+                null,
+                ProfileIdTable.ID_COLUMN + " asc");
         if (profileIdCursor == null) {
             Log.e(LOG_TAG, "loadProfilesIfNecessary: Failed to query for unloaded profile ids");
             return;
@@ -220,6 +233,8 @@ public class PopulatePipelineService extends IntentService {
                 profileIds.add(profileIdCursor.getLong(0));
             }
         } finally {
+            Log.i(LOG_TAG, "loadProfilesIfNecessary: Trying to load more profiles: "
+                    + profileIds.size());
             profileIdCursor.close();
         }
 
@@ -229,7 +244,17 @@ public class PopulatePipelineService extends IntentService {
                 new ApiClientAction.Callback<List<ProfileBean>>() {
                     @Override
                     public void onResult(List<ProfileBean> profiles) {
-                        saveProfiles(profiles);
+                        if (profiles != null) {
+                            Log.i(LOG_TAG, "onResult: Received profiles from the cloud: "
+                                    + profiles.size());
+                        } else {
+                            Log.i(LOG_TAG, "onResult: Got null from GetProfilesByIdClientAction");
+                        }
+                        try {
+                            saveProfiles(profiles);
+                        } catch (RemoteException | OperationApplicationException ex) {
+                            Log.e(LOG_TAG, "onResult: Failed to save profiles", ex);
+                        }
 
                         // Load additional profile ids if needed.
                         if (rowCount + profileIds.size() > MIN_PROFILES_CACHED) {
@@ -244,7 +269,9 @@ public class PopulatePipelineService extends IntentService {
 
     }
 
-    private void saveProfiles(List<ProfileBean> profiles) {
+    private void saveProfiles(List<ProfileBean> profiles)
+            throws RemoteException, OperationApplicationException {
+
         List<ContentValues> contentValuesList = new ArrayList<>(profiles.size());
 
         for (ProfileBean profile : profiles) {
@@ -287,6 +314,30 @@ public class PopulatePipelineService extends IntentService {
         getContentResolver().bulkInsert(
                 EgoEaterContract.ProfileTable.CONTENT_URI,
                 contentValuesArray);
+        Log.i(LOG_TAG, "saveProfiles: Saved profiles to the device: " + contentValuesArray.length);
+
+        markProfileIdsAsDownloaded(profiles);
+    }
+
+    private void markProfileIdsAsDownloaded(List<ProfileBean> profiles)
+            throws RemoteException, OperationApplicationException {
+
+        ArrayList<ContentProviderOperation> updateOperations = new ArrayList<>();
+        for (ProfileBean profileBean : profiles) {
+            String profileId = Long.toString(profileBean.getUserId());
+            ContentProviderOperation updateOperation =
+                    ContentProviderOperation.newUpdate(ProfileIdTable.CONTENT_URI)
+                            .withValue(ProfileIdTable.IS_PROFILE_LOADED_COLUMN, true)
+                            .withSelection(
+                                    ProfileIdTable.PROFILE_ID_COLUMN + " = ?",
+                                    new String[]{profileId})
+                            .build();
+            updateOperations.add(updateOperation);
+        }
+
+        getContentResolver().applyBatch(EgoEaterContract.AUTHORITY, updateOperations);
+        Log.i(LOG_TAG, "markProfileIdsAsDownloaded: Marked profile ids as downloaded: "
+                + updateOperations.size());
     }
 
     private void loadProfileIds(final int minProfileIdCount, final Runnable runnable) {
@@ -310,8 +361,8 @@ public class PopulatePipelineService extends IntentService {
     private void saveProfileIds(List<Long> profileIds, int minProfileIdCount, Runnable runnable) {
         // Get existing profile ids.
         Cursor cursor = getContentResolver().query(
-                EgoEaterContract.ProfileIdTable.CONTENT_URI,
-                new String[]{EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN},
+                ProfileIdTable.CONTENT_URI,
+                new String[]{ProfileIdTable.PROFILE_ID_COLUMN},
                 null,
                 null,
                 null);
@@ -334,7 +385,7 @@ public class PopulatePipelineService extends IntentService {
         for (Long profileId : profileIds) {
             if (!existingProfileIds.contains(profileId)) {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN, profileId);
+                contentValues.put(ProfileIdTable.PROFILE_ID_COLUMN, profileId);
                 contentValuesList.add(contentValues);
             }
         }
@@ -342,7 +393,7 @@ public class PopulatePipelineService extends IntentService {
         ContentValues[] contentValuesArray =
                 contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
         getContentResolver().bulkInsert(
-                EgoEaterContract.ProfileIdTable.CONTENT_URI,
+                ProfileIdTable.CONTENT_URI,
                 contentValuesArray);
 
         // Check if more profile ids need to be loaded.
@@ -420,7 +471,7 @@ public class PopulatePipelineService extends IntentService {
         String p0Col = EgoEaterContract.RatingTable.WINNER_ID_COLUMN;
         String p1Col = EgoEaterContract.RatingTable.LOSER_ID_COLUMN;
         String where = String.format(
-                "((%1$s = ?) and (%2$s = ?) or ((%3$s = ?) and (%4$s = ?)",
+                "((%1$s = ?) and (%2$s = ?)) or ((%3$s = ?) and (%4$s = ?))",
                 p0Col,
                 p1Col,
                 p1Col,
@@ -436,6 +487,8 @@ public class PopulatePipelineService extends IntentService {
                 },
                 null);
         try {
+            Log.i(LOG_TAG, "isAlreadyCompared: Check pairing: " + profileId0 + " " + profileId1
+                    + " " + (cursor.getCount() > 0));
             return cursor.getCount() > 0;
         } finally {
             cursor.close();

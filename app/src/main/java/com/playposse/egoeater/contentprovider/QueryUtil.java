@@ -28,7 +28,7 @@ public final class QueryUtil {
         Cursor cursor = contentResolver.query(
                 PipelineTable.CONTENT_URI,
                 PipelineTable.COLUMN_NAMES,
-                PipelineTable.ARE_PHOTOS_CACHED_COLUMN + " = 1",
+                null, // PipelineTable.ARE_PHOTOS_CACHED_COLUMN + " = 1",
                 null,
                 PipelineTable.ID_COLUMN + " asc");
 
