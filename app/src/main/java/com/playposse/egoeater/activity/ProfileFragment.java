@@ -231,10 +231,12 @@ public class ProfileFragment extends Fragment {
             return "";
         }
 
+        String distance = getString(R.string.distance_snippet, (int) profile.getDistance());
+
         if (profile.getCountry().equals(USA_COUNTRY)) {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getState();
+            return profile.getCity() + LOCATION_SEPARATOR + profile.getState() + distance;
         } else {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry();
+            return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry() + distance;
         }
     }
 
