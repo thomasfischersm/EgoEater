@@ -175,16 +175,23 @@ public class ProfileFragment extends Fragment {
                 return;
         }
 
-        if (photoUrl != null) {
-            imageView.setVisibility(View.VISIBLE);
-            Glide.with(this)
-                    .load(photoUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontTransform()
-                    .into(imageView);
-        } else {
-            imageView.setVisibility(View.GONE);
-        }
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (photoUrl != null) {
+                    imageView.setVisibility(View.VISIBLE);
+                    Glide.with(getContext())
+                            .load(photoUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .dontTransform()
+                            .into(imageView);
+                } else
+
+                {
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override

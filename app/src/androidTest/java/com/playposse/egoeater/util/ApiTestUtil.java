@@ -47,6 +47,11 @@ public class ApiTestUtil {
             new FakeUser("127642391104452", "Cindy Doe", "cindy_lvffjkc_doe@tfbnw.net", "2110 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.cindy_profile, "female", "01/01/1997"),
             new FakeUser("105165483368049", "James Doe", "pszrjrlwux_1491601134@tfbnw.net", "2100 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.james_profile, "male", "01/01/1998"),
             new FakeUser("108501693032719", "Henry Doe", "nafvgfkhrl_1491602576@tfbnw.net", "2230 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.henry_profile, "male", "01/01/1996"),
+            new FakeUser("103096803579916", "Asher Doe", "lxbwimnocj_1491955670@tfbnw.net", "2240 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.asher_profile, "male", "01/01/1995"),
+            new FakeUser("106239366596830", "Oliver Doe", "henlizaqva_1491955672@tfbnw.net", "2250 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.oliver_profile, "male", "01/01/1994"),
+            new FakeUser("106663763220741", "Atticus Doe", "keparaflgy_1491955422@tfbnw.net", "2260 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.atticus_profile, "male", "01/01/1993"),
+            new FakeUser("109263179626868", "Milo Doe", "hcbxeolefx_1491957637@tfbnw.net", "2270 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.milo_profile, "male", "01/01/1992"),
+            new FakeUser("105536490001009", "Jack Doe", "xoiksdeada_1491957640@tfbnw.net", "2280 4th Street, Santa Monica, CA 90404", com.playposse.egoeater.test.R.raw.jack_profile, "male", "01/01/1991"),
     };
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -123,7 +128,8 @@ public class ApiTestUtil {
                 TestUser fbTestUser = createFbTestUser(fakeUser.getName());
                 fakeUser.setTestUser(fbTestUser);
                 Log.i(LOG_TAG, "createMissingFbTestUsers: Created FB test user id: "
-                        + fbTestUser.getId() + " email: " + fbTestUser.getEmail());
+                        + fakeUser.getName() + " " + fbTestUser.getId()
+                        + " email: " + fbTestUser.getEmail());
             }
         }
     }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.Rating;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.playposse.egoeater.clientactions.ReportRankingClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
@@ -19,6 +20,8 @@ import com.playposse.egoeater.util.SmartCursor;
  * A collection of methods to query {@link EgoEaterContentProvider} for information.
  */
 public final class QueryUtil {
+
+    private static final String LOG_TAG = QueryUtil.class.getSimpleName();
 
     private QueryUtil() {
     }
@@ -90,9 +93,13 @@ public final class QueryUtil {
                 winnerContentValues,
                 ProfileTable.PROFILE_ID_COLUMN + " = ?",
                 new String[]{Long.toString(winnerId)});
+        Log.i(LOG_TAG, "saveRating: Updated winner: " + winner.getName() + " before "
+                + winner.getWins() + " " + winner.getLosses() + " " + winner.getWinsLossesSum()
+                + " after " + winnerContentValues.get(ProfileTable.WINS_COLUMN)
+                + " " + winnerContentValues.get(ProfileTable.WINS_LOSSES_SUM_COLUMN));
 
         // Update the loser profile.
-        ProfileParcelable loser = getProfileByProfileId(contentResolver, winnerId);
+        ProfileParcelable loser = getProfileByProfileId(contentResolver, loserId);
         ContentValues loserContentValues = new ContentValues();
         loserContentValues.put(ProfileTable.LOSSES_COLUMN, loser.getLosses() + 1);
         loserContentValues.put(ProfileTable.WINS_LOSSES_SUM_COLUMN, loser.getWinsLossesSum() - 1);
@@ -101,6 +108,10 @@ public final class QueryUtil {
                 loserContentValues,
                 ProfileTable.PROFILE_ID_COLUMN + " = ?",
                 new String[]{Long.toString(loserId)});
+        Log.i(LOG_TAG, "saveRating: Updated loser: " + loser.getName() + " before "
+                + loser.getWins() + " " + loser.getLosses() + " " + loser.getWinsLossesSum()
+                + " after " + loserContentValues.get(ProfileTable.LOSSES_COLUMN)
+                + " " + loserContentValues.get(ProfileTable.WINS_LOSSES_SUM_COLUMN));
 
         // Report the result to the cloud.
         new ReportRankingClientAction(context, winnerId, loserId).execute();
