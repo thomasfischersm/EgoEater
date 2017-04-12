@@ -77,8 +77,8 @@ public class DataMunchUtil {
      */
     public static double getDistance(
             double lat1,
-            double lat2,
             double lon1,
+            double lat2,
             double lon2) {
 
         final int R = 6371; // Radius of the earth
