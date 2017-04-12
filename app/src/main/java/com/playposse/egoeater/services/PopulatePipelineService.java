@@ -25,6 +25,7 @@ import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.DatabaseDumper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -148,8 +149,11 @@ public class PopulatePipelineService extends IntentService {
 
         // Create pairings
         List<ContentValues> contentValuesList = new ArrayList<>();
-        for (Map.Entry<Integer, List<Long>> entry : profileIdsByRankStatus.entrySet()) {
-            List<Long> profileIds = entry.getValue();
+        ArrayList<Integer> rankStatusList = new ArrayList<>(profileIdsByRankStatus.keySet());
+        Collections.sort(rankStatusList);
+        Collections.reverse(rankStatusList); // TODO: Do this in one step.
+        for (int rankStatus : rankStatusList) {
+            List<Long> profileIds = profileIdsByRankStatus.get(rankStatus);
             while (profileIds.size() > 1) {
                 Long profileId = profileIds.remove(0);
                 for (int i = 0; i < profileIds.size(); i++) {
