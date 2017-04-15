@@ -13,6 +13,15 @@
         <url-pattern>/_ah/spi/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GenerateMatchesServlet</servlet-name>
+        <servlet-class>com.playposse.egoeater.backend.generatematches.GenerateMatchesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GenerateMatchesServlet</servlet-name>
+        <url-pattern>/cron/generate-matches</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
@@ -29,4 +38,14 @@
     <listener>
         <listener-class>com.playposse.egoeater.backend.util.ObjectifyRegistrationServletContextListener</listener-class>
     </listener>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>cron</web-resource-name>
+            <url-pattern>/cron/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
 </web-app>

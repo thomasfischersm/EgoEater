@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+    <cron>
+        <url>/cron/generate-matches</url>
+        <description>Generates matches once a day.</description>
+        <schedule>every day 10:00</schedule>
+        <timezone>America/Los_Angeles</timezone>
+        <retry-parameters>
+            <job-retry-limit>2</job-retry-limit>
+        </retry-parameters>
+    </cron>
+</cronentries>
