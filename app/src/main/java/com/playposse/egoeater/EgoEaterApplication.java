@@ -13,11 +13,11 @@ public class EgoEaterApplication extends Application {
 
     private Tracker tracker;
 
-//    @Override
-//    public void onCreate() {
-//        super.onCreate();
-//        getApplicationContext().deleteDatabase("egoEaterDb");
-//    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        getApplicationContext().deleteDatabase("egoEaterDb");
+    }
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.

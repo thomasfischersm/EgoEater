@@ -12,4 +12,8 @@
     <!--<datastore-index kind="GeoTest"  source="manual">-->
         <!--<property name="geoPt" mode="geospatial"/>-->
     <!--</datastore-index>-->
+    <datastore-index kind="Ranking" ancestor="false" source="manual">
+        <property name="profileId" direction="asc"/>
+        <property name="winsLossesSum" direction="desc"/>
+    </datastore-index>
 </datastore-indexes>

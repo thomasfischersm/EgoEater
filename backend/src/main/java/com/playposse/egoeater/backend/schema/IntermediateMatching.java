@@ -7,39 +7,38 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 /**
- * An objectify entity to store the ranking between users.
+ * An Objectify entity that stores intermediate information for matching.
  */
 @Entity
 @Cache
-public class Ranking {
+public class IntermediateMatching {
 
     @Id
     private Long id;
-    @Index
     private Ref<EgoEaterUser> profileId;
-    @Index
     private Ref<EgoEaterUser> ratedProfileId;
-    private int wins = 0;
-    private int losses = 0;
     @Index
-    private int winsLossesSum = 0;
+    private Integer rank;
+    private Integer rankBack;
+    @Index
+    private Double matchScore;
 
-    public Ranking() {
-    }
+    public IntermediateMatching(
+            Ref<EgoEaterUser> profileId,
+            Ref<EgoEaterUser> ratedProfileId,
+            Integer rank) {
 
-    public Ranking(Ref<EgoEaterUser> profileId, Ref<EgoEaterUser> ratedProfileId) {
         this.profileId = profileId;
         this.ratedProfileId = ratedProfileId;
+        this.rank = rank;
     }
 
-    public void registerWin() {
-        wins++;
-        winsLossesSum++;
+    public void setRankBack(Integer rankBack) {
+        this.rankBack = rankBack;
     }
 
-    public void registerLoss() {
-        losses++;
-        winsLossesSum--;
+    public void setMatchScore(Double matchScore) {
+        this.matchScore = matchScore;
     }
 
     public Long getId() {
@@ -54,15 +53,15 @@ public class Ranking {
         return ratedProfileId;
     }
 
-    public int getWins() {
-        return wins;
+    public Integer getRank() {
+        return rank;
     }
 
-    public int getLosses() {
-        return losses;
+    public Integer getRankBack() {
+        return rankBack;
     }
 
-    public int getWinsLossesSum() {
-        return winsLossesSum;
+    public Double getMatchScore() {
+        return matchScore;
     }
 }

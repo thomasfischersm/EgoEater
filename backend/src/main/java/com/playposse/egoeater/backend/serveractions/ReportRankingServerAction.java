@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+import static com.playposse.egoeater.backend.util.RefUtil.createUserRef;
 
 /**
  * A server action that reports a ranking.
@@ -47,7 +48,7 @@ public class ReportRankingServerAction extends AbstractServerAction {
                 .list();
 
         if (rankings.size() == 0) {
-            return new Ranking(profileId, rateProfileId);
+            return new Ranking(createUserRef(profileId), createUserRef(rateProfileId));
         } else if (rankings.size() == 1) {
             return rankings.get(0);
         } else {
