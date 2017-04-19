@@ -3,6 +3,7 @@ package com.playposse.egoeater.backend.generatematches;
 import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.cmd.QueryKeys;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
 import com.playposse.egoeater.backend.schema.IntermediateUser;
@@ -175,14 +176,14 @@ public class GenerateMatchesServlet extends HttpServlet {
     }
 
     private static void cleanOldMatches() {
-        QueryResultIterable<Match> iterable = ofy().load()
+        QueryKeys<Match> keys = ofy().load()
                 .type(Match.class)
                 .filter("isLocked =", true)
-                .iterable();
+                .keys();
 
         ofy().delete()
                 .type(Match.class)
-                .ids(iterable)
+                .ids(keys)
                 .now();
     }
 

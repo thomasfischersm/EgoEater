@@ -23,6 +23,7 @@ import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateLocationServerAction;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.WipeTestDataServerAction;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -133,5 +134,11 @@ public class EgoEaterEndPoint {
             @Named("loserId") long loserId) throws BadRequestException {
 
         ReportRankingServerAction.reportRanking(sessionId, winnerId, loserId);
+    }
+
+    @ApiMethod(name = "wipeTestData")
+    public void wipeTestData(@Named("secret") long secret) throws BadRequestException {
+
+        WipeTestDataServerAction.wipeTestData(secret);
     }
 }
