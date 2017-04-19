@@ -2,6 +2,7 @@ package com.playposse.egoeater.backend.generatematches;
 
 import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.QueryKeys;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
@@ -76,15 +77,33 @@ public class GenerateMatchesServlet extends HttpServlet {
     }
 
     private static void cleanIntermediate() {
-        QueryResultIterable<IntermediateMatching> idIterable =
-                ofy().load()
-                        .type(IntermediateMatching.class)
-                        .iterable();
+        cleanIntermediateMatches();
+        cleanIntermediateUsers();
+        ofy().flush();
+    }
+
+    private static void cleanIntermediateMatches() {
+        QueryResultIterable<Key<IntermediateMatching>> iterable = ofy().load()
+                .type(IntermediateMatching.class)
+                .keys()
+                .iterable();
 
         ofy().delete()
                 .type(IntermediateMatching.class)
-                .ids(idIterable)
-                .now();
+                .ids(iterable);
+        log.info("Done cleaning intermediate matching tables.");
+    }
+
+    private static void cleanIntermediateUsers() {
+        QueryResultIterable<Key<IntermediateUser>> iterable = ofy().load()
+                .type(IntermediateUser.class)
+                .keys()
+                .iterable();
+
+        ofy().delete()
+                .type(IntermediateUser.class)
+                .ids(iterable);
+        log.info("Done cleaning intermediate user tables.");
     }
 
     /**
@@ -136,7 +155,7 @@ public class GenerateMatchesServlet extends HttpServlet {
 
     /**
      * Goes through the intermediate entities again to add the rankBack and sum.
-     *
+     * <p>
      * <p>The match score formula is: Formula: max + (min / (max + 1))
      */
     private static void populateIntermediateSecondPass() {
@@ -191,14 +210,12 @@ public class GenerateMatchesServlet extends HttpServlet {
      * Reads the information from the intermediate table to create the matching.
      */
     private static void createMatches() {
-        QueryResultIterator<IntermediateMatching> iterator = ofy().load()
+        QueryResultIterable<IntermediateMatching> iterable = ofy().load()
                 .type(IntermediateMatching.class)
                 .order("matchScore")
-                .iterator();
+                .iterable();
 
-        while (iterator.hasNext()) {
-            IntermediateMatching intermediateMatching = iterator.next();
-
+        for (IntermediateMatching intermediateMatching : iterable) {
             Ref<EgoEaterUser> userARef = intermediateMatching.getProfileId();
             long userALongId = userARef.getKey().getId();
             IntermediateUser userA = ofy().load()
