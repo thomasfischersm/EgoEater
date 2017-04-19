@@ -23,6 +23,9 @@ public class IntermediateMatching {
     @Index
     private Double matchScore;
 
+    public IntermediateMatching() {
+    }
+
     public IntermediateMatching(
             Ref<EgoEaterUser> profileId,
             Ref<EgoEaterUser> ratedProfileId,

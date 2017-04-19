@@ -165,6 +165,7 @@ public class ApiTestUtil {
                 .execute();
 
         fakeUser.setSessionId(userBean.getSessionId());
+        fakeUser.setProfileId(userBean.getUserId());
         return userBean;
     }
 

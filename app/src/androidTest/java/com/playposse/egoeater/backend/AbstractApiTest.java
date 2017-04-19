@@ -36,12 +36,16 @@ public class AbstractApiTest {
 
     protected FakeUser getFakeUser() throws IOException {
         if (fakeUser == null) {
-            FakeUser fakeUser = ApiTestUtil.fakeUsers[0];
+            FakeUser fakeUser = ApiTestUtil.fakeUsers[getFakeUserIndex()];
             readFbAccessTokens(fakeUser);
             signIn(fakeUser, "5678");
             this.fakeUser = fakeUser;
         }
         return fakeUser;
+    }
+
+    protected int getFakeUserIndex() {
+        return 0;
     }
 
     private static FacebookClient createFacebookClient() {

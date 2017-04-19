@@ -23,6 +23,9 @@ public class IntermediateUser {
     @Stringify(LongStringifier.class)
     private Map<Long, Integer> profileIdToRankMap = new HashMap<>();
 
+    public IntermediateUser() {
+    }
+
     public IntermediateUser(
             Ref<EgoEaterUser> profileId,
             int matchesCount,

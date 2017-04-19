@@ -1,5 +1,6 @@
 package com.playposse.egoeater.util;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.restfb.types.TestUser;
@@ -20,6 +21,8 @@ public class FakeUser {
     private String dob;
     private String fbAccessToken;
     private Long sessionId;
+    @Nullable
+    private Long profileId;
 
     public FakeUser(
             String fBUserId,
@@ -89,5 +92,14 @@ public class FakeUser {
 
     public void setSessionId(Long sessionId) {
         this.sessionId = sessionId;
+    }
+
+    @Nullable
+    public Long getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(@Nullable Long profileId) {
+        this.profileId = profileId;
     }
 }
