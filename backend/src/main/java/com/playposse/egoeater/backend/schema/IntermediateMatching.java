@@ -5,6 +5,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfNotNull;
 
 /**
  * An Objectify entity that stores intermediate information for matching.
@@ -16,11 +17,12 @@ public class IntermediateMatching {
     @Id
     private Long id;
     private Ref<EgoEaterUser> profileId;
+    @Index
     private Ref<EgoEaterUser> ratedProfileId;
     @Index
     private Integer rank;
     private Integer rankBack;
-    @Index
+    @Index(IfNotNull.class)
     private Double matchScore;
 
     public IntermediateMatching() {

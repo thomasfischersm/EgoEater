@@ -89,8 +89,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                 .iterable();
 
         ofy().delete()
-                .type(IntermediateMatching.class)
-                .ids(iterable);
+                .keys(iterable);
         log.info("Done cleaning intermediate matching tables.");
     }
 
@@ -101,8 +100,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                 .iterable();
 
         ofy().delete()
-                .type(IntermediateUser.class)
-                .ids(iterable);
+                .keys(iterable);
         log.info("Done cleaning intermediate user tables.");
     }
 
@@ -136,10 +134,11 @@ public class GenerateMatchesServlet extends HttpServlet {
                 profileId = ranking.getProfileId();
                 rank = START_RANK;
                 profileIdToRankMap = new HashMap<>();
-                profileIdToRankMap.put(ratedProfileId.getKey().getId(), rank);
             } else {
                 rank++;
             }
+
+            profileIdToRankMap.put(ratedProfileId.getKey().getId(), rank);
 
             // TODO: Check for fuck off to avoid creating these entries.
             // TODO: Check if a user is already at the max fixed matches and avoid creating entries.
@@ -148,6 +147,12 @@ public class GenerateMatchesServlet extends HttpServlet {
             IntermediateMatching intermediateMatching =
                     new IntermediateMatching(profileId, ratedProfileId, rank);
             ofy().save().entity(intermediateMatching);
+        }
+
+        if (profileId != null) {
+            IntermediateUser intermediateUser =
+                    new IntermediateUser(profileId, 0, profileIdToRankMap);
+            ofy().save().entity(intermediateUser);
         }
 
         ofy().flush();
@@ -159,20 +164,23 @@ public class GenerateMatchesServlet extends HttpServlet {
      * <p>The match score formula is: Formula: max + (min / (max + 1))
      */
     private static void populateIntermediateSecondPass() {
-        QueryResultIterator<IntermediateMatching> iterator =
+        QueryResultIterable<IntermediateMatching> iterable =
                 ofy().load()
                         .type(IntermediateMatching.class)
                         .order("ratedProfileId")
-                        .iterator();
+                        .iterable();
 
         Ref<EgoEaterUser> ratedProfileId = null;
         IntermediateUser intermediateRatedUser = null;
-        while (iterator.hasNext()) {
-            IntermediateMatching intermediateMatching = iterator.next();
+        log.info("Second pass is a go: " + iterable.iterator().hasNext());
+        for (IntermediateMatching intermediateMatching : iterable) {
             long profileIdLong = intermediateMatching.getProfileId().getKey().getId();
+            log.info("2nd pass: id: " + intermediateMatching.getId()
+                    + " profile id " + profileIdLong);
 
             // When the next user starts, load that user's information.
-            if (!intermediateMatching.getProfileId().equals(ratedProfileId)) {
+            if (!intermediateMatching.getRatedProfileId().equals(ratedProfileId)) {
+                log.info("- Looking up rated profile: " + intermediateMatching.getRatedProfileId());
                 ratedProfileId = intermediateMatching.getRatedProfileId();
                 long ratedProfileIdLong = ratedProfileId.getKey().getId();
                 intermediateRatedUser =
@@ -180,9 +188,19 @@ public class GenerateMatchesServlet extends HttpServlet {
                                 .type(IntermediateUser.class)
                                 .id(ratedProfileIdLong)
                                 .now();
+                if (intermediateRatedUser == null) {
+                    // The rated user hasn't ranked anybody yet.
+                    log.info("Profile " + ratedProfileId + " hasn't ranked anybody yet.");
+                    continue;
+                }
             }
 
             Integer rankBack = intermediateRatedUser.getProfileIdToRankMap().get(profileIdLong);
+            if (rankBack == null) {
+                // The rated user hasn't ranked this user back yet.
+                log.info("Profile " + ratedProfileId + " hasn't ranked this user yet.");
+                continue;
+            }
             intermediateMatching.setRankBack(rankBack);
 
             int max = Math.max(intermediateMatching.getRank(), intermediateMatching.getRankBack());
@@ -222,7 +240,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                     .type(IntermediateUser.class)
                     .id(userALongId)
                     .now();
-            if (userA.getMatchesCount() >= MAX_MATCHES_COUNT) {
+            if ((userA == null) || (userA.getMatchesCount() >= MAX_MATCHES_COUNT)) {
                 continue;
             }
 
@@ -232,7 +250,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                     .type(IntermediateUser.class)
                     .id(userBLongId)
                     .now();
-            if (userB.getMatchesCount() >= MAX_MATCHES_COUNT) {
+            if ((userB == null) || (userB.getMatchesCount() >= MAX_MATCHES_COUNT)) {
                 continue;
             }
 

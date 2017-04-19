@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
  * A JUnit test that generates data for a male test user.
  */
 @RunWith(AndroidJUnit4.class)
-public class GenerateMatchesServletTest_GenerateMaleData extends AbstractApiTest {
+public class GenerateMatchesServletTest extends AbstractApiTest {
 
     @Override
     protected int getFakeUserIndex() {
@@ -30,7 +30,7 @@ public class GenerateMatchesServletTest_GenerateMaleData extends AbstractApiTest
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Test
-    public void generateMaleData() throws InterruptedException, ExecutionException, IOException {
+    public void generateData() throws InterruptedException, ExecutionException, IOException {
         // Init fake users.
         Context context = InstrumentationRegistry.getContext();
         ApiTestUtil.initFakeUsers(context);
