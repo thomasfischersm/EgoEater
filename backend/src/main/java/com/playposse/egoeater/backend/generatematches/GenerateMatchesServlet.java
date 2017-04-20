@@ -218,14 +218,15 @@ public class GenerateMatchesServlet extends HttpServlet {
     }
 
     private static void cleanOldMatches() {
-        QueryKeys<Match> keys = ofy().load()
+        QueryResultIterable<Key<Match>> iterable = ofy().load()
                 .type(Match.class)
-                .filter("isLocked =", true)
-                .keys();
+                .filter("isLocked =", false)
+                .keys()
+                .iterable();
 
         ofy().delete()
                 .type(Match.class)
-                .ids(keys)
+                .ids(iterable)
                 .now();
     }
 
