@@ -143,6 +143,11 @@ public class GenerateMatchesServlet extends HttpServlet {
             // TODO: Check for fuck off to avoid creating these entries.
             // TODO: Check if a user is already at the max fixed matches and avoid creating entries.
 
+            // Skip saving for half the records because matches go both ways.
+            if (profileId.getKey().getId() > ratedProfileId.getKey().getId()) {
+                continue;
+            }
+
             // Create intermediateMatching entry.
             IntermediateMatching intermediateMatching =
                     new IntermediateMatching(profileId, ratedProfileId, rank);
@@ -255,9 +260,12 @@ public class GenerateMatchesServlet extends HttpServlet {
             }
 
             // Create match.
-            Match match = new Match(userARef, userBRef);
             ofy().save()
-                    .entity(match);
+                    .entity(new Match(userARef, userBRef));
+
+            // Create match in the other direction.
+            ofy().save()
+                    .entity(new Match(userBRef, userARef));
 
             // Update match counts.
             userA.setMatchesCount(userA.getMatchesCount() + 1);
