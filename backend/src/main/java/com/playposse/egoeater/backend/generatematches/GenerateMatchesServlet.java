@@ -225,8 +225,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                 .iterable();
 
         ofy().delete()
-                .type(Match.class)
-                .ids(iterable)
+                .keys(iterable)
                 .now();
     }
 
