@@ -11,6 +11,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.RatingTable;
+
 /**
  * A {@link ContentProvider} to cache data locally in the app.
  */
@@ -23,15 +29,17 @@ public class EgoEaterContentProvider extends ContentProvider {
     private static final int RATING_TABLE_KEY = 3;
     private static final int PIPELINE_TABLE_KEY = 4;
     private static final int DELETE_DUPLICATE_PROFILES_KEY = 5;
+    private static final int PIPELINE_LOG_TABLE_KEY = 6;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.ProfileIdTable.PATH, PROFILE_ID_TABLE_KEY);
-        uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.ProfileTable.PATH, PROFILE_TABLE_KEY);
-        uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.RatingTable.PATH, RATING_TABLE_KEY);
-        uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.PipelineTable.PATH, PIPELINE_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, ProfileIdTable.PATH, PROFILE_ID_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, ProfileTable.PATH, PROFILE_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, RatingTable.PATH, RATING_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, PipelineTable.PATH, PIPELINE_TABLE_KEY);
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.DeleteDuplicateProfiles.PATH, DELETE_DUPLICATE_PROFILES_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, PipelineLogTable.PATH, PIPELINE_LOG_TABLE_KEY);
     }
 
     private MainDatabaseHelper mainDatabaseHelper;
@@ -57,7 +65,7 @@ public class EgoEaterContentProvider extends ContentProvider {
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
                 return database.query(
-                        EgoEaterContract.ProfileIdTable.TABLE_NAME,
+                        ProfileIdTable.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -66,7 +74,7 @@ public class EgoEaterContentProvider extends ContentProvider {
                         sortOrder);
             case PROFILE_TABLE_KEY:
                 return database.query(
-                        EgoEaterContract.ProfileTable.TABLE_NAME,
+                        ProfileTable.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -75,7 +83,7 @@ public class EgoEaterContentProvider extends ContentProvider {
                         sortOrder);
             case RATING_TABLE_KEY:
                 return database.query(
-                        EgoEaterContract.RatingTable.TABLE_NAME,
+                        RatingTable.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -84,7 +92,7 @@ public class EgoEaterContentProvider extends ContentProvider {
                         sortOrder);
             case PIPELINE_TABLE_KEY:
                 return database.query(
-                        EgoEaterContract.PipelineTable.TABLE_NAME,
+                        PipelineTable.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -108,18 +116,21 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
-                long id = database.insert(EgoEaterContract.ProfileIdTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(EgoEaterContract.ProfileIdTable.CONTENT_URI, id);
+                long id = database.insert(ProfileIdTable.TABLE_NAME, null, values);
+                return ContentUris.withAppendedId(ProfileIdTable.CONTENT_URI, id);
             case PROFILE_TABLE_KEY:
-                long profileId = database.insert(EgoEaterContract.ProfileTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(EgoEaterContract.ProfileTable.CONTENT_URI, profileId);
+                long profileId = database.insert(ProfileTable.TABLE_NAME, null, values);
+                return ContentUris.withAppendedId(ProfileTable.CONTENT_URI, profileId);
             case RATING_TABLE_KEY:
-                long ratingId = database.insert(EgoEaterContract.RatingTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(EgoEaterContract.RatingTable.CONTENT_URI, ratingId);
+                long ratingId = database.insert(RatingTable.TABLE_NAME, null, values);
+                return ContentUris.withAppendedId(RatingTable.CONTENT_URI, ratingId);
             case PIPELINE_TABLE_KEY:
-                long pipelineId = database.insert(EgoEaterContract.PipelineTable.TABLE_NAME, null, values);
-                getContext().getContentResolver().notifyChange(EgoEaterContract.PipelineTable.CONTENT_URI, null);
-                return ContentUris.withAppendedId(EgoEaterContract.PipelineTable.CONTENT_URI, pipelineId);
+                long pipelineId = database.insert(PipelineTable.TABLE_NAME, null, values);
+                getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
+                return ContentUris.withAppendedId(PipelineTable.CONTENT_URI, pipelineId);
+            case PIPELINE_LOG_TABLE_KEY:
+                long pipelineLogId = database.insert(PipelineLogTable.TABLE_NAME, null, values);
+                return ContentUris.withAppendedId(PipelineLogTable.CONTENT_URI, pipelineLogId);
         }
 
         return null;
@@ -135,13 +146,13 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
-                return database.delete(EgoEaterContract.ProfileIdTable.TABLE_NAME, selection, selectionArgs);
+                return database.delete(ProfileIdTable.TABLE_NAME, selection, selectionArgs);
             case PROFILE_TABLE_KEY:
-                return database.delete(EgoEaterContract.ProfileTable.TABLE_NAME, selection, selectionArgs);
+                return database.delete(ProfileTable.TABLE_NAME, selection, selectionArgs);
             case RATING_TABLE_KEY:
-                return database.delete(EgoEaterContract.RatingTable.TABLE_NAME, selection, selectionArgs);
+                return database.delete(RatingTable.TABLE_NAME, selection, selectionArgs);
             case PIPELINE_TABLE_KEY:
-                return database.delete(EgoEaterContract.PipelineTable.TABLE_NAME, selection, selectionArgs);
+                return database.delete(PipelineTable.TABLE_NAME, selection, selectionArgs);
             case DELETE_DUPLICATE_PROFILES_KEY:
                 Log.i(LOG_TAG, "delete: Deleting duplicate profiles");
                 database.execSQL(EgoEaterContract.DeleteDuplicateProfiles.SQL);
@@ -162,13 +173,13 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
-                return database.update(EgoEaterContract.ProfileIdTable.TABLE_NAME, values, selection, selectionArgs);
+                return database.update(ProfileIdTable.TABLE_NAME, values, selection, selectionArgs);
             case PROFILE_TABLE_KEY:
-                return database.update(EgoEaterContract.ProfileTable.TABLE_NAME, values, selection, selectionArgs);
+                return database.update(ProfileTable.TABLE_NAME, values, selection, selectionArgs);
             case RATING_TABLE_KEY:
-                return database.update(EgoEaterContract.RatingTable.TABLE_NAME, values, selection, selectionArgs);
+                return database.update(RatingTable.TABLE_NAME, values, selection, selectionArgs);
             case PIPELINE_TABLE_KEY:
-                return database.update(EgoEaterContract.PipelineTable.TABLE_NAME, values, selection, selectionArgs);
+                return database.update(PipelineTable.TABLE_NAME, values, selection, selectionArgs);
         }
         return 0;
     }

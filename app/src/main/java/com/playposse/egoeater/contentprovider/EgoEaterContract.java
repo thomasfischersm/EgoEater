@@ -171,6 +171,35 @@ public class EgoEaterContract {
                         + "ARE_PHOTOS_CACHED BOOLEAN DEFAULT FALSE)";
     }
 
+    public static final class PipelineLogTable implements BaseColumns {
+
+        public static final String PATH = "pipelineLog";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String TABLE_NAME = "PIPELINE_LOG";
+        public static final String ID_COLUMN = "_id";
+        public static final String CREATED_COLUMN = "created";
+        public static final String DURATION_MS_COLUMN = "duration_ms";
+        public static final String TRIGGER_REASON_COLUMN = "trigger_reason";
+
+        public static final int NO_MORE_PAIRING_ACTIVITY_TRIGGER = 1;
+        public static final int RATING_ACTIVITY_TRIGGER = 2;
+        public static final int SIGN_IN_TRIGGER = 3;
+        public static final int LOCATION_UPDATE_TRIGGER = 4;
+
+        public static final String[] COLUMN_NAMES = new String[]{
+                ID_COLUMN,
+                CREATED_COLUMN,
+                DURATION_MS_COLUMN,
+                TRIGGER_REASON_COLUMN};
+
+        static final String SQL_CREATE_TABLE =
+                "CREATE TABLE PIPELINE_LOG "
+                + "(_ID INTEGER PRIMARY KEY, "
+                + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                + "DURATION_MS INTEGER, "
+                + "TRIGGER_REASON INTEGER)";
+    }
+
     public static final class DeleteDuplicateProfiles {
 
         public static final String PATH = "deleteDuplicateProfiles";

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
@@ -24,6 +25,8 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
 
     private static final String LOG_TAG = NoMorePairingsActivity.class.getSimpleName();
 
+    private ContentObserver contentObserver;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_no_more_pairings;
@@ -32,25 +35,43 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         // Let's kick the service to build the pipeline. Maybe, another pairing can be found.
-        startService(new Intent(this, PopulatePipelineService.class));
+        PopulatePipelineService.startService(
+                this,
+                PipelineLogTable.NO_MORE_PAIRING_ACTIVITY_TRIGGER);
 
-        getContentResolver().registerContentObserver(
-                PipelineTable.CONTENT_URI,
-                true,
-                new ContentObserver(new Handler()) {
+        contentObserver = new ContentObserver(new Handler()) {
             @Override
             public void onChange(boolean selfChange) {
                 checkIfPipelineIsRefreshed();
             }
-        });
+        };
+        getContentResolver().registerContentObserver(
+                PipelineTable.CONTENT_URI,
+                true,
+                contentObserver);
 
         DatabaseDumper.dumpTables(new MainDatabaseHelper(this));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (contentObserver != null) {
+            getContentResolver().unregisterContentObserver(contentObserver);
+            contentObserver = null;
+        }
+    }
+
     private void checkIfPipelineIsRefreshed() {
-        if (QueryUtil.getNextPairing(getContentResolver()) != null) {
+        if (QueryUtil.getNextPairing(this, false) != null) {
             // The pipeline has a new pairing. Send the user back to the RatingActivity.
             startActivity(new Intent(this, RatingActivity.class));
         }

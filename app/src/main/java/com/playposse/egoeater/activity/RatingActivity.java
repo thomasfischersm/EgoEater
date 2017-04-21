@@ -89,7 +89,7 @@ public class RatingActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            pairing = QueryUtil.getNextPairing(getContentResolver());
+            pairing = QueryUtil.getNextPairing(getApplicationContext(), true);
 
             if (pairing == null) {
                 // No more pairings. Re-direct to a page to inform the user.

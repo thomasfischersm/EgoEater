@@ -19,6 +19,8 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SignInClientAction;
+import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 
 import java.io.ByteArrayOutputStream;
@@ -102,7 +104,7 @@ public class LoginActivity extends ParentActivity {
                 + data.getSessionId());
 
         // Kick off building the pipeline.
-        startService(new Intent(this, PopulatePipelineService.class));
+        PopulatePipelineService.startService(this, PipelineLogTable.SIGN_IN_TRIGGER);
 
         dismissLoadingProgress();
         GlobalRouting.onLoginComplete(this);

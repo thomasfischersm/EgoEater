@@ -3,6 +3,7 @@ package com.playposse.egoeater.services;
 import android.app.IntentService;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
@@ -19,6 +20,7 @@ import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.DeleteDuplicateProfiles;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -40,6 +42,11 @@ public class PopulatePipelineService extends IntentService {
     private static final String LOG_TAG = PopulatePipelineService.class.getSimpleName();
 
     private static final String SERVICE_NAME = "PopulatePipelineService";
+
+    /**
+     * When the pipeline rebuilt is triggered, the reason is logged to analyze unnecessary rebuilds.
+     */
+    private static final String TRIGGER_REASON_INTENT_PARAMETER = "triggerReason";
 
     /**
      * The minimum number of pipelines that have to be in the pipeline.
@@ -67,12 +74,20 @@ public class PopulatePipelineService extends IntentService {
         super(SERVICE_NAME);
     }
 
+    public static void startService(Context context, int triggerReason) {
+        Intent intent = new Intent(context, PopulatePipelineService.class);
+        intent.putExtra(TRIGGER_REASON_INTENT_PARAMETER, triggerReason);
+        context.startService(intent);
+    }
+
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleIntent(@Nullable final Intent intent) {
         if (isActive) {
             return;
         }
         isActive = true;
+        final long start = System.currentTimeMillis();
+        Log.i(LOG_TAG, "*** Start rebuilding pipeline.");
 
         loadProfilesIfNecessary(new Runnable() {
             @Override
@@ -85,11 +100,15 @@ public class PopulatePipelineService extends IntentService {
                     Log.e(LOG_TAG, "run: Failed to rebuild pipeline.", ex);
                 }
                 cacheProfilePhotos();
+
+                long end = System.currentTimeMillis();
+                long duration = end - start;
+                logExecution(intent, duration);
                 DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+                Log.i(LOG_TAG, "*** Done rebuilding pipeline in " + duration + "ms");
+                isActive = false;
             }
         });
-
-        isActive = false;
     }
 
     private int rebuildPipeline() throws RemoteException, OperationApplicationException {
@@ -501,5 +520,15 @@ public class PopulatePipelineService extends IntentService {
         } finally {
             cursor.close();
         }
+    }
+
+    private void logExecution(Intent intent, long duration) {
+        int triggerReason = intent.getIntExtra(TRIGGER_REASON_INTENT_PARAMETER, -1);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PipelineLogTable.DURATION_MS_COLUMN, duration);
+        contentValues.put(PipelineLogTable.TRIGGER_REASON_COLUMN, triggerReason);
+
+        getContentResolver().insert(PipelineLogTable.CONTENT_URI, contentValues);
     }
 }

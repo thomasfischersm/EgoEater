@@ -26,6 +26,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.UpdateLocationClientAction;
+import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
@@ -186,7 +188,7 @@ public abstract class ParentWithLocationCheckActivity
                     .execute();
 
             // Kick off pipeline to rebuild.
-            startService(new Intent(this, PopulatePipelineService.class));
+            PopulatePipelineService.startService(this, PipelineLogTable.LOCATION_UPDATE_TRIGGER);
         } catch (IOException ex) {
             Log.e(LOG_TAG, "checkLocationSync: Failed to update location information.", ex);
         }

@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.playposse.egoeater.clientactions.ReportRankingClientAction;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.RatingTable;
+import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.SmartCursor;
@@ -27,7 +29,11 @@ public final class QueryUtil {
     }
 
     @Nullable
-    public static PairingParcelable getNextPairing(ContentResolver contentResolver) {
+    public static PairingParcelable getNextPairing(
+            Context context,
+            boolean potentialTriggerRebuild) {
+
+        ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(
                 PipelineTable.CONTENT_URI,
                 PipelineTable.COLUMN_NAMES,
@@ -37,7 +43,16 @@ public final class QueryUtil {
 
         if ((cursor != null) && (cursor.moveToNext())) {
             SmartCursor smartCursor = new SmartCursor(cursor, PipelineTable.COLUMN_NAMES);
-            return new PairingParcelable(smartCursor);
+            PairingParcelable pairing = new PairingParcelable(smartCursor);
+
+            if (potentialTriggerRebuild && !cursor.moveToNext()) {
+                // Reached the end of the pipeline. Trigger rebuilding it.
+                PopulatePipelineService.startService(
+                        context,
+                        PipelineLogTable.RATING_ACTIVITY_TRIGGER);
+            }
+
+            return pairing;
         } else {
             return null;
         }
