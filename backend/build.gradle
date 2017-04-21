@@ -26,7 +26,7 @@ dependencies {
     compile 'com.google.appengine:appengine-endpoints:1.9.42'
     compile 'com.google.appengine:appengine-endpoints-deps:1.9.42'
     compile 'javax.servlet:servlet-api:2.5'
-    compile 'com.googlecode.objectify:objectify:5.1.12'
+    compile 'com.googlecode.objectify:objectify:5.1.17'
     compile group: 'com.restfb', name: 'restfb', version: '1.34.0'
     compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '0.11.0-beta'
 }

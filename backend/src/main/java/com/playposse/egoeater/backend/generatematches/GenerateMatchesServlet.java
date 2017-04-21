@@ -4,16 +4,19 @@ import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.cmd.QueryKeys;
+import com.googlecode.objectify.Result;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
 import com.playposse.egoeater.backend.schema.IntermediateUser;
 import com.playposse.egoeater.backend.schema.Match;
 import com.playposse.egoeater.backend.schema.MatchesServletLog;
 import com.playposse.egoeater.backend.schema.Ranking;
+import com.playposse.egoeater.backend.util.ObjectifyWaiter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -48,11 +51,11 @@ public class GenerateMatchesServlet extends HttpServlet {
 
         // Create matches.
         try {
-            cleanIntermediate();
-            populateIntermediateFirstPass();
-            populateIntermediateSecondPass();
-            cleanOldMatches();
-            createMatches();
+            ObjectifyWaiter waiter = new ObjectifyWaiter();
+            cleanTables(waiter);
+            populateIntermediateFirstPass(waiter);
+            populateIntermediateSecondPass(waiter);
+            createMatches(waiter);
         } catch (Throwable ex) {
             logExecution(req, start, ex.getMessage());
             throw ex;
@@ -60,15 +63,17 @@ public class GenerateMatchesServlet extends HttpServlet {
 
         // Log execution
         logExecution(req, start, null);
+        log.info("*** Done");
     }
 
     private void logExecution(HttpServletRequest req, long start, @Nullable String errorMessage) {
+        log.info("*** Log execution");
         long end = System.currentTimeMillis();
         int duration = (int) (end - start);
         boolean isRunByCron = isRunByCron(req);
         int status = (errorMessage == null) ? STATUS_OK : STATUS_ERROR;
         MatchesServletLog log = new MatchesServletLog(duration, status, isRunByCron, errorMessage);
-        ofy().save().entity(log).now();
+        ofy().save().entity(log);
     }
 
     private static boolean isRunByCron(HttpServletRequest req) {
@@ -76,38 +81,45 @@ public class GenerateMatchesServlet extends HttpServlet {
         return Boolean.TRUE.toString().equalsIgnoreCase(header);
     }
 
-    private static void cleanIntermediate() {
-        cleanIntermediateMatches();
-        cleanIntermediateUsers();
-        ofy().flush();
+    private static void cleanTables(ObjectifyWaiter waiter) {
+        log.info("*** Cleaning tables");
+        cleanIntermediateMatches(waiter);
+        cleanIntermediateUsers(waiter);
+        cleanOldMatches(waiter);
+        waiter.flush();
     }
 
-    private static void cleanIntermediateMatches() {
+    private static void cleanIntermediateMatches(ObjectifyWaiter waiter) {
         QueryResultIterable<Key<IntermediateMatching>> iterable = ofy().load()
                 .type(IntermediateMatching.class)
                 .keys()
                 .iterable();
 
-        ofy().delete()
-                .keys(iterable);
+        waiter.addResult(
+                ofy().delete()
+                        .keys(iterable));
         log.info("Done cleaning intermediate matching tables.");
     }
 
-    private static void cleanIntermediateUsers() {
+    private static void cleanIntermediateUsers(ObjectifyWaiter waiter) {
         QueryResultIterable<Key<IntermediateUser>> iterable = ofy().load()
                 .type(IntermediateUser.class)
                 .keys()
                 .iterable();
 
-        ofy().delete()
-                .keys(iterable);
+        waiter.addResult(
+                ofy().delete()
+                        .keys(iterable));
         log.info("Done cleaning intermediate user tables.");
     }
 
     /**
      * Populates the intermediate table with rows. The rankBack and matchScore are left empty.
+     *
+     * @param waiter
      */
-    private static void populateIntermediateFirstPass() {
+    private static void populateIntermediateFirstPass(ObjectifyWaiter waiter) {
+        log.info("*** First pass");
         QueryResultIterator<Ranking> iterator = ofy().load()
                 .type(Ranking.class)
                 .order("profileId")
@@ -116,6 +128,7 @@ public class GenerateMatchesServlet extends HttpServlet {
 
         Ref<EgoEaterUser> profileId = null;
         int rank = START_RANK;
+        List<Ref<EgoEaterUser>> lockedProfileRefs = null;
         Map<Long, Integer> profileIdToRankMap = new HashMap<>();
         while (iterator.hasNext()) {
             Ranking ranking = iterator.next();
@@ -124,16 +137,17 @@ public class GenerateMatchesServlet extends HttpServlet {
             // Detect if ranking of the next user is starting.
             if (!ranking.getProfileId().equals(profileId)) {
                 if (profileId != null) {
-                    log.info("Stored " + rank + " intermediateMatching rows for " + profileId);
-                }
-                if (profileId != null) {
-                    IntermediateUser intermediateUser =
-                            new IntermediateUser(profileId, 0, profileIdToRankMap);
-                    ofy().save().entity(intermediateUser);
+                    saveIntermediateUser(
+                            profileId,
+                            rank,
+                            lockedProfileRefs,
+                            profileIdToRankMap,
+                            waiter);
                 }
                 profileId = ranking.getProfileId();
                 rank = START_RANK;
                 profileIdToRankMap = new HashMap<>();
+                lockedProfileRefs = getLockedProfileRefs(profileId);
             } else {
                 rank++;
             }
@@ -148,27 +162,70 @@ public class GenerateMatchesServlet extends HttpServlet {
                 continue;
             }
 
+            // If we hit a locked match, skip this.
+            if (lockedProfileRefs.contains(ratedProfileId)) {
+                continue;
+            }
+
             // Create intermediateMatching entry.
             IntermediateMatching intermediateMatching =
                     new IntermediateMatching(profileId, ratedProfileId, rank);
-            ofy().save().entity(intermediateMatching);
+            waiter.addResult(
+                    ofy().save()
+                            .entity(intermediateMatching));
         }
 
         if (profileId != null) {
-            IntermediateUser intermediateUser =
-                    new IntermediateUser(profileId, 0, profileIdToRankMap);
-            ofy().save().entity(intermediateUser);
+            saveIntermediateUser(profileId, rank, lockedProfileRefs, profileIdToRankMap, waiter);
         }
 
-        ofy().flush();
+        waiter.flush();
+    }
+
+    private static void saveIntermediateUser(
+            Ref<EgoEaterUser> profileId,
+            int rank, List<Ref<EgoEaterUser>> lockedProfileRefs,
+            Map<Long, Integer> profileIdToRankMap,
+            ObjectifyWaiter waiter) {
+
+        log.info("Stored " + rank + " intermediateMatching rows for " + profileId);
+        IntermediateUser intermediateUser =
+                new IntermediateUser(profileId, profileIdToRankMap, lockedProfileRefs);
+        waiter.addResult(
+                ofy().save()
+                        .entity(intermediateUser));
+    }
+
+    /**
+     * Returns profiles of locked matches the user already has.
+     * <p>
+     * <p>This method assumes that all non-fixed matches have already been removed from the Match
+     * entity. By avoiding to filter on the isFixed property, we avoid having to have an index on
+     * that field and a composite index.
+     */
+    private static List<Ref<EgoEaterUser>> getLockedProfileRefs(Ref<EgoEaterUser> profileRef) {
+        List<Match> lockedMatches = ofy().load()
+                .type(Match.class)
+                .filter("userARef =", profileRef) // TODO: Test if this condition works.
+                .list();
+
+        List<Ref<EgoEaterUser>> lockedProfilesRef = new ArrayList<>();
+        for (Match match : lockedMatches) {
+            Ref<EgoEaterUser> userBRef = match.getUserBRef();
+            lockedProfilesRef.add(userBRef);
+        }
+        return lockedProfilesRef;
     }
 
     /**
      * Goes through the intermediate entities again to add the rankBack and sum.
      * <p>
      * <p>The match score formula is: Formula: max + (min / (max + 1))
+     *
+     * @param waiter
      */
-    private static void populateIntermediateSecondPass() {
+    private static void populateIntermediateSecondPass(ObjectifyWaiter waiter) {
+        log.info("*** Second pass");
         QueryResultIterable<IntermediateMatching> iterable =
                 ofy().load()
                         .type(IntermediateMatching.class)
@@ -195,7 +252,7 @@ public class GenerateMatchesServlet extends HttpServlet {
                                 .now();
                 if (intermediateRatedUser == null) {
                     // The rated user hasn't ranked anybody yet.
-                    log.info("Profile " + ratedProfileId + " hasn't ranked anybody yet.");
+                    log.info("- Profile " + ratedProfileId + " hasn't ranked anybody yet.");
                     continue;
                 }
             }
@@ -203,7 +260,7 @@ public class GenerateMatchesServlet extends HttpServlet {
             Integer rankBack = intermediateRatedUser.getProfileIdToRankMap().get(profileIdLong);
             if (rankBack == null) {
                 // The rated user hasn't ranked this user back yet.
-                log.info("Profile " + ratedProfileId + " hasn't ranked this user yet.");
+                log.info("- Profile " + ratedProfileId + " hasn't ranked this user yet.");
                 continue;
             }
             intermediateMatching.setRankBack(rankBack);
@@ -211,33 +268,40 @@ public class GenerateMatchesServlet extends HttpServlet {
             int max = Math.max(intermediateMatching.getRank(), intermediateMatching.getRankBack());
             int min = Math.min(intermediateMatching.getRank(), intermediateMatching.getRankBack());
             intermediateMatching.setMatchScore(max + (min / (max + 1.0)));
-            ofy().save().entity(intermediateMatching);
+            waiter.addResult(
+                    ofy().save()
+                            .entity(intermediateMatching));
+            log.info("- Updated second pass.");
         }
 
-        ofy().flush();
+        waiter.flush();
     }
 
-    private static void cleanOldMatches() {
+    private static void cleanOldMatches(ObjectifyWaiter waiter) {
         QueryResultIterable<Key<Match>> iterable = ofy().load()
                 .type(Match.class)
                 .filter("isLocked =", false)
                 .keys()
                 .iterable();
 
-        ofy().delete()
-                .keys(iterable)
-                .now();
+        waiter.addResult(
+                ofy().delete()
+                        .keys(iterable));
     }
 
     /**
      * Reads the information from the intermediate table to create the matching.
+     *
+     * @param waiter
      */
-    private static void createMatches() {
+    private static void createMatches(ObjectifyWaiter waiter) {
+        log.info("*** Create matches");
         QueryResultIterable<IntermediateMatching> iterable = ofy().load()
                 .type(IntermediateMatching.class)
                 .order("matchScore")
                 .iterable();
 
+        log.info("Create matches is a go: " + iterable.iterator().hasNext());
         for (IntermediateMatching intermediateMatching : iterable) {
             Ref<EgoEaterUser> userARef = intermediateMatching.getProfileId();
             long userALongId = userARef.getKey().getId();
@@ -260,20 +324,24 @@ public class GenerateMatchesServlet extends HttpServlet {
             }
 
             // Create match.
-            ofy().save()
-                    .entity(new Match(userARef, userBRef));
+            waiter.addResult(
+                    ofy().save()
+                            .entity(new Match(userARef, userBRef)));
 
             // Create match in the other direction.
-            ofy().save()
-                    .entity(new Match(userBRef, userARef));
+            waiter.addResult(
+                    ofy().save()
+                            .entity(new Match(userBRef, userARef)));
 
             // Update match counts.
             userA.setMatchesCount(userA.getMatchesCount() + 1);
-            ofy().save()
-                    .entity(userA);
+            waiter.addResult(
+                    ofy().save()
+                            .entity(userA));
             userB.setMatchesCount(userB.getMatchesCount() + 1);
-            ofy().save()
-                    .entity(userB);
+            waiter.addResult(
+                    ofy().save()
+                            .entity(userB));
         }
     }
 }

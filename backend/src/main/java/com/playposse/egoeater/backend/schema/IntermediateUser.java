@@ -7,7 +7,9 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Stringify;
 import com.playposse.egoeater.backend.util.LongStringifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,18 +24,21 @@ public class IntermediateUser {
     private int matchesCount = 0;
     @Stringify(LongStringifier.class)
     private Map<Long, Integer> profileIdToRankMap = new HashMap<>();
+    private List<Ref<EgoEaterUser>> lockedMatchingProfiles = new ArrayList<>();
 
     public IntermediateUser() {
     }
 
     public IntermediateUser(
             Ref<EgoEaterUser> profileId,
-            int matchesCount,
-            Map<Long, Integer> profileIdToRankMap) {
+            Map<Long, Integer> profileIdToRankMap,
+            List<Ref<EgoEaterUser>> lockedMatchingProfiles) {
 
         this.profileId = profileId.getKey().getId();
-        this.matchesCount = matchesCount;
         this.profileIdToRankMap = profileIdToRankMap;
+        this.lockedMatchingProfiles = lockedMatchingProfiles;
+
+        matchesCount = lockedMatchingProfiles.size();
     }
 
     public void setMatchesCount(int matchesCount) {
@@ -50,5 +55,9 @@ public class IntermediateUser {
 
     public Map<Long, Integer> getProfileIdToRankMap() {
         return profileIdToRankMap;
+    }
+
+    public List<Ref<EgoEaterUser>> getLockedMatchingProfiles() {
+        return lockedMatchingProfiles;
     }
 }
