@@ -89,7 +89,8 @@ public class RatingActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            pairing = QueryUtil.getNextPairing(getApplicationContext(), true);
+            Log.i(LOG_TAG, "Start LoadPairingAsyncTask");
+            pairing = QueryUtil.getNextPairing(getApplicationContext(), pairing, true);
 
             if (pairing == null) {
                 // No more pairings. Re-direct to a page to inform the user.
@@ -103,6 +104,8 @@ public class RatingActivity
             rightProfile = QueryUtil.getProfileByProfileId(
                     getContentResolver(),
                     pairing.getProfileId1());
+
+            Log.i(LOG_TAG, "Done LoadPairingAsyncTask");
             return null;
         }
 
@@ -117,6 +120,8 @@ public class RatingActivity
 
         @Override
         protected Void doInBackground(ProfileParcelable... params) {
+            Log.i(LOG_TAG, "Start StoreRatingAsyncTask");
+
             // Store rating.
             ProfileParcelable profile = params[0];
             boolean isWinnerLeft = (profile.getProfileId() == leftProfile.getProfileId());
@@ -138,6 +143,7 @@ public class RatingActivity
 
             DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
 
+            Log.i(LOG_TAG, "Done StoreRatingAsyncTask");
             return null;
         }
     }

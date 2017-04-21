@@ -31,6 +31,7 @@ public final class QueryUtil {
     @Nullable
     public static PairingParcelable getNextPairing(
             Context context,
+            @Nullable PairingParcelable lastPairing,
             boolean potentialTriggerRebuild) {
 
         ContentResolver contentResolver = context.getContentResolver();
@@ -41,20 +42,35 @@ public final class QueryUtil {
                 null,
                 PipelineTable.ID_COLUMN + " asc");
 
-        if ((cursor != null) && (cursor.moveToNext())) {
+        try {
+            if ((cursor == null) || !cursor.moveToNext()) {
+                return null;
+            }
+
             SmartCursor smartCursor = new SmartCursor(cursor, PipelineTable.COLUMN_NAMES);
             PairingParcelable pairing = new PairingParcelable(smartCursor);
 
-            if (potentialTriggerRebuild && !cursor.moveToNext()) {
+            // Check if perhaps we got the same pairing because the pipeline rebuilt.
+            if ((lastPairing != null)
+                    && (lastPairing.getProfileId0() == pairing.getProfileId0())
+                    && (lastPairing.getProfileId1() == pairing.getProfileId1())) {
+
+                if (!cursor.moveToNext()) {
+                    return null;
+                }
+
+                // Get the second next pairing.
+                pairing = new PairingParcelable(smartCursor);
+            }
+
+            return pairing;
+        } finally {
+            if ((cursor != null) && potentialTriggerRebuild && !cursor.moveToNext()) {
                 // Reached the end of the pipeline. Trigger rebuilding it.
                 PopulatePipelineService.startService(
                         context,
                         PipelineLogTable.RATING_ACTIVITY_TRIGGER);
             }
-
-            return pairing;
-        } else {
-            return null;
         }
     }
 
@@ -93,10 +109,10 @@ public final class QueryUtil {
                 new String[]{Integer.toString(pairingId)});
 
         // Store the rating.
-        ContentValues ratingContentvalues = new ContentValues();
-        ratingContentvalues.put(RatingTable.WINNER_ID_COLUMN, winnerId);
-        ratingContentvalues.put(RatingTable.LOSER_ID_COLUMN, loserId);
-        contentResolver.insert(RatingTable.CONTENT_URI, ratingContentvalues);
+        ContentValues ratingContentValues = new ContentValues();
+        ratingContentValues.put(RatingTable.WINNER_ID_COLUMN, winnerId);
+        ratingContentValues.put(RatingTable.LOSER_ID_COLUMN, loserId);
+        contentResolver.insert(RatingTable.CONTENT_URI, ratingContentValues);
 
         // Update the winner profile.
         ProfileParcelable winner = getProfileByProfileId(contentResolver, winnerId);

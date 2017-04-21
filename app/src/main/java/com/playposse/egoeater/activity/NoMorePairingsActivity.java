@@ -71,7 +71,7 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
     }
 
     private void checkIfPipelineIsRefreshed() {
-        if (QueryUtil.getNextPairing(this, false) != null) {
+        if (QueryUtil.getNextPairing(this, null, false) != null) {
             // The pipeline has a new pairing. Send the user back to the RatingActivity.
             startActivity(new Intent(this, RatingActivity.class));
         }
