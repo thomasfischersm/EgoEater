@@ -90,7 +90,7 @@ public class RatingActivity
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(LOG_TAG, "Start LoadPairingAsyncTask");
-            pairing = QueryUtil.getNextPairing(getApplicationContext(), pairing, true);
+            pairing = QueryUtil.getNextPairing(getApplicationContext(), true);
 
             if (pairing == null) {
                 // No more pairings. Re-direct to a page to inform the user.

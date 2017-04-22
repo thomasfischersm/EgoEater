@@ -13,6 +13,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.RatingTable;
+import com.playposse.egoeater.services.PPSQueryHelper;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
@@ -31,7 +32,6 @@ public final class QueryUtil {
     @Nullable
     public static PairingParcelable getNextPairing(
             Context context,
-            @Nullable PairingParcelable lastPairing,
             boolean potentialTriggerRebuild) {
 
         ContentResolver contentResolver = context.getContentResolver();
@@ -43,27 +43,21 @@ public final class QueryUtil {
                 PipelineTable.ID_COLUMN + " asc");
 
         try {
-            if ((cursor == null) || !cursor.moveToNext()) {
+            if ((cursor == null)) {
                 return null;
             }
-
             SmartCursor smartCursor = new SmartCursor(cursor, PipelineTable.COLUMN_NAMES);
-            PairingParcelable pairing = new PairingParcelable(smartCursor);
 
-            // Check if perhaps we got the same pairing because the pipeline rebuilt.
-            if ((lastPairing != null)
-                    && (lastPairing.getProfileId0() == pairing.getProfileId0())
-                    && (lastPairing.getProfileId1() == pairing.getProfileId1())) {
+            while (cursor.moveToNext()) {
+                PairingParcelable pairing = new PairingParcelable(smartCursor);
 
-                if (!cursor.moveToNext()) {
-                    return null;
+                long profileId0 = pairing.getProfileId0();
+                long profileId1 = pairing.getProfileId1();
+                if (!isAlreadyCompared(contentResolver, profileId0, profileId1)) {
+                    return pairing;
                 }
-
-                // Get the second next pairing.
-                pairing = new PairingParcelable(smartCursor);
             }
-
-            return pairing;
+            return null;
         } finally {
             if ((cursor != null) && potentialTriggerRebuild && !cursor.moveToNext()) {
                 // Reached the end of the pipeline. Trigger rebuilding it.
@@ -146,5 +140,40 @@ public final class QueryUtil {
 
         // Report the result to the cloud.
         new ReportRankingClientAction(context, winnerId, loserId).execute();
+    }
+
+    /**
+     * Checks if the two profiles are already compared.
+     */
+    public static boolean isAlreadyCompared(
+            ContentResolver contentResolver,
+            Long profileId0,
+            Long profileId1) {
+
+        String p0Col = RatingTable.WINNER_ID_COLUMN;
+        String p1Col = RatingTable.LOSER_ID_COLUMN;
+        String where = String.format(
+                "((%1$s = ?) and (%2$s = ?)) or ((%3$s = ?) and (%4$s = ?))",
+                p0Col,
+                p1Col,
+                p1Col,
+                p0Col);
+
+        Cursor cursor = contentResolver.query(
+                RatingTable.CONTENT_URI,
+                new String[]{RatingTable.ID_COLUMN},
+                where,
+                new String[]{
+                        Long.toString(profileId0),
+                        Long.toString(profileId1)
+                },
+                null);
+        try {
+            Log.i(LOG_TAG, "isAlreadyCompared: Check pairing: " + profileId0 + " " + profileId1
+                    + " " + (cursor.getCount() > 0));
+            return cursor.getCount() > 0;
+        } finally {
+            cursor.close();
+        }
     }
 }

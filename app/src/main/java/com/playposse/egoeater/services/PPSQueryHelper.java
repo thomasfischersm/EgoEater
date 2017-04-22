@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
@@ -13,9 +12,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
-import com.playposse.egoeater.clientactions.ApiClientAction;
-import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.QueryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,7 +120,7 @@ public class PPSQueryHelper {
                 Long profileId = profileIds.remove(0);
                 for (int i = 0; i < profileIds.size(); i++) {
                     Long otherProfileId = profileIds.get(i);
-                    boolean isAlreadyCompared = isAlreadyCompared(
+                    boolean isAlreadyCompared = QueryUtil.isAlreadyCompared(
                             contentResolver,
                             profileId,
                             otherProfileId);
@@ -142,41 +140,6 @@ public class PPSQueryHelper {
             }
         }
         return contentValuesList;
-    }
-
-    /**
-     * Checks if the two profiles are already compared.
-     */
-    static boolean isAlreadyCompared(
-            ContentResolver contentResolver,
-            Long profileId0,
-            Long profileId1) {
-
-        String p0Col = EgoEaterContract.RatingTable.WINNER_ID_COLUMN;
-        String p1Col = EgoEaterContract.RatingTable.LOSER_ID_COLUMN;
-        String where = String.format(
-                "((%1$s = ?) and (%2$s = ?)) or ((%3$s = ?) and (%4$s = ?))",
-                p0Col,
-                p1Col,
-                p1Col,
-                p0Col);
-
-        Cursor cursor = contentResolver.query(
-                EgoEaterContract.RatingTable.CONTENT_URI,
-                new String[]{EgoEaterContract.RatingTable.ID_COLUMN},
-                where,
-                new String[]{
-                        Long.toString(profileId0),
-                        Long.toString(profileId1)
-                },
-                null);
-        try {
-            Log.i(LOG_TAG, "isAlreadyCompared: Check pairing: " + profileId0 + " " + profileId1
-                    + " " + (cursor.getCount() > 0));
-            return cursor.getCount() > 0;
-        } finally {
-            cursor.close();
-        }
     }
 
     static void storePairings(
