@@ -165,6 +165,8 @@ public final class QueryUtil {
                 where,
                 new String[]{
                         Long.toString(profileId0),
+                        Long.toString(profileId1),
+                        Long.toString(profileId0),
                         Long.toString(profileId1)
                 },
                 null);
