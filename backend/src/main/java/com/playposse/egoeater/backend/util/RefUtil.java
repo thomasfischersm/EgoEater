@@ -14,4 +14,8 @@ public final class RefUtil {
     public static Ref<EgoEaterUser> createUserRef(long profileId) {
         return Ref.create(Key.create(EgoEaterUser.class, profileId));
     }
+
+    public static Ref<EgoEaterUser> createUserRef(EgoEaterUser user) {
+        return createUserRef(user.getId());
+    }
 }

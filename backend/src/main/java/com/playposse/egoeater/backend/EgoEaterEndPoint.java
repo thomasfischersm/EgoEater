@@ -10,10 +10,12 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
+import com.playposse.egoeater.backend.beans.MatchBean;
 import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.GetMatchesServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByDistanceServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByIdServerAction;
 import com.playposse.egoeater.backend.serveractions.ReportRankingServerAction;
@@ -140,5 +142,12 @@ public class EgoEaterEndPoint {
     public void wipeTestData(@Named("secret") long secret) throws BadRequestException {
 
         WipeTestDataServerAction.wipeTestData(secret);
+    }
+
+    @ApiMethod(name = "getMatches")
+    public List<MatchBean> getMatches(@Named("sessionId") long sessionId)
+            throws BadRequestException {
+
+        return GetMatchesServerAction.getMatches(sessionId);
     }
 }
