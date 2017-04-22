@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Rating;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -13,7 +12,6 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.RatingTable;
-import com.playposse.egoeater.services.PPSQueryHelper;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
@@ -55,6 +53,9 @@ public final class QueryUtil {
                 long profileId1 = pairing.getProfileId1();
                 if (!isAlreadyCompared(contentResolver, profileId0, profileId1)) {
                     return pairing;
+                } else {
+                    // If it is already compared, let's delete it.
+                    deletePipelineEntry(contentResolver, pairing.getPairingId());
                 }
             }
             return null;
@@ -97,10 +98,7 @@ public final class QueryUtil {
         ContentResolver contentResolver = context.getContentResolver();
 
         // Remove the pairing from the pipeline.
-        contentResolver.delete(
-                PipelineTable.CONTENT_URI,
-                PipelineTable.ID_COLUMN + " = ?",
-                new String[]{Integer.toString(pairingId)});
+        deletePipelineEntry(contentResolver, pairingId);
 
         // Store the rating.
         ContentValues ratingContentValues = new ContentValues();
@@ -140,6 +138,13 @@ public final class QueryUtil {
 
         // Report the result to the cloud.
         new ReportRankingClientAction(context, winnerId, loserId).execute();
+    }
+
+    private static void deletePipelineEntry(ContentResolver contentResolver, int pairingId) {
+        contentResolver.delete(
+                PipelineTable.CONTENT_URI,
+                PipelineTable.ID_COLUMN + " = ?",
+                new String[]{Integer.toString(pairingId)});
     }
 
     /**

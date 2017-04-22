@@ -39,6 +39,9 @@ public abstract class ApiClientAction<D> {
     @Nullable
     private ArrayList<Integer> lock = null;
 
+    @Nullable
+    private Exception exception = null;
+
     public ApiClientAction(Context context) {
         this.context = context.getApplicationContext();
 
@@ -130,6 +133,7 @@ public abstract class ApiClientAction<D> {
                 returnedData = executeAsync();
                 Log.i(LOG_TAG, "Finished execution client action: " + actionName);
             } catch (IOException ex) {
+                exception = ex;
                 Log.e(LOG_TAG, "Failed to execute: " + this.getClass().getName(), ex);
                 GlobalRouting.onCloudError(context);
             }
@@ -139,12 +143,16 @@ public abstract class ApiClientAction<D> {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            postExecute();
+            // Return result to caller.
+            if (exception != null) {
+                postExecute();
 
-            if (callback != null) {
-                callback.onResult(returnedData);
+                if (callback != null) {
+                    callback.onResult(returnedData);
+                }
             }
 
+            // Release lock if placed.
             if (lock != null) {
                 synchronized (lock) {
                     lock.notifyAll();

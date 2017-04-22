@@ -173,6 +173,10 @@ public class PopulatePipelineService extends IntentService {
             List<Long> profileIds = GetProfileIdsByDistanceClientAction.getBlocking(
                     getApplicationContext(),
                     queryRadius);
+            if (profileIds == null) {
+                profileIds = new ArrayList<>();
+            }
+
             List<Long> savedProfileIds = PPSQueryHelper.saveProfileIds(
                     getContentResolver(),
                     profileIds,

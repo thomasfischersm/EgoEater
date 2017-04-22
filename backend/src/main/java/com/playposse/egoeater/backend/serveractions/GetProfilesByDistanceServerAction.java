@@ -85,6 +85,11 @@ public class GetProfilesByDistanceServerAction extends AbstractServerAction {
 
         log.info("Initial index result is " + intermediateKeys.size());
 
+        if (intermediateKeys.size() == 0) {
+            // No point in trying the next query if there are no results here.
+            return new ArrayList<>();
+        }
+
         List<Key<EgoEaterUser>> egoEaterUsers = ofy().load()
                 .type(EgoEaterUser.class)
                 .filterKey("IN", intermediateKeys)
