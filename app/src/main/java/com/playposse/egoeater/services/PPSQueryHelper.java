@@ -1,0 +1,381 @@
+package com.playposse.egoeater.services;
+
+import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
+import com.playposse.egoeater.clientactions.ApiClientAction;
+import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
+import com.playposse.egoeater.contentprovider.EgoEaterContract;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A little helper class to make {@link ContentProvider} queries. The
+ * {@link PopulatePipelineService} is quite complicated. As much as possible should be factored out.
+ */
+public class PPSQueryHelper {
+    private static final String LOG_TAG = PPSQueryHelper.class.getSimpleName();
+
+    @NonNull
+    static ArrayList<ContentProviderOperation> prepareOperationsToDeleteOldPipeline(
+            ContentResolver contentResolver) {
+
+        // Get current pipeline ids.
+        Cursor oldPipelineCursor = contentResolver.query(
+                EgoEaterContract.PipelineTable.CONTENT_URI,
+                new String[]{EgoEaterContract.PipelineTable.ID_COLUMN},
+                null,
+                null,
+                null);
+        ArrayList<ContentProviderOperation> deleteOldPipelineOperations = new ArrayList<>();
+        try {
+            while (oldPipelineCursor.moveToNext()) {
+                int rowId = oldPipelineCursor.getInt(0);
+                deleteOldPipelineOperations.add(
+                        ContentProviderOperation
+                                .newDelete(EgoEaterContract.PipelineTable.CONTENT_URI)
+                                .withSelection(
+                                        EgoEaterContract.PipelineTable.ID_COLUMN + " = ?",
+                                        new String[]{Integer.toString(rowId)})
+                                .build());
+
+            }
+        } finally {
+            Log.i(LOG_TAG, "rebuildPipeline: Found old pipeline size: "
+                    + deleteOldPipelineOperations.size());
+            oldPipelineCursor.close();
+        }
+        return deleteOldPipelineOperations;
+    }
+
+    static void deleteOldPairings(
+            ContentResolver contentResolver,
+            ArrayList<ContentProviderOperation> deleteOldPipelineOperations)
+            throws RemoteException, OperationApplicationException {
+
+        contentResolver.applyBatch(
+                EgoEaterContract.AUTHORITY,
+                deleteOldPipelineOperations);
+        Log.i(LOG_TAG, "rebuildPipeline: Deleted old pipeline "
+                + deleteOldPipelineOperations.size());
+    }
+
+    @NonNull
+    static Map<Integer, List<Long>> getProfileIdsByRankStatus(
+            ContentResolver contentResolver) {
+
+        // Query the profile ranking status.
+        Cursor cursor = contentResolver.query(
+                EgoEaterContract.ProfileTable.CONTENT_URI,
+                new String[]{
+                        EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN,
+                        EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN},
+                null,
+                null,
+                EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN + " desc");
+
+        // Sort profiles by ranking status.
+        Map<Integer, List<Long>> profileIdsByRankStatus = new HashMap<>();
+        try {
+            while (cursor.moveToNext()) {
+                long profileId = cursor.getLong(0);
+                int winLossesSum = cursor.getInt(1);
+                if (!profileIdsByRankStatus.containsKey(winLossesSum)) {
+                    profileIdsByRankStatus.put(winLossesSum, new ArrayList<Long>());
+                }
+                profileIdsByRankStatus.get(winLossesSum).add(profileId);
+            }
+        } finally {
+            Log.i(LOG_TAG, "rebuildPipeline: Found ranked profiles: "
+                    + profileIdsByRankStatus.size());
+            cursor.close();
+        }
+        return profileIdsByRankStatus;
+    }
+
+    @NonNull
+    static List<ContentValues> createPairings(
+            ContentResolver contentResolver,
+            Map<Integer, List<Long>> profileIdsByRankStatus) {
+
+        List<ContentValues> contentValuesList = new ArrayList<>();
+        ArrayList<Integer> rankStatusList = new ArrayList<>(profileIdsByRankStatus.keySet());
+        Collections.sort(rankStatusList);
+        Collections.reverse(rankStatusList); // TODO: Do this in one step.
+        for (int rankStatus : rankStatusList) {
+            List<Long> profileIds = profileIdsByRankStatus.get(rankStatus);
+            while (profileIds.size() > 1) {
+                Long profileId = profileIds.remove(0);
+                for (int i = 0; i < profileIds.size(); i++) {
+                    Long otherProfileId = profileIds.get(i);
+                    boolean isAlreadyCompared = isAlreadyCompared(
+                            contentResolver,
+                            profileId,
+                            otherProfileId);
+                    if (!isAlreadyCompared) {
+                        profileIds.remove(i);
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(
+                                EgoEaterContract.PipelineTable.PROFILE_0_ID_COLUMN,
+                                profileId);
+                        contentValues.put(
+                                EgoEaterContract.PipelineTable.PROFILE_1_ID_COLUMN,
+                                otherProfileId);
+                        contentValuesList.add(contentValues);
+                        break;
+                    }
+                }
+            }
+        }
+        return contentValuesList;
+    }
+
+    /**
+     * Checks if the two profiles are already compared.
+     */
+    static boolean isAlreadyCompared(
+            ContentResolver contentResolver,
+            Long profileId0,
+            Long profileId1) {
+
+        String p0Col = EgoEaterContract.RatingTable.WINNER_ID_COLUMN;
+        String p1Col = EgoEaterContract.RatingTable.LOSER_ID_COLUMN;
+        String where = String.format(
+                "((%1$s = ?) and (%2$s = ?)) or ((%3$s = ?) and (%4$s = ?))",
+                p0Col,
+                p1Col,
+                p1Col,
+                p0Col);
+
+        Cursor cursor = contentResolver.query(
+                EgoEaterContract.RatingTable.CONTENT_URI,
+                new String[]{EgoEaterContract.RatingTable.ID_COLUMN},
+                where,
+                new String[]{
+                        Long.toString(profileId0),
+                        Long.toString(profileId1)
+                },
+                null);
+        try {
+            Log.i(LOG_TAG, "isAlreadyCompared: Check pairing: " + profileId0 + " " + profileId1
+                    + " " + (cursor.getCount() > 0));
+            return cursor.getCount() > 0;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    static void storePairings(
+            ContentResolver contentResolver,
+            List<ContentValues> contentValuesList) {
+
+        ContentValues[] contentValuesArray =
+                contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
+        contentResolver.bulkInsert(
+                EgoEaterContract.PipelineTable.CONTENT_URI,
+                contentValuesArray);
+        Log.i(LOG_TAG, "rebuildPipeline: Created new pairings: " + contentValuesArray.length);
+    }
+
+    @Nullable
+    static Integer getUnrankedProfilesCount(ContentResolver contentResolver) {
+        // Count profiles that are cached and not compared yet.
+        Cursor profileCursor = contentResolver.query(
+                EgoEaterContract.ProfileTable.CONTENT_URI,
+                new String[]{EgoEaterContract.ProfileTable.ID_COLUMN},
+                EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN + " = ?",
+                new String[]{"0"},
+                null);
+        if (profileCursor == null) {
+            Log.e(LOG_TAG, "loadProfilesIfNecessary: Failed to query profiles");
+            return null;
+        }
+
+        final int rowCount;
+        try {
+            rowCount = profileCursor.getCount();
+            Log.i(LOG_TAG, "loadProfilesIfNecessary: Found profiles that need to be ranked: "
+                    + rowCount);
+            return rowCount;
+        } finally {
+            profileCursor.close();
+        }
+    }
+
+    @Nullable
+    static List<Long> getUnloadedProfileIds(
+            ContentResolver contentResolver,
+            int limit) {
+
+        // Find unloaded profile ids.
+        Cursor profileIdCursor = contentResolver.query(
+                EgoEaterContract.ProfileIdTable.CONTENT_URI,
+                new String[]{EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN},
+                "not " + EgoEaterContract.ProfileIdTable.IS_PROFILE_LOADED_COLUMN,
+                null,
+                EgoEaterContract.ProfileIdTable.ID_COLUMN + " asc");
+        if (profileIdCursor == null) {
+            Log.e(LOG_TAG, "loadProfilesIfNecessary: Failed to query for unloaded profile ids");
+            return null;
+        }
+        final List<Long> profileIds = new ArrayList<>();
+        try {
+            while ((profileIdCursor.moveToNext())
+                    && (profileIds.size() < limit)) {
+                profileIds.add(profileIdCursor.getLong(0));
+            }
+        } finally {
+            Log.i(LOG_TAG, "loadProfilesIfNecessary: Trying to load more profiles: "
+                    + profileIds.size());
+            profileIdCursor.close();
+        }
+        return profileIds;
+    }
+
+    static void saveProfiles(ContentResolver contentResolver, List<ProfileBean> profiles)
+            throws RemoteException, OperationApplicationException {
+
+        List<ContentValues> contentValuesList = new ArrayList<>(profiles.size());
+
+        for (ProfileBean profile : profiles) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN, profile.getUserId());
+            contentValues.put(EgoEaterContract.ProfileTable.FIRST_NAME_COLUMN, profile.getFirstName());
+            contentValues.put(EgoEaterContract.ProfileTable.LAST_NAME_COLUMN, profile.getLastName());
+            contentValues.put(EgoEaterContract.ProfileTable.NAME_COLUMN, profile.getName());
+            contentValues.put(EgoEaterContract.ProfileTable.PROFILE_TEXT_COLUMN, profile.getProfileText());
+            contentValues.put(EgoEaterContract.ProfileTable.DISTANCE_COLUMN, profile.getDistance());
+            contentValues.put(EgoEaterContract.ProfileTable.CITY_COLUMN, profile.getCity());
+            contentValues.put(EgoEaterContract.ProfileTable.STATE_COLUMN, profile.getState());
+            contentValues.put(EgoEaterContract.ProfileTable.COUNTRY_COLUMN, profile.getCountry());
+            contentValues.put(EgoEaterContract.ProfileTable.AGE_COLUMN, profile.getAge());
+            contentValues.put(EgoEaterContract.ProfileTable.GENDER_COLUMN, profile.getGender());
+
+            List<String> profilePhotoUrls = profile.getProfilePhotoUrls();
+            if (profilePhotoUrls != null) {
+                if (profilePhotoUrls.size() > 0) {
+                    contentValues.put(
+                            EgoEaterContract.ProfileTable.PHOTO_URL_0_COLUMN,
+                            profilePhotoUrls.get(0));
+                }
+                if (profilePhotoUrls.size() > 1) {
+                    contentValues.put(
+                            EgoEaterContract.ProfileTable.PHOTO_URL_1_COLUMN,
+                            profilePhotoUrls.get(1));
+                }
+                if (profilePhotoUrls.size() > 2) {
+                    contentValues.put(
+                            EgoEaterContract.ProfileTable.PHOTO_URL_2_COLUMN,
+                            profilePhotoUrls.get(2));
+                }
+            }
+            contentValuesList.add(contentValues);
+        }
+
+        ContentValues[] contentValuesArray =
+                contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
+        contentResolver.bulkInsert(
+                EgoEaterContract.ProfileTable.CONTENT_URI,
+                contentValuesArray);
+        Log.i(LOG_TAG, "saveProfiles: Saved profiles to the device: " + contentValuesArray.length);
+
+        markProfileIdsAsDownloaded(contentResolver, profiles);
+
+        // Delete duplicate profiles just in case -> SHOULDN'T BE NEEDED
+//        contentResolver.delete(EgoEaterContract.DeleteDuplicateProfiles.CONTENT_URI, null, null);
+    }
+
+    private static void markProfileIdsAsDownloaded(
+            ContentResolver contentResolver,
+            List<ProfileBean> profiles)
+            throws RemoteException, OperationApplicationException {
+
+        ArrayList<ContentProviderOperation> updateOperations = new ArrayList<>();
+        for (ProfileBean profileBean : profiles) {
+            String profileId = Long.toString(profileBean.getUserId());
+            ContentProviderOperation updateOperation =
+                    ContentProviderOperation.newUpdate(EgoEaterContract.ProfileIdTable.CONTENT_URI)
+                            .withValue(EgoEaterContract.ProfileIdTable.IS_PROFILE_LOADED_COLUMN, true)
+                            .withSelection(
+                                    EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN + " = ?",
+                                    new String[]{profileId})
+                            .build();
+            updateOperations.add(updateOperation);
+        }
+
+        contentResolver.applyBatch(EgoEaterContract.AUTHORITY, updateOperations);
+        Log.i(LOG_TAG, "markProfileIdsAsDownloaded: Marked profile ids as downloaded: "
+                + updateOperations.size());
+    }
+
+    static List<Long> saveProfileIds(
+            ContentResolver contentResolver,
+            List<Long> newProfileIds,
+            List<Long> existingProfileIds)
+            throws InterruptedException {
+
+        if (existingProfileIds == null) {
+            return new ArrayList<>();
+        }
+
+        // Store new profile ids.
+        List<Long> savedProfileIds = new ArrayList<>();
+        ArrayList<ContentValues> contentValuesList = new ArrayList<>();
+        for (Long profileId : newProfileIds) {
+            if (!existingProfileIds.contains(profileId)) {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN, profileId);
+                contentValuesList.add(contentValues);
+
+                savedProfileIds.add(profileId);
+            }
+        }
+
+        ContentValues[] contentValuesArray =
+                contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
+        contentResolver.bulkInsert(
+                EgoEaterContract.ProfileIdTable.CONTENT_URI,
+                contentValuesArray);
+
+        return savedProfileIds;
+    }
+
+    @Nullable
+    static List<Long> getExistingProfileIds(ContentResolver contentResolver) {
+        // Get existing profile ids.
+        Cursor cursor = contentResolver.query(
+                EgoEaterContract.ProfileIdTable.CONTENT_URI,
+                new String[]{EgoEaterContract.ProfileIdTable.PROFILE_ID_COLUMN},
+                null,
+                null,
+                null);
+        if (cursor == null) {
+            Log.e(LOG_TAG, "saveProfileIds: Failed to get profile ids.");
+            return null;
+        }
+
+        List<Long> existingProfileIds = new ArrayList<>(cursor.getCount());
+        try {
+            while (cursor.moveToNext()) {
+                existingProfileIds.add(cursor.getLong(0));
+            }
+        } finally {
+            cursor.close();
+        }
+        return existingProfileIds;
+    }
+}

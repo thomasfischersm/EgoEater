@@ -34,4 +34,10 @@ public class GetProfilesByIdClientAction extends ApiClientAction<List<ProfileBea
             return getApi().getProfilesById(profileIds, getSessionId()).execute().getItems();
         }
     }
+
+    public static List<ProfileBean> getBlocking(Context context, List<Long> profileIds)
+            throws InterruptedException {
+
+        return new GetProfilesByIdClientAction(context, null, profileIds).executeBlocking();
+    }
 }

@@ -17,6 +17,7 @@ import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * A base class for calls to the cloud to implement.
@@ -34,6 +35,9 @@ public abstract class ApiClientAction<D> {
 
     @Nullable
     private D returnedData;
+
+    @Nullable
+    private ArrayList<Integer> lock = null;
 
     public ApiClientAction(Context context) {
         this.context = context.getApplicationContext();
@@ -69,6 +73,16 @@ public abstract class ApiClientAction<D> {
 
     public final void execute() {
         new ClientActionAsyncTask().execute();
+    }
+
+    public final D executeBlocking() throws InterruptedException {
+        lock = new ArrayList<>();
+        execute();
+
+        synchronized (lock) {
+            lock.wait();
+        }
+        return returnedData;
     }
 
     /**
@@ -129,6 +143,12 @@ public abstract class ApiClientAction<D> {
 
             if (callback != null) {
                 callback.onResult(returnedData);
+            }
+
+            if (lock != null) {
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
             }
         }
     }
