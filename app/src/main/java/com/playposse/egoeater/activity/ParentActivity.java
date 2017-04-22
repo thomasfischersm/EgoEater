@@ -14,6 +14,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
@@ -77,10 +78,7 @@ public abstract class ParentActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        EgoEaterApplication application = (EgoEaterApplication) getApplication();
-        Tracker tracker = application.getDefaultTracker();
-        tracker.setScreenName(getClass().getSimpleName());
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        AnalyticsUtil.reportScreenName(getApplication(), getClass().getSimpleName());
     }
 
     protected void showLoadingProgress() {

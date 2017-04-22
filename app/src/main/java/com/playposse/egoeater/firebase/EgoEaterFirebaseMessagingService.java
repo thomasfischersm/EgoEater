@@ -7,8 +7,11 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.firebase.actions.FirebaseClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyNewMatchesClientAction;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 import java.util.Map;
+
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
 
 /**
  * An implementation of {@link FirebaseMessagingService} that receives messages from AppEngine. The
@@ -58,9 +61,9 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
         Log.i(LOG_CAT, "Executed Firebase action " + action.getClass().getSimpleName());
 
         // Report action to Analytics
-//        AnalyticsUtil.reportEvent(
-//                getApplication(),
-//                firebaseEvent,
-//                action.getClass().getSimpleName());
+        AnalyticsUtil.reportEvent(
+                getApplication(),
+                firebaseEvent,
+                action.getClass().getSimpleName());
     }
 }
