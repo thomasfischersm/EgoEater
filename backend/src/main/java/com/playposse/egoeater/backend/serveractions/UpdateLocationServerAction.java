@@ -13,8 +13,8 @@ public class UpdateLocationServerAction extends AbstractServerAction {
 
     public static UserBean updateLocation(
             long sessionId,
-            double longitude,
             double latitude,
+            double longitude,
             String city,
             String state,
             String country) throws BadRequestException {
