@@ -5,6 +5,7 @@ import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.Result;
+import com.playposse.egoeater.backend.firebase.NotifyNewMatchesFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
 import com.playposse.egoeater.backend.schema.IntermediateUser;
@@ -56,6 +57,7 @@ public class GenerateMatchesServlet extends HttpServlet {
             populateIntermediateFirstPass(waiter);
             populateIntermediateSecondPass(waiter);
             createMatches(waiter);
+            NotifyNewMatchesFirebaseServerAction.sendMissionDataInvalidation();
         } catch (Throwable ex) {
             logExecution(req, start, ex.getMessage());
             throw ex;
@@ -255,6 +257,12 @@ public class GenerateMatchesServlet extends HttpServlet {
                     log.info("- Profile " + ratedProfileId + " hasn't ranked anybody yet.");
                     continue;
                 }
+            } else if (intermediateRatedUser == null) {
+                // We couldn't find the intermediateRatedUser in the last loop iteration. So, keep
+                // skipping IntermediateMatching rows until a new user shows up.
+                log.info("- Skipping row because profile " + ratedProfileId
+                        + " has been previously determined not have ranked anybody.");
+                continue;
             }
 
             Integer rankBack = intermediateRatedUser.getProfileIdToRankMap().get(profileIdLong);

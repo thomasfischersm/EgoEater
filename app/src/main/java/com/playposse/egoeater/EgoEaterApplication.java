@@ -5,6 +5,9 @@ import android.content.Intent;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import static com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService.ALL_DEVICES_TOPIC;
 
 /**
  * Implementation of {@link Application} for Bag Zombie app.
@@ -16,6 +19,9 @@ public class EgoEaterApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(ALL_DEVICES_TOPIC);
+
         getApplicationContext().deleteDatabase("egoEaterDb");
     }
 
