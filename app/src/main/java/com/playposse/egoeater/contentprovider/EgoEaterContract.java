@@ -3,6 +3,8 @@ package com.playposse.egoeater.contentprovider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.playposse.egoeater.util.CollectionsUtil;
+
 /**
  * A contract class for the {@link EgoEaterContentProvider}.
  */
@@ -194,10 +196,40 @@ public class EgoEaterContract {
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE PIPELINE_LOG "
-                + "(_ID INTEGER PRIMARY KEY, "
-                + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
-                + "DURATION_MS INTEGER, "
-                + "TRIGGER_REASON INTEGER)";
+                        + "(_ID INTEGER PRIMARY KEY, "
+                        + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                        + "DURATION_MS INTEGER, "
+                        + "TRIGGER_REASON INTEGER)";
+    }
+
+    /**
+     * A table that holds all the matches.
+     */
+    public static final class MatchTable implements BaseColumns {
+
+        public static final String PATH = "match";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String TABLE_NAME = "MATCH";
+        public static final String ID_COLUMN = "_id";
+        public static final String MATCH_ID_COLUMN = "match_id";
+        public static final String CREATED_COLUMN = "created";
+        public static final String PROFILE_ID_COLUMN = "profile_id";
+        public static final String IS_LOCKED_COLUMN = "is_locked";
+
+        public static final String[] COLUMN_NAMES = new String[]{
+                ID_COLUMN,
+                MATCH_ID_COLUMN,
+                CREATED_COLUMN,
+                PROFILE_ID_COLUMN,
+                IS_LOCKED_COLUMN};
+
+        static final String SQL_CREATE_TABLE =
+                "CREATE TABLE MATCH "
+                        + "(_ID INTEGER PRIMARY KEY, "
+                        + "MATCH_ID INTEGER, "
+                        + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
+                        + "PROFILE_ID INTEGER,"
+                        + "IS_LOCKED BOOLEAN)";
     }
 
     public static final class DeleteDuplicateProfiles {
@@ -207,5 +239,20 @@ public class EgoEaterContract {
         static final String SQL = "delete from " + ProfileTable.TABLE_NAME
                 + " where rowid not in (select max(rowid) from " + ProfileTable.TABLE_NAME
                 + " group by " + ProfileTable.PROFILE_ID_COLUMN + ");";
+    }
+
+    public static final class MatchAndProfileQuery {
+
+        public static final String PATH = "matchAndProfile";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String[] COLUMN_NAMES =
+                CollectionsUtil.concatenate(MatchTable.COLUMN_NAMES, ProfileTable.COLUMN_NAMES);
+
+        public static final String SQL = String.format(
+                "select * from %1$s a " +
+                        "inner join %2$s b on a.profile_id=b.profile_id " +
+                        "order by a.created asc",
+                MatchTable.TABLE_NAME,
+                ProfileTable.TABLE_NAME);
     }
 }

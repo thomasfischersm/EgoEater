@@ -17,7 +17,7 @@ public class MatchBean {
 
     public MatchBean(Match match, EgoEaterUser egoEaterUser) {
         this.matchId = match.getId();
-        this.otherProfileBean = new ProfileBean(match.getUserBRef().getValue(), egoEaterUser);
+        this.otherProfileBean = new ProfileBean(match.getUserBRef().get(), egoEaterUser);
         this.isLocked = match.isLocked();
     }
 

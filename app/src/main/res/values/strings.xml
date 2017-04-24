@@ -38,6 +38,9 @@
     <string name="save_button_label">Save</string>
     <string name="dismiss_button_label">Dismiss</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Notifications -->
+    <string name="updated_matches_notification_title">Woohoo! Ego Eater has new matches for you!</string>
+    <string name="updated_matches_notification_text">Once a day, Ego Eater runs an algorithm to pair the hotties of the world. The algorithm just finished running. You\'ve got some hot peeps to check out!</string>
+    <string name="only_lost_matches_notification_title">You\'ve had some matches in Ego Eater. Now they are gone.</string>
+    <string name="only_lost_matches_notification_text">Once a day, Ego Eater runs an algorithm to pair the hotties of the world. The last person just lost interest in you. But fret not. There are many things you can do. (1) Rank more users to find the special one who\'s into you. (2) Text your matches faster. Once you sent the first message, the match becomes locked. (3) This is the hardest yet most satisfying. Become more attractive. Hit the gym. Get new clothes. Put a smile on your face by following your passion.</string>
 </resources>

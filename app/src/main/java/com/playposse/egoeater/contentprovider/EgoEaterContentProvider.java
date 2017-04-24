@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQuery;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
@@ -30,6 +32,8 @@ public class EgoEaterContentProvider extends ContentProvider {
     private static final int PIPELINE_TABLE_KEY = 4;
     private static final int DELETE_DUPLICATE_PROFILES_KEY = 5;
     private static final int PIPELINE_LOG_TABLE_KEY = 6;
+    private static final int MATCH_TABLE_KEY = 7;
+    private static final int MATCH_AND_PROFILE_QUERY_KEY = 8;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -40,6 +44,8 @@ public class EgoEaterContentProvider extends ContentProvider {
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, PipelineTable.PATH, PIPELINE_TABLE_KEY);
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, EgoEaterContract.DeleteDuplicateProfiles.PATH, DELETE_DUPLICATE_PROFILES_KEY);
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, PipelineLogTable.PATH, PIPELINE_LOG_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, MatchTable.PATH, MATCH_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, MatchAndProfileQuery.PATH, MATCH_AND_PROFILE_QUERY_KEY);
     }
 
     private MainDatabaseHelper mainDatabaseHelper;
@@ -62,45 +68,40 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         SQLiteDatabase database = mainDatabaseHelper.getReadableDatabase();
 
+        String tableName;
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
-                return database.query(
-                        ProfileIdTable.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+                tableName = ProfileIdTable.TABLE_NAME;
+                break;
             case PROFILE_TABLE_KEY:
-                return database.query(
-                        ProfileTable.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+                tableName = ProfileTable.TABLE_NAME;
+                break;
             case RATING_TABLE_KEY:
-                return database.query(
-                        RatingTable.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+                tableName = RatingTable.TABLE_NAME;
+                break;
             case PIPELINE_TABLE_KEY:
-                return database.query(
-                        PipelineTable.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
+                tableName = PipelineTable.TABLE_NAME;
+                break;
+            case MATCH_TABLE_KEY:
+                tableName = MatchTable.TABLE_NAME;
+                break;
+            case MATCH_AND_PROFILE_QUERY_KEY:
+                return database.rawQuery(
+                        MatchAndProfileQuery.SQL,
+                        null);
+            default:
+                return null;
         }
-        return null;
+
+        return database.query(
+                tableName,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder);
+
     }
 
     @Nullable
@@ -114,26 +115,43 @@ public class EgoEaterContentProvider extends ContentProvider {
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         SQLiteDatabase database = mainDatabaseHelper.getWritableDatabase();
 
+        String tableName;
+        Uri contentUri;
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
-                long id = database.insert(ProfileIdTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(ProfileIdTable.CONTENT_URI, id);
+                tableName = ProfileIdTable.TABLE_NAME;
+                contentUri = ProfileIdTable.CONTENT_URI;
+                break;
             case PROFILE_TABLE_KEY:
-                long profileId = database.insert(ProfileTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(ProfileTable.CONTENT_URI, profileId);
+                tableName = ProfileTable.TABLE_NAME;
+                contentUri = ProfileTable.CONTENT_URI;
+                break;
             case RATING_TABLE_KEY:
-                long ratingId = database.insert(RatingTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(RatingTable.CONTENT_URI, ratingId);
+                tableName = RatingTable.TABLE_NAME;
+                contentUri = RatingTable.CONTENT_URI;
+                break;
             case PIPELINE_TABLE_KEY:
-                long pipelineId = database.insert(PipelineTable.TABLE_NAME, null, values);
-                getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
-                return ContentUris.withAppendedId(PipelineTable.CONTENT_URI, pipelineId);
+                tableName = PipelineTable.TABLE_NAME;
+                contentUri = PipelineTable.CONTENT_URI;
+                break;
             case PIPELINE_LOG_TABLE_KEY:
-                long pipelineLogId = database.insert(PipelineLogTable.TABLE_NAME, null, values);
-                return ContentUris.withAppendedId(PipelineLogTable.CONTENT_URI, pipelineLogId);
+                tableName = PipelineLogTable.TABLE_NAME;
+                contentUri = PipelineLogTable.CONTENT_URI;
+                break;
+            case MATCH_TABLE_KEY:
+                tableName = MatchTable.TABLE_NAME;
+                contentUri = MatchTable.CONTENT_URI;
+                break;
+            default:
+                return null;
+        }
+        long id = database.insert(tableName, null, values);
+
+        if (uriMatcher.match(uri) == PIPELINE_TABLE_KEY) {
+            getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
         }
 
-        return null;
+        return ContentUris.withAppendedId(contentUri, id);
     }
 
     @Override
@@ -153,6 +171,8 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return database.delete(RatingTable.TABLE_NAME, selection, selectionArgs);
             case PIPELINE_TABLE_KEY:
                 return database.delete(PipelineTable.TABLE_NAME, selection, selectionArgs);
+            case MATCH_TABLE_KEY:
+                return database.delete(MatchTable.TABLE_NAME, selection, selectionArgs);
             case DELETE_DUPLICATE_PROFILES_KEY:
                 Log.i(LOG_TAG, "delete: Deleting duplicate profiles");
                 database.execSQL(EgoEaterContract.DeleteDuplicateProfiles.SQL);

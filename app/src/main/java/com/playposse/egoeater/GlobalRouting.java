@@ -2,6 +2,7 @@ package com.playposse.egoeater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.playposse.egoeater.activity.CropPhotoActivity;
 import com.playposse.egoeater.activity.EditProfileActivity;
@@ -15,6 +16,8 @@ import com.playposse.egoeater.util.StringUtil;
  * happen.
  */
 public class GlobalRouting {
+
+    private static final String LOG_TAG = GlobalRouting.class.getSimpleName();
 
     /**
      * Routes the user when the app starts.
@@ -38,6 +41,7 @@ public class GlobalRouting {
      * Routes the user when login has completed.
      */
     public static void onLoginComplete(Context context) {
+        Log.i(LOG_TAG, "onLoginComplete: GlobalRouting.onLoginComplete has been called.");
         if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {

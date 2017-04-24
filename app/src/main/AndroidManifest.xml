@@ -32,7 +32,6 @@
         <service
             android:name=".services.PopulatePipelineService"
             android:exported="false" />
-
         <service android:name=".firebase.EgoEaterFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -102,7 +101,8 @@
             android:name=".activity.RatingActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.NoMorePairingsActivity"></activity>
+        <activity android:name=".activity.NoMorePairingsActivity" />
+        <activity android:name=".activity.MatchesActivity"></activity>
     </application>
 
 </manifest>

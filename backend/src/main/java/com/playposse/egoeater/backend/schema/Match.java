@@ -26,6 +26,9 @@ public class Match {
     private boolean isLocked = false;
     private long created = System.currentTimeMillis();
 
+    public Match() {
+    }
+
     public Match(Ref<EgoEaterUser> userARef, Ref<EgoEaterUser> userBRef) {
         this.userARef = userARef;
         this.userBRef = userBRef;

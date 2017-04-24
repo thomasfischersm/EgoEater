@@ -5,8 +5,11 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.util.SmartCursor;
+
+import java.util.List;
 
 import static com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 
@@ -110,6 +113,41 @@ public class ProfileParcelable implements Parcelable {
         dest.writeInt(wins);
         dest.writeInt(losses);
         dest.writeInt(winsLossesSum);
+    }
+
+    public static ContentValues toContentValues(ProfileBean profile) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN, profile.getUserId());
+        contentValues.put(EgoEaterContract.ProfileTable.FIRST_NAME_COLUMN, profile.getFirstName());
+        contentValues.put(EgoEaterContract.ProfileTable.LAST_NAME_COLUMN, profile.getLastName());
+        contentValues.put(EgoEaterContract.ProfileTable.NAME_COLUMN, profile.getName());
+        contentValues.put(EgoEaterContract.ProfileTable.PROFILE_TEXT_COLUMN, profile.getProfileText());
+        contentValues.put(EgoEaterContract.ProfileTable.DISTANCE_COLUMN, profile.getDistance());
+        contentValues.put(EgoEaterContract.ProfileTable.CITY_COLUMN, profile.getCity());
+        contentValues.put(EgoEaterContract.ProfileTable.STATE_COLUMN, profile.getState());
+        contentValues.put(EgoEaterContract.ProfileTable.COUNTRY_COLUMN, profile.getCountry());
+        contentValues.put(EgoEaterContract.ProfileTable.AGE_COLUMN, profile.getAge());
+        contentValues.put(EgoEaterContract.ProfileTable.GENDER_COLUMN, profile.getGender());
+
+        List<String> profilePhotoUrls = profile.getProfilePhotoUrls();
+        if (profilePhotoUrls != null) {
+            if (profilePhotoUrls.size() > 0) {
+                contentValues.put(
+                        EgoEaterContract.ProfileTable.PHOTO_URL_0_COLUMN,
+                        profilePhotoUrls.get(0));
+            }
+            if (profilePhotoUrls.size() > 1) {
+                contentValues.put(
+                        EgoEaterContract.ProfileTable.PHOTO_URL_1_COLUMN,
+                        profilePhotoUrls.get(1));
+            }
+            if (profilePhotoUrls.size() > 2) {
+                contentValues.put(
+                        EgoEaterContract.ProfileTable.PHOTO_URL_2_COLUMN,
+                        profilePhotoUrls.get(2));
+            }
+        }
+        return contentValues;
     }
 
     public long getProfileId() {

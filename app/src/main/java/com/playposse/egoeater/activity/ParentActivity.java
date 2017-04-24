@@ -56,7 +56,7 @@ public abstract class ParentActivity extends AppCompatActivity {
                 return true;
             case R.id.matches_menu_item:
                 finish();
-                // TODO: Start matches activity
+                startActivity(new Intent(this, MatchesActivity.class));
                 return true;
             case R.id.send_feedback_menu_item:
                 // TODO

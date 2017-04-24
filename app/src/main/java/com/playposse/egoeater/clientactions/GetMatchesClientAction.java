@@ -29,4 +29,8 @@ public class GetMatchesClientAction extends ApiClientAction<List<MatchBean>> {
             return new ArrayList<>();
         }
     }
+
+    public static List<MatchBean> getBlocking(Context context) throws InterruptedException {
+        return new GetMatchesClientAction(context, null).executeBlocking();
+    }
 }

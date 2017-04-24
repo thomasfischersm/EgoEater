@@ -1,6 +1,10 @@
 package com.playposse.egoeater.util;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.playposse.egoeater.storage.ProfileParcelable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,5 +41,9 @@ public class SmartCursor {
 
     public long getLong(String columnName) {
         return cursor.getLong(columnNameToIndexMap.get(columnName));
+    }
+
+    public boolean getBoolean(String columnName) {
+        return getInt(columnName) > 0;
     }
 }
