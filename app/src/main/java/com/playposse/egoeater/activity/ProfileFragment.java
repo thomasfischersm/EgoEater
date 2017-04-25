@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.StringUtil;
 
 import static com.playposse.egoeater.util.EgoEaterConstants.LOCATION_SEPARATOR;
@@ -112,8 +113,10 @@ public class ProfileFragment extends Fragment {
         mainImageIndex = 0;
         if (profile != null) {
             loadImages();
-            headlineTextView.setText(formatHeadline());
-            subHeadTextView.setText(formatSubHead());
+            String headLine = ProfileFormatter.formatNameAndAge(getContext(), profile);
+            headlineTextView.setText(headLine);
+            String subHead = ProfileFormatter.formatCityStateAndDistance(getContext(), profile);
+            subHeadTextView.setText(subHead);
         }
     }
 
@@ -210,34 +213,6 @@ public class ProfileFragment extends Fragment {
         super.onDetach();
 
         listener = null;
-    }
-
-    private String formatHeadline() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(profile.getFirstName());
-
-        if (profile.getAge() > 0) {
-            sb.append(getString(R.string.age_speparator));
-            sb.append(profile.getAge());
-        }
-        return sb.toString();
-    }
-
-    private String formatSubHead() {
-        if (StringUtil.isEmpty(profile.getCity())
-                || StringUtil.isEmpty(profile.getState())
-                || StringUtil.isEmpty(profile.getCountry())) {
-            // Skip. The data is incomplete.
-            return "";
-        }
-
-        String distance = getString(R.string.distance_snippet, (int) profile.getDistance());
-
-        if (profile.getCountry().equals(USA_COUNTRY)) {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getState() + distance;
-        } else {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry() + distance;
-        }
     }
 
     /**

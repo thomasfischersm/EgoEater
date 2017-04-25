@@ -23,7 +23,7 @@ public class GetMatchesClientAction extends ApiClientAction<List<MatchBean>> {
     protected List<MatchBean> executeAsync() throws IOException {
         MatchBeanCollection matchBeanCollection = getApi().getMatches(getSessionId()).execute();
 
-        if (matchBeanCollection != null) {
+        if ((matchBeanCollection != null) && (matchBeanCollection.getItems() != null)) {
             return matchBeanCollection.getItems();
         } else {
             return new ArrayList<>();

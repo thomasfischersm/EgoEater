@@ -42,6 +42,7 @@ public class GlobalRouting {
      */
     public static void onLoginComplete(Context context) {
         Log.i(LOG_TAG, "onLoginComplete: GlobalRouting.onLoginComplete has been called.");
+        // TODO: If there is a match, show the matches activity.
         if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
@@ -56,5 +57,6 @@ public class GlobalRouting {
      */
     public static void onCloudError(Context context) {
         EgoEaterPreferences.clearSessionId(context);
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 }

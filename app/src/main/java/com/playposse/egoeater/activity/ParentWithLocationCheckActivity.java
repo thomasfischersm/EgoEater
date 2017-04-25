@@ -189,6 +189,8 @@ public abstract class ParentWithLocationCheckActivity
 
             // Kick off pipeline to rebuild.
             PopulatePipelineService.startService(this, PipelineLogTable.LOCATION_UPDATE_TRIGGER);
+
+            // TODO: We could call the cloud to get the updated distance to each profile.
         } catch (IOException ex) {
             Log.e(LOG_TAG, "checkLocationSync: Failed to update location information.", ex);
         }
