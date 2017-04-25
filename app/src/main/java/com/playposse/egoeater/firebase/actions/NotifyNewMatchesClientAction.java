@@ -34,7 +34,6 @@ import static com.playposse.egoeater.contentprovider.EgoEaterContract.AUTHORITY;
  */
 public class NotifyNewMatchesClientAction extends FirebaseClientAction {
 
-    // TODO: Fix bug where duplicate matches are created.
     private static final String LOG_TAG = NotifyNewMatchesClientAction.class.getSimpleName();
 
     private enum UpdateState {

@@ -35,6 +35,8 @@ public class MatchesActivity
         extends ParentActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    // TODO: Think about listening to contentprovider changes and refreshing the view.
+
     private static final int COLUMN_COUNT = 3;
     private static final int LOADER_ID = 1;
 
