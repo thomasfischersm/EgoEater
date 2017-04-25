@@ -198,4 +198,29 @@ public final class QueryUtil {
             cursor.close();
         }
     }
+
+    public static ProfileParcelable getProfileById(
+            ContentResolver contentResolver,
+            long profileId) {
+
+        Cursor cursor = contentResolver.query(
+                ProfileTable.CONTENT_URI,
+                ProfileTable.COLUMN_NAMES,
+                ProfileTable.PROFILE_ID_COLUMN + " = ?",
+                new String[]{Long.toString(profileId)},
+                null);
+
+        try {
+            if ((cursor != null) && cursor.moveToNext()) {
+                SmartCursor smartCursor = new SmartCursor(cursor, ProfileTable.COLUMN_NAMES);
+                return new ProfileParcelable(smartCursor);
+            } else {
+                return null;
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 }

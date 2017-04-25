@@ -17,6 +17,7 @@ import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.DataMunchUtil;
 import com.playposse.egoeater.util.EgoEaterConstants;
+import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.StringUtil;
 
 import static com.playposse.egoeater.util.EgoEaterConstants.LOCATION_SEPARATOR;
@@ -73,11 +74,7 @@ public class EditProfileActivity extends ParentWithLocationCheckActivity {
 
     private void initProfilePhoto(final int photoIndex, ImageButton imageButton, String photoUrl) {
         if (photoUrl != null) {
-            Glide.with(this)
-                    .load(photoUrl)
-                    .asBitmap()
-                    .dontTransform()
-                    .into(imageButton);
+            GlideUtil.load(imageButton, photoUrl);
         }
 
         imageButton.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile</string>
     <string name="age_speparator">, </string>
+    <string name="profile_edit_text_hint">Enter a short profile here.</string>
 
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>

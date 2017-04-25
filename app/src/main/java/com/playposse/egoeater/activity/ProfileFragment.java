@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.StringUtil;
 
@@ -183,11 +184,7 @@ public class ProfileFragment extends Fragment {
             public void run() {
                 if (photoUrl != null) {
                     imageView.setVisibility(View.VISIBLE);
-                    Glide.with(getContext())
-                            .load(photoUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .dontTransform()
-                            .into(imageView);
+                    GlideUtil.load(imageView, photoUrl);
                 } else
 
                 {
