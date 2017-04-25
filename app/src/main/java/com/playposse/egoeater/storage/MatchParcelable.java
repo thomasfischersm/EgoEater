@@ -31,7 +31,7 @@ public class MatchParcelable implements Parcelable {
             };
 
     public MatchParcelable(SmartCursor smartCursor) {
-        localMatchId = smartCursor.getInt(MatchTable.ID_COLUMN);
+        localMatchId = smartCursor.getInt(0); // Warning: Multiple ID columns!
         cloudMatchId = smartCursor.getLong(MatchTable.MATCH_ID_COLUMN);
         isLocked = smartCursor.getBoolean(MatchTable.IS_LOCKED_COLUMN);
         otherProfile = new ProfileParcelable(smartCursor);

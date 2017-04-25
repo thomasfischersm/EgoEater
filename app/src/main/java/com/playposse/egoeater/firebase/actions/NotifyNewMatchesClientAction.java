@@ -16,8 +16,10 @@ import com.playposse.egoeater.clientactions.GetMatchesClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQuery;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
+import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.MatchParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.DatabaseDumper;
 import com.playposse.egoeater.util.NotificationUtil;
 import com.playposse.egoeater.util.NotificationUtil.NotificationType;
 import com.playposse.egoeater.util.SmartCursor;
@@ -32,6 +34,7 @@ import static com.playposse.egoeater.contentprovider.EgoEaterContract.AUTHORITY;
  */
 public class NotifyNewMatchesClientAction extends FirebaseClientAction {
 
+    // TODO: Fix bug where duplicate matches are created.
     private static final String LOG_TAG = NotifyNewMatchesClientAction.class.getSimpleName();
 
     private enum UpdateState {
@@ -48,15 +51,18 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
 
     @Override
     protected void execute(RemoteMessage remoteMessage) {
+        long start = System.currentTimeMillis();
         Log.i(LOG_TAG, "execute: Received notifcation of new matches.");
         UpdateState updateState = processNewMatches();
 
         sendNotification(updateState);
+        long end = System.currentTimeMillis();
+        DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+        Log.i(LOG_TAG, "execute: Processed new match notification in " + (end - start) + "ms.");
     }
 
     private UpdateState processNewMatches() {
         try {
-
             List<MatchParcelable> existingMatches = getExistingMatches();
             List<MatchBean> newMatches = getNewMatches();
 
@@ -200,7 +206,7 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
             ContentProviderOperation operation =
                     ContentProviderOperation.newDelete(MatchTable.CONTENT_URI)
                             .withSelection(
-                                    ProfileTable.ID_COLUMN + " = ?",
+                                    MatchTable.ID_COLUMN + " = ?",
                                     new String[]{Integer.toString(match.getLocalMatchId())})
                             .build();
             operations.add(operation);

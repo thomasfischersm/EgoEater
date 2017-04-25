@@ -43,6 +43,10 @@ public class SmartCursor {
         return cursor.getLong(columnNameToIndexMap.get(columnName));
     }
 
+    public int getInt(int columnIndex) {
+        return cursor.getInt(columnIndex);
+    }
+
     public boolean getBoolean(String columnName) {
         return getInt(columnName) > 0;
     }
