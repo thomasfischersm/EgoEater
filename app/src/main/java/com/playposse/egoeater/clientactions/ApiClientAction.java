@@ -144,7 +144,7 @@ public abstract class ApiClientAction<D> {
         @Override
         protected void onPostExecute(Void aVoid) {
             // Return result to caller.
-            if (exception != null) {
+            if (exception == null) {
                 postExecute();
 
                 if (callback != null) {
