@@ -69,6 +69,7 @@ public final class NotificationUtil {
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_favorite_border_black_24dp)
+                .setAutoCancel(true)
                 .build();
 
         NotificationManager notificationManager =

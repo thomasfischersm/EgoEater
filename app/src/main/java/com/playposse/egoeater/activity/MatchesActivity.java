@@ -141,7 +141,7 @@ public class MatchesActivity
                 @Override
                 public void onClick(View v) {
                     SimpleAlertDialog.show(
-                            getApplicationContext(),
+                            MatchesActivity.this,
                             R.string.match_lock_icon_title,
                             R.string.match_lock_icon_explanation);
                 }
