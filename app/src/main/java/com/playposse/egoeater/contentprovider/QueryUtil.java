@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.playposse.egoeater.clientactions.ReportRankingClientAction;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
@@ -179,6 +180,20 @@ public final class QueryUtil {
             Log.i(LOG_TAG, "isAlreadyCompared: Check pairing: " + profileId0 + " " + profileId1
                     + " " + (cursor.getCount() > 0));
             return cursor.getCount() > 0;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public static boolean hasMatches(ContentResolver contentResolver) {
+        Cursor cursor = contentResolver.query(
+                MatchTable.CONTENT_URI,
+                MatchTable.COLUMN_NAMES,
+                null,
+                null,
+                null);
+        try {
+            return (cursor != null) && (cursor.getCount() > 0);
         } finally {
             cursor.close();
         }

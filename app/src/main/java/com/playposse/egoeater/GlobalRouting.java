@@ -7,7 +7,9 @@ import android.util.Log;
 import com.playposse.egoeater.activity.CropPhotoActivity;
 import com.playposse.egoeater.activity.EditProfileActivity;
 import com.playposse.egoeater.activity.LoginActivity;
+import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.activity.RatingActivity;
+import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.StringUtil;
 
@@ -42,8 +44,9 @@ public class GlobalRouting {
      */
     public static void onLoginComplete(Context context) {
         Log.i(LOG_TAG, "onLoginComplete: GlobalRouting.onLoginComplete has been called.");
-        // TODO: If there is a match, show the matches activity.
-        if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
+        if (QueryUtil.hasMatches(context.getContentResolver())) {
+            context.startActivity(new Intent(context, MatchesActivity.class));
+        }else if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
             context.startActivity(new Intent(context, EditProfileActivity.class));
