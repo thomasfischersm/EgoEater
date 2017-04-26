@@ -13,6 +13,8 @@ import android.util.Log;
 
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQuery;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MaxMessageIndexQuery;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
@@ -34,6 +36,8 @@ public class EgoEaterContentProvider extends ContentProvider {
     private static final int PIPELINE_LOG_TABLE_KEY = 6;
     private static final int MATCH_TABLE_KEY = 7;
     private static final int MATCH_AND_PROFILE_QUERY_KEY = 8;
+    private static final int MESSAGE_TABLE_KEY = 9;
+    private static final int MAX_MESSAGE_INDEX_QUERY_KEY = 10;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -46,6 +50,8 @@ public class EgoEaterContentProvider extends ContentProvider {
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, PipelineLogTable.PATH, PIPELINE_LOG_TABLE_KEY);
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, MatchTable.PATH, MATCH_TABLE_KEY);
         uriMatcher.addURI(EgoEaterContract.AUTHORITY, MatchAndProfileQuery.PATH, MATCH_AND_PROFILE_QUERY_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, MessageTable.PATH, MESSAGE_TABLE_KEY);
+        uriMatcher.addURI(EgoEaterContract.AUTHORITY, MaxMessageIndexQuery.PATH, MAX_MESSAGE_INDEX_QUERY_KEY);
     }
 
     private MainDatabaseHelper mainDatabaseHelper;
@@ -89,6 +95,18 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return database.rawQuery(
                         MatchAndProfileQuery.SQL,
                         null);
+            case MESSAGE_TABLE_KEY:
+                tableName = MessageTable.TABLE_NAME;
+                break;
+            case MAX_MESSAGE_INDEX_QUERY_KEY:
+                String[] realSelectionArgs = new String[4];
+                realSelectionArgs[0] = selectionArgs[0];
+                realSelectionArgs[1] = selectionArgs[1];
+                realSelectionArgs[2] = selectionArgs[1];
+                realSelectionArgs[3] = selectionArgs[0];
+                return database.rawQuery(
+                        MaxMessageIndexQuery.SQL,
+                        realSelectionArgs);
             default:
                 return null;
         }
@@ -142,6 +160,10 @@ public class EgoEaterContentProvider extends ContentProvider {
                 tableName = MatchTable.TABLE_NAME;
                 contentUri = MatchTable.CONTENT_URI;
                 break;
+            case MESSAGE_TABLE_KEY:
+                tableName = MessageTable.TABLE_NAME;
+                contentUri = MessageTable.CONTENT_URI;
+                break;
             default:
                 return null;
         }
@@ -149,6 +171,8 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         if (uriMatcher.match(uri) == PIPELINE_TABLE_KEY) {
             getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
+        } else if (uriMatcher.match(uri) == MESSAGE_TABLE_KEY) {
+            getContext().getContentResolver().notifyChange(MessageTable.CONTENT_URI, null);
         }
 
         return ContentUris.withAppendedId(contentUri, id);
@@ -173,6 +197,8 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return database.delete(PipelineTable.TABLE_NAME, selection, selectionArgs);
             case MATCH_TABLE_KEY:
                 return database.delete(MatchTable.TABLE_NAME, selection, selectionArgs);
+            case MESSAGE_TABLE_KEY:
+                return database.delete(MessageTable.TABLE_NAME, selection, selectionArgs);
             case DELETE_DUPLICATE_PROFILES_KEY:
                 Log.i(LOG_TAG, "delete: Deleting duplicate profiles");
                 database.execSQL(EgoEaterContract.DeleteDuplicateProfiles.SQL);
@@ -200,6 +226,12 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return database.update(RatingTable.TABLE_NAME, values, selection, selectionArgs);
             case PIPELINE_TABLE_KEY:
                 return database.update(PipelineTable.TABLE_NAME, values, selection, selectionArgs);
+            case MATCH_TABLE_KEY:
+                return database.update(MatchTable.TABLE_NAME, values, selection, selectionArgs);
+            case MESSAGE_TABLE_KEY:
+                int rowCount = database.update(MessageTable.TABLE_NAME, values, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(MessageTable.CONTENT_URI, null);
+                return rowCount;
         }
         return 0;
     }

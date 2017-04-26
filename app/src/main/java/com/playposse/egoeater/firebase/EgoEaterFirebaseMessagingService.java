@@ -6,7 +6,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.firebase.actions.FirebaseClientAction;
+import com.playposse.egoeater.firebase.actions.NotifyMessageReadClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyNewMatchesClientAction;
+import com.playposse.egoeater.firebase.actions.NotifyNewMessageClientAction;
 import com.playposse.egoeater.util.AnalyticsUtil;
 
 import java.util.Map;
@@ -23,6 +25,8 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TYPE_KEY = "type";
     private static final String NOTIFY_NEW_MATCHES_TYPE = "notifyNewMatches";
+    private static final String NOTIFY_NEW_MESSAGE_TYPE = "notifyNewMessage";
+    private static final String NOTIFY_MESSAGE_READ_DATA_TYPE = "notifyMessageRead";
 
     public static final String ALL_DEVICES_TOPIC = "allDevices";
 
@@ -49,6 +53,12 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
         switch (data.get(TYPE_KEY)) {
             case NOTIFY_NEW_MATCHES_TYPE:
                 execute(new NotifyNewMatchesClientAction(remoteMessage));
+                break;
+            case NOTIFY_NEW_MESSAGE_TYPE:
+                execute(new NotifyNewMessageClientAction(remoteMessage));
+                break;
+            case NOTIFY_MESSAGE_READ_DATA_TYPE:
+                execute(new NotifyMessageReadClientAction(remoteMessage));
                 break;
             default:
                 Log.w(LOG_CAT, "Received an unknown message type from Firebase: "

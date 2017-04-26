@@ -5,11 +5,13 @@ import com.googlecode.objectify.Ref;
 import com.playposse.egoeater.backend.firebase.NotifyNewMessageFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+import com.playposse.egoeater.backend.schema.Match;
 import com.playposse.egoeater.backend.schema.Message;
 import com.playposse.egoeater.backend.util.RefUtil;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -17,6 +19,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * A server action that sends a message between two users.
  */
 public class SendMessageServerAction extends AbstractServerAction {
+
+    private static final Logger log = Logger.getLogger(SendMessageServerAction.class.getName());
 
     public static void sendMessage(long sessionId, long recipientId, String message)
             throws BadRequestException, IOException {
@@ -38,6 +42,8 @@ public class SendMessageServerAction extends AbstractServerAction {
         final Conversation conversation;
         if (conversations.size() > 0) {
             conversation = createConversation(userRefs[0], userRefs[1], senderRef, message);
+            lockMatch(userRefs[0], userRefs[1]);
+            lockMatch(userRefs[1], userRefs[0]); // TODO: Should only need one lockMatch in the future.
         } else {
             conversation = updateConversation(conversations.get(0), senderRef, message);
         }
@@ -53,12 +59,12 @@ public class SendMessageServerAction extends AbstractServerAction {
     }
 
     private static Conversation createConversation(
-            Ref<EgoEaterUser> userRefA,
-            Ref<EgoEaterUser> userRefB,
+            Ref<EgoEaterUser> userARef,
+            Ref<EgoEaterUser> userBRef,
             Ref<EgoEaterUser> senderUserRef,
             String message) {
 
-        return new Conversation(userRefA, userRefB, senderUserRef, message);
+        return new Conversation(userARef, userBRef, senderUserRef, message);
     }
 
     private static Conversation updateConversation(
@@ -71,5 +77,24 @@ public class SendMessageServerAction extends AbstractServerAction {
         conversation.getMessages().add(message);
         ofy().save().entity(conversation);
         return conversation;
+    }
+
+    private static void lockMatch(Ref<EgoEaterUser> userARef, Ref<EgoEaterUser> userBRef) {
+        List<Match> matches = ofy().load()
+                .type(Match.class)
+                .filter("userARef =", userARef)
+                .filter("userBRef =", userBRef)
+                .list();
+
+        if (matches.size() != 1) {
+            log.warning("Got an unexpected amount of matches for " + userARef.getKey().getId()
+                    + " and " + userBRef.getKey().getId() + ": " + matches.size());
+            return;
+        }
+
+        Match match = matches.get(0);
+        match.setLocked(true);
+        ofy().save()
+                .entity(match);
     }
 }

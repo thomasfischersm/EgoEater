@@ -232,6 +232,44 @@ public class EgoEaterContract {
                         + "IS_LOCKED BOOLEAN)";
     }
 
+    /**
+     * A table that holds all the messages. Each message of a conversation has its own row. This
+     * makes it easy to show the conversation in a RecyclerView. The storage approach on the
+     * server is different.
+     */
+    public static final class MessageTable implements BaseColumns {
+
+        public static final String PATH = "message";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String TABLE_NAME = "MESSAGE";
+        public static final String ID_COLUMN = "_id";
+        public static final String SENDER_PROFILE_ID_COLUMN = "sender_profile_id";
+        public static final String RECIPIENT_PROFILE_ID_COLUMN = "recipient_profile_id";
+        public static final String MESSAGE_INDEX_COLUMN = "message_index";
+        public static final String IS_RECEIVED_COLUMN = "is_received";
+        public static final String CREATED_COLUMN = "created";
+        public static final String MESSAGE_CONTENT_COLUMN = "message_content";
+
+        public static final String[] COLUMN_NAMES = new String[]{
+                ID_COLUMN,
+                SENDER_PROFILE_ID_COLUMN,
+                RECIPIENT_PROFILE_ID_COLUMN,
+                MESSAGE_INDEX_COLUMN,
+                IS_RECEIVED_COLUMN,
+                CREATED_COLUMN,
+                MESSAGE_CONTENT_COLUMN};
+
+        static final String SQL_CREATE_TABLE =
+                "CREATE TABLE MESSAGE "
+                        + "(_ID INTEGER PRIMARY KEY, "
+                + "SENDER_PROFILE_ID INTEGER, "
+                + "RECIPIENT_PROFILE_ID INTEGER, "
+                + "MESSAGE_INDEX INTEGER, "
+                + "IS_RECEIVED BOOLEAN DEFAULT FALSE, "
+                + "CREATED DATETIME, "
+                + "MESSAGE_CONTENT TEXT)";
+    }
+
     public static final class DeleteDuplicateProfiles {
 
         public static final String PATH = "deleteDuplicateProfiles";
@@ -254,5 +292,23 @@ public class EgoEaterContract {
                         "order by a.created asc",
                 MatchTable.TABLE_NAME,
                 ProfileTable.TABLE_NAME);
+    }
+
+    /**
+     * A query that returns the maximum message index for a conversation between two users.
+     */
+    public static final class MaxMessageIndexQuery {
+
+        public static final String PATH = "maxMessageIndex";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String MAX_MESSAGE_INDEX_COLUMN = "max_message_index";
+        public static final String[] COLUMN_NAMES = new String[]{
+                MAX_MESSAGE_INDEX_COLUMN};
+
+        public static final String SQL =
+                "select max(message_index) as max_message_index " +
+                        "from message " +
+                        "where ((sender_profile_id = ?) and (recipient_profile_id = ?)) " +
+                        "or ((sender_profile_id = ?) and (recipient_profile_id = ?))";
     }
 }

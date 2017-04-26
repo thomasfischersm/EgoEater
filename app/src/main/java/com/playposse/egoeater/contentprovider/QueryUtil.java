@@ -9,11 +9,14 @@ import android.util.Log;
 
 import com.playposse.egoeater.clientactions.ReportRankingClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MaxMessageIndexQuery;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.RatingTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.SmartCursor;
@@ -222,5 +225,77 @@ public final class QueryUtil {
                 cursor.close();
             }
         }
+    }
+
+    public static Integer getMaxMessageIndex(
+            ContentResolver contentResolver,
+            long profileAId,
+            long profileBId) {
+
+        Cursor cursor = contentResolver.query(
+                MaxMessageIndexQuery.CONTENT_URI,
+                null,
+                null,
+                new String[]{Long.toString(profileAId), Long.toString(profileBId)},
+                null);
+
+        try {
+            if ((cursor == null) || (!cursor.moveToNext())) {
+                return null;
+            } else {
+                return cursor.getInt(0);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    /**
+     * Marks a match as locked. This happens when one of the users sends the first message.
+     */
+    public static void lockMatch(
+            ContentResolver contentResolver,
+            long profileId) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MatchTable.IS_LOCKED_COLUMN, true);
+
+        int rowCount = contentResolver.update(
+                MatchTable.CONTENT_URI,
+                contentValues,
+                MatchTable.PROFILE_ID_COLUMN + " = ?",
+                new String[]{Long.toString(profileId)});
+
+        if (rowCount != 1) {
+            Log.w(LOG_TAG, "lockMatch: Tried to lock a match and failed: " + rowCount);
+        }
+    }
+
+    public static void markMessageRead(
+            Context context,
+            long recipientProfileId,
+            int messageIndex) {
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Long senderProfileId = EgoEaterPreferences.getUser(context).getUserId();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MessageTable.IS_RECEIVED_COLUMN, true);
+
+        int rowCount = contentResolver.update(
+                MessageTable.CONTENT_URI,
+                contentValues,
+                MessageTable.SENDER_PROFILE_ID_COLUMN + " = ? and "
+                        + MessageTable.RECIPIENT_PROFILE_ID_COLUMN + " = ? and "
+                        + MessageTable.MESSAGE_INDEX_COLUMN + " = ?",
+                new String[]{
+                        Long.toString(senderProfileId),
+                        Long.toString(recipientProfileId),
+                        Integer.toString(messageIndex)});
+
+        Log.w(LOG_TAG, "markMessageRead: Failed to mark a message as read. Received an unexpected" +
+                " row count: " + rowCount);
     }
 }

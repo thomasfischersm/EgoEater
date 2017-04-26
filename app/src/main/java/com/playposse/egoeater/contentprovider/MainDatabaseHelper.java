@@ -24,6 +24,7 @@ public class MainDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(EgoEaterContract.PipelineTable.SQL_CREATE_TABLE);
         db.execSQL(EgoEaterContract.PipelineLogTable.SQL_CREATE_TABLE);
         db.execSQL(EgoEaterContract.MatchTable.SQL_CREATE_TABLE);
+        db.execSQL(EgoEaterContract.MessageTable.SQL_CREATE_TABLE);
     }
 
     @Override
