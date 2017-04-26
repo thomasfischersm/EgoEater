@@ -18,12 +18,14 @@ import javax.annotation.Nullable;
  */
 public class FirebaseServerAction {
 
+    private static final Logger log = Logger.getLogger(FirebaseServerAction.class.getName());
+
     public enum FirebasePriority {
         normal,
         high,
     }
 
-    private static final Logger log = Logger.getLogger(FirebaseServerAction.class.getName());
+    public static final int MAX_FIREBASE_MESSAGE_SIZE = 3_500;
 
     private static final String FIREBASE_URL = "https://fcm.googleapis.com/fcm/send";
     private static final String APP_ID = "AAAAAwmSP4o:APA91bEHeJhtauN9ZS0SUyB-OwmJiN2IYCUJYjehOc4grYnTddA-2oUu-USewx-ntJEhC802UK1qzvaKNL0-Yis-ZOxUHyRm8MrxWrV6OPt8_8i0dW20y6D3k9_oopR0vwBIe5OpCQc7";

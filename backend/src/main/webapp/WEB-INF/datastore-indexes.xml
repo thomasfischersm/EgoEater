@@ -16,4 +16,8 @@
         <property name="profileId" direction="asc"/>
         <property name="winsLossesSum" direction="desc"/>
     </datastore-index>
+    <datastore-index kind="Conversation" ancestor="false" source="manual">
+        <property name="profileRefA" direction="asc"/>
+        <property name="profileRefB" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>

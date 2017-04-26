@@ -14,10 +14,7 @@ public class NotifyNewMatchesFirebaseServerAction extends FirebaseServerAction {
     private static final String COLLAPSE_KEY =
             "notifyNewMatchesCollapseKey";
 
-    /**
-     * Sends a message to all devices to tell them to invalidate the mission data cache.
-     */
-    public static String sendMissionDataInvalidation() throws IOException {
+    public static String notifyNewMatches() throws IOException {
         JSONObject rootNode = new JSONObject();
         rootNode.put(TYPE_KEY, DATA_TYPE);
 

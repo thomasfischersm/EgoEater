@@ -103,8 +103,10 @@
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.NoMorePairingsActivity" />
         <activity android:name=".activity.MatchesActivity" />
-        <activity android:name=".activity.ViewProfileActivity"
+        <activity
+            android:name=".activity.ViewProfileActivity"
             android:parentActivityName=".activity.MatchesActivity" />
+        <activity android:name=".activity.MessagingActivity"></activity>
     </application>
 
 </manifest>

@@ -11,22 +11,27 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.MatchBean;
+import com.playposse.egoeater.backend.beans.MessageBean;
 import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
+import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.GetConversationServerAction;
 import com.playposse.egoeater.backend.serveractions.GetMatchesServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByDistanceServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByIdServerAction;
+import com.playposse.egoeater.backend.serveractions.ReportMessageReadServerAction;
 import com.playposse.egoeater.backend.serveractions.ReportRankingServerAction;
 import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
+import com.playposse.egoeater.backend.serveractions.SendMessageServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
-import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateLocationServerAction;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
 import com.playposse.egoeater.backend.serveractions.WipeTestDataServerAction;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -149,5 +154,31 @@ public class EgoEaterEndPoint {
             throws BadRequestException {
 
         return GetMatchesServerAction.getMatches(sessionId);
+    }
+
+    @ApiMethod(name = "sendMessage")
+    public void sendMessage(
+            @Named("sessionId") long sessionId,
+            @Named("recipientId") long recipientId,
+            @Named("message") String message) throws BadRequestException, IOException {
+
+         SendMessageServerAction.sendMessage(sessionId, recipientId, message);
+    }
+
+    @ApiMethod(name = "getConversation")
+    public List<MessageBean> getConversation(
+            @Named("sessionId") long sessionId,
+            @Named("otherUserId") long otherUserId) throws BadRequestException {
+
+        return GetConversationServerAction.getConversation(sessionId, otherUserId);
+    }
+
+    @ApiMethod(name = "reportMessageRead")
+    public void reportMessageRead(
+            @Named("sessionId") long sessionId,
+            @Named("otherUserId") long otherUserId,
+            @Named("messageIndex") int messageIndex) throws BadRequestException {
+
+        ReportMessageReadServerAction.reportMessageRead(sessionId, otherUserId, messageIndex);
     }
 }

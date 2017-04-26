@@ -4,7 +4,6 @@ import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.Result;
 import com.playposse.egoeater.backend.firebase.NotifyNewMatchesFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
@@ -57,7 +56,7 @@ public class GenerateMatchesServlet extends HttpServlet {
             populateIntermediateFirstPass(waiter);
             populateIntermediateSecondPass(waiter);
             createMatches(waiter);
-            NotifyNewMatchesFirebaseServerAction.sendMissionDataInvalidation();
+            NotifyNewMatchesFirebaseServerAction.notifyNewMatches();
         } catch (Throwable ex) {
             logExecution(req, start, ex.getMessage());
             throw ex;
@@ -300,7 +299,8 @@ public class GenerateMatchesServlet extends HttpServlet {
     /**
      * Reads the information from the intermediate table to create the matching.
      *
-     * @param waiter
+     * TODO: Implement logic, so that only one match row is created. The profile with the smaller id
+     * is always left.
      */
     private static void createMatches(ObjectifyWaiter waiter) {
         log.info("*** Create matches");
