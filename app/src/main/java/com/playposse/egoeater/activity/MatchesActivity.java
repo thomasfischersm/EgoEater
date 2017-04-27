@@ -1,6 +1,8 @@
 package com.playposse.egoeater.activity;
 
 import android.app.LoaderManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -27,6 +29,8 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.storage.MatchParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.NotificationUtil;
+import com.playposse.egoeater.util.NotificationUtil.NotificationType;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
 import com.playposse.egoeater.util.SimpleAlertDialog;
@@ -88,6 +92,8 @@ public class MatchesActivity
                 EgoEaterContract.MatchTable.CONTENT_URI,
                 false,
                 contentObserver);
+
+        NotificationUtil.clear(this, NotificationType.UpdatedMatches);
     }
 
     @Override

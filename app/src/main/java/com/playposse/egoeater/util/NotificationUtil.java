@@ -76,4 +76,11 @@ public final class NotificationUtil {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(type.getId(), notification);
     }
+
+    public static void clear(Context context, NotificationType notificationType) {
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationType.getId());
+
+    }
 }
