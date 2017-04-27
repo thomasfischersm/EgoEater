@@ -15,6 +15,7 @@ import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
+import com.playposse.egoeater.util.EmailUtil;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
@@ -59,7 +60,7 @@ public abstract class ParentActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MatchesActivity.class));
                 return true;
             case R.id.send_feedback_menu_item:
-                // TODO
+                EmailUtil.sendFeedbackAction(this);
                 return true;
             case R.id.about_menu_item:
                 // TODO

@@ -63,6 +63,13 @@
     <string name="about_menu">About</string>
     <string name="logout_menu">Logout</string>
 
+    <!-- Send Us Feedback option -->
+    <string name="feedback_dialog_title">Send us feedback!</string>
+    <string name="feedback_dialog_message">An e-mail will be opened where you can send me feedback.</string>
+    <string name="feedback_email_recipient">thomas@playposse.com</string>
+    <string name="feedback_email_subject">Feedback About Ego Eater Android App</string>
+    <string name="feedback_email_body">Please, send me your feedback. I care about hearing from you.</string>
+
     <!-- Common text -->
     <string name="save_button_label">Save</string>
     <string name="dismiss_button_label">Dismiss</string>
@@ -70,8 +77,12 @@
     <string name="profile_thumbnail_content_description">The thumbnail of a profile photo of a user.</string>
     <string name="lock_icon_content_description">A lock icon that indicates if a profile is locked or not.</string>
     <string name="new_message_icon_content_description">An icon that indicates that a new message has arrived.</string>
-    <string name="dialog_okay_button">Okay</string>
     <string name="love_icon_content_description">A heart shaped icon that indicates that you like that user.</string>
+
+    <!-- Common button labels -->
+    <string name="dialog_okay_button">Okay</string>
+    <string name="dialog_continue_button">Continue</string>
+    <string name="dialog_cancel_button">Cancel</string>
 
     <!-- Notifications -->
     <string name="updated_matches_notification_title">
