@@ -94,6 +94,7 @@ public class MatchesActivity
                 contentObserver);
 
         NotificationUtil.clear(this, NotificationType.UpdatedMatches);
+        NotificationUtil.clear(this, NotificationType.NewMessage);
     }
 
     @Override

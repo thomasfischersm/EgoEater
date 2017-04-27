@@ -78,6 +78,7 @@
         Once a day, Ego Eater runs an algorithm to pair the hotties of the world. The algorithm just
         finished running. You\'ve got some hot peeps to check out!
     </string>
+
     <string name="only_lost_matches_notification_title">
         You\'ve had some matches in Ego Eater. Now they are gone.
     </string>
@@ -88,5 +89,12 @@
         the first message, the match becomes locked. (3) This is the hardest yet most satisfying.
         Become more attractive. Hit the gym. Get new clothes. Put a smile on your face by following
         your passion.
+    </string>
+
+    <string name="new_message_notification_title">
+        New message!
+    </string>
+    <string name="new_message_notification_text">
+        Check out what a cutie is writing you!
     </string>
 </resources>

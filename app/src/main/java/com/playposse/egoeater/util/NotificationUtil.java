@@ -25,6 +25,11 @@ public final class NotificationUtil {
                 R.string.only_lost_matches_notification_title,
                 R.string.only_lost_matches_notification_text,
                 MatchesActivity.class),
+        NewMessage(
+                3,
+                R.string.new_message_notification_title,
+                R.string.new_message_notification_text,
+                MatchesActivity.class)
         ;
         private int notificationId;
         private int titleId;

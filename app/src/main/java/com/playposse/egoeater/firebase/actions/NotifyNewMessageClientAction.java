@@ -12,6 +12,8 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.firebase.FirebaseMessage;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.NotificationUtil;
+import com.playposse.egoeater.util.NotificationUtil.NotificationType;
 
 import java.util.List;
 
@@ -49,7 +51,10 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             } else {
                 updateConversationMessage(message, senderProfileId, profileId);
             }
-            // TODO: Create notification for user to see.
+
+            NotificationUtil.sendNotification(getApplicationContext(), NotificationType.NewMessage);
+            // TODO: Think of a way to avoid sending the notification if the user is on the activity
+            // to chat with that user.
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "execute: Failed to process new message.", ex);
         }
