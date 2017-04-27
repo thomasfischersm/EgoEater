@@ -17,27 +17,38 @@ public final class NotificationUtil {
     public enum NotificationType {
         UpdatedMatches(
                 1,
+                R.drawable.ic_favorite_border_black_24dp,
                 R.string.updated_matches_notification_title,
                 R.string.updated_matches_notification_text,
                 MatchesActivity.class),
         OnlyLostMatches(
                 2,
+                R.drawable.ic_favorite_border_black_24dp,
                 R.string.only_lost_matches_notification_title,
                 R.string.only_lost_matches_notification_text,
                 MatchesActivity.class),
         NewMessage(
                 3,
+                R.drawable.ic_message_black_24dp,
                 R.string.new_message_notification_title,
                 R.string.new_message_notification_text,
                 MatchesActivity.class)
         ;
         private int notificationId;
+        private int iconId;
         private int titleId;
         private int textId;
         private Class<?> activityClass;
 
-        NotificationType(int notificationId, int titleId, int textId, Class<?> activityClass) {
+        NotificationType(
+                int notificationId,
+                int iconId,
+                int titleId,
+                int textId,
+                Class<?> activityClass) {
+
             this.notificationId = notificationId;
+            this.iconId = iconId;
             this.titleId = titleId;
             this.textId = textId;
             this.activityClass = activityClass;
@@ -45,6 +56,10 @@ public final class NotificationUtil {
 
         public int getId() {
             return notificationId;
+        }
+
+        public int getIconId() {
+            return iconId;
         }
 
         public int getTitleId() {
@@ -73,7 +88,7 @@ public final class NotificationUtil {
                 .setContentTitle(title)
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_favorite_border_black_24dp)
+                .setSmallIcon(type.getIconId())
                 .setAutoCancel(true)
                 .build();
 
