@@ -111,6 +111,8 @@ public class MessagingActivity
     protected void onResume() {
         super.onResume();
 
+        CurrentActivity.setMessagingPartnerId(partnerId);
+
         // Refresh the view when new messages arrive.
         contentObserver = new ContentObserver(new Handler()) {
             @Override

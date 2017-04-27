@@ -10,6 +10,8 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.playposse.egoeater.activity.CurrentActivity;
+import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.MatchBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.clientactions.GetMatchesClientAction;
@@ -219,6 +221,11 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
      * Sends the user a notification if it makes sense.
      */
     private void sendNotification(UpdateState updateState) {
+        if (CurrentActivity.getCurrentActivity().equals(MatchesActivity.class)) {
+            // Already on matches Activity. Skip showing the notification.
+            return;
+        }
+
         Context context = getApplicationContext();
         switch (updateState) {
             case updatedMatches:

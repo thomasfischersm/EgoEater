@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.MessageBean;
 import com.playposse.egoeater.clientactions.GetConversationClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
@@ -52,9 +53,12 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
                 updateConversationMessage(message, senderProfileId, profileId);
             }
 
-            NotificationUtil.sendNotification(getApplicationContext(), NotificationType.NewMessage);
-            // TODO: Think of a way to avoid sending the notification if the user is on the activity
-            // to chat with that user.
+            if ((CurrentActivity.getMessagingPartnerId() == null)
+                    || (CurrentActivity.getMessagingPartnerId() != senderProfileId)) {
+                NotificationUtil.sendNotification(
+                        getApplicationContext(),
+                        NotificationType.NewMessage);
+            }
 
             ContentResolver contentResolver = getApplicationContext().getContentResolver();
             QueryUtil.markMatchHasNewMessage(contentResolver, senderProfileId, true);
