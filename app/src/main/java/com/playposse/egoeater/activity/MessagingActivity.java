@@ -304,7 +304,8 @@ public class MessagingActivity
             setTitle(getString(R.string.messages_activity_title, partner.getFirstName()));
             getLoaderManager().initLoader(LOADER_ID, null, MessagingActivity.this);
             new ReportMessagesReadAsyncTask().execute();
-            new Thread(new CheckForNewMessagesAsyncTask()).start();
+            new Thread(new CheckForNewMessagesRunnable()).start();
+            new Thread(new MarkMessageReadInMatchRunnable()).start();
         }
     }
 
@@ -344,10 +345,10 @@ public class MessagingActivity
     }
 
     /**
-     * An {@link AsyncTask} that looks at the start of the activity if the cloud has additional
+     * An {@link Runnable} that looks at the start of the activity if the cloud has additional
      * messages.
      */
-    private class CheckForNewMessagesAsyncTask implements Runnable {
+    private class CheckForNewMessagesRunnable implements Runnable {
 
         @Override
         public void run() {
@@ -384,6 +385,17 @@ public class MessagingActivity
                 Log.e(LOG_TAG, "doInBackground: Failed", ex);
                 throw new IllegalStateException(ex);
             }
+        }
+    }
+
+    /**
+     * A {@link Runnable} that sets the flag on the match as read.
+     */
+    private class MarkMessageReadInMatchRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            QueryUtil.markMatchHasNewMessage(getContentResolver(), partnerId, false);
         }
     }
 }

@@ -55,6 +55,9 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             NotificationUtil.sendNotification(getApplicationContext(), NotificationType.NewMessage);
             // TODO: Think of a way to avoid sending the notification if the user is on the activity
             // to chat with that user.
+
+            ContentResolver contentResolver = getApplicationContext().getContentResolver();
+            QueryUtil.markMatchHasNewMessage(contentResolver, senderProfileId, true);
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "execute: Failed to process new message.", ex);
         }

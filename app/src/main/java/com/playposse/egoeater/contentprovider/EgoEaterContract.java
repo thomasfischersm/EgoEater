@@ -215,13 +215,15 @@ public class EgoEaterContract {
         public static final String CREATED_COLUMN = "created";
         public static final String PROFILE_ID_COLUMN = "profile_id";
         public static final String IS_LOCKED_COLUMN = "is_locked";
+        public static final String HAS_NEW_MESSAGE = "has_new_message";
 
         public static final String[] COLUMN_NAMES = new String[]{
                 ID_COLUMN,
                 MATCH_ID_COLUMN,
                 CREATED_COLUMN,
                 PROFILE_ID_COLUMN,
-                IS_LOCKED_COLUMN};
+                IS_LOCKED_COLUMN,
+                HAS_NEW_MESSAGE};
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE MATCH "
@@ -229,7 +231,8 @@ public class EgoEaterContract {
                         + "MATCH_ID INTEGER, "
                         + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
                         + "PROFILE_ID INTEGER,"
-                        + "IS_LOCKED BOOLEAN)";
+                        + "IS_LOCKED BOOLEAN,"
+                        + "HAS_NEW_MESSAGE BOOLEAN DEFAULT FALSE)";
     }
 
     /**
@@ -262,12 +265,12 @@ public class EgoEaterContract {
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE MESSAGE "
                         + "(_ID INTEGER PRIMARY KEY, "
-                + "SENDER_PROFILE_ID INTEGER, "
-                + "RECIPIENT_PROFILE_ID INTEGER, "
-                + "MESSAGE_INDEX INTEGER, "
-                + "IS_RECEIVED BOOLEAN DEFAULT FALSE, "
-                + "CREATED DATETIME, "
-                + "MESSAGE_CONTENT TEXT)";
+                        + "SENDER_PROFILE_ID INTEGER, "
+                        + "RECIPIENT_PROFILE_ID INTEGER, "
+                        + "MESSAGE_INDEX INTEGER, "
+                        + "IS_RECEIVED BOOLEAN DEFAULT FALSE, "
+                        + "CREATED DATETIME, "
+                        + "MESSAGE_CONTENT TEXT)";
     }
 
     public static final class DeleteDuplicateProfiles {

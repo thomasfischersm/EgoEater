@@ -166,6 +166,7 @@ public class MatchesActivity
             } else {
                 holder.getLockIconImageView().setImageResource(R.drawable.ic_lock_open_black_24dp);
             }
+            holder.getNewMessageImageIcon().setVisibility(match.hasNewMessage() ? VISIBLE : GONE);
             String headLine = ProfileFormatter.formatNameAndAge(getApplicationContext(), profile);
             holder.getHeadlineTextView().setText(headLine);
             String subHead =
@@ -199,6 +200,7 @@ public class MatchesActivity
 
         private final ImageView profileImageView;
         private final ImageView lockIconImageView;
+        private final ImageView newMessageImageIcon;
         private final TextView headlineTextView;
         private final TextView subHeadTextView;
 
@@ -207,6 +209,7 @@ public class MatchesActivity
 
             profileImageView = (ImageView) itemView.findViewById(R.id.profileImageView);
             lockIconImageView = (ImageView) itemView.findViewById(R.id.lockIconImageView);
+            newMessageImageIcon = (ImageView) itemView.findViewById(R.id.newMessageImageIcon);
             headlineTextView = (TextView) itemView.findViewById(R.id.headlineTextView);
             subHeadTextView = (TextView) itemView.findViewById(R.id.subHeadTextView);
         }
@@ -217,6 +220,10 @@ public class MatchesActivity
 
         public ImageView getLockIconImageView() {
             return lockIconImageView;
+        }
+
+        public ImageView getNewMessageImageIcon() {
+            return newMessageImageIcon;
         }
 
         public TextView getHeadlineTextView() {

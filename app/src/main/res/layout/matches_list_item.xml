@@ -37,6 +37,18 @@
                 android:paddingRight="1dp"
                 android:paddingStart="1dp"
                 android:src="@drawable/ic_lock_open_black_24dp" />
+
+            <ImageView
+                android:id="@+id/newMessageImageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/profileImageView"
+                android:layout_toLeftOf="@+id/lockIconImageView"
+                android:layout_toStartOf="@+id/lockIconImageView"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/new_message_icon_content_description"
+                android:src="@drawable/ic_message_black_24dp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView

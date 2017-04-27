@@ -15,6 +15,7 @@ public class MatchParcelable implements Parcelable {
     private int localMatchId;
     private long cloudMatchId;
     private boolean isLocked;
+    private boolean hasNewMessage;
     private ProfileParcelable otherProfile;
 
     public static final Parcelable.Creator<MatchParcelable> CREATOR =
@@ -34,6 +35,7 @@ public class MatchParcelable implements Parcelable {
         localMatchId = smartCursor.getInt(0); // Warning: Multiple ID columns!
         cloudMatchId = smartCursor.getLong(MatchTable.MATCH_ID_COLUMN);
         isLocked = smartCursor.getBoolean(MatchTable.IS_LOCKED_COLUMN);
+        hasNewMessage = smartCursor.getBoolean(MatchTable.HAS_NEW_MESSAGE);
         otherProfile = new ProfileParcelable(smartCursor);
     }
 
@@ -41,6 +43,7 @@ public class MatchParcelable implements Parcelable {
         localMatchId = in.readInt();
         cloudMatchId = in.readLong();
         isLocked = in.readInt() > 0;
+        hasNewMessage = in.readInt() > 0;
         otherProfile = ProfileParcelable.CREATOR.createFromParcel(in);
     }
 
@@ -55,6 +58,7 @@ public class MatchParcelable implements Parcelable {
         dest.writeInt(localMatchId);
         dest.writeLong(cloudMatchId);
         dest.writeInt(isLocked ? 1 : 0);
+        dest.writeInt(hasNewMessage ? 1 : 0);
         otherProfile.writeToParcel(dest, flags);
     }
 
@@ -68,6 +72,10 @@ public class MatchParcelable implements Parcelable {
 
     public boolean isLocked() {
         return isLocked;
+    }
+
+    public boolean hasNewMessage() {
+        return hasNewMessage;
     }
 
     public ProfileParcelable getOtherProfile() {

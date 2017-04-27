@@ -298,4 +298,24 @@ public final class QueryUtil {
         Log.w(LOG_TAG, "markMessageRead: Failed to mark a message as read. Received an unexpected" +
                 " row count: " + rowCount);
     }
+
+    public static void markMatchHasNewMessage(
+            ContentResolver contentResolver,
+            long partnerId,
+            boolean hasNewMassage) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MatchTable.HAS_NEW_MESSAGE, hasNewMassage);
+
+        int rowCount = contentResolver.update(
+                MatchTable.CONTENT_URI,
+                contentValues,
+                MatchTable.PROFILE_ID_COLUMN + " = ?",
+                new String[]{Long.toString(partnerId)});
+
+        if (rowCount != 1) {
+            Log.w(LOG_TAG, "lockMatch: Tried to mark match as having a new message but failed: "
+                    + rowCount);
+        }
+    }
 }
