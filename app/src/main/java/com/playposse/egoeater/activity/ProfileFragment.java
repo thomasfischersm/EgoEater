@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private ImageView profilePhotoImageView;
     private ImageView profileThumbnail0ImageView;
     private ImageView profileThumbnail1ImageView;
+    private ImageView heartImageView;
     private TextView headlineTextView;
     private TextView subHeadTextView;
 
@@ -70,6 +72,7 @@ public class ProfileFragment extends Fragment {
         profilePhotoImageView = (ImageView) rootView.findViewById(R.id.profilePhotoImageView);
         profileThumbnail0ImageView = (ImageView) rootView.findViewById(R.id.profileThumbnail0ImageView);
         profileThumbnail1ImageView = (ImageView) rootView.findViewById(R.id.profileThumbnail1ImageView);
+        heartImageView = (ImageView) rootView.findViewById(R.id.heartImageView);
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
 
@@ -97,6 +100,23 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 mainImageIndex = (mainImageIndex == 2) ? 0 : 2;
                 loadImages();
+            }
+        });
+
+        profilePhotoImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        heartImageView.setVisibility(View.VISIBLE);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        heartImageView.setVisibility(View.GONE);
+                        break;
+                }
+
+                // Never consume the event. Simply show/hide the heart icon.
+                return false;
             }
         });
 

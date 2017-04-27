@@ -67,9 +67,11 @@
     <string name="save_button_label">Save</string>
     <string name="dismiss_button_label">Dismiss</string>
     <string name="profile_photo_content_description">The profile photo of a user.</string>
+    <string name="profile_thumbnail_content_description">The thumbnail of a profile photo of a user.</string>
     <string name="lock_icon_content_description">A lock icon that indicates if a profile is locked or not.</string>
     <string name="new_message_icon_content_description">An icon that indicates that a new message has arrived.</string>
     <string name="dialog_okay_button">Okay</string>
+    <string name="love_icon_content_description">A heart shaped icon that indicates that you like that user.</string>
 
     <!-- Notifications -->
     <string name="updated_matches_notification_title">
