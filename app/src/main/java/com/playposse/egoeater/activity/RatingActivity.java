@@ -111,8 +111,10 @@ public class RatingActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            leftProfileFragment.setProfile(leftProfile);
-            rightProfileFragment.setProfile(rightProfile);
+            if ((leftProfile != null) && (rightProfile != null)) {
+                leftProfileFragment.setProfile(leftProfile);
+                rightProfileFragment.setProfile(rightProfile);
+            }
         }
     }
 

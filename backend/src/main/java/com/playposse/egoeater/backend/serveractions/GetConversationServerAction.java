@@ -22,21 +22,9 @@ public class GetConversationServerAction extends AbstractServerAction {
 
         // Verify session id and find user.
         EgoEaterUser egoEaterUser = loadUser(sessionId);
-        Ref<EgoEaterUser>[] userRefs = sortUserRefs(egoEaterUser.getId(), otherUserId);
-
-        // Check if conversation exists already.
-        List<Conversation> conversations = ofy().load()
-                .type(Conversation.class)
-                .filter("profileRefA =", userRefs[0])
-                .filter("profileRefB =", userRefs[1])
-                .list();
-
-        if ((conversations == null) || (conversations.size() == 0)) {
-            return null;
-        }
 
         // Convert Objectify entities to transport beans.
-        Conversation conversation = conversations.get(0);
+        Conversation conversation = getConversationByProfileIds(egoEaterUser.getId(), otherUserId);
         List<MessageBean> messageBeans = new ArrayList<>(conversation.getMessages().size());
         for (Message message : conversation.getMessages()) {
             messageBeans.add(new MessageBean(message));

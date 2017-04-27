@@ -7,7 +7,7 @@ import com.googlecode.objectify.Ref;
  */
 public class Message {
 
-    private long index;
+    private int index;
     private Ref<EgoEaterUser> senderProfileId;
     private long created;
     private boolean received;
@@ -16,7 +16,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(long index, Ref<EgoEaterUser> senderProfileId, String messageContent) {
+    public Message(int index, Ref<EgoEaterUser> senderProfileId, String messageContent) {
         this.index = index;
         this.senderProfileId = senderProfileId;
         this.messageContent = messageContent;
@@ -25,7 +25,7 @@ public class Message {
         received = false;
     }
 
-    public long getIndex() {
+    public int getIndex() {
         return index;
     }
 

@@ -25,11 +25,13 @@ import android.widget.TextView;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.clientactions.GetMaxMessageIndexClientAction;
 import com.playposse.egoeater.clientactions.ReportMessageReadClientAction;
 import com.playposse.egoeater.clientactions.SendMessageClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
 import com.playposse.egoeater.contentprovider.QueryUtil;
+import com.playposse.egoeater.firebase.actions.NotifyNewMessageClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
@@ -42,7 +44,7 @@ import static android.view.View.VISIBLE;
 
 /**
  * An {@link Activity} that lets two users message each other.
- *
+ * <p>
  * TODO: Check for new messages on startup, in case something went bad with the Firebase messaging.
  */
 public class MessagingActivity
@@ -230,7 +232,7 @@ public class MessagingActivity
             if ((senderId == profileId) && (recipientId == partnerId)) {
                 senderPhotoUrl = userBean.getProfilePhotoUrls().get(0);
                 senderName = userBean.getFirstName();
-            } else if ((senderId == partnerId) && (recipientId == profileId)){
+            } else if ((senderId == partnerId) && (recipientId == profileId)) {
                 senderPhotoUrl = partner.getPhotoUrl0();
                 senderName = partner.getFirstName();
             } else {
@@ -302,13 +304,14 @@ public class MessagingActivity
             setTitle(getString(R.string.messages_activity_title, partner.getFirstName()));
             getLoaderManager().initLoader(LOADER_ID, null, MessagingActivity.this);
             new ReportMessagesReadAsyncTask().execute();
+            new Thread(new CheckForNewMessagesAsyncTask()).start();
         }
     }
 
     /**
      * An {@link AsyncTask} that goes through all the messages and marks them all read, if
      * necessary.
-     *
+     * <p>
      * <p>TODO: Could actually wait until the user scrolls to the particular message. Consider this
      * perhaps in the future.
      */
@@ -337,6 +340,50 @@ public class MessagingActivity
             }
 
             return null;
+        }
+    }
+
+    /**
+     * An {@link AsyncTask} that looks at the start of the activity if the cloud has additional
+     * messages.
+     */
+    private class CheckForNewMessagesAsyncTask implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Log.i(LOG_TAG, "doInBackground: Checking if messages are up-to-date.");
+                int cloudId =
+                        new GetMaxMessageIndexClientAction(
+                                MessagingActivity.this,
+                                partnerId)
+                                .executeBlocking();
+
+                if (cloudId == -1) {
+                    // There are no messages in the cloud.
+                    Log.i(LOG_TAG, "doInBackground: The cloud doesn't have messages.");
+                    return;
+                }
+
+                Integer deviceId =
+                        QueryUtil.getMaxMessageIndex(getContentResolver(), profileId, partnerId);
+                if ((deviceId != null) && (cloudId == deviceId)) {
+                    // The messages are up-to-date.
+                    Log.i(LOG_TAG, "doInBackground: Messages are up-to-date.");
+                    return;
+                }
+
+                // Need to load messages.
+                Log.i(LOG_TAG, "doInBackground: Trying to reImport the conversation.");
+                NotifyNewMessageClientAction.reImportConversation(
+                        MessagingActivity.this,
+                        partnerId,
+                        profileId);
+                return;
+            } catch (InterruptedException ex) {
+                Log.e(LOG_TAG, "doInBackground: Failed", ex);
+                throw new IllegalStateException(ex);
+            }
         }
     }
 }

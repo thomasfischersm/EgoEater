@@ -5,6 +5,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Ref;
+import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.ProfilePhoto;
 import com.playposse.egoeater.backend.util.RefUtil;
@@ -89,5 +90,21 @@ public abstract class AbstractServerAction {
 
     protected static Ref<EgoEaterUser>[] sortUserRefs(long profile0Id, long profile1Id) {
         return sortUserRefs(RefUtil.createUserRef(profile0Id), RefUtil.createUserRef(profile1Id));
+    }
+
+    protected static Conversation getConversationByProfileIds(long userId, long partnerId) {
+        Ref<EgoEaterUser>[] userRefs = sortUserRefs(userId, partnerId);
+
+        List<Conversation> conversations = ofy().load()
+                .type(Conversation.class)
+                .filter("profileRefA =", userRefs[0])
+                .filter("profileRefB =", userRefs[1])
+                .list();
+
+        if ((conversations == null) || (conversations.size() == 0)) {
+            return null;
+        } else {
+            return conversations.get(0);
+        }
     }
 }

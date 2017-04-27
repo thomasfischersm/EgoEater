@@ -2,6 +2,7 @@ package com.playposse.egoeater.firebase.actions;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
@@ -42,9 +43,9 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
         // Check if the message content is included.
         try {
             if (!message.isMessageIncluded()) {
-                reImportConversation(message, senderProfileId, profileId);
+                reImportConversation(getApplicationContext(), senderProfileId, profileId);
             } else if (!isMessageIndexCorrect(message, senderProfileId, profileId)) {
-                reImportConversation(message, senderProfileId, profileId);
+                reImportConversation(getApplicationContext(), senderProfileId, profileId);
             } else {
                 updateConversationMessage(message, senderProfileId, profileId);
             }
@@ -65,20 +66,20 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
                 && (currentMessageIndex + 1 == message.getMessageIndex()));
     }
 
-    private void reImportConversation(
-            NotifyNewMessageMessage message,
+    public static void reImportConversation(
+            Context context,
             long senderProfileId,
             long profileId) throws InterruptedException {
 
-        deleteConversation(senderProfileId, profileId);
-        QueryUtil.lockMatch(getApplicationContext().getContentResolver(), senderProfileId);
+        deleteConversation(context, senderProfileId, profileId);
+        QueryUtil.lockMatch(context.getContentResolver(), senderProfileId);
         List<MessageBean> messages =
-                GetConversationClientAction.getBlocking(getApplicationContext(), senderProfileId);
-        save(messages, senderProfileId, profileId);
+                GetConversationClientAction.getBlocking(context, senderProfileId);
+        save(context, messages, senderProfileId, profileId);
     }
 
-    private void deleteConversation(long senderProfileId, long profileId) {
-        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+    private static void deleteConversation(Context context, long senderProfileId, long profileId) {
+        ContentResolver contentResolver = context.getContentResolver();
         String senderStr = Long.toString(senderProfileId);
         String recipientStr = Long.toString(profileId);
         int rowCount = contentResolver.delete(
@@ -93,7 +94,8 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
         Log.i(LOG_TAG, "deleteConversation: Deleted old conversation: " + rowCount);
     }
 
-    private void save(
+    private static void save(
+            Context context,
             List<MessageBean> messages,
             long senderProfileId,
             long profileId) {
@@ -112,14 +114,14 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             contentValuesArray[i].put(MessageTable.MESSAGE_CONTENT_COLUMN, message.getMessageContent());
         }
 
-        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+        ContentResolver contentResolver = context.getContentResolver();
         contentResolver.bulkInsert(MessageTable.CONTENT_URI, contentValuesArray);
     }
 
     /**
      * Takes a choice of two longs. Specifies one of the two and returns the other.
      */
-    private long inverse(long thisLong, long choiceA, long choiceB) {
+    private static long inverse(long thisLong, long choiceA, long choiceB) {
         return (thisLong == choiceA) ? choiceB : choiceA;
     }
 
