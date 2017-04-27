@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -99,6 +100,7 @@ public final class QueryUtil {
             long winnerId,
             long loserId) {
 
+        long start = System.currentTimeMillis();
         ContentResolver contentResolver = context.getContentResolver();
 
         // Remove the pairing from the pipeline.
@@ -142,6 +144,10 @@ public final class QueryUtil {
 
         // Report the result to the cloud.
         new ReportRankingClientAction(context, winnerId, loserId).execute();
+
+        // Log the time duration.
+        long end = System.currentTimeMillis();
+        Log.i(LOG_TAG, "saveRating: Took " + (end - start) + "ms");
     }
 
     private static void deletePipelineEntry(ContentResolver contentResolver, int pairingId) {

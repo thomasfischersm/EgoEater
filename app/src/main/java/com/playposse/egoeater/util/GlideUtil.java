@@ -23,4 +23,17 @@ public final class GlideUtil {
             imageView.setImageBitmap(null);
         }
     }
+
+    public static void load(ImageView imageView, String imageUrl, int placeHolderResId) {
+        if (imageUrl != null) {
+            Glide.with(imageView.getContext())
+                    .load(imageUrl)
+                    .placeholder(placeHolderResId)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontTransform()
+                    .into(imageView);
+        } else {
+            imageView.setImageBitmap(null);
+        }
+    }
 }

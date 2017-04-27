@@ -22,7 +22,7 @@ public class EgoEaterApplication extends Application {
 
         FirebaseMessaging.getInstance().subscribeToTopic(ALL_DEVICES_TOPIC);
 
-//        getApplicationContext().deleteDatabase("egoEaterDb");
+        getApplicationContext().deleteDatabase("egoEaterDb");
     }
 
     /**

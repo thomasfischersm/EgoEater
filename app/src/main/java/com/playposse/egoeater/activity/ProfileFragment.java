@@ -204,7 +204,7 @@ public class ProfileFragment extends Fragment {
             public void run() {
                 if (photoUrl != null) {
                     imageView.setVisibility(View.VISIBLE);
-                    GlideUtil.load(imageView, photoUrl);
+                    GlideUtil.load(imageView, photoUrl, R.drawable.ic_insert_emoticon_black_24dp);
                 } else
 
                 {
