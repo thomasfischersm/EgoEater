@@ -39,6 +39,11 @@
         more profiles.
     </string>
 
+    <!-- Messages Activity -->
+    <string name="messages_activity_title">Conversation with %1$s</string>
+    <string name="no_messages_message">Break the silence! Send a message!</string>
+    <string name="sendButtonContentDescription">A button that sends the current message.</string>
+
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>

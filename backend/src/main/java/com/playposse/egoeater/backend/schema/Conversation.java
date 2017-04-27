@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * An Objectify entity for the conversation between two users. A conversation consists of a list of
  * messages.
- *
+ * <p>
  * <p>The assumption is that a document based storage is better at loading one large document than
  * many small rows. Thus, the conversation is stored as one entity, rather than one entity for each
  * message.
- *
+ * <p>
  * <p>Profile A has always the lower profile id.
  */
 @Entity
@@ -42,6 +42,9 @@ public class Conversation {
             Ref<EgoEaterUser> profileRefB,
             Ref<EgoEaterUser> initialSenderProfileRef,
             String initialMessage) {
+
+        this.profileRefA = profileRefA;
+        this.profileRefB = profileRefB;
 
         created = System.currentTimeMillis();
         messages = new ArrayList<>();

@@ -5,6 +5,7 @@ import android.database.DataSetObserver;
 import android.provider.BaseColumns;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import android.util.Log;
 import android.view.ViewGroup;
 
 /**
@@ -13,10 +14,16 @@ import android.view.ViewGroup;
 public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHolder>
         extends Adapter<VH>{
 
+    private static final String LOG_TAG = RecyclerViewCursorAdapter.class.getSimpleName();
+
     private final DataSetObserver dataSetObserver = new SimpleDataSetObserver();
 
     private Cursor cursor;
     private Integer idColumnIndex;
+
+    public RecyclerViewCursorAdapter() {
+        setHasStableIds(true);
+    }
 
     protected abstract void onBindViewHolder(VH holder, int position, Cursor cursor);
 
@@ -42,9 +49,18 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
         return RecyclerView.NO_ID;
     }
 
+    protected Cursor getCursor(int position) {
+        if ((cursor != null) && cursor.moveToPosition(position)) {
+            return cursor;
+        }
+        return null;
+    }
+
     @Override
     public int getItemCount() {
-        return (cursor != null) ? cursor.getCount() : 0;
+        int count = (cursor != null) ? cursor.getCount() : 0;
+        Log.i(LOG_TAG, "getItemCount: Called with item count " + count);
+        return count;
     }
 
     public void swapCursor(Cursor newCursor) {
@@ -55,7 +71,7 @@ public abstract class RecyclerViewCursorAdapter<VH extends RecyclerView.ViewHold
         cursor = newCursor;
         if (cursor != null) {
             cursor.registerDataSetObserver(dataSetObserver);
-            idColumnIndex = cursor.getColumnIndex(BaseColumns._ID);
+            idColumnIndex = cursor.getColumnIndex(BaseColumns._ID.toUpperCase());
         } else {
             idColumnIndex = null;
         }

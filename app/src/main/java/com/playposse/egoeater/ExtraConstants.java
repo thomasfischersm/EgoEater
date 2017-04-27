@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.playposse.egoeater.activity.CropPhotoActivity;
+import com.playposse.egoeater.activity.MessagingActivity;
 import com.playposse.egoeater.activity.ViewProfileActivity;
 
 /**
@@ -29,6 +30,12 @@ public class ExtraConstants {
 
     public static void startViewProfileActivity(Context context, long profileId) {
         Intent intent = new Intent(context, ViewProfileActivity.class);
+        intent.putExtra(PROFILE_ID, profileId);
+        context.startActivity(intent);
+    }
+
+    public static void startMessagesActivity(Context context, long profileId) {
+        Intent intent = new Intent(context, MessagingActivity.class);
         intent.putExtra(PROFILE_ID, profileId);
         context.startActivity(intent);
     }

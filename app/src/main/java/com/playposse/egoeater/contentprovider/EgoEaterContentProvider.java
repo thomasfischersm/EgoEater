@@ -1,6 +1,7 @@
 package com.playposse.egoeater.contentprovider;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -72,9 +73,11 @@ public class EgoEaterContentProvider extends ContentProvider {
             @Nullable String[] selectionArgs,
             @Nullable String sortOrder) {
 
+        ContentResolver contentResolver = getContext().getContentResolver();
         SQLiteDatabase database = mainDatabaseHelper.getReadableDatabase();
 
         String tableName;
+        Uri notificationUri = null;
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
                 tableName = ProfileIdTable.TABLE_NAME;
@@ -90,13 +93,17 @@ public class EgoEaterContentProvider extends ContentProvider {
                 break;
             case MATCH_TABLE_KEY:
                 tableName = MatchTable.TABLE_NAME;
+                notificationUri = MatchTable.CONTENT_URI;
                 break;
             case MATCH_AND_PROFILE_QUERY_KEY:
-                return database.rawQuery(
+                Cursor rawCursor = database.rawQuery(
                         MatchAndProfileQuery.SQL,
                         null);
+                rawCursor.setNotificationUri(contentResolver, MatchTable.CONTENT_URI);
+                return rawCursor;
             case MESSAGE_TABLE_KEY:
                 tableName = MessageTable.TABLE_NAME;
+                notificationUri = MessageTable.CONTENT_URI;
                 break;
             case MAX_MESSAGE_INDEX_QUERY_KEY:
                 String[] realSelectionArgs = new String[4];
@@ -111,7 +118,7 @@ public class EgoEaterContentProvider extends ContentProvider {
                 return null;
         }
 
-        return database.query(
+        Cursor cursor = database.query(
                 tableName,
                 projection,
                 selection,
@@ -119,6 +126,10 @@ public class EgoEaterContentProvider extends ContentProvider {
                 null,
                 null,
                 sortOrder);
+        if (notificationUri != null) {
+            cursor.setNotificationUri(contentResolver, notificationUri);
+        }
+        return cursor;
 
     }
 
@@ -169,10 +180,17 @@ public class EgoEaterContentProvider extends ContentProvider {
         }
         long id = database.insert(tableName, null, values);
 
-        if (uriMatcher.match(uri) == PIPELINE_TABLE_KEY) {
-            getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
-        } else if (uriMatcher.match(uri) == MESSAGE_TABLE_KEY) {
-            getContext().getContentResolver().notifyChange(MessageTable.CONTENT_URI, null);
+        // Notify of change after the database update is complete.
+        switch (uriMatcher.match(uri)) {
+            case PIPELINE_TABLE_KEY:
+                getContext().getContentResolver().notifyChange(PipelineTable.CONTENT_URI, null);
+                break;
+            case MATCH_TABLE_KEY:
+                getContext().getContentResolver().notifyChange(MatchTable.CONTENT_URI, null);
+            case MESSAGE_TABLE_KEY:
+                getContext().getContentResolver().notifyChange(MessageTable.CONTENT_URI, null);
+                Log.i(LOG_TAG, "insert: Notifying that the message table has changed.");
+                break;
         }
 
         return ContentUris.withAppendedId(contentUri, id);
@@ -196,7 +214,9 @@ public class EgoEaterContentProvider extends ContentProvider {
             case PIPELINE_TABLE_KEY:
                 return database.delete(PipelineTable.TABLE_NAME, selection, selectionArgs);
             case MATCH_TABLE_KEY:
-                return database.delete(MatchTable.TABLE_NAME, selection, selectionArgs);
+                int rowCount = database.delete(MatchTable.TABLE_NAME, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(MatchTable.CONTENT_URI, null);
+                return rowCount;
             case MESSAGE_TABLE_KEY:
                 return database.delete(MessageTable.TABLE_NAME, selection, selectionArgs);
             case DELETE_DUPLICATE_PROFILES_KEY:
@@ -217,6 +237,7 @@ public class EgoEaterContentProvider extends ContentProvider {
 
         SQLiteDatabase database = mainDatabaseHelper.getWritableDatabase();
 
+        final int rowCount;
         switch (uriMatcher.match(uri)) {
             case PROFILE_ID_TABLE_KEY:
                 return database.update(ProfileIdTable.TABLE_NAME, values, selection, selectionArgs);
@@ -227,9 +248,11 @@ public class EgoEaterContentProvider extends ContentProvider {
             case PIPELINE_TABLE_KEY:
                 return database.update(PipelineTable.TABLE_NAME, values, selection, selectionArgs);
             case MATCH_TABLE_KEY:
-                return database.update(MatchTable.TABLE_NAME, values, selection, selectionArgs);
+                rowCount = database.update(MatchTable.TABLE_NAME, values, selection, selectionArgs);
+                getContext().getContentResolver().notifyChange(MatchTable.CONTENT_URI, null);
+                return rowCount;
             case MESSAGE_TABLE_KEY:
-                int rowCount = database.update(MessageTable.TABLE_NAME, values, selection, selectionArgs);
+                rowCount = database.update(MessageTable.TABLE_NAME, values, selection, selectionArgs);
                 getContext().getContentResolver().notifyChange(MessageTable.CONTENT_URI, null);
                 return rowCount;
         }

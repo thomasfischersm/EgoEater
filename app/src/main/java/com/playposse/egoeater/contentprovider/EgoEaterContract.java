@@ -23,7 +23,7 @@ public class EgoEaterContract {
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "PROFILE_ID";
 
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String PROFILE_ID_COLUMN = "profile_id";
         public static final String IS_PROFILE_LOADED_COLUMN = "is_profile_loaded";
 
@@ -48,7 +48,7 @@ public class EgoEaterContract {
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "PROFILE";
 
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String PROFILE_ID_COLUMN = "profile_id";
         public static final String FIRST_NAME_COLUMN = "first_name";
         public static final String LAST_NAME_COLUMN = "last_name";
@@ -126,7 +126,7 @@ public class EgoEaterContract {
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "RATING";
 
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String WINNER_ID_COLUMN = "winner_id";
         public static final String LOSER_ID_COLUMN = "loser_id";
         public static final String CREATED_COLUMN = "created";
@@ -154,7 +154,7 @@ public class EgoEaterContract {
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "PIPELINE";
 
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String PROFILE_0_ID_COLUMN = "profile_0_id";
         public static final String PROFILE_1_ID_COLUMN = "profile_1_id";
         public static final String ARE_PHOTOS_CACHED_COLUMN = "are_photos_cached";
@@ -178,7 +178,7 @@ public class EgoEaterContract {
         public static final String PATH = "pipelineLog";
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "PIPELINE_LOG";
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String CREATED_COLUMN = "created";
         public static final String DURATION_MS_COLUMN = "duration_ms";
         public static final String TRIGGER_REASON_COLUMN = "trigger_reason";
@@ -210,7 +210,7 @@ public class EgoEaterContract {
         public static final String PATH = "match";
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "MATCH";
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String MATCH_ID_COLUMN = "match_id";
         public static final String CREATED_COLUMN = "created";
         public static final String PROFILE_ID_COLUMN = "profile_id";
@@ -242,7 +242,7 @@ public class EgoEaterContract {
         public static final String PATH = "message";
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "MESSAGE";
-        public static final String ID_COLUMN = "_id";
+        public static final String ID_COLUMN = _ID;
         public static final String SENDER_PROFILE_ID_COLUMN = "sender_profile_id";
         public static final String RECIPIENT_PROFILE_ID_COLUMN = "recipient_profile_id";
         public static final String MESSAGE_INDEX_COLUMN = "message_index";

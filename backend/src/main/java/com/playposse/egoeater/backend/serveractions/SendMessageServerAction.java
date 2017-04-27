@@ -40,7 +40,7 @@ public class SendMessageServerAction extends AbstractServerAction {
 
         // Persist message.
         final Conversation conversation;
-        if (conversations.size() > 0) {
+        if (conversations.size() <= 0) {
             conversation = createConversation(userRefs[0], userRefs[1], senderRef, message);
             lockMatch(userRefs[0], userRefs[1]);
             lockMatch(userRefs[1], userRefs[0]); // TODO: Should only need one lockMatch in the future.

@@ -21,7 +21,7 @@ public class ReportMessageReadClientAction extends ApiClientAction<Void> {
 
     @Override
     protected Void executeAsync() throws IOException {
-        getApi().reportMessageRead(getSessionId(), senderProfileId, messageIndex);
+        getApi().reportMessageRead(getSessionId(), senderProfileId, messageIndex).execute();
         return null;
     }
 }

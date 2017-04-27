@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,22 @@ public class ViewProfileActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        ExtraConstants.startMessagesActivity(this, profileId);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                ExtraConstants.startMessagesActivity(this, profileId);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

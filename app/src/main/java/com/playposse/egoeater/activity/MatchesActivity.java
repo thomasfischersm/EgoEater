@@ -4,10 +4,13 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,8 @@ public class MatchesActivity
 
     // TODO: Think about listening to contentprovider changes and refreshing the view.
 
+    private static final String LOG_TAG = MatchesActivity.class.getSimpleName();
+
     private static final int COLUMN_COUNT = 3;
     private static final int LOADER_ID = 1;
 
@@ -44,6 +49,7 @@ public class MatchesActivity
     private TextView noMatchesTextView;
 
     private MatchesCursorAdapter matchesCursorAdapter;
+    private ContentObserver contentObserver;
 
     @Override
     protected int getLayoutResId() {
@@ -67,6 +73,33 @@ public class MatchesActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Refresh the view when new messages arrive.
+        contentObserver = new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                Log.i(LOG_TAG, "onChange: Noticed that the mtach table has changed.");
+                matchesCursorAdapter.notifyDataSetChanged();
+            }
+        };
+        getContentResolver().registerContentObserver(
+                EgoEaterContract.MatchTable.CONTENT_URI,
+                false,
+                contentObserver);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (contentObserver != null) {
+            getContentResolver().unregisterContentObserver(contentObserver);
+            contentObserver = null;
+        }
+    }
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(
                 this,
@@ -87,6 +120,7 @@ public class MatchesActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         matchesCursorAdapter.swapCursor(null);
+        matchesRecyclerView.setVisibility(GONE);
         noMatchesTextView.setVisibility(VISIBLE);
     }
 
@@ -135,7 +169,7 @@ public class MatchesActivity
             holder.getProfileImageView().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ExtraConstants.startViewProfileActivity(getApplicationContext(), profileId);
+                    ExtraConstants.startMessagesActivity(getApplicationContext(), profileId);
                 }
             });
 
@@ -154,7 +188,7 @@ public class MatchesActivity
     /**
      * {@link ViewHolder} for matches.
      */
-    private class MatchesViewHolder extends ViewHolder {
+    private static class MatchesViewHolder extends ViewHolder {
 
         private final ImageView profileImageView;
         private final ImageView lockIconImageView;

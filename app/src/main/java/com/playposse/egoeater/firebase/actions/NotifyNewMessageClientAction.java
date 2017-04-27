@@ -48,6 +48,7 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             } else {
                 updateConversationMessage(message, senderProfileId, profileId);
             }
+            // TODO: Create notification for user to see.
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "execute: Failed to process new message.", ex);
         }

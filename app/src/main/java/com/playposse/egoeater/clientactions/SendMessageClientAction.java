@@ -27,11 +27,13 @@ public class SendMessageClientAction extends ApiClientAction<Void> {
 
     @Override
     protected Void executeAsync() throws IOException {
-        getApi().sendMessage(getSessionId(), recipientId, message);
         int messageIndex = saveMessageLocally(recipientId, message);
         if (messageIndex == 0) {
             lockMatchLocally(recipientId);
         }
+
+        getApi().sendMessage(getSessionId(), recipientId, message).execute();
+
         return null;
     }
 

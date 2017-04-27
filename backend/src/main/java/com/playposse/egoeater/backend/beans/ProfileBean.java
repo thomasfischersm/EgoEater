@@ -14,8 +14,8 @@ public class ProfileBean {
 
     private long userId;
     private String firstName;
-    private String lastName;
-    private String name;
+    private String lastName; // TODO: Don't expose last name
+    private String name; // TODO: Don't expose name!
     private String profileText;
     private int distance;
     private String city;
