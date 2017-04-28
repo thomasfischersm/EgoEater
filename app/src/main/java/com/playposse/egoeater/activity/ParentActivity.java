@@ -63,7 +63,7 @@ public abstract class ParentActivity extends AppCompatActivity {
                 EmailUtil.sendFeedbackAction(this);
                 return true;
             case R.id.about_menu_item:
-                // TODO
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             case R.id.logout_menu_item:
                 EgoEaterPreferences.clearSessionId(this);

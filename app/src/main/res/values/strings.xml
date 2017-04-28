@@ -44,6 +44,48 @@
     <string name="no_messages_message">Break the silence! Send a message!</string>
     <string name="sendButtonContentDescription">A button that sends the current message.</string>
 
+    <!-- About Activity -->
+    <string name="about_app_heading">About Ego Eater App</string>
+    <string name="about_app_body_text">
+        Ego Eater is an Android app for online dating. You compare two profiles and pick the one you
+        like better. With enough comparison picks, the app will create a ranking from whom you like
+        the most to least.\n
+        \n
+        Next the app limits every user to maximum 10 matches. Matches are made based on whom you
+        like the most and who likes you back. If you both are super popular, chances are you\'ll get
+        matched up unless either of you runs out of matches. If you are more average attractive,
+        chances are that your top choices will run out of matches before you\'d even get considered.
+        You\'ll likely end up matching with other average attractive people who couldn\'t get their
+        first choices.\n
+        \n
+        There is of course the chance that you and your hottie are a niche. Say you are both super
+        into punk. You might like each other back as number one while the world doesn\'t care about
+        you two.
+    </string>
+    <string name="about_background_heading">Background</string>
+    <string name="about_background_body_text">
+        We\'ve all been in group situations, e.g. a class or summer camp. After a little while, the
+        group develops an understanding of who gets paired up with who. Jenny, the runner, goes
+        with Fred, also a runner. James always watches indie flicks. He\'ll end up with April
+        because she does the same.\n
+        \n
+        When we get to a big  city with a big dating pool, we suddenly see the creme of the crop.
+        Some of us won\'t settle for anything less and keep chasing unattainable "gods" and
+        "goddesses." Ego Eater slots you with only a small number of matches that you actually have
+        a chance with.\n
+        \n
+        Avoid wasting time by sending hundreds of messages to girls that never message you back.
+        Avoid getting your inbox flooded by thousands of messages. Get focused right on a hand
+        selected number of people that are your high value matches.
+    </string>
+    <string name="about_credits_heading">Credits and copyright</string>
+    <string name="about_credits_body_text">
+        © 2017 Thomas Fischer\n\n
+        The logo is a combination of artwork from the <a href="thenounproject.com">thenounproject.com</a>:\n
+        Lion by Polina Flegontovna
+    </string>
+
+
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>

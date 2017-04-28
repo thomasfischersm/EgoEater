@@ -1,17 +1,42 @@
 package com.playposse.egoeater.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 
 import com.playposse.egoeater.R;
 
-public class AboutActivity extends AppCompatActivity {
+/**
+ * An informative {@link android.app.Activity} that tells the user about the app.
+ */
+public class AboutActivity extends ParentActivity {
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_about;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
-    // Lion by Polina Flegontovna from the Noun Project
+    /**
+     * When the up button is clicked go to the previous activity instead of the parent activity.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
