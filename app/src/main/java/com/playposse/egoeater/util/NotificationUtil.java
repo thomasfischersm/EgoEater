@@ -32,7 +32,13 @@ public final class NotificationUtil {
                 R.drawable.ic_message_black_24dp,
                 R.string.new_message_notification_title,
                 R.string.new_message_notification_text,
-                MatchesActivity.class)
+                MatchesActivity.class),
+        Unmatched(
+                4,
+                R.drawable.ic_noun_882380_cc,
+                R.string.unmatch_notification_title,
+                R.string.unmatch_notification_text,
+                MatchesActivity.class);
         ;
         private int notificationId;
         private int iconId;
