@@ -5,6 +5,7 @@ import com.playposse.egoeater.backend.EgoEaterEndPoint;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.Ranking;
 import com.playposse.egoeater.backend.schema.Rating;
+import com.playposse.egoeater.backend.util.RefUtil;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -43,8 +44,8 @@ public class ReportRankingServerAction extends AbstractServerAction {
     private static Ranking getRanking(long profileId, long rateProfileId) {
         List<Ranking> rankings = ofy().load()
                 .type(Ranking.class)
-                .filter("profileId =", profileId)
-                .filter("ratedProfileId =", rateProfileId)
+                .filter("profileId =", RefUtil.createUserRef(profileId))
+                .filter("ratedProfileId =", RefUtil.createUserRef(rateProfileId))
                 .list();
 
         if (rankings.size() == 0) {

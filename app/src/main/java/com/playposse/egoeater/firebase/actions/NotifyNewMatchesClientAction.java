@@ -221,7 +221,7 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
      * Sends the user a notification if it makes sense.
      */
     private void sendNotification(UpdateState updateState) {
-        if (CurrentActivity.getCurrentActivity().equals(MatchesActivity.class)) {
+        if (MatchesActivity.class.equals(CurrentActivity.getCurrentActivity())) {
             // Already on matches Activity. Skip showing the notification.
             return;
         }

@@ -39,6 +39,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/fuckOffButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:contentDescription="@string/fuckOffButtonContentDescription"
+            android:src="@drawable/ic_noun_38095_cc" />
+
         <EditText
             android:id="@+id/newMessageEditText"
             android:layout_width="0dp"

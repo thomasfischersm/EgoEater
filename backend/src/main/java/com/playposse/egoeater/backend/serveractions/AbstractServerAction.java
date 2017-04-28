@@ -3,11 +3,15 @@ package com.playposse.egoeater.backend.serveractions;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.cmd.QueryKeys;
 import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+import com.playposse.egoeater.backend.schema.Match;
 import com.playposse.egoeater.backend.schema.ProfilePhoto;
+import com.playposse.egoeater.backend.schema.Ranking;
 import com.playposse.egoeater.backend.util.RefUtil;
 
 import java.util.List;
@@ -57,7 +61,7 @@ public abstract class AbstractServerAction {
             Storage storage) {
 
         List<ProfilePhoto> profilePhotos = egoEaterUser.getProfilePhotos();
-        if (photoIndex < profilePhotos.size() ) {
+        if (photoIndex < profilePhotos.size()) {
             ProfilePhoto oldProfilePhoto = profilePhotos.get(photoIndex);
             deleteFile(oldProfilePhoto.getFileName(), storage);
             profilePhotos.remove(photoIndex);
@@ -72,7 +76,7 @@ public abstract class AbstractServerAction {
 
     /**
      * Sorts two user refs by id ascending.
-     *
+     * <p>
      * <p>This is used by queries that are joined by two users. We always assume that the user with
      * the smaller id is user A. That way, we don't have to query for both possibilities.
      */
@@ -106,5 +110,40 @@ public abstract class AbstractServerAction {
         } else {
             return conversations.get(0);
         }
+    }
+
+    protected static Integer getRank(long userId, long partnerId) {
+        List<Ranking> rankings = ofy().load()
+                .type(Ranking.class)
+                .filter("profileId =", RefUtil.createUserRef(userId))
+                .filter("ratedProfileId =", RefUtil.createUserRef(partnerId))
+                .list();
+
+        if (rankings.size() == 1) {
+            return rankings.get(0).getWinsLossesSum();
+        } else {
+            return null;
+        }
+    }
+
+    protected static List<Key<Match>> getMatchIds(long userId, long partnerId) {
+        Ref<EgoEaterUser>[] userRefs = sortUserRefs(userId, partnerId);
+
+        List<Key<Match>> matches = ofy().load()
+                .type(Match.class)
+                .filter("userARef =", userRefs[0])
+                .filter("userBRef =", userRefs[1])
+                .keys()
+                .list();
+
+        // TODO: Only one side should be needed in the future!
+        matches.addAll(ofy().load()
+                .type(Match.class)
+                .filter("userARef =", userRefs[1])
+                .filter("userBRef =", userRefs[0])
+                .keys()
+                .list());
+
+        return matches;
     }
 }

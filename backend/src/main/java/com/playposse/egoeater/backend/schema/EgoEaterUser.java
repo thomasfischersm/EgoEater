@@ -42,6 +42,8 @@ public class EgoEaterUser {
     @Index
     private String gender;
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
+    private List<Long> fuckOffList = new ArrayList<>();
+    private List<Long> pissedOffList = new ArrayList<>();
 
     public EgoEaterUser() {
     }
@@ -205,5 +207,13 @@ public class EgoEaterUser {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<Long> getFuckOffList() {
+        return fuckOffList;
+    }
+
+    public List<Long> getPissedOffList() {
+        return pissedOffList;
     }
 }

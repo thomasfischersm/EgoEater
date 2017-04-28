@@ -79,7 +79,7 @@ public class RatingActivity
             return;
         }
 
-        new StoreRatingAsyncTask().execute(profile);
+        new StoreRatingAsyncTask(pairing, leftProfile, rightProfile, profile).execute();
     }
 
     /**
@@ -118,15 +118,39 @@ public class RatingActivity
         }
     }
 
-    private class StoreRatingAsyncTask extends AsyncTask<ProfileParcelable, Void, Void> {
+    private class StoreRatingAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private final PairingParcelable pairing;
+        private final ProfileParcelable leftProfile;
+        private final ProfileParcelable rightProfile;
+        private final ProfileParcelable winningProfile;
+
+        private StoreRatingAsyncTask(
+                PairingParcelable pairing,
+                ProfileParcelable leftProfile,
+                ProfileParcelable rightProfile,
+                ProfileParcelable winningProfile) {
+
+            this.pairing = pairing;
+            this.leftProfile = leftProfile;
+            this.rightProfile = rightProfile;
+            this.winningProfile = winningProfile;
+        }
 
         @Override
-        protected Void doInBackground(ProfileParcelable... params) {
+        protected Void doInBackground(Void... params) {
             Log.i(LOG_TAG, "Start StoreRatingAsyncTask");
 
+            // Ensure we are in a valid state.
+            if ((pairing == null)
+                    || (leftProfile == null)
+                    || (rightProfile == null)
+                    || (winningProfile == null)) {
+                return null;
+            }
+
             // Store rating.
-            ProfileParcelable profile = params[0];
-            boolean isWinnerLeft = (profile.getProfileId() == leftProfile.getProfileId());
+            boolean isWinnerLeft = (winningProfile.getProfileId() == leftProfile.getProfileId());
             long winnerId = isWinnerLeft ? leftProfile.getProfileId() : rightProfile.getProfileId();
             long loserId = isWinnerLeft ? rightProfile.getProfileId() : leftProfile.getProfileId();
             QueryUtil.saveRating(

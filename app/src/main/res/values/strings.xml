@@ -43,6 +43,19 @@
     <string name="messages_activity_title">Conversation with %1$s</string>
     <string name="no_messages_message">Break the silence! Send a message!</string>
     <string name="sendButtonContentDescription">A button that sends the current message.</string>
+    <string name="fuckOffButtonContentDescription">This is the famous fuck off button.</string>
+    <string name="fuck_off_dialog_title">The famous fuck off button</string>
+    <string name="fuck_off_dialog_text">
+        Warning! This action cannot be undone! You will never ever hear or see this person again.\n
+        \n
+        Think long and hard before proceeding. You\'ve told us your preferences. We\'ve given you
+        the best match that\'s interested in you. If you are going to reject this person, we are
+        going to give you the next person down your list. If you ranked them right, you are going to
+        like them less.\n
+        \n
+        If this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
+        and tell this person to fuck off!
+    </string>
 
     <!-- About Activity -->
     <string name="about_app_heading">About Ego Eater App</string>
@@ -87,7 +100,9 @@
     <string name="about_credits_body_text">
         © 2017 Thomas Fischer\n\n
         The logo is a combination of artwork from the <a href="thenounproject.com">thenounproject.com</a>:\n
-        Lion by Polina Flegontovna
+        Lion by Polina Flegontovna from the Noun Project\n
+        Middle Finger by Piotrek Chuchla from the Noun Project\n
+        Sad emoji by Weltenraser from the Noun Project\n
     </string>
 
 
@@ -158,4 +173,6 @@
     <string name="new_message_notification_text">
         Check out what a cutie is writing you!
     </string>
+    <string name="unmatch_notification_title">Unmatched</string>
+    <string name="unmatch_notification_text">You have been unmatched.</string>
 </resources>

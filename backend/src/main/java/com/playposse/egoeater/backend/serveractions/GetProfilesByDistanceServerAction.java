@@ -109,7 +109,14 @@ public class GetProfilesByDistanceServerAction extends AbstractServerAction {
         // Create list of ids.
         List<Long> profileIds = new ArrayList<>(egoEaterUsers.size());
         for (Key<EgoEaterUser> key : egoEaterUsers) {
-            profileIds.add(key.getId());
+            long partnerId = key.getId();
+            if (egoEaterUser.getFuckOffList().contains(partnerId)) {
+                continue;
+            }
+            if (egoEaterUser.getPissedOffList().contains(partnerId)) {
+                continue;
+            }
+            profileIds.add(partnerId);
         }
 
         return profileIds;

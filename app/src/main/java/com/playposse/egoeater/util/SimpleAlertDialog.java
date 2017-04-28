@@ -11,21 +11,59 @@ import com.playposse.egoeater.R;
  */
 public final class SimpleAlertDialog {
 
-    private SimpleAlertDialog() {}
+    private SimpleAlertDialog() {
+    }
 
-    public static void show(Context context, int titleId, int messageId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(titleId);
-        builder.setMessage(messageId);
-        builder.setPositiveButton(
-                R.string.dialog_okay_button,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                }
-        );
-        builder.show();
+    /**
+     * Shows a dialog with a message that the user can click "OK" on.
+     */
+    public static void alert(Context context, int titleId, int messageId) {
+        new AlertDialog.Builder(context)
+                .setTitle(titleId)
+                .setMessage(messageId)
+                .setPositiveButton(
+                        R.string.dialog_okay_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .show();
+    }
+
+    /**
+     * Shows a dialog with a message that the user can agree with or reject.
+     */
+    public static void confirm(
+            Context context,
+            int titleId,
+            int messageId,
+            final Runnable confirmationRunnable) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(titleId)
+                .setMessage(messageId)
+                .setNegativeButton(
+                        R.string.dialog_cancel_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setPositiveButton(
+                        R.string.dialog_continue_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                confirmationRunnable.run();
+                            }
+                        }
+                )
+                .show();
     }
 }

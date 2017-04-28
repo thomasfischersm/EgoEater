@@ -1,8 +1,6 @@
 package com.playposse.egoeater.activity;
 
 import android.app.LoaderManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -26,7 +24,6 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQuery;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
-import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.storage.MatchParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.NotificationUtil;
@@ -184,7 +181,7 @@ public class MatchesActivity
             holder.getLockIconImageView().setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SimpleAlertDialog.show(
+                    SimpleAlertDialog.alert(
                             MatchesActivity.this,
                             R.string.match_lock_icon_title,
                             R.string.match_lock_icon_explanation);

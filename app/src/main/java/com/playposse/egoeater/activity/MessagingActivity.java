@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -25,17 +26,20 @@ import android.widget.TextView;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.clientactions.FuckOffClientAction;
 import com.playposse.egoeater.clientactions.GetMaxMessageIndexClientAction;
 import com.playposse.egoeater.clientactions.ReportMessageReadClientAction;
 import com.playposse.egoeater.clientactions.SendMessageClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MessageTable;
+import com.playposse.egoeater.contentprovider.FuckOffUtil;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.firebase.actions.NotifyNewMessageClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 import com.playposse.egoeater.util.SmartCursor;
 import com.playposse.egoeater.util.StringUtil;
 
@@ -59,6 +63,7 @@ public class MessagingActivity
     private TextView noMessagesTextView;
     private EditText newMessageEditText;
     private ImageButton sendButton;
+    private ImageButton fuckOffButton;
 
     private long profileId;
     private long partnerId;
@@ -77,14 +82,17 @@ public class MessagingActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // Find the views.
         messagesRecyclerView = (RecyclerView) findViewById(R.id.messagesRecyclerView);
         noMessagesTextView = (TextView) findViewById(R.id.noMessagesTextView);
         newMessageEditText = (EditText) findViewById(R.id.newMessageEditText);
         sendButton = (ImageButton) findViewById(R.id.sendButton);
+        fuckOffButton = (ImageButton) findViewById(R.id.fuckOffButton);
 
         // Look up information in the intent and preferences.
         profileId = EgoEaterPreferences.getUser(this).getUserId();
@@ -103,6 +111,12 @@ public class MessagingActivity
             @Override
             public void onClick(View v) {
                 sendMessage();
+            }
+        });
+        fuckOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fuckOff();
             }
         });
     }
@@ -181,6 +195,28 @@ public class MessagingActivity
         messagesCursorAdapter.swapCursor(null);
         messagesRecyclerView.setVisibility(GONE);
         noMessagesTextView.setVisibility(VISIBLE);
+    }
+
+    private void fuckOff() {
+        SimpleAlertDialog.confirm(
+                this,
+                R.string.fuck_off_dialog_title,
+                R.string.fuck_off_dialog_text,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        fuckOffConfirmed();
+                    }
+                }
+        );
+    }
+
+    private void fuckOffConfirmed() {
+        EgoEaterPreferences.addFuckOffUser(this, partnerId);
+        new FuckOffClientAction(this, partnerId).execute();
+        FuckOffUtil.eraseUserLocally(getContentResolver(), partnerId);
+
+        startActivity(new Intent(this, MatchesActivity.class));
     }
 
     /**

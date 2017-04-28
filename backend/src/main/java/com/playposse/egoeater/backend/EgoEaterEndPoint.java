@@ -18,6 +18,7 @@ import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
+import com.playposse.egoeater.backend.serveractions.FuckOffServerAction;
 import com.playposse.egoeater.backend.serveractions.GetConversationServerAction;
 import com.playposse.egoeater.backend.serveractions.GetMatchesServerAction;
 import com.playposse.egoeater.backend.serveractions.GetMaxMessageIndexServerAction;
@@ -192,5 +193,13 @@ public class EgoEaterEndPoint {
         int maxMessageIndex =
                 GetMaxMessageIndexServerAction.getMaxMessageIndex(sessionId, partnerId);
         return new MaxMessageIndexResponseBean(maxMessageIndex);
+    }
+
+    @ApiMethod(name = "fuckOff")
+    public void fuckOff(
+            @Named("sessionId") long sessionId,
+            @Named("partnerId") long partnerId) throws BadRequestException, IOException {
+
+        FuckOffServerAction.fuckOff(sessionId, partnerId);
     }
 }

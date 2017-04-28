@@ -38,6 +38,8 @@ public final class EgoEaterPreferences {
     private static final String BIRTHDAY_KEY = "birthday";
     private static final String GENDER_KEY = "gender";
     private static final String QUERY_RADIUS_KEY = "queryRadius";
+    private static final String FUCK_OFF_USERS_KEY = "fuckOffUsers";
+    private static final String PISSED_OFF_USERS_KEY = "pissedOffUsers";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
@@ -173,6 +175,22 @@ public final class EgoEaterPreferences {
 
     public static void setQueryRadius(Context context, int queryRadius) {
         setInt(context, QUERY_RADIUS_KEY, queryRadius);
+    }
+
+    public static Set<Long> getFuckedOffUsers(Context context) {
+        return getLongSet(context, FUCK_OFF_USERS_KEY);
+    }
+
+    public static void addFuckOffUser(Context context, long profileId) {
+        addValueToLongSet(context, FUCK_OFF_USERS_KEY, profileId);
+    }
+
+    public static Set<Long> getPissedOffUsers(Context context) {
+        return getLongSet(context, PISSED_OFF_USERS_KEY);
+    }
+
+    public static void addPissedOffUser(Context context, long profileId) {
+        addValueToLongSet(context, PISSED_OFF_USERS_KEY, profileId);
     }
 
     private static String getString(Context context, String key) {

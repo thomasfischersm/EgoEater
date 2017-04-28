@@ -45,6 +45,13 @@ public class GetProfilesByIdServerAction extends AbstractServerAction {
         // Convert the Objectify entities into beans.
         List<ProfileBean> profileBeans = new ArrayList<>(egoEaterUsers.size());
         for (EgoEaterUser profile : egoEaterUsers) {
+            long partnerId = profile.getId();
+            if (egoEaterUser.getFuckOffList().contains(partnerId)) {
+                continue;
+            }
+            if (egoEaterUser.getPissedOffList().contains(partnerId)) {
+                continue;
+            }
             profileBeans.add(new ProfileBean(profile, egoEaterUser));
         }
 
