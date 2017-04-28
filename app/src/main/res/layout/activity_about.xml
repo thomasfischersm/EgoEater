@@ -48,9 +48,21 @@
                 android:text="@string/about_background_heading" />
 
             <TextView
-                android:layout_width="match_parent" android:autoLink="all"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_background_body_text" />
+
+            <TextView
+                style="@style/sectionHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_feedback_heading" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:text="@string/about_feedback_body_text" />
 
             <TextView
                 style="@style/sectionHeader"
@@ -59,8 +71,9 @@
                 android:text="@string/about_credits_heading" />
 
             <TextView
-                android:layout_width="match_parent" android:autoLink="all"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autoLink="all"
                 android:text="@string/about_credits_body_text" />
         </LinearLayout>
     </ScrollView>

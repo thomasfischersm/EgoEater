@@ -78,6 +78,11 @@
         Avoid getting your inbox flooded by thousands of messages. Get focused right on a hand
         selected number of people that are your high value matches.
     </string>
+    <string name="about_feedback_heading">Send Us Feedback!</string>
+    <string name="about_feedback_body_text">
+        I love to hear from you. Send your feedback to
+        <a href="mailto:thomas@playposse.com?subject=Feedback About Ego Eater Android App">thomas@playposse.com</a>.
+    </string>
     <string name="about_credits_heading">Credits and copyright</string>
     <string name="about_credits_body_text">
         © 2017 Thomas Fischer\n\n
