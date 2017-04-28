@@ -5,7 +5,10 @@ import com.google.appengine.api.datastore.QueryResultIterable;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.QueryKeys;
+import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+import com.playposse.egoeater.backend.schema.IntermediateMatching;
+import com.playposse.egoeater.backend.schema.IntermediateUser;
 import com.playposse.egoeater.backend.schema.Match;
 import com.playposse.egoeater.backend.schema.Ranking;
 import com.playposse.egoeater.backend.schema.Rating;
@@ -33,11 +36,19 @@ public class WipeTestDataServerAction extends AbstractServerAction {
         }
 
         List<EgoEaterUser> testUsers = findTestUsers();
+        if (testUsers.size() == 0) {
+            log.info("There are no test users to delete.");
+            return;
+        }
+
         List<Ref<EgoEaterUser>> refs = createUserRefs(testUsers);
         deleteMatches(refs);
         deleteRanking(refs);
         deleteRating(refs);
         deleteUsers(refs);
+        deleteConversations(refs);
+        deleteIntermediateMatchings(refs);
+        deleteIntermediateUsers(refs);
     }
 
     private static void deleteMatches(List<Ref<EgoEaterUser>> refs) {
@@ -107,6 +118,39 @@ public class WipeTestDataServerAction extends AbstractServerAction {
                 .filter("loser IN", refs)
                 .keys();
         delete(Rating.class, keysC);
+    }
+
+    private static void deleteConversations(List<Ref<EgoEaterUser>> refs) {
+        QueryKeys<Conversation> keysA = ofy().load()
+                .type(Conversation.class)
+                .filter("profileRefA IN", refs)
+                .keys();
+        delete(Conversation.class, keysA);
+
+        QueryKeys<Conversation> keysB = ofy().load()
+                .type(Conversation.class)
+                .filter("profileRefB IN", refs)
+                .keys();
+        delete(Conversation.class, keysB);
+    }
+
+    private static void deleteIntermediateMatchings(List<Ref<EgoEaterUser>> refs) {
+        QueryKeys<IntermediateMatching> keysA = ofy().load()
+                .type(IntermediateMatching.class)
+                .filter("profileId IN", refs)
+                .keys();
+        delete(IntermediateMatching.class, keysA);
+
+        QueryKeys<IntermediateMatching> keysB = ofy().load()
+                .type(IntermediateMatching.class)
+                .filter("ratedProfileId IN", refs)
+                .keys();
+        delete(IntermediateMatching.class, keysB);
+    }
+
+    private static void deleteIntermediateUsers(List<Ref<EgoEaterUser>> refs) {
+        ofy().delete()
+                .type(IntermediateUser.class).ids(ToLongs(refs));
     }
 
     private static void deleteUsers(List<Ref<EgoEaterUser>> refs) {
