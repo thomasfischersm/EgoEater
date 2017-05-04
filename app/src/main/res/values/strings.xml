@@ -2,6 +2,10 @@
     <string name="app_name">Ego Eater</string>
     <string name="facebook_app_id">1840650169531250</string>
 
+    <!-- Login activity -->
+    <string name="app_title">ego•eater</string>
+    <string name="login_button_label">Log in with Facebook</string>
+
     <!-- CropPhotoActivity -->
     <string name="crop_photo_activity_title">Crop profile photo</string>
     <string name="delete_button_label">Delete</string>

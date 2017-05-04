@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -25,12 +27,13 @@ import com.playposse.egoeater.services.PopulatePipelineService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class LoginActivity extends ParentActivity {
 
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
-    private LoginButton loginButton;
+    private Button loginButton;
 
     private CallbackManager callbackManager;
 
@@ -43,30 +46,31 @@ public class LoginActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton = (Button) findViewById(R.id.loginButton);
 
-        loginButton.setReadPermissions("public_profile", "email", "user_birthday");
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.i(LOG_TAG, "Facebook login successful: " + loginResult.getAccessToken());
-                Log.i(LOG_TAG, "app id " + loginResult.getAccessToken().getApplicationId());
-                Log.i(LOG_TAG, "token " + loginResult.getAccessToken().getToken().length());
-                onFbLoginCompleted(loginResult);
-            }
+        LoginManager.getInstance().registerCallback(
+                callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.i(LOG_TAG, "Facebook login successful: " + loginResult.getAccessToken());
+                        Log.i(LOG_TAG, "app id " + loginResult.getAccessToken().getApplicationId());
+                        Log.i(LOG_TAG, "token " + loginResult.getAccessToken().getToken().length());
+                        onFbLoginCompleted(loginResult);
+                    }
 
-            @Override
-            public void onCancel() {
-                Log.e(LOG_TAG, "Facebook login was canceled.");
-            }
+                    @Override
+                    public void onCancel() {
+                        Log.e(LOG_TAG, "Facebook login was canceled.");
+                    }
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.e(LOG_TAG, "Facebook login failed: " + error.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e(LOG_TAG, "Facebook login failed: " + error.getMessage());
+                    }
+                });
         Log.i(LOG_TAG, "Facebook callback registered.");
 
         // Apparently, the session ID is dead or something else requires trying to login again if
@@ -75,6 +79,15 @@ public class LoginActivity extends ParentActivity {
             LoginManager.getInstance().logOut();
         }
         debug();
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(
+                        LoginActivity.this,
+                        Arrays.asList("public_profile", "email", "user_birthday"));
+            }
+        });
     }
 
     @Override

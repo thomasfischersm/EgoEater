@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_help"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     tools:context="com.playposse.egoeater.activity.LoginActivity">
 
@@ -15,19 +16,29 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:visibility="gone"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:elevation="4dp" android:shadowRadius="40"  android:shadowColor="#aaa"
+        android:text="@string/app_title"
+        android:textColor="#fff"
+        android:textSize="60sp"
+        android:padding="8dp"
+        app:layout_marginTopPercent="20%" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp" />
-    </RelativeLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/capsule_button_bg"
+        android:text="@string/login_button_label"
+        android:textColor="#F44336"
+        app:layout_marginBottomPercent="8%"
+        app:layout_widthPercent="80%" />
+</android.support.percent.PercentRelativeLayout>
