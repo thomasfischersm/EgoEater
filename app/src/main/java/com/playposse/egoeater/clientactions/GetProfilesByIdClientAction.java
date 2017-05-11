@@ -2,7 +2,6 @@ package com.playposse.egoeater.clientactions;
 
 import android.content.Context;
 
-import com.playposse.egoeater.backend.egoEaterApi.model.LongListWrapper;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 
 import java.io.IOException;
