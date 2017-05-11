@@ -1,12 +1,14 @@
 package com.playposse.egoeater.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,6 +35,7 @@ public class LoginActivity extends ParentActivity {
 
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
+    private TextView logoTextView;
     private Button loginButton;
 
     private CallbackManager callbackManager;
@@ -46,6 +49,7 @@ public class LoginActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        logoTextView = (TextView) findViewById(R.id.logoTextView);
         loginButton = (Button) findViewById(R.id.loginButton);
 
         callbackManager = CallbackManager.Factory.create();
@@ -88,6 +92,10 @@ public class LoginActivity extends ParentActivity {
                         Arrays.asList("public_profile", "email", "user_birthday"));
             }
         });
+
+        // Load the external font for the logo.
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nexa_bold.otf");
+        logoTextView.setTypeface(typeface);
     }
 
     @Override

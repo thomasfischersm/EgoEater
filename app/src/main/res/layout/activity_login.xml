@@ -20,17 +20,31 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
+        android:id="@+id/logoTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:elevation="4dp"
         android:padding="8dp"
-        android:shadowColor="#aaa"
-        android:shadowRadius="40"
+        android:shadowColor="#35000000"
+        android:shadowRadius="1"
         android:text="@string/app_title"
         android:textColor="#fff"
+        android:shadowDx="0"
+        android:shadowDy="8"
         android:textSize="60sp"
         app:layout_marginTopPercent="20%" />
+
+    <TextView
+        android:id="@+id/tagLineTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/logoTextView"
+        android:layout_alignEnd="@+id/logoTextView"
+        android:layout_below="@+id/logoTextView"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif"
+        android:text="@string/tag_line"
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/loginButton"
