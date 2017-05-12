@@ -2,16 +2,15 @@ package com.playposse.egoeater.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
@@ -32,6 +31,7 @@ public abstract class ParentActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        applyCustomFontToActionBar();
     }
 
     protected abstract int getLayoutResId();
@@ -113,6 +113,16 @@ public abstract class ParentActivity extends AppCompatActivity {
                     progressDialog = null;
                 }
             });
+        }
+    }
+
+    private void applyCustomFontToActionBar() {
+        TextView titleTextView = (TextView) findViewById(R.id.titleTextView);
+
+        if (titleTextView != null) {
+            Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nexa_bold.otf");
+            titleTextView.setTypeface(typeface);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
     }
 }

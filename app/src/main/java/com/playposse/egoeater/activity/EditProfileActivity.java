@@ -45,8 +45,6 @@ public class EditProfileActivity extends ParentWithLocationCheckActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(R.string.edit_profile_activity_title);
-
         profilePhoto0Button = (ImageButton) findViewById(R.id.profilePhoto0Button);
         profilePhoto1Button = (ImageButton) findViewById(R.id.profilePhoto1Button);
         profilePhoto2Button = (ImageButton) findViewById(R.id.profilePhoto2Button);
