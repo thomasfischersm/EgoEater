@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- FAQ style -->
     <style name="sectionHeader" parent="android:Widget.Holo.Light.TextView">
         <item name="android:drawableBottom">@drawable/help_section_header</item>
         <item name="android:drawablePadding">4dp</item>
@@ -16,5 +17,46 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/emphasis</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Font styles -->
+    <style name="headline" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/headline_textSize</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="title" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/title_textSize</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="subheader" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/subheader_textSize</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="body1" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/body1_textSize</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="body2" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/body2_textSize</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="menu" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/menu_textSize</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="caption" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/caption_textSize</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="button" parent="android:Widget.Holo.Light.Button">
+        <item name="android:textSize">@dimen/button_textSize</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 </resources>

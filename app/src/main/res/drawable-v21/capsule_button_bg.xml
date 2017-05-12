@@ -3,11 +3,11 @@
     android:color="?android:colorControlHighlight">
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="60dp" />
+            <corners android:radius="64dp" />
             <solid android:color="#fff" />
             <padding
-                android:left="30dp"
-                android:right="30dp" />
+                android:left="32dp"
+                android:right="32dp" />
         </shape>
     </item>
 </ripple>

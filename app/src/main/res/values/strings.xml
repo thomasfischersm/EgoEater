@@ -6,6 +6,7 @@
     <string name="app_title">ego•eater</string>
     <string name="tag_line">Find out who\'s in your dating league</string>
     <string name="login_button_label">Log in with Facebook</string>
+    <string name="background_content_description">Background texture</string>
 
     <!-- CropPhotoActivity -->
     <string name="crop_photo_activity_title">Crop profile photo</string>

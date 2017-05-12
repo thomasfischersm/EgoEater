@@ -5,7 +5,6 @@
     android:id="@+id/activity_help"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
     android:orientation="vertical"
     tools:context="com.playposse.egoeater.activity.LoginActivity">
 
@@ -19,18 +18,26 @@
         android:visibility="gone"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background_content_description"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_bg" />
+
     <TextView
         android:id="@+id/logoTextView"
+        style="@style/headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:padding="8dp"
         android:shadowColor="#35000000"
-        android:shadowRadius="1"
-        android:text="@string/app_title"
-        android:textColor="#fff"
         android:shadowDx="0"
         android:shadowDy="8"
+        android:shadowRadius="1"
+        android:text="@string/app_title"
+        android:textColor="@color/textColorLight"
         android:textSize="60sp"
         app:layout_marginTopPercent="20%" />
 
@@ -38,24 +45,26 @@
         android:id="@+id/tagLineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/logoTextView"
-        android:layout_alignEnd="@+id/logoTextView"
         android:layout_below="@+id/logoTextView"
-        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif"
         android:text="@string/tag_line"
-        android:textColor="#fff" />
+        android:shadowColor="#35000000"
+        android:shadowDx="0"
+        android:shadowDy="8"
+        android:shadowRadius="1"
+        android:textColor="@color/textColorLight"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/loginButton"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
         android:background="@drawable/capsule_button_bg"
         android:text="@string/login_button_label"
-        android:textColor="#F44336"
-        app:layout_marginBottomPercent="8%"
-        app:layout_widthPercent="80%" />
+        android:textColor="@color/colorPrimary" />
 </android.support.percent.PercentRelativeLayout>
