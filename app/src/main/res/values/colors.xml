@@ -13,7 +13,7 @@
     <color name="backgroundLight">#FAFAFA</color>
 
     <!-- Dark theme -->
-    <color name="primaryTextColorDark">#000000</color>
+    <color name="primaryTextColorDark">#FFFFFF</color>
     <color name="secondaryTextColorDark">#B3B3B3</color>
     <color name="disabledTextColorDark">#4D4D4D</color>
     <color name="backgroundDark">#212121</color>

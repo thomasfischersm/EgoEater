@@ -25,8 +25,16 @@
         <!-- Main content fragment goes here. -->
     </LinearLayout>
 
-    <fragment
-        android:layout_width="300dp"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        class="com.playposse.egoeater.activity.NavigationDrawerFragment" />
+        android:layout_gravity="start"
+        android:background="@color/backgroundLight"
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/secondaryTextColorLight"
+        app:itemTextColor="@color/secondaryTextColorLight"
+        app:menu="@menu/navigation_menu">
+
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

@@ -34,7 +34,7 @@ public class AboutActivity extends ParentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                break;
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

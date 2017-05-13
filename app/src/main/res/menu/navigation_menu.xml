@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/profile_menu_item"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/profile_nav" />
+        <item
+            android:id="@+id/rating_menu_item"
+            android:icon="@drawable/ic_view_agenda_black_24px"
+            android:title="@string/rating_nav" />
+        <item
+            android:id="@+id/matches_menu_item"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="@string/matches_nav" />
+    </group>
+    <item android:title="">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/send_feedback_menu_item"
+                    android:icon="@drawable/ic_feedback_black_24px"
+                    android:title="@string/send_feedback_nav" />
+                <item
+                    android:id="@+id/about_menu_item"
+                    android:icon="@drawable/ic_info_black_24dp"
+                    android:title="@string/about_nav" />
+                <item
+                    android:id="@+id/logout_menu_item"
+                    android:icon="@drawable/ic_power_settings_new_black_24dp"
+                    android:title="@string/logout_nav" />
+            </group>
+        </menu>
+    </item>
+</menu>
