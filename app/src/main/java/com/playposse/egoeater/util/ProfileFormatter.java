@@ -34,12 +34,18 @@ public final class ProfileFormatter {
             return "";
         }
 
-        String distance = context.getString(R.string.distance_snippet, (int) profile.getDistance());
+        int distance = (int) profile.getDistance();
+        final String distanceStr;
+        if (distance > 0) {
+            distanceStr = context.getString(R.string.distance_snippet, distance);
+        } else {
+            distanceStr = "";
+        }
 
         if (profile.getCountry().equals(USA_COUNTRY)) {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getState() + distance;
+            return profile.getCity() + LOCATION_SEPARATOR + profile.getState() + distanceStr;
         } else {
-            return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry() + distance;
+            return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry() + distanceStr;
         }
     }
 }

@@ -111,6 +111,15 @@
     </string>
 
 
+    <!-- Navigation drawer -->
+    <string name="profile_nav">Profile</string>
+    <string name="rating_nav">Rating</string>
+    <string name="matches_nav">Matches</string>
+    <string name="send_feedback_nav">Send feedback</string>
+    <string name="about_nav">About</string>
+    <string name="logout_nav">Log out</string>
+
+
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
@@ -180,4 +189,7 @@
     </string>
     <string name="unmatch_notification_title">Unmatched</string>
     <string name="unmatch_notification_text">You have been unmatched.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

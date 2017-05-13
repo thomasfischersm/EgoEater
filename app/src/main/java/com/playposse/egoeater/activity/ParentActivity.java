@@ -4,17 +4,23 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.EmailUtil;
+import com.playposse.egoeater.util.LogoutUtil;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
@@ -22,19 +28,33 @@ import com.playposse.egoeater.util.EmailUtil;
  */
 public abstract class ParentActivity extends AppCompatActivity {
 
+    private DrawerLayout drawerLayout;
+    private LinearLayout mainFragmentContainer;
+
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResId());
+
+        int activityResId = getLayoutResId();
+        if (activityResId != 0) {
+            setContentView(activityResId);
+        } else {
+            setContentView(R.layout.activity_parent);
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+            mainFragmentContainer = (LinearLayout) findViewById(R.id.mainFragmentContainer);
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         applyCustomFontToActionBar();
     }
 
-    protected abstract int getLayoutResId();
+    // TODO: Remove this.
+    protected int getLayoutResId() {
+        return 0;
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,9 +86,7 @@ public abstract class ParentActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AboutActivity.class));
                 return true;
             case R.id.logout_menu_item:
-                EgoEaterPreferences.clearSessionId(this);
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
+                LogoutUtil.logout(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -124,5 +142,13 @@ public abstract class ParentActivity extends AppCompatActivity {
             titleTextView.setTypeface(typeface);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+    }
+
+    protected void addMainFragment(Fragment mainFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.mainFragmentContainer, mainFragment);
+        fragmentTransaction.commit();
     }
 }

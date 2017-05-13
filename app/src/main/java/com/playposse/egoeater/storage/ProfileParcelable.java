@@ -6,7 +6,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
+import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.util.DataMunchUtil;
 import com.playposse.egoeater.util.SmartCursor;
 
 import java.util.List;
@@ -67,6 +69,34 @@ public class ProfileParcelable implements Parcelable {
         wins = smartCursor.getInt(ProfileTable.WINS_COLUMN);
         losses = smartCursor.getInt(ProfileTable.LOSSES_COLUMN);
         winsLossesSum = smartCursor.getInt(ProfileTable.WINS_LOSSES_SUM_COLUMN);
+    }
+
+    public ProfileParcelable(UserBean userBean) {
+        profileId = userBean.getUserId();
+        firstName = userBean.getFirstName();
+        lastName = userBean.getLastName();
+        name = userBean.getName();
+        profileText = userBean.getProfileText();
+        distance = -1;
+        city = userBean.getCity();
+        state = userBean.getState();
+        country = userBean.getCountry();
+        age = DataMunchUtil.getAge(userBean.getBirthday());;
+        gender = userBean.getGender();
+        if (userBean.getProfilePhotoUrls() != null) {
+            if (userBean.getProfilePhotoUrls().size() > 0) {
+                photoUrl0 = userBean.getProfilePhotoUrls().get(0);
+            }
+            if (userBean.getProfilePhotoUrls().size() > 1) {
+                photoUrl1 = userBean.getProfilePhotoUrls().get(1);
+            }
+            if (userBean.getProfilePhotoUrls().size() > 2) {
+                photoUrl2 = userBean.getProfilePhotoUrls().get(2);
+            }
+        }
+        wins = 0;
+        losses = 0;
+        winsLossesSum = 0;
     }
 
     private ProfileParcelable(Parcel source) {
