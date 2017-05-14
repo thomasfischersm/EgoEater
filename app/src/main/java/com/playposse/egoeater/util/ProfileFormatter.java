@@ -20,7 +20,7 @@ public final class ProfileFormatter {
         sb.append(profile.getFirstName());
 
         if (profile.getAge() > 0) {
-            sb.append(context.getString(R.string.age_speparator));
+            sb.append(context.getString(R.string.age_separator));
             sb.append(profile.getAge());
         }
         return sb.toString();

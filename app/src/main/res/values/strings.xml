@@ -15,8 +15,9 @@
     <string name="select_profile_photo_chooser">Select profile photo</string>
 
     <!-- EditProfileActivity -->
-    <string name="age_speparator">, </string>
+    <string name="age_separator">, </string>
     <string name="profile_edit_text_hint">Enter a short profile here.</string>
+    <string name="profile_info">Profile Info</string>
 
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>
