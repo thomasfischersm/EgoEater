@@ -87,26 +87,43 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.LauncherActivity">
+        <activity
+            android:name=".activity.LauncherActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CropPhotoActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.EditProfileActivity" />
+        <activity
+            android:name=".activity.CropPhotoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RatingActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.NoMorePairingsActivity" />
-        <activity android:name=".activity.MatchesActivity" />
-        <activity android:name=".activity.ViewProfileActivity" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NoMorePairingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MatchesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ViewProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MessagingActivity"
-            android:parentActivityName=".activity.MatchesActivity" />
+            android:parentActivityName=".activity.MatchesActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
