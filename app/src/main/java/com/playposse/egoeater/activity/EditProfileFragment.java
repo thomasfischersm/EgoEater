@@ -83,6 +83,8 @@ public class EditProfileFragment extends Fragment {
     private void initProfilePhoto(final int photoIndex, ImageView imageView, String photoUrl) {
         if (photoUrl != null) {
             GlideUtil.load(imageView, photoUrl);
+        } else {
+            imageView.setImageResource(R.drawable.empty_photo_slot);
         }
 
         imageView.setOnClickListener(new View.OnClickListener() {
