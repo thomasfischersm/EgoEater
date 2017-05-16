@@ -3,6 +3,7 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.playposse.egoeater.R;
@@ -26,6 +27,7 @@ public class RatingActivity
     private static final String LEFT_PROFILE_KEY = "leftProfile";
     private static final String RIGHT_PROFILE_KEY = "rightProfile";
 
+    private RatingFragment ratingFragment;
     private RatingProfileFragment leftRatingProfileFragment;
     private RatingProfileFragment rightRatingProfileFragment;
 
@@ -34,20 +36,19 @@ public class RatingActivity
     private ProfileParcelable rightProfile;
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_rating;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        leftRatingProfileFragment =
-                (RatingProfileFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.leftProfileFragment);
-        rightRatingProfileFragment =
-                (RatingProfileFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.rightProfileFragment);
+        ratingFragment = new RatingFragment();
+        addMainFragment(ratingFragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        leftRatingProfileFragment = ratingFragment.getLeftRatingProfileFragment();
+        rightRatingProfileFragment = ratingFragment.getRightRatingProfileFragment();
 
         new LoadPairingAsyncTask().execute();
     }

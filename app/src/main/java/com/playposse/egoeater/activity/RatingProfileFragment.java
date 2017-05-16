@@ -3,6 +3,7 @@ package com.playposse.egoeater.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,9 +30,11 @@ public class RatingProfileFragment extends Fragment {
     private ProfileSelectionListener listener;
     private int mainImageIndex = 0;
 
-    private ImageView profilePhotoImageView;
-    private ImageView profileThumbnail0ImageView;
-    private ImageView profileThumbnail1ImageView;
+    private ImageView profilePhoto0ImageView;
+    private CardView photo1CardView;
+    private ImageView profilePhoto1ImageView;
+    private CardView photo2CardView;
+    private ImageView profilePhoto2ImageView;
     private ImageView heartImageView;
     private TextView headlineTextView;
     private TextView subHeadTextView;
@@ -60,18 +63,21 @@ public class RatingProfileFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.rating_fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rating_profile, container, false);
 
-        profilePhotoImageView = (ImageView) rootView.findViewById(R.id.profilePhotoImageView);
-        profileThumbnail0ImageView = (ImageView) rootView.findViewById(R.id.profileThumbnail0ImageView);
-        profileThumbnail1ImageView = (ImageView) rootView.findViewById(R.id.profileThumbnail1ImageView);
+        profilePhoto0ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto0ImageView);
+        photo1CardView = (CardView) rootView.findViewById(R.id.photo1CardView);
+        profilePhoto1ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto1ImageView);
+        photo2CardView = (CardView) rootView.findViewById(R.id.photo2CardView);
+        profilePhoto2ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto2ImageView);
         heartImageView = (ImageView) rootView.findViewById(R.id.heartImageView);
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
 
         refreshView();
 
-        profilePhotoImageView.setOnClickListener(new View.OnClickListener() {
+        // Select profile.
+        profilePhoto0ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -80,7 +86,8 @@ public class RatingProfileFragment extends Fragment {
             }
         });
 
-        profileThumbnail0ImageView.setOnClickListener(new View.OnClickListener() {
+        // Change main profile photo.
+        profilePhoto1ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainImageIndex = (mainImageIndex == 1) ? 0 : 1;
@@ -88,7 +95,8 @@ public class RatingProfileFragment extends Fragment {
             }
         });
 
-        profileThumbnail1ImageView.setOnClickListener(new View.OnClickListener() {
+        // Change main profile photo.
+        profilePhoto2ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainImageIndex = (mainImageIndex == 2) ? 0 : 2;
@@ -96,7 +104,7 @@ public class RatingProfileFragment extends Fragment {
             }
         });
 
-        profilePhotoImageView.setOnTouchListener(new View.OnTouchListener() {
+        profilePhoto0ImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -129,7 +137,9 @@ public class RatingProfileFragment extends Fragment {
             loadImages();
             String headLine = ProfileFormatter.formatNameAndAge(getContext(), profile);
             headlineTextView.setText(headLine);
-            String subHead = ProfileFormatter.formatCityStateAndDistance(getContext(), profile);
+            String subHead = ProfileFormatter.formatCityStateDistanceAndProfile(
+                    getContext(),
+                    profile);
             subHeadTextView.setText(subHead);
         }
     }
@@ -143,19 +153,27 @@ public class RatingProfileFragment extends Fragment {
                     loadImage(2, 2);
                     break;
                 case 1:
-                    loadImage(0, 0);
-                    loadImage(1, 1);
+                    loadImage(0, 1);
+                    loadImage(1, 0);
                     loadImage(2, 2);
                     break;
                 case 2:
-                    loadImage(0, 0);
+                    loadImage(0, 2);
                     loadImage(1, 1);
-                    loadImage(2, 2);
+                    loadImage(2, 0);
                     break;
                 default:
                     Log.e(LOG_TAG, "loadImages: Unexpected mainImageIndex: " + mainImageIndex);
                     break;
             }
+        }
+
+        // Hide extra image slots
+        if (profile.getPhotoUrl1() == null) {
+            photo1CardView.setVisibility(View.GONE);
+        }
+        if (profile.getPhotoUrl2() == null) {
+            photo2CardView.setVisibility(View.GONE);
         }
     }
 
@@ -179,13 +197,13 @@ public class RatingProfileFragment extends Fragment {
         final ImageView imageView;
         switch (slotIndex) {
             case 0:
-                imageView = profilePhotoImageView;
+                imageView = profilePhoto0ImageView;
                 break;
             case 1:
-                imageView = profileThumbnail0ImageView;
+                imageView = profilePhoto1ImageView;
                 break;
             case 2:
-                imageView = profileThumbnail1ImageView;
+                imageView = profilePhoto2ImageView;
                 break;
             default:
                 Log.e(LOG_TAG, "loadImage: Unexpected slotIndex: " + slotIndex);
@@ -198,9 +216,7 @@ public class RatingProfileFragment extends Fragment {
                 if (photoUrl != null) {
                     imageView.setVisibility(View.VISIBLE);
                     GlideUtil.load(imageView, photoUrl, R.drawable.ic_insert_emoticon_black_24dp);
-                } else
-
-                {
+                } else {
                     imageView.setVisibility(View.GONE);
                 }
             }

@@ -54,6 +54,11 @@ public final class ProfileFormatter {
             Context context,
             ProfileParcelable profile) {
 
-        return formatCityStateAndDistance(context, profile) + " - " + profile.getProfileText();
+        String profileText = profile.getProfileText();
+        if (profileText != null) {
+            return formatCityStateAndDistance(context, profile) + " - " + profileText;
+        } else {
+            return formatCityStateAndDistance(context, profile);
+        }
     }
 }

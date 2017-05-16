@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.playposse.egoeater.activity.RatingFragment">
+
+    <fragment
+        android:id="@+id/leftProfileFragment"
+        android:name="com.playposse.egoeater.activity.RatingProfileFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_rating_profile" />
+
+    <fragment
+        android:id="@+id/rightProfileFragment"
+        android:name="com.playposse.egoeater.activity.RatingProfileFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_rating_profile" />
+</LinearLayout>

@@ -1,0 +1,100 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.playposse.egoeater.activity.RatingProfileFragment">
+
+    <ImageView
+        android:id="@+id/profilePhoto0ImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/profile_photo_content_description"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|top"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/photo1CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:contentPaddingBottom="-4dp"
+            app:contentPaddingTop="-4dp">
+
+            <ImageView
+                android:id="@+id/profilePhoto1ImageView"
+                android:layout_width="75dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/profile_thumbnail_content_description"
+                android:scaleType="fitCenter" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/photo2CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:contentPaddingBottom="-4dp"
+            app:contentPaddingTop="-4dp">
+
+            <ImageView
+                android:id="@+id/profilePhoto2ImageView"
+                android:layout_width="75dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/profile_thumbnail_content_description"
+                android:scaleType="fitCenter" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:background="@drawable/scrim_bg"
+        android:orientation="vertical"
+        android:paddingBottom="14dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/headlineTextView"
+            style="@style/headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextColorDark" />
+
+        <TextView
+            android:id="@+id/subHeadTextView"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="@color/primaryTextColorDark" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/heartImageView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/love_icon_content_description"
+        android:src="@drawable/ic_favorite_black_24dp"
+        android:tint="#F44336"
+        android:visibility="gone" />
+</FrameLayout>
