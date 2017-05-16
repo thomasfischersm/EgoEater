@@ -66,4 +66,33 @@ public final class SimpleAlertDialog {
                 )
                 .show();
     }
+
+    /**
+     * Shows a dialog that asks to choose between cancel and discard.
+     */
+    public static void confirmDiscard(Context context, final Runnable discardRunnable) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.discard_dialog_title)
+                .setMessage(R.string.discard_dialog_message)
+                .setNegativeButton(
+                        R.string.discard_dialog_cancel_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setPositiveButton(
+                        R.string.discard_dialog_discard_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                discardRunnable.run();
+                            }
+                        }
+                )
+                .show();
+    }
 }

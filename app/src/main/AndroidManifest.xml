@@ -124,6 +124,11 @@
             android:name=".activity.MessagingActivity"
             android:parentActivityName=".activity.MatchesActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.EditProfileActivity"
+            android:parentActivityName=".activity.ViewOwnProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -13,7 +13,8 @@ import static com.playposse.egoeater.util.EgoEaterConstants.USA_COUNTRY;
  */
 public final class ProfileFormatter {
 
-    private ProfileFormatter() {}
+    private ProfileFormatter() {
+    }
 
     public static String formatNameAndAge(Context context, ProfileParcelable profile) {
         StringBuilder sb = new StringBuilder();
@@ -47,5 +48,12 @@ public final class ProfileFormatter {
         } else {
             return profile.getCity() + LOCATION_SEPARATOR + profile.getCountry() + distanceStr;
         }
+    }
+
+    public static String formatCityStateDistanceAndProfile(
+            Context context,
+            ProfileParcelable profile) {
+
+        return formatCityStateAndDistance(context, profile) + " - " + profile.getProfileText();
     }
 }

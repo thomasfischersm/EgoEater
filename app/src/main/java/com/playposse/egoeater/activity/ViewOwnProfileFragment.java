@@ -55,8 +55,6 @@ public class ViewOwnProfileFragment extends Fragment {
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
         editButton = (FloatingActionButton) rootView.findViewById(R.id.editButton);
-//        profileEditText = (EditText) rootView.findViewById(R.id.profileEditText);
-//        saveButton = (Button) rootView.findViewById(R.id.saveButton);
 
         initProfilePhoto(
                 0,
@@ -76,16 +74,16 @@ public class ViewOwnProfileFragment extends Fragment {
 
         UserBean userBean = EgoEaterPreferences.getUser(getContext());
         ProfileParcelable profile = new ProfileParcelable(userBean);
-//        profileEditText.setText(userBean.getProfileText());
         headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
         subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(getContext(), profile));
 
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onSaveClicked();
-//            }
-//        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
+            }
+        });
 
         return rootView;
     }
@@ -122,24 +120,4 @@ public class ViewOwnProfileFragment extends Fragment {
             emptyView.setOnClickListener(clickListener);
         }
     }
-//
-//    private void onSaveClicked() {
-//        ((ParentActivity) getActivity()).showLoadingProgress();
-//
-//        new SaveProfileClientAction(
-//                getContext(),
-//                profileEditText.getText().toString(),
-//                new ApiClientAction.Callback<Void>() {
-//                    @Override
-//                    public void onResult(Void data) {
-//                        onSaveCompleted();
-//                    }
-//                }).execute();
-//    }
-//
-//    private void onSaveCompleted() {
-//        ((ParentActivity) getActivity()).dismissLoadingProgress();
-//
-//        startActivity(new Intent(getContext(), RatingActivity.class));
-//    }
 }
