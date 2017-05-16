@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -56,26 +57,44 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/profilePhoto1ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="2dp"
-                    android:scaleType="fitCenter" />
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true"
+                    app:contentPaddingBottom="-4dp"
+                    app:contentPaddingTop="-4dp">
 
-                <ImageView
-                    android:id="@+id/profilePhoto2ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="true"
-                    android:elevation="2dp"
-                    android:scaleType="fitCenter" />
+                    <ImageView
+                        android:id="@+id/profilePhoto1ImageView"
+                        android:layout_width="105dp"
+                        android:layout_height="75dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter" />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardUseCompatPadding="true"
+                    app:contentPaddingBottom="-4dp"
+                    app:contentPaddingTop="-4dp">
+
+                    <ImageView
+                        android:id="@+id/profilePhoto2ImageView"
+                        android:layout_width="105dp"
+                        android:layout_height="75dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter" />
+                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <TextView
