@@ -3,9 +3,7 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
@@ -20,7 +18,7 @@ import com.playposse.egoeater.util.DatabaseDumper;
  */
 public class RatingActivity
         extends ParentActivity
-        implements ProfileFragment.ProfileSelectionListener {
+        implements RatingProfileFragment.ProfileSelectionListener {
 
     private static final String LOG_TAG = RatingActivity.class.getSimpleName();
 
@@ -28,8 +26,8 @@ public class RatingActivity
     private static final String LEFT_PROFILE_KEY = "leftProfile";
     private static final String RIGHT_PROFILE_KEY = "rightProfile";
 
-    private ProfileFragment leftProfileFragment;
-    private ProfileFragment rightProfileFragment;
+    private RatingProfileFragment leftRatingProfileFragment;
+    private RatingProfileFragment rightRatingProfileFragment;
 
     private PairingParcelable pairing;
     private ProfileParcelable leftProfile;
@@ -44,11 +42,11 @@ public class RatingActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        leftProfileFragment =
-                (ProfileFragment) getSupportFragmentManager()
+        leftRatingProfileFragment =
+                (RatingProfileFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.leftProfileFragment);
-        rightProfileFragment =
-                (ProfileFragment) getSupportFragmentManager()
+        rightRatingProfileFragment =
+                (RatingProfileFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.rightProfileFragment);
 
         new LoadPairingAsyncTask().execute();
@@ -112,8 +110,8 @@ public class RatingActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             if ((leftProfile != null) && (rightProfile != null)) {
-                leftProfileFragment.setProfile(leftProfile);
-                rightProfileFragment.setProfile(rightProfile);
+                leftRatingProfileFragment.setProfile(leftProfile);
+                rightRatingProfileFragment.setProfile(rightProfile);
             }
         }
     }

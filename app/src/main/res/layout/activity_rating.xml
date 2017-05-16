@@ -24,18 +24,18 @@
 
         <fragment
             android:id="@+id/leftProfileFragment"
-            android:name="com.playposse.egoeater.activity.ProfileFragment"
+            android:name="com.playposse.egoeater.activity.RatingProfileFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_profile" />
+            tools:layout="@layout/rating_fragment_profile" />
 
         <fragment
             android:id="@+id/rightProfileFragment"
-            android:name="com.playposse.egoeater.activity.ProfileFragment"
+            android:name="com.playposse.egoeater.activity.RatingProfileFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_profile" />
+            tools:layout="@layout/rating_fragment_profile" />
     </LinearLayout>
 </LinearLayout>

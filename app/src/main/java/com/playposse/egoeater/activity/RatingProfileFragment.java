@@ -1,7 +1,6 @@
 package com.playposse.egoeater.activity;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,23 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
-import com.playposse.egoeater.util.StringUtil;
-
-import static com.playposse.egoeater.util.EgoEaterConstants.LOCATION_SEPARATOR;
-import static com.playposse.egoeater.util.EgoEaterConstants.USA_COUNTRY;
 
 /**
  * A {@link Fragment} that shows a profile in the {@link RatingActivity}.
  */
-public class ProfileFragment extends Fragment {
+public class RatingProfileFragment extends Fragment {
 
-    private static final String LOG_TAG = ProfileFragment.class.getSimpleName();
+    private static final String LOG_TAG = RatingProfileFragment.class.getSimpleName();
 
     private static final String PROFILE_PARAM = "profile";
 
@@ -43,7 +36,7 @@ public class ProfileFragment extends Fragment {
     private TextView headlineTextView;
     private TextView subHeadTextView;
 
-    public ProfileFragment() {
+    public RatingProfileFragment() {
         // Required empty public constructor
     }
 
@@ -67,7 +60,7 @@ public class ProfileFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.rating_fragment_profile, container, false);
 
         profilePhotoImageView = (ImageView) rootView.findViewById(R.id.profilePhotoImageView);
         profileThumbnail0ImageView = (ImageView) rootView.findViewById(R.id.profileThumbnail0ImageView);
