@@ -137,12 +137,24 @@ public final class EgoEaterPreferences {
         return getString(context, PROFILE_PHOTO_URL_KEY + 0);
     }
 
+    public static void setProfilePhotoUrl0(Context context, String photoUrl) {
+        setString(context, PROFILE_PHOTO_URL_KEY + 0, photoUrl);
+    }
+
     public static String getProfilePhotoUrl1(Context context) {
         return getString(context, PROFILE_PHOTO_URL_KEY + 1);
     }
 
+    public static void setProfilePhotoUrl1(Context context, String photoUrl) {
+        setString(context, PROFILE_PHOTO_URL_KEY + 1, photoUrl);
+    }
+
     public static String getProfilePhotoUrl2(Context context) {
         return getString(context, PROFILE_PHOTO_URL_KEY + 2);
+    }
+
+    public static void setProfilePhotoUrl2(Context context, String photoUrl) {
+        setString(context, PROFILE_PHOTO_URL_KEY + 2, photoUrl);
     }
 
     public static void setHasFirstProfilePhoto(Context context, boolean hasFirstProfilePhoto) {

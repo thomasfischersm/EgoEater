@@ -18,6 +18,7 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoClientAction;
+import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -102,13 +103,13 @@ public class CropPhotoActivity extends ParentActivity {
             @Override
             public void onClick(View v) {
                 showLoadingProgress();
-                new UploadProfilePhotoClientAction(
+                new UploadProfilePhotoToServletClientAction(
                         getApplicationContext(),
                         photoIndex,
                         cropImageView.getCroppedImage(),
-                        new ApiClientAction.Callback<Void>() {
+                        new ApiClientAction.Callback<String>() {
                             @Override
-                            public void onResult(Void data) {
+                            public void onResult(String photoUrl) {
                                 EgoEaterPreferences.setHasFirstProfilePhoto(
                                         getApplicationContext(),
                                         true);

@@ -32,6 +32,12 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
     public static UserBean uploadProfilePhoto(long sessionId, int photoIndex, PhotoBean photoBean)
             throws BadRequestException {
 
+        return uploadProfilePhoto(sessionId, photoIndex, photoBean.getBytes());
+    }
+
+    public static UserBean uploadProfilePhoto(long sessionId, int photoIndex, byte[] photoContent)
+            throws BadRequestException {
+
         // Verify input.
         if ((photoIndex < 0) || (photoIndex > 2)) {
             throw new BadRequestException(
@@ -47,7 +53,7 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
 
         // Store new photo in Cloud Storage.
         String fileName = generateUniqueFilename();
-        String url = createFile(fileName, photoBean.getBytes(), storage);
+        String url = createFile(fileName, photoContent, storage);
 
         // Update EgoEaterUser.
         ProfilePhoto profilePhoto = new ProfilePhoto(fileName, url);

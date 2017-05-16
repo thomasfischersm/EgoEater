@@ -8,6 +8,7 @@ import android.util.Log;
 import com.playposse.egoeater.backend.egoEaterApi.model.PhotoBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.ImageUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,9 +38,7 @@ public class UploadProfilePhotoClientAction extends ApiClientAction<Void> {
     @Override
     protected Void executeAsync() throws IOException {
         // Convert Bitmap to base64 encoded PNG file.
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-        byte[] bytes = outputStream.toByteArray();
+        byte[] bytes = ImageUtil.convertBitmapToBytes(bitmap);
         String base64 = Base64.encodeToString(bytes, Base64.DEFAULT);
         PhotoBean photoBean = new PhotoBean().setBytes(base64);
 

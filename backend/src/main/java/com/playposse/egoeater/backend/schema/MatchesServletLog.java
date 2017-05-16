@@ -3,7 +3,7 @@ package com.playposse.egoeater.backend.schema;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.playposse.egoeater.backend.generatematches.GenerateMatchesServlet;
+import com.playposse.egoeater.backend.sevlets.GenerateMatchesServlet;
 
 import javax.annotation.Nullable;
 

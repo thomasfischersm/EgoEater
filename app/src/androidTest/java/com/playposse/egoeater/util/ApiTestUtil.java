@@ -2,6 +2,8 @@ package com.playposse.egoeater.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -14,9 +16,11 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
+import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 import com.playposse.egoeater.backend.egoEaterApi.model.PhotoBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
@@ -25,8 +29,11 @@ import com.restfb.json.JsonArray;
 import com.restfb.json.JsonObject;
 import com.restfb.types.TestUser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -238,14 +245,65 @@ public class ApiTestUtil {
 
         final EgoEaterApi api = instantiateApi();
 
-        for (final FakeUser fakeUser : fBUserIdToFakeUserMap.values()) {
-            byte[] profilePhoto = IoUtil.readRawResource(context, fakeUser.getProfileResId());
+        List<FakeUser> fakeUsers = new ArrayList<>(fBUserIdToFakeUserMap.values());
+        for (int i = 0; i < fakeUsers.size(); i++) {
+            FakeUser fakeUser = fakeUsers.get(i);
+            Long sessionId = fakeUser.getSessionId();
+            boolean isMale = fakeUser.getGender().equals("male");
 
-            String base64 = Base64.encodeToString(profilePhoto, Base64.DEFAULT);
-            PhotoBean photoBean = new PhotoBean().setBytes(base64);
+            if (isMale) {
+                updateProfilePhoto(context, sessionId, 0, com.playposse.egoeater.test.R.raw.male_profile_photo0);
+            } else {
+                updateProfilePhoto(context, sessionId, 0, com.playposse.egoeater.test.R.raw.female_profile_photo0);
+            }
 
-            api.uploadProfilePhoto(fakeUser.getSessionId(), 0, photoBean).execute();
+            if (i % 3 < 2) {
+                if (isMale) {
+                    updateProfilePhoto(context, sessionId, 1, com.playposse.egoeater.test.R.raw.male_profile_photo1);
+                } else {
+                    updateProfilePhoto(context, sessionId, 1, com.playposse.egoeater.test.R.raw.female_profile_photo1);
+                }
+            }
+
+            if (i % 3 < 1) {
+                if (isMale) {
+                    updateProfilePhoto(context, sessionId, 2, com.playposse.egoeater.test.R.raw.male_profile_photo2);
+                } else {
+                    updateProfilePhoto(context, sessionId, 2, com.playposse.egoeater.test.R.raw.female_profile_photo2);
+                }
+            }
         }
+    }
+
+    private static void updateProfilePhoto(
+            Context context,
+            long sessionId,
+            int photoIndex,
+            int photoResId) throws IOException, InterruptedException {
+
+//        Log.i(LOG_TAG, "updateProfilePhoto: About to upload profile photo.");
+//        byte[] profilePhoto = IoUtil.readRawResource(context, photoResId);
+//        Log.i(LOG_TAG, "updateProfilePhoto: Read bytes. (Photo size " + profilePhoto.length + ")");
+//
+//        byte[] pngPhoto = convertJpgToPng(profilePhoto);
+//        Log.i(LOG_TAG, "updateProfilePhoto: Convert to png. (Photo size " + pngPhoto.length);
+//
+//        String base64 = Base64.encodeToString(pngPhoto, Base64.DEFAULT);
+//        PhotoBean photoBean = new PhotoBean().setBytes(base64);
+//        Log.i(LOG_TAG, "updateProfilePhoto: ... encode done. (Encoded size "
+//                + base64.length() + ")");
+//
+//        EgoEaterApi api = instantiateApi();
+//        api.uploadProfilePhoto(sessionId, photoIndex, photoBean).execute();
+//        Log.i(LOG_TAG, "updateProfilePhoto: ...upload done.");
+
+        byte[] profilePhoto = IoUtil.readRawResource(context, photoResId);
+        byte[] pngPhoto = convertJpgToPng(profilePhoto);
+        UploadProfilePhotoToServletClientAction.getBlocking(
+                context,
+                sessionId,
+                photoIndex,
+                pngPhoto);
     }
 
     public static EgoEaterApi instantiateApi() {
@@ -264,5 +322,17 @@ public class ApiTestUtil {
                 .setApplicationName("Ego Eater")
                 .setRootUrl("https://ego-eater.appspot.com/_ah/api/")
                 .build();
+    }
+
+    private static byte[] convertJpgToPng(byte[] jpgContent) throws IOException {
+        // Read JPG.
+        Bitmap bitmap = BitmapFactory.decodeByteArray(jpgContent, 0, jpgContent.length);
+
+        // Write PNG.
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output); //100-best quality
+        output.close();
+
+        return output.toByteArray();
     }
 }
