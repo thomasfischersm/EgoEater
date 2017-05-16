@@ -17,7 +17,6 @@ import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
-import com.playposse.egoeater.clientactions.UploadProfilePhotoClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -223,7 +222,7 @@ public class CropPhotoActivity extends ParentActivity {
 
     private void startEditProfileActivity() {
         finish();
-        startActivity(new Intent(this, EditProfileActivity.class));
+        startActivity(new Intent(this, ViewOwnProfileActivity.class));
     }
 
     private void startActivityToRequestPhoto() {

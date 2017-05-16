@@ -1,8 +1,6 @@
 package com.playposse.egoeater.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,17 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
-import com.playposse.egoeater.clientactions.ApiClientAction;
-import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
@@ -29,7 +22,7 @@ import com.playposse.egoeater.util.ProfileFormatter;
 /**
  * A {@link Fragment} that lets the user edit his/her profile.
  */
-public class EditProfileFragment extends Fragment {
+public class ViewOwnProfileFragment extends Fragment {
 
     private ImageView profilePhoto0ImageView;
     private ImageView profilePhoto1ImageView;
@@ -42,7 +35,7 @@ public class EditProfileFragment extends Fragment {
 //    private EditText profileEditText;
 //    private Button saveButton;
 
-    public EditProfileFragment() {
+    public ViewOwnProfileFragment() {
         // Required empty public constructor
     }
 
@@ -52,7 +45,7 @@ public class EditProfileFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_own_profile, container, false);
 
         profilePhoto0ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto0ImageView);
         profilePhoto1ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto1ImageView);

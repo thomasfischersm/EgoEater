@@ -103,7 +103,7 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.EditProfileActivity"
+            android:name=".activity.ViewOwnProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RatingActivity"

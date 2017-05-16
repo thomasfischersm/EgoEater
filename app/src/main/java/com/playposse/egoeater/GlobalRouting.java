@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.playposse.egoeater.activity.CropPhotoActivity;
-import com.playposse.egoeater.activity.EditProfileActivity;
+import com.playposse.egoeater.activity.ViewOwnProfileActivity;
 import com.playposse.egoeater.activity.LoginActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.activity.RatingActivity;
@@ -49,7 +49,7 @@ public class GlobalRouting {
         }else if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
-            context.startActivity(new Intent(context, EditProfileActivity.class));
+            context.startActivity(new Intent(context, ViewOwnProfileActivity.class));
         } else {
             context.startActivity(new Intent(context, RatingActivity.class));
         }
