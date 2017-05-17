@@ -40,8 +40,9 @@
 
     <!-- Matches Activity -->
     <string name="matches_activity_title">Your matches</string>
+    <string name="no_matches_heading">You do not have any matches</string>
     <string name="no_matches_message">
-        You do not have any matches. Rank more profiles to find people who like you back.\n\n
+        Rank more profiles to find people who like you back.\n\n
         Ego Eater is a brand new app. There may not be any profiles left to rank. Be a hero and
         stick with us to start this.
     </string>

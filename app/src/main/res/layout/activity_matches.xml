@@ -18,16 +18,34 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/matchesRecyclerView"
+        android:id="@+id/matchesRecyclerView" android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-    <TextView
-        android:id="@+id/noMatchesTextView"
+    <LinearLayout
+        android:id="@+id/noMatchesLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/no_matches_message"
+        android:layout_margin="16dp"
         android:gravity="center"
-        android:visibility="gone" />
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/no_matches_heading"
+            android:textColor="@color/primaryTextColorLight" />
+
+        <TextView
+            style="@style/body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_matches_message"
+            android:textColor="@color/secondaryTextColorLight" />
+    </LinearLayout>
 </LinearLayout>

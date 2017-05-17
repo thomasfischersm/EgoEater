@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +49,7 @@ public class MatchesActivity
     private static final int LOADER_ID = 1;
 
     private RecyclerView matchesRecyclerView;
-    private TextView noMatchesTextView;
+    private LinearLayout noMatchesLayout;
 
     private MatchesCursorAdapter matchesCursorAdapter;
     private ContentObserver contentObserver;
@@ -65,7 +66,7 @@ public class MatchesActivity
         setTitle(R.string.matches_activity_title);
 
         matchesRecyclerView = (RecyclerView) findViewById(R.id.matchesRecyclerView);
-        noMatchesTextView = (TextView) findViewById(R.id.noMatchesTextView);
+        noMatchesLayout = (LinearLayout) findViewById(R.id.noMatchesLayout);
 
         matchesRecyclerView.setLayoutManager(new GridLayoutManager(this, COLUMN_COUNT));
         matchesCursorAdapter = new MatchesCursorAdapter();
@@ -119,14 +120,14 @@ public class MatchesActivity
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         matchesCursorAdapter.swapCursor(cursor);
         matchesRecyclerView.setVisibility((cursor.getCount() > 0) ? VISIBLE : GONE);
-        noMatchesTextView.setVisibility((cursor.getCount() > 0) ? GONE : VISIBLE);
+        noMatchesLayout.setVisibility((cursor.getCount() > 0) ? GONE : VISIBLE);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         matchesCursorAdapter.swapCursor(null);
         matchesRecyclerView.setVisibility(GONE);
-        noMatchesTextView.setVisibility(VISIBLE);
+        noMatchesLayout.setVisibility(VISIBLE);
     }
 
     /**
