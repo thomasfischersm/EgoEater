@@ -1,23 +1,45 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.playposse.egoeater.activity.RatingFragment">
 
-    <fragment
-        android:id="@+id/leftProfileFragment"
-        android:name="com.playposse.egoeater.activity.RatingProfileFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_rating_profile" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/rightProfileFragment"
-        android:name="com.playposse.egoeater.activity.RatingProfileFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_rating_profile" />
-</LinearLayout>
+        <fragment
+            android:id="@+id/leftProfileFragment"
+            android:name="com.playposse.egoeater.activity.RatingProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_rating_profile" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/secondaryTextColorLight" />
+
+        <fragment
+            android:id="@+id/rightProfileFragment"
+            android:name="com.playposse.egoeater.activity.RatingProfileFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_rating_profile" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical|end"
+        android:layout_margin="16dp"
+        android:background="@drawable/circle_bg"
+        android:gravity="center"
+        android:text="@string/choose_hint"
+        android:textAllCaps="true"
+        android:textColor="@color/primaryTextColorDark" />
+</FrameLayout>

@@ -26,6 +26,7 @@
 
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>
+    <string name="choose_hint">or</string>
 
     <!-- No more pairings available activity -->
     <string name="no_more_pairings_message">
