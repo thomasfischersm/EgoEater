@@ -31,9 +31,8 @@ public class ViewOwnProfileFragment extends Fragment {
     private ImageView emptyPhoto2ImageView;
     private TextView headlineTextView;
     private TextView subHeadTextView;
+    private TextView profileTextView;
     private FloatingActionButton editButton;
-//    private EditText profileEditText;
-//    private Button saveButton;
 
     public ViewOwnProfileFragment() {
         // Required empty public constructor
@@ -54,6 +53,7 @@ public class ViewOwnProfileFragment extends Fragment {
         emptyPhoto2ImageView = (ImageView) rootView.findViewById(R.id.emptyPhoto2ImageView);
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
+        profileTextView = (TextView) rootView.findViewById(R.id.profileTextView);
         editButton = (FloatingActionButton) rootView.findViewById(R.id.editButton);
 
         initProfilePhoto(
@@ -76,6 +76,7 @@ public class ViewOwnProfileFragment extends Fragment {
         ProfileParcelable profile = new ProfileParcelable(userBean);
         headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
         subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(getContext(), profile));
+        profileTextView.setText(profile.getProfileText());
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
