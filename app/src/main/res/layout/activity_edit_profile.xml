@@ -49,121 +49,133 @@
         </FrameLayout>
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/profilePhoto0ImageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/profile_photo_content_description"
-            android:scaleType="fitCenter" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|top"
-            android:layout_margin="16dp"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/photo1CardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true"
-                app:contentPaddingBottom="-4dp"
-                app:contentPaddingTop="-4dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/profilePhoto1ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
+                    android:id="@+id/profilePhoto0ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/profile_photo_content_description"
                     android:scaleType="fitCenter" />
-            </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/photo2CardView"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|top"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/photo1CardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true"
+                        app:contentPaddingBottom="-4dp"
+                        app:contentPaddingTop="-4dp">
+
+                        <ImageView
+                            android:id="@+id/profilePhoto1ImageView"
+                            android:layout_width="105dp"
+                            android:layout_height="75dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/profile_photo_content_description"
+                            android:scaleType="fitCenter" />
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/photo2CardView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true"
+                        app:contentPaddingBottom="-4dp"
+                        app:contentPaddingTop="-4dp">
+
+                        <ImageView
+                            android:id="@+id/profilePhoto2ImageView"
+                            android:layout_width="105dp"
+                            android:layout_height="75dp"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/profile_photo_content_description"
+                            android:scaleType="fitCenter" />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:background="@drawable/scrim_bg"
+                    android:orientation="vertical"
+                    android:paddingBottom="14dp"
+                    android:paddingEnd="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp">
+
+                    <TextView
+                        android:id="@+id/headlineTextView"
+                        style="@style/headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColorDark" />
+
+                    <TextView
+                        android:id="@+id/subHeadTextView"
+                        style="@style/body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:textColor="@color/primaryTextColorDark" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true"
-                app:contentPaddingBottom="-4dp"
-                app:contentPaddingTop="-4dp">
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/profilePhoto2ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/profile_photo_content_description"
-                    android:scaleType="fitCenter" />
-            </android.support.v7.widget.CardView>
+                <TextView
+                    style="@style/caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_info"
+                    android:textColor="@color/primaryTextColorLight" />
+
+                <EditText
+                    android:id="@+id/profileEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete|textAutoCorrect|textMultiLine"
+                    android:lines="3"
+                    android:maxLength="500" />
+
+                <TextView
+                    android:id="@+id/characterCountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/profile_info"
+                    android:textColor="@color/primaryTextColorLight" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:background="@drawable/scrim_bg"
-            android:orientation="vertical"
-            android:paddingBottom="14dp"
-            android:paddingEnd="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingStart="16dp">
-
-            <TextView
-                android:id="@+id/headlineTextView"
-                style="@style/headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primaryTextColorDark" />
-
-            <TextView
-                android:id="@+id/subHeadTextView"
-                style="@style/body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:lines="2"
-                android:textColor="@color/primaryTextColorDark" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/caption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_info"
-            android:textColor="@color/primaryTextColorLight" />
-
-        <EditText
-            android:id="@+id/profileEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete|textAutoCorrect|textMultiLine"
-            android:lines="3"
-            android:maxLength="500" />
-
-        <TextView
-            android:id="@+id/characterCountTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="@string/profile_info"
-            android:textColor="@color/primaryTextColorLight" />
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

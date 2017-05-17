@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.R;
@@ -37,6 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView discardButton;
     private TextView titleTextView;
     private TextView saveTextView;
+    private ScrollView scrollView;
     private CardView photo1CardView;
     private ImageView profilePhoto0ImageView;
     private CardView photo2CardView;
@@ -61,6 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
         discardButton = (ImageView) findViewById(R.id.discardButton);
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         saveTextView = (TextView) findViewById(R.id.saveTextView);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
         profilePhoto0ImageView = (ImageView) findViewById(R.id.profilePhoto0ImageView);
         photo1CardView = (CardView) findViewById(R.id.photo1CardView);
         profilePhoto1ImageView = (ImageView) findViewById(R.id.profilePhoto1ImageView);
@@ -110,6 +113,23 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 discardAndExit();
+            }
+        });
+
+        profileEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    scrollView.postDelayed(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.fullScroll(View.FOCUS_DOWN);
+
+                                }
+                            },
+                            150);
+                }
             }
         });
     }
