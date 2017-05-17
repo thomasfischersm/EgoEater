@@ -154,6 +154,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (originalProfileText.equals(profileEditText.getText().toString())) {
             // No changes -> simply exit.
             exit();
+            return;
         }
 
         SimpleAlertDialog.confirmDiscard(
