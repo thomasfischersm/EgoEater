@@ -1,6 +1,8 @@
 package com.playposse.egoeater.activity;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -38,6 +40,7 @@ public class RatingProfileFragment extends Fragment {
     private ImageView heartImageView;
     private TextView headlineTextView;
     private TextView subHeadTextView;
+    private View rippleView;
 
     public RatingProfileFragment() {
         // Required empty public constructor
@@ -73,6 +76,7 @@ public class RatingProfileFragment extends Fragment {
         heartImageView = (ImageView) rootView.findViewById(R.id.heartImageView);
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
+        rippleView = (View) rootView.findViewById(R.id.rippleView);
 
         refreshView();
 
@@ -110,9 +114,11 @@ public class RatingProfileFragment extends Fragment {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         heartImageView.setVisibility(View.VISIBLE);
+                        rippleView.setPressed(true);
                         break;
                     case MotionEvent.ACTION_UP:
                         heartImageView.setVisibility(View.GONE);
+                        rippleView.setPressed(false);
                         break;
                 }
 
