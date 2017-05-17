@@ -30,7 +30,7 @@ public class EgoEaterApplication extends Application {
         FirebaseInstanceId.getInstance().getToken();
 
 //        getApplicationContext().deleteDatabase("egoEaterDb");
-        createTestMatches();
+//        createTestMatches();
     }
 
     /**
