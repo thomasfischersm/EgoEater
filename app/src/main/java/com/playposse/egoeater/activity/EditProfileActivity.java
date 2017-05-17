@@ -49,6 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private String originalProfileText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         UserBean userBean = EgoEaterPreferences.getUser(this);
         ProfileParcelable profile = new ProfileParcelable(userBean);
+        originalProfileText = profile.getProfileText();
 
         if (profile.getPhotoUrl0() != null) {
             GlideUtil.load(profilePhoto0ImageView, profile.getPhotoUrl0());
@@ -128,6 +131,11 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void discardAndExit() {
+        if (originalProfileText.equals(profileEditText.getText().toString())) {
+            // No changes -> simply exit.
+            exit();
+        }
+
         SimpleAlertDialog.confirmDiscard(
                 this,
                 new Runnable() {
