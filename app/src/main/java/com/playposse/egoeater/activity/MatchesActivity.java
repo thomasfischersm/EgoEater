@@ -26,6 +26,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQu
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.storage.MatchParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.NotificationUtil;
 import com.playposse.egoeater.util.NotificationUtil.NotificationType;
 import com.playposse.egoeater.util.ProfileFormatter;
@@ -151,11 +152,7 @@ public class MatchesActivity
             final boolean isLocked = match.isLocked();
 
             // Load profile photo.
-            Glide.with(getApplicationContext())
-                    .load(profile.getPhotoUrl0())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontTransform()
-                    .into(holder.getProfileImageView());
+            GlideUtil.load(holder.getProfileImageView(), profile.getPhotoUrl0());
 
             // Populate the rest of the profile snapshot.
             if (isLocked) {
