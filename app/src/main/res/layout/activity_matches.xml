@@ -18,9 +18,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/matchesRecyclerView" android:layout_margin="16dp"
+        android:id="@+id/matchesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:scrollbars="vertical" />
 
     <LinearLayout

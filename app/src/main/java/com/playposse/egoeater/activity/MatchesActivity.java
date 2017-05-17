@@ -46,7 +46,7 @@ public class MatchesActivity
 
     private static final String LOG_TAG = MatchesActivity.class.getSimpleName();
 
-    private static final int MIN_ITEM_DP_WIDTH = 150;
+    private static final int MIN_ITEM_DP_WIDTH = 105;
     private static final int MAX_COLUMN_COUNT = 3;
     private static final int LOADER_ID = 1;
 
