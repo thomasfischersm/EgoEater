@@ -29,8 +29,11 @@
     <string name="choose_hint">or</string>
 
     <!-- No more pairings available activity -->
+    <string name="no_more_pairings_heading">
+        No more pairings are available
+    </string>
     <string name="no_more_pairings_message">
-        No more pairings are available!\n\nEgo Eater has only recently launched. Your support is
+        Ego Eater has only recently launched. Your support is
         critical for starting profiles.\n\nUnfortunately, there are no more users in your area to
         vote on. Please, stick with us.\n\nWe\'ll notify you if someone new signs up in your area.
     </string>

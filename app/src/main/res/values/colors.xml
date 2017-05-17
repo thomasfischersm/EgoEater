@@ -7,9 +7,9 @@
     <color name="navigationBarColor">#B71C1C</color>
 
     <!-- Light theme -->
-    <color name="primaryTextColorLight">#DEDEDE</color>
-    <color name="secondaryTextColorLight">#8A8A8A</color>
-    <color name="disabledTextColorLight">#616161</color>
+    <color name="primaryTextColorLight">#212121</color>
+    <color name="secondaryTextColorLight">#757575</color>
+    <color name="disabledTextColorLight">#B3B3B3</color>
     <color name="backgroundLight">#FAFAFA</color>
 
     <!-- Dark theme -->

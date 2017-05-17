@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_help"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context="com.playposse.egoeater.activity.NoMorePairingsFragment">
+
+    <TextView
+        style="@style/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/no_more_pairings_heading"
+        android:textColor="@color/primaryTextColorLight" />
+
+    <TextView
+        style="@style/body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/no_more_pairings_message"
+        android:textColor="@color/secondaryTextColorLight" />
+</LinearLayout>

@@ -3,20 +3,15 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.playposse.egoeater.R;
-import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.util.DatabaseDumper;
-
-import java.util.List;
 
 /**
  * An {@link android.app.Activity} that informs the user that no more pairings are available.
@@ -28,13 +23,10 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
     private ContentObserver contentObserver;
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_no_more_pairings;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        addMainFragment(new NoMorePairingsFragment());
     }
 
     @Override
