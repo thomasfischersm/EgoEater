@@ -31,6 +31,7 @@ public class RatingProfileFragment extends Fragment {
     private ProfileParcelable profile;
     private ProfileSelectionListener listener;
     private int mainImageIndex = 0;
+    private boolean newProfile = true;
 
     private ImageView profilePhoto0ImageView;
     private CardView photo1CardView;
@@ -48,6 +49,7 @@ public class RatingProfileFragment extends Fragment {
 
     public void setProfile(ProfileParcelable profile) {
         this.profile = profile;
+        newProfile = true;
 
         refreshView();
     }
@@ -148,6 +150,7 @@ public class RatingProfileFragment extends Fragment {
                     profile);
             subHeadTextView.setText(subHead);
         }
+        newProfile = false;
     }
 
     private void loadImages() {
@@ -221,7 +224,18 @@ public class RatingProfileFragment extends Fragment {
             public void run() {
                 if (photoUrl != null) {
                     imageView.setVisibility(View.VISIBLE);
-                    GlideUtil.load(imageView, photoUrl, R.drawable.ic_insert_emoticon_black_24dp);
+                    if (newProfile) {
+                        // Load the photo the first time with a placeholder for potential network
+                        // access.
+                        GlideUtil.load(
+                                imageView,
+                                photoUrl,
+                                R.drawable.ic_insert_emoticon_black_24dp);
+                    } else {
+                        // Load subsequent photo swaps triggered by the user without a placeholder
+                        // to avoid flickering while the photo is potentially resized.
+                        GlideUtil.load(imageView, photoUrl);
+                    }
                 } else {
                     imageView.setVisibility(View.GONE);
                 }
