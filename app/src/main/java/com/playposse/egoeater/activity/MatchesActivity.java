@@ -32,6 +32,7 @@ import com.playposse.egoeater.util.NotificationUtil;
 import com.playposse.egoeater.util.NotificationUtil.NotificationType;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
+import com.playposse.egoeater.util.ResponsiveGridLayoutManager;
 import com.playposse.egoeater.util.SimpleAlertDialog;
 import com.playposse.egoeater.util.SmartCursor;
 
@@ -45,7 +46,8 @@ public class MatchesActivity
 
     private static final String LOG_TAG = MatchesActivity.class.getSimpleName();
 
-    private static final int COLUMN_COUNT = 3;
+    private static final int MIN_ITEM_DP_WIDTH = 150;
+    private static final int MAX_COLUMN_COUNT = 3;
     private static final int LOADER_ID = 1;
 
     private RecyclerView matchesRecyclerView;
@@ -68,7 +70,9 @@ public class MatchesActivity
         matchesRecyclerView = (RecyclerView) findViewById(R.id.matchesRecyclerView);
         noMatchesLayout = (LinearLayout) findViewById(R.id.noMatchesLayout);
 
-        matchesRecyclerView.setLayoutManager(new GridLayoutManager(this, COLUMN_COUNT));
+        ResponsiveGridLayoutManager recycleLayoutManager =
+                new ResponsiveGridLayoutManager(this, MIN_ITEM_DP_WIDTH, MAX_COLUMN_COUNT);
+        matchesRecyclerView.setLayoutManager(recycleLayoutManager);
         matchesCursorAdapter = new MatchesCursorAdapter();
         matchesRecyclerView.setAdapter(matchesCursorAdapter);
 

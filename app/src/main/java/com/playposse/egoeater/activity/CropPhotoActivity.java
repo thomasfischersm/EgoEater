@@ -128,8 +128,6 @@ public class CropPhotoActivity extends ParentActivity {
         if (!hasFirstProfilePhoto) {
             // Pick the Facebook profile photo.
             loadFbProfilePhoto();
-
-
         } else if (!hasPhotoFromGallery) {
             // Pick a photo from the gallery.
             startActivityToRequestPhoto();

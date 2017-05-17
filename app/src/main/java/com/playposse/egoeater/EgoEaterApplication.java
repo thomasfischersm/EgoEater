@@ -37,4 +37,11 @@ public class EgoEaterApplication extends Application {
         }
         return tracker;
     }
+
+    /**
+     * Creates 10 matches in the local database. Testing only!
+     */
+    private void createTestMatches() {
+
+    }
 }
