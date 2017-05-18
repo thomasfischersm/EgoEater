@@ -1,64 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<app:android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:padding="8dp"
-    card_view:cardCornerRadius="4dp">
+    android:layout_margin="5dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    app:contentPaddingBottom="-4dp"
+    app:contentPaddingTop="-4dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/profilePhotoImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
 
-            <ImageView
-                android:id="@+id/profileImageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/profile_photo_content_description" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:background="@drawable/scrim_bg"
+            android:orientation="vertical"
+            android:padding="7dp">
 
-            <ImageView
-                android:id="@+id/lockIconImageView"
+            <TextView
+                android:id="@+id/headlineTextView"
+                style="@style/subheader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/profileImageView"
-                android:layout_alignEnd="@id/profileImageView"
-                android:layout_alignRight="@id/profileImageView"
-                android:contentDescription="@string/lock_icon_content_description"
-                android:paddingBottom="2dp"
-                android:paddingEnd="1dp"
-                android:paddingRight="1dp"
-                android:paddingStart="1dp"
-                android:src="@drawable/ic_lock_open_black_24dp" />
+                android:textColor="@color/primaryTextColorDark" />
 
-            <ImageView
-                android:id="@+id/newMessageImageIcon"
+            <TextView
+                android:id="@+id/subHeadTextView"
+                style="@style/caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/profileImageView"
-                android:layout_toLeftOf="@+id/lockIconImageView"
-                android:layout_toStartOf="@+id/lockIconImageView"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/new_message_icon_content_description"
-                android:src="@drawable/ic_message_black_24dp"
-                android:visibility="gone" />
-        </RelativeLayout>
+                android:textColor="@color/primaryTextColorDark" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/headlineTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/lockIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:contentDescription="@string/lock_icon_content_description"
+            android:padding="7dp"
+            android:src="@drawable/ic_lock_outline_black_24dp"
+            android:tint="@color/primaryTextColorDark" />
 
-        <TextView
-            android:id="@+id/subHeadTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+        <ImageView
+            android:id="@+id/newMessageImageIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/new_message_icon_content_description"
+            android:padding="7dp"
+            android:src="@drawable/ic_chat_bubble_black_24dp"
+            android:tint="@color/colorPrimary"
+            android:visibility="gone" />
+    </FrameLayout>
+</app:android.support.v7.widget.CardView>

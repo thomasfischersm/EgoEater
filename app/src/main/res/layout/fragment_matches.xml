@@ -12,7 +12,10 @@
         android:id="@+id/matchesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
         android:scrollbars="vertical" />
 
     <LinearLayout
@@ -20,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+        android:layout_marginTop="25dp"
         android:gravity="center"
         android:orientation="vertical">
 

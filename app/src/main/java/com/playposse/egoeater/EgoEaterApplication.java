@@ -57,8 +57,8 @@ public class EgoEaterApplication extends Application {
             ContentValues contentValues = new ContentValues();
             contentValues.put(MatchTable.MATCH_ID_COLUMN, counter);
             contentValues.put(MatchTable.PROFILE_ID_COLUMN, profileId);
-            contentValues.put(MatchTable.IS_LOCKED_COLUMN, false);
-            contentValues.put(MatchTable.HAS_NEW_MESSAGE, (counter % 2 == 1));
+            contentValues.put(MatchTable.IS_LOCKED_COLUMN, (counter % 3 == 2));
+            contentValues.put(MatchTable.HAS_NEW_MESSAGE, (counter % 3 == 1));
             getContentResolver().insert(MatchTable.CONTENT_URI, contentValues);
 
             counter++;
@@ -69,7 +69,7 @@ public class EgoEaterApplication extends Application {
         Cursor cursor = getContentResolver()
                 .query(ProfileIdTable.CONTENT_URI, ProfileIdTable.COLUMN_NAMES, null, null, null);
 
-        if (cursor.moveToNext()) {
+        if (cursor.moveToNext() && cursor.moveToNext()) {
             String idColumnName = ProfileIdTable.PROFILE_ID_COLUMN.toUpperCase();
             return cursor.getLong(cursor.getColumnIndex(idColumnName));
         } else {

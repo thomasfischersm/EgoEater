@@ -41,7 +41,7 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
 
     private static final String LOG_TAG = MatchesFragment.class.getSimpleName();
 
-    private static final int MIN_ITEM_DP_WIDTH = 105;
+    private static final int MIN_ITEM_DP_WIDTH = 150;
     private static final int MAX_COLUMN_COUNT = 3;
     private static final int LOADER_ID = 1;
 
@@ -144,20 +144,21 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
         @Override
         protected void onBindViewHolder(MatchesViewHolder holder, int position, Cursor cursor) {
             // Load data out of cursor.
-            SmartCursor smartCursor = new SmartCursor(cursor, EgoEaterContract.MatchAndProfileQuery.COLUMN_NAMES);
+            SmartCursor smartCursor =
+                    new SmartCursor(cursor, EgoEaterContract.MatchAndProfileQuery.COLUMN_NAMES);
             MatchParcelable match = new MatchParcelable(smartCursor);
             ProfileParcelable profile = match.getOtherProfile();
             final long profileId = profile.getProfileId();
-            final boolean isLocked = match.isLocked();
+            boolean isLocked = match.isLocked();
 
             // Load profile photo.
-            GlideUtil.load(holder.getProfileImageView(), profile.getPhotoUrl0());
+            GlideUtil.load(holder.getProfilePhotoImageView(), profile.getPhotoUrl0());
 
             // Populate the rest of the profile snapshot.
-            if (isLocked) {
-                holder.getLockIconImageView().setImageResource(R.drawable.ic_lock_black_24dp);
+            if (isLocked && !match.hasNewMessage()) {
+                holder.getLockIconImageView().setVisibility(VISIBLE);
             } else {
-                holder.getLockIconImageView().setImageResource(R.drawable.ic_lock_open_black_24dp);
+                holder.getLockIconImageView().setVisibility(GONE);
             }
             holder.getNewMessageImageIcon().setVisibility(match.hasNewMessage() ? VISIBLE : GONE);
             String headLine = ProfileFormatter.formatNameAndAge(getContext(), profile);
@@ -167,7 +168,7 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
             holder.getSubHeadTextView().setText(subHead);
 
             // Add click listeners.
-            holder.getProfileImageView().setOnClickListener(new View.OnClickListener() {
+            holder.getProfilePhotoImageView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ExtraConstants.startMessagesActivity(getContext(), profileId);
@@ -191,7 +192,7 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
      */
     private static class MatchesViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView profileImageView;
+        private final ImageView profilePhotoImageView;
         private final ImageView lockIconImageView;
         private final ImageView newMessageImageIcon;
         private final TextView headlineTextView;
@@ -200,15 +201,15 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
         public MatchesViewHolder(View itemView) {
             super(itemView);
 
-            profileImageView = (ImageView) itemView.findViewById(R.id.profileImageView);
+            profilePhotoImageView = (ImageView) itemView.findViewById(R.id.profilePhotoImageView);
             lockIconImageView = (ImageView) itemView.findViewById(R.id.lockIconImageView);
             newMessageImageIcon = (ImageView) itemView.findViewById(R.id.newMessageImageIcon);
             headlineTextView = (TextView) itemView.findViewById(R.id.headlineTextView);
             subHeadTextView = (TextView) itemView.findViewById(R.id.subHeadTextView);
         }
 
-        public ImageView getProfileImageView() {
-            return profileImageView;
+        public ImageView getProfilePhotoImageView() {
+            return profilePhotoImageView;
         }
 
         public ImageView getLockIconImageView() {
