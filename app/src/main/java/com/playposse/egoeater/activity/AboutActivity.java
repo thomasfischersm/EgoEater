@@ -12,31 +12,10 @@ import com.playposse.egoeater.R;
 public class AboutActivity extends ParentActivity {
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_about;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    /**
-     * When the up button is clicked go to the previous activity instead of the parent activity.
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        addMainFragment(new AboutFragment());
     }
 }
 
