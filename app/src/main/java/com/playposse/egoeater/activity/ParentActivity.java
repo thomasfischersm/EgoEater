@@ -36,13 +36,12 @@ import com.playposse.egoeater.util.ProfileFormatter;
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
  * toolbar.
  */
-public abstract class ParentActivity extends AppCompatActivity {
+public abstract class ParentActivity extends ActivityWithProgressDialog {
 
     private DrawerLayout drawerLayout;
     private LinearLayout mainFragmentContainer;
     private NavigationView navigationView;
 
-    private ProgressDialog progressDialog;
     private ActionBarDrawerToggle drawerToggle;
 
     @Override
@@ -169,31 +168,6 @@ public abstract class ParentActivity extends AppCompatActivity {
 
         if (drawerToggle != null) {
             drawerToggle.syncState();
-        }
-    }
-
-    protected void showLoadingProgress() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog = new ProgressDialog(ParentActivity.this);
-                progressDialog.setTitle(R.string.progress_dialog_title);
-                progressDialog.setMessage(getString(R.string.progress_dialog_message));
-                progressDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
-                progressDialog.show();
-            }
-        });
-    }
-
-    protected void dismissLoadingProgress() {
-        if (progressDialog != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    progressDialog = null;
-                }
-            });
         }
     }
 

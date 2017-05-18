@@ -30,12 +30,12 @@ import com.playposse.egoeater.util.SimpleAlertDialog;
  * An {@link Activity} where the user edits the profile text. Contrast this with the
  * {@link ViewOwnProfileActivity}, which shows the user his/her own profile in a read-only version.
  */
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends ActivityWithProgressDialog {
 
     private static final int MAX_PROFILE_CHARACTER_COUNT = 500;
 
     private Toolbar toolbar;
-    private ImageView discardButton;
+    private ImageView discardImageView;
     private TextView titleTextView;
     private TextView saveTextView;
     private ScrollView scrollView;
@@ -49,8 +49,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText profileEditText;
     private TextView characterCountTextView;
 
-    private ProgressDialog progressDialog;
-
     private String originalProfileText;
 
     @Override
@@ -60,7 +58,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        discardButton = (ImageView) findViewById(R.id.discardButton);
+        discardImageView = (ImageView) findViewById(R.id.discardImageView);
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         saveTextView = (TextView) findViewById(R.id.saveTextView);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -109,7 +107,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        discardButton.setOnClickListener(new View.OnClickListener() {
+        discardImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 discardAndExit();
@@ -191,31 +189,6 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         discardAndExit();
-    }
-
-    protected void showLoadingProgress() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog = new ProgressDialog(EditProfileActivity.this);
-                progressDialog.setTitle(R.string.progress_dialog_title);
-                progressDialog.setMessage(getString(R.string.progress_dialog_message));
-                progressDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
-                progressDialog.show();
-            }
-        });
-    }
-
-    protected void dismissLoadingProgress() {
-        if (progressDialog != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    progressDialog = null;
-                }
-            });
-        }
     }
 
     /**

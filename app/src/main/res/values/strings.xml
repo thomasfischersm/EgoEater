@@ -9,7 +9,7 @@
     <string name="background_content_description">Background texture</string>
 
     <!-- CropPhotoActivity -->
-    <string name="crop_photo_activity_title">Crop profile photo</string>
+    <string name="crop_photo_activity_title">Crop</string>
     <string name="delete_button_label">Delete</string>
     <string name="cancel_button_label">Cancel</string>
     <string name="select_profile_photo_chooser">Select profile photo</string>

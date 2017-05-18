@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -16,9 +17,9 @@ import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
-import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.io.IOException;
  * An {@link android.app.Activity} that crops profile photos to fit the dimensions of the app.
  */
 // TODO: Resize image if it is larger than an expected screen size for a phone.
-public class CropPhotoActivity extends ParentActivity {
+public class CropPhotoActivity extends ActivityWithProgressDialog {
 
     private static final String LOG_TAG = CropPhotoActivity.class.getSimpleName();
 
@@ -45,60 +46,37 @@ public class CropPhotoActivity extends ParentActivity {
     private boolean hasPhotoFromGallery = false;
     private Uri galleryPhotoUri;
 
+    private ImageView discardImageView;
+    private TextView saveTextView;
     private CropImageView cropImageView;
-    private Button deleteButton;
-    private Button cancelButton;
-    private Button saveButton;
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_crop_photo;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_crop_photo);
+
         photoIndex = ExtraConstants.getPhotoIndex(getIntent());
         hasFirstProfilePhoto = EgoEaterPreferences.hasFirstProfilePhoto(this);
 
+        discardImageView = (ImageView) findViewById(R.id.discardImageView);
+        saveTextView = (TextView) findViewById(R.id.saveTextView);
         cropImageView = (CropImageView) findViewById(R.id.cropImageView);
-        deleteButton = (Button) findViewById(R.id.deleteButton);
-        cancelButton = (Button) findViewById(R.id.cancelButton);
-        saveButton = (Button) findViewById(R.id.saveButton);
 
         // If the user hasn't picked a profile photo yet, the user must pick a profile photo to
         // continue.
-        cancelButton.setVisibility(hasFirstProfilePhoto ? View.VISIBLE : View.GONE);
-        deleteButton.setVisibility((photoIndex > 0) ? View.VISIBLE : View.GONE);
+        discardImageView.setVisibility(hasFirstProfilePhoto ? View.VISIBLE : View.GONE);
 
         setTitle(R.string.crop_photo_activity_title);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        discardImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLoadingProgress();
-                new DeleteProfilePhotoClientAction(
-                        getApplicationContext(),
-                        photoIndex,
-                        new ApiClientAction.Callback<Void>() {
-                            @Override
-                            public void onResult(Void data) {
-                                onServerActionComplete();
-                            }
-                        })
-                        .execute();
+                discardAndExit();
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startEditProfileActivity();
-            }
-        });
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLoadingProgress();
@@ -230,5 +208,21 @@ public class CropPhotoActivity extends ParentActivity {
         Intent chooserIntent =
                 Intent.createChooser(intent, getString(R.string.select_profile_photo_chooser));
         startActivityForResult(chooserIntent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onBackPressed() {
+        discardAndExit();
+    }
+
+    private void discardAndExit() {
+        SimpleAlertDialog.confirmDiscard(
+                this,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        startEditProfileActivity();
+                    }
+                });
     }
 }

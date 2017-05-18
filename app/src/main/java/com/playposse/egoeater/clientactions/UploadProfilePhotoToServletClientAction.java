@@ -101,14 +101,15 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
                         photoIndexPart)
                         .execute();
 
+        String photoUrl = response.body().string(); // Warning! Body can only be read once!
+
         Log.i(LOG_TAG, "executeAsync: Call to cloud was " + response.isSuccessful()
                 + " " + response.code()
-                + " " + response.body().string());
+                + " " + photoUrl);
 
-        String photoUrl = response.body().string();
         storePhotoUrlInPreferences(getContext(), photoIndex, photoUrl);
 
-        return response.body().string();
+        return photoUrl;
     }
 
     private static void storePhotoUrlInPreferences(
@@ -121,10 +122,10 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
                 EgoEaterPreferences.setProfilePhotoUrl0(context, photoUrl);
                 break;
             case 1:
-                EgoEaterPreferences.setProfilePhotoUrl0(context, photoUrl);
+                EgoEaterPreferences.setProfilePhotoUrl1(context, photoUrl);
                 break;
             case 2:
-                EgoEaterPreferences.setProfilePhotoUrl0(context, photoUrl);
+                EgoEaterPreferences.setProfilePhotoUrl2(context, photoUrl);
                 break;
         }
     }
