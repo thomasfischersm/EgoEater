@@ -49,6 +49,7 @@ public class UploadProfilePhotoClientAction extends ApiClientAction<Void> {
 
         // Update the preferences with the new profile photo.
         EgoEaterPreferences.setUser(getContext(), userBean);
+        EgoEaterPreferences.setHasFirstProfilePhoto(getContext(), true);
 
         return null;
     }

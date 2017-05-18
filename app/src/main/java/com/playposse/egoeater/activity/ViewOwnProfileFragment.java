@@ -14,10 +14,13 @@ import android.widget.TextView;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.clientactions.ApiClientAction;
+import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 
 /**
  * A {@link Fragment} that lets the user edit his/her profile.
@@ -108,17 +111,71 @@ public class ViewOwnProfileFragment extends Fragment {
             }
         }
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
+        View.OnClickListener clickListenerToDialog = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =
-                        ExtraConstants.createCropPhotoIntent(getContext(), photoIndex);
-                startActivity(intent);
+                SimpleAlertDialog.confirmPhoto(
+                        getContext(),
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                pickPhoto(photoIndex);
+                            }
+                        }, new Runnable() {
+                            @Override
+                            public void run() {
+                                deletePhoto(photoIndex);
+                            }
+                        });
             }
         };
-        imageView.setOnClickListener(clickListener);
+        View.OnClickListener clickListenerToPickActivity = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickPhoto(photoIndex);
+            }
+        };
+        if (photoIndex == 0) {
+            imageView.setOnClickListener(clickListenerToPickActivity);
+        } else {
+            imageView.setOnClickListener(clickListenerToDialog);
+        }
         if (emptyView != null) {
-            emptyView.setOnClickListener(clickListener);
+            emptyView.setOnClickListener(clickListenerToPickActivity);
+        }
+    }
+
+    private void pickPhoto(int photoIndex) {
+        Intent intent = ExtraConstants.createCropPhotoIntent(getContext(), photoIndex);
+        startActivity(intent);
+    }
+
+    private void deletePhoto(final int photoIndex) {
+        ((ActivityWithProgressDialog) getActivity()).showLoadingProgress();
+        new DeleteProfilePhotoClientAction(
+                getContext(),
+                photoIndex,
+                new ApiClientAction.Callback<Void>() {
+                    @Override
+                    public void onResult(Void data) {
+                        ((ActivityWithProgressDialog) getActivity()).dismissLoadingProgress();
+                        clearPhotoSlot(photoIndex);
+                    }
+                }).execute();
+    }
+
+    private void clearPhotoSlot(int photoIndex) {
+        switch (photoIndex) {
+            case 1:
+                profilePhoto1ImageView.setImageBitmap(null);
+                profilePhoto1ImageView.setVisibility(View.GONE);
+                emptyPhoto1ImageView.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                profilePhoto2ImageView.setImageBitmap(null);
+                profilePhoto2ImageView.setVisibility(View.GONE);
+                emptyPhoto2ImageView.setVisibility(View.VISIBLE);
+                break;
         }
     }
 }

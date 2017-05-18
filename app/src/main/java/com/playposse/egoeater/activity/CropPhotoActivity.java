@@ -87,10 +87,6 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
                         new ApiClientAction.Callback<String>() {
                             @Override
                             public void onResult(String photoUrl) {
-                                EgoEaterPreferences.setHasFirstProfilePhoto(
-                                        getApplicationContext(),
-                                        true);
-
                                 onServerActionComplete();
                             }
                         })

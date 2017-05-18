@@ -150,6 +150,15 @@
     <string name="discard_dialog_cancel_button">Cancel</string>
     <string name="discard_dialog_discard_button">Discard</string>
 
+    <!-- Photo picker dialog -->
+    <string name="photo_picker_dialog_title">Photo</string>
+    <string name="photo_picker_dialog_pick_item">Pick</string>
+    <string name="photo_picker_dialog_delete_item">Delete</string>
+    <array name="photo_picker_dialog_items">
+        <item>@string/photo_picker_dialog_pick_item</item>
+        <item>@string/photo_picker_dialog_delete_item</item>
+    </array>
+
     <!-- Options menu -->
     <string name="profile_menu">Profile</string>
     <string name="rating_menu">Rating</string>

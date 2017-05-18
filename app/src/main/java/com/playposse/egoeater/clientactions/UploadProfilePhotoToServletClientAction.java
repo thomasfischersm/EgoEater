@@ -108,6 +108,7 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
                 + " " + photoUrl);
 
         storePhotoUrlInPreferences(getContext(), photoIndex, photoUrl);
+        EgoEaterPreferences.setHasFirstProfilePhoto(getContext(), true);
 
         return photoUrl;
     }
