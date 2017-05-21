@@ -266,22 +266,18 @@ public class MessagingActivity
 
             // Look up the profile information.
             final String senderPhotoUrl;
-            final String senderName;
             if ((senderId == profileId) && (recipientId == partnerId)) {
                 senderPhotoUrl = userBean.getProfilePhotoUrls().get(0);
-                senderName = userBean.getFirstName();
             } else if ((senderId == partnerId) && (recipientId == profileId)) {
                 senderPhotoUrl = partner.getPhotoUrl0();
-                senderName = partner.getFirstName();
             } else {
                 throw new IllegalStateException("Got a message for recipient " + recipientId +
                         " but was in a conversation with " + partnerId);
             }
 
             // Populate the view.
-            holder.getNameTextView().setText(senderName);
             holder.getMessageTextView().setText(message);
-            GlideUtil.load(holder.getProfileImageView(), senderPhotoUrl);
+            GlideUtil.loadCircular(holder.getProfileImageView(), senderPhotoUrl);
 
             // Add click listener to partner photo.
             if (senderId == partnerId) {
@@ -301,26 +297,20 @@ public class MessagingActivity
     private static class MessagesViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView profileImageView;
-        private final TextView nameTextView;
         private final TextView messageTextView;
 
-        public MessagesViewHolder(View itemView) {
+        private MessagesViewHolder(View itemView) {
             super(itemView);
 
             profileImageView = (ImageView) itemView.findViewById(R.id.profileImageView);
-            nameTextView = (TextView) itemView.findViewById(R.id.nameTextView);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
         }
 
-        public ImageView getProfileImageView() {
+        private ImageView getProfileImageView() {
             return profileImageView;
         }
 
-        public TextView getNameTextView() {
-            return nameTextView;
-        }
-
-        public TextView getMessageTextView() {
+        private TextView getMessageTextView() {
             return messageTextView;
         }
     }
