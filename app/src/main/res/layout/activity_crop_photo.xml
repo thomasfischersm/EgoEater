@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:contentDescription="@string/discardButtonContentDescription"
+                android:contentDescription="@string/discard_button_content_description"
                 android:src="@drawable/ic_close_black_24dp"
                 android:tint="@color/primaryTextColorDark" />
 

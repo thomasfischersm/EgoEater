@@ -4,9 +4,36 @@
 
     <!-- Login activity -->
     <string name="app_title">ego•eater</string>
-    <string name="tag_line">Find out who\'s in your dating league</string>
+    <string name="tag_line">Realistic and effective dating</string>
     <string name="login_button_label">Log in with Facebook</string>
     <string name="background_content_description">Background texture</string>
+
+    <!-- Introduction deck activity -->
+    <string name="getting_started_button">Get started</string>
+    <string name="rate_users_title">Pick the one you like better</string>
+    <string name="rate_users_body">
+        Let the algorithm learn the nuanced landscape of your dating preferences versus the general yes/no buckets of swiping.
+    </string>
+    <string name="rate_users_graphic_content_description">
+        Illustration that depicts two profiles shown side by side and suggests the user to pick the
+        preferred one.
+    </string>
+    <string name="get_matched_title">Get matched for maximum mutual attraction</string>
+    <string name="get_matched_body">
+        Tired of hundreds of matches that go nowhere? Based on your ranking, we know exactly who
+        is totally hot for who and you feel the same way.
+    </string>
+    <string name="get_matched_content_description">
+        Illustration that depicts dating matches.
+    </string>
+    <string name="start_a_conversation_title">Start a small number of high quality conversations</string>
+    <string name="start_a_conversation_body">
+        Through mutual ranking, you will have much higher quality prospects. Further, everyone is
+        limited to contact only the 10 best matches. Start a genuine conversation with right people.
+    </string>
+    <string name="start_a_conversation_content_description">
+        A diagram that shows message bubbles.
+    </string>
 
     <!-- CropPhotoActivity -->
     <string name="crop_photo_activity_title">Crop</string>
@@ -21,7 +48,7 @@
 
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile text</string>
-    <string name="discardButtonContentDescription">Discard button</string>
+    <string name="discard_button_content_description">Discard button</string>
     <string name="characterCounter">%1$d / %2$d</string>
 
     <!-- RatingActivity -->

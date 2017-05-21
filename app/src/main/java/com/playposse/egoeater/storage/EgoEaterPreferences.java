@@ -29,6 +29,7 @@ public final class EgoEaterPreferences {
     private static final String FIREBASE_TOKEN_KEY = "firebaseToken";
     private static final String PROFILE_PHOTO_URL_KEY = "profilePhotoUrl";
     private static final String HAS_FIRST_PROFILE_PHOTO_KEY = "hasFirstProfilePhoto";
+    private static final String HAS_SEEN_INTRO_DECK_KEY = "hasSeenIntroDeck";
     private static final String PROFILE_TEXT_KEY = "profileText";
     private static final String LONGITUDE_KEY = "longitude";
     private static final String LATITUDE_KEY = "latitude";
@@ -42,6 +43,7 @@ public final class EgoEaterPreferences {
     private static final String PISSED_OFF_USERS_KEY = "pissedOffUsers";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
+    private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
     private static final int QUERY_RADIUS_DEFAULT = 0;
 
@@ -170,6 +172,17 @@ public final class EgoEaterPreferences {
 
     public static String getProfileText(Context context) {
         return getString(context, PROFILE_TEXT_KEY);
+    }
+
+    public static void setHasSeenIntroDeck(Context context, boolean hasSeenIntroDeck) {
+        setBoolean(context, HAS_SEEN_INTRO_DECK_KEY, hasSeenIntroDeck);
+    }
+
+    public static boolean hasSeenIntroDeck(Context context) {
+        return getBoolean(
+                context,
+                HAS_SEEN_INTRO_DECK_KEY,
+                HAS_SEEN_INTRO_DECK_DEFAULT_VALUE);
     }
 
     public static Double getLongitude(Context context) {
