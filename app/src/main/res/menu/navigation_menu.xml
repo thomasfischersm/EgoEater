@@ -19,7 +19,7 @@
             <group>
                 <item
                     android:id="@+id/send_feedback_menu_item"
-                    android:icon="@drawable/ic_feedback_black_24px"
+                    android:icon="@drawable/ic_feedback_black_24dp"
                     android:title="@string/send_feedback_nav" />
                 <item
                     android:id="@+id/about_menu_item"
