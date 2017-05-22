@@ -16,6 +16,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -63,7 +65,6 @@ public class MessagingActivity
     private TextView noMessagesTextView;
     private EditText newMessageEditText;
     private ImageButton sendButton;
-    private ImageButton fuckOffButton;
 
     private long profileId;
     private long partnerId;
@@ -92,7 +93,6 @@ public class MessagingActivity
         noMessagesTextView = (TextView) findViewById(R.id.noMessagesTextView);
         newMessageEditText = (EditText) findViewById(R.id.newMessageEditText);
         sendButton = (ImageButton) findViewById(R.id.sendButton);
-        fuckOffButton = (ImageButton) findViewById(R.id.fuckOffButton);
 
         // Look up information in the intent and preferences.
         profileId = EgoEaterPreferences.getUser(this).getUserId();
@@ -113,12 +113,24 @@ public class MessagingActivity
                 sendMessage();
             }
         });
-        fuckOffButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.messaging_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fuckOffMenuItem:
                 fuckOff();
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

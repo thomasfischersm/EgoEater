@@ -14,8 +14,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:theme="@style/MyApp.ActionBarTheme"
+        android:titleTextColor="@color/primaryTextColorDark"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/primaryTextColorDark" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
@@ -39,19 +41,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/fuckOffButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:contentDescription="@string/fuckOffButtonContentDescription"
-            android:src="@drawable/ic_noun_38095_cc" />
-
         <EditText
             android:id="@+id/newMessageEditText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:hint="@string/enter_message_hint"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/enter_message_hint"
             android:inputType="textAutoCorrect|textMultiLine"
             android:maxLines="5" />
 
@@ -60,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/sendButtonContentDescription"
+            android:contentDescription="@string/send_button_content_description"
             android:src="@drawable/ic_send_black_24dp" />
     </LinearLayout>
 </LinearLayout>

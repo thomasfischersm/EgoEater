@@ -85,8 +85,8 @@
     <!-- Messages Activity -->
     <string name="no_messages_message">Break the silence! Send a message!</string>
     <string name="enter_message_hint">Type your message</string>
-    <string name="sendButtonContentDescription">A button that sends the current message.</string>
-    <string name="fuckOffButtonContentDescription">This is the famous fuck off button.</string>
+    <string name="send_button_content_description">A button that sends the current message.</string>
+    <string name="fuck_off_button_content_description">This is the famous fuck off button.</string>
     <string name="fuck_off_dialog_title">The famous fuck off button</string>
     <string name="fuck_off_dialog_text">
         Warning! This action cannot be undone! You will never ever hear or see this person again.\n
@@ -99,6 +99,7 @@
         If this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
         and tell this person to fuck off!
     </string>
+    <string name="fuck_off_menu_title">Fuck off</string>
 
     <!-- About Activity -->
     <string name="about_app_heading">About Ego Eater App</string>

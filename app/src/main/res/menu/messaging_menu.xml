@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/fuckOffMenuItem"
+        android:icon="@drawable/ic_noun_38095_cc"
+        android:title="@string/fuck_off_menu_title"
+        app:showAsAction="always" />
+</menu>
