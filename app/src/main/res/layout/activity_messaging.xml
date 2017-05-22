@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="textAutoCorrect|textMultiLine"
-            android:lines="5" />
+            android:maxLines="5" />
 
         <ImageButton
             android:id="@+id/sendButton"
