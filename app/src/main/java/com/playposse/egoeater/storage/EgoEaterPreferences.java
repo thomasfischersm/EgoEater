@@ -358,5 +358,16 @@ public final class EgoEaterPreferences {
             setString(context, key, null);
         }
     }
+
+    /**
+     * Throws away all the local preference data.
+     */
+    public static void reset(Context context) {
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences.edit()
+                .clear()
+                .commit();
+    }
 }
 
