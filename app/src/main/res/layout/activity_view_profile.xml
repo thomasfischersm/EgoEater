@@ -14,8 +14,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:theme="@style/MyApp.ActionBarTheme"
+        android:titleTextColor="@color/primaryTextColorDark"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/primaryTextColorDark" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -196,12 +198,12 @@
                 android:layout_alignBottom="@+id/header"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="-28dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_message_black_24dp"
                 android:tint="@color/primaryTextColorDark"
-                app:fabSize="normal"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
+                app:fabSize="normal" />
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>
