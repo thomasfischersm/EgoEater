@@ -16,6 +16,7 @@ public class MatchParcelable implements Parcelable {
     private long cloudMatchId;
     private boolean isLocked;
     private boolean hasNewMessage;
+    private int unreadMessagesCount;
     private ProfileParcelable otherProfile;
 
     public static final Parcelable.Creator<MatchParcelable> CREATOR =
@@ -36,6 +37,7 @@ public class MatchParcelable implements Parcelable {
         cloudMatchId = smartCursor.getLong(MatchTable.MATCH_ID_COLUMN);
         isLocked = smartCursor.getBoolean(MatchTable.IS_LOCKED_COLUMN);
         hasNewMessage = smartCursor.getBoolean(MatchTable.HAS_NEW_MESSAGE);
+        unreadMessagesCount = smartCursor.getInt(MatchTable.UNREAD_MESSAGES_COUNT);
         otherProfile = new ProfileParcelable(smartCursor);
     }
 
@@ -44,6 +46,7 @@ public class MatchParcelable implements Parcelable {
         cloudMatchId = in.readLong();
         isLocked = in.readInt() > 0;
         hasNewMessage = in.readInt() > 0;
+        unreadMessagesCount = in.readInt();
         otherProfile = ProfileParcelable.CREATOR.createFromParcel(in);
     }
 
@@ -59,6 +62,7 @@ public class MatchParcelable implements Parcelable {
         dest.writeLong(cloudMatchId);
         dest.writeInt(isLocked ? 1 : 0);
         dest.writeInt(hasNewMessage ? 1 : 0);
+        dest.writeInt(unreadMessagesCount);
         otherProfile.writeToParcel(dest, flags);
     }
 
@@ -76,6 +80,10 @@ public class MatchParcelable implements Parcelable {
 
     public boolean hasNewMessage() {
         return hasNewMessage;
+    }
+
+    public int getUnreadMessagesCount() {
+        return unreadMessagesCount;
     }
 
     public ProfileParcelable getOtherProfile() {

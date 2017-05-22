@@ -305,13 +305,50 @@ public final class QueryUtil {
                 " row count: " + rowCount);
     }
 
-    public static void markMatchHasNewMessage(
+    public static void incrementUnreadMessages(
             ContentResolver contentResolver,
-            long partnerId,
-            boolean hasNewMassage) {
+            long partnerId) {
+
+        int unreadMessagesCount = getUnreadMessagesCount(contentResolver, partnerId);
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MatchTable.HAS_NEW_MESSAGE, hasNewMassage);
+        contentValues.put(MatchTable.HAS_NEW_MESSAGE, true);
+        contentValues.put(MatchTable.UNREAD_MESSAGES_COUNT, unreadMessagesCount + 1);
+
+        int rowCount = contentResolver.update(
+                MatchTable.CONTENT_URI,
+                contentValues,
+                MatchTable.PROFILE_ID_COLUMN + " = ?",
+                new String[]{Long.toString(partnerId)});
+
+        if (rowCount != 1) {
+            Log.w(LOG_TAG, "lockMatch: Tried to mark match as having a new message but failed: "
+                    + rowCount);
+        }
+    }
+
+    private static int getUnreadMessagesCount(ContentResolver contentResolver, long partnerId) {
+        Cursor cursor = contentResolver.query(
+                MatchTable.CONTENT_URI,
+                new String[]{MatchTable.UNREAD_MESSAGES_COUNT},
+                MatchTable.PROFILE_ID_COLUMN + " = ?",
+                new String[]{Long.toString(partnerId)},
+                null);
+        try {
+            if ((cursor != null) && (cursor.moveToNext())) {
+                return cursor.getInt(0);
+            } else {
+                return 0;
+            }
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public static void clearUnreadMessages(ContentResolver contentResolver, long partnerId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MatchTable.HAS_NEW_MESSAGE, false);
+        contentValues.put(MatchTable.UNREAD_MESSAGES_COUNT, 0);
 
         int rowCount = contentResolver.update(
                 MatchTable.CONTENT_URI,

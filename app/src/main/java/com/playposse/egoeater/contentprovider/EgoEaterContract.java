@@ -216,6 +216,7 @@ public class EgoEaterContract {
         public static final String PROFILE_ID_COLUMN = "profile_id";
         public static final String IS_LOCKED_COLUMN = "is_locked";
         public static final String HAS_NEW_MESSAGE = "has_new_message";
+        public static final String UNREAD_MESSAGES_COUNT = "unread_messages_count";
 
         public static final String[] COLUMN_NAMES = new String[]{
                 ID_COLUMN,
@@ -223,7 +224,8 @@ public class EgoEaterContract {
                 CREATED_COLUMN,
                 PROFILE_ID_COLUMN,
                 IS_LOCKED_COLUMN,
-                HAS_NEW_MESSAGE};
+                HAS_NEW_MESSAGE,
+                UNREAD_MESSAGES_COUNT};
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE MATCH "
@@ -232,7 +234,8 @@ public class EgoEaterContract {
                         + "CREATED DATETIME DEFAULT CURRENT_TIMESTAMP, "
                         + "PROFILE_ID INTEGER,"
                         + "IS_LOCKED BOOLEAN,"
-                        + "HAS_NEW_MESSAGE BOOLEAN DEFAULT FALSE)";
+                        + "HAS_NEW_MESSAGE BOOLEAN DEFAULT FALSE,"
+                        + "UNREAD_MESSAGES_COUNT DEFAULT 0)";
     }
 
     /**

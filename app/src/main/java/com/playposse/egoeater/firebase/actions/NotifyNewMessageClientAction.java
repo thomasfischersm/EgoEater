@@ -61,7 +61,7 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             }
 
             ContentResolver contentResolver = getApplicationContext().getContentResolver();
-            QueryUtil.markMatchHasNewMessage(contentResolver, senderProfileId, true);
+            QueryUtil.incrementUnreadMessages(contentResolver, senderProfileId);
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "execute: Failed to process new message.", ex);
         }

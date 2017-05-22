@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -160,7 +161,12 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
             } else {
                 holder.getLockIconImageView().setVisibility(GONE);
             }
-            holder.getNewMessageImageIcon().setVisibility(match.hasNewMessage() ? VISIBLE : GONE);
+            holder.getNewMessagesLayout().setVisibility(match.hasNewMessage() ? VISIBLE : GONE);
+            if (match.getUnreadMessagesCount() > 1) {
+                holder.getNewMessagesTextView().setText("" + match.getUnreadMessagesCount());
+            } else {
+                holder.getNewMessagesTextView().setText("");
+            }
             String headLine = ProfileFormatter.formatNameAndAge(getContext(), profile);
             holder.getHeadlineTextView().setText(headLine);
             String subHead =
@@ -194,37 +200,49 @@ public class MatchesFragment extends Fragment implements LoaderManager.LoaderCal
 
         private final ImageView profilePhotoImageView;
         private final ImageView lockIconImageView;
-        private final ImageView newMessageImageIcon;
+        private final FrameLayout newMessagesLayout;
+        private final ImageView newMessagesImageIcon;
+        private final TextView newMessagesTextView;
         private final TextView headlineTextView;
         private final TextView subHeadTextView;
 
-        public MatchesViewHolder(View itemView) {
+        private MatchesViewHolder(View itemView) {
             super(itemView);
 
             profilePhotoImageView = (ImageView) itemView.findViewById(R.id.profilePhotoImageView);
             lockIconImageView = (ImageView) itemView.findViewById(R.id.lockIconImageView);
-            newMessageImageIcon = (ImageView) itemView.findViewById(R.id.newMessageImageIcon);
+            newMessagesLayout = (FrameLayout) itemView.findViewById(R.id.newMessagesLayout);
+            newMessagesImageIcon = (ImageView) itemView.findViewById(R.id.newMessagesImageIcon);
+            newMessagesTextView = (TextView) itemView.findViewById(R.id.newMessagesTextView);
             headlineTextView = (TextView) itemView.findViewById(R.id.headlineTextView);
             subHeadTextView = (TextView) itemView.findViewById(R.id.subHeadTextView);
         }
 
-        public ImageView getProfilePhotoImageView() {
+        private ImageView getProfilePhotoImageView() {
             return profilePhotoImageView;
         }
 
-        public ImageView getLockIconImageView() {
+        private ImageView getLockIconImageView() {
             return lockIconImageView;
         }
 
-        public ImageView getNewMessageImageIcon() {
-            return newMessageImageIcon;
+        private FrameLayout getNewMessagesLayout() {
+            return newMessagesLayout;
         }
 
-        public TextView getHeadlineTextView() {
+        private ImageView getNewMessagesImageIcon() {
+            return newMessagesImageIcon;
+        }
+
+        private TextView getNewMessagesTextView() {
+            return newMessagesTextView;
+        }
+
+        private TextView getHeadlineTextView() {
             return headlineTextView;
         }
 
-        public TextView getSubHeadTextView() {
+        private TextView getSubHeadTextView() {
             return subHeadTextView;
         }
     }
