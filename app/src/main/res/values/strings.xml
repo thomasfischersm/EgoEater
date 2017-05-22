@@ -216,6 +216,14 @@
     <string name="lock_icon_content_description">A lock icon that indicates if a profile is locked or not.</string>
     <string name="new_message_icon_content_description">An icon that indicates that a new message has arrived.</string>
     <string name="love_icon_content_description">A heart shaped icon that indicates that you like that user.</string>
+    <string name="info_icon_content_description">Info icon</string>
+    <string name="app_info_title">How The Algorithm Works</string>
+    <string name="app_info_body">
+        1. Choose between two users repeatedly.\n
+        2. The app creates a stack ranking.\n
+        3. A daily algorithm matches for mutual attraction.\n
+        4. Everyone is limited to the top 10 matches.
+    </string>
 
     <!-- Common button labels -->
     <string name="dialog_okay_button">Okay</string>

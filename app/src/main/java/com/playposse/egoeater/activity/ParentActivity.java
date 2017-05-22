@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -41,6 +43,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     private DrawerLayout drawerLayout;
     private LinearLayout mainFragmentContainer;
     private NavigationView navigationView;
+    private ImageView infoImageView;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -56,6 +59,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
             mainFragmentContainer = (LinearLayout) findViewById(R.id.mainFragmentContainer);
             navigationView = (NavigationView) findViewById(R.id.navigationView);
+            infoImageView = (ImageView) findViewById(R.id.infoImageView);
 
             drawerToggle = new ActionBarDrawerToggle(
                     this,
@@ -71,6 +75,13 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
                             return onOptionsItemSelected(item);
                         }
                     });
+
+            infoImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAppInfo();
+                }
+            });
 
             initNavigationHeader();
         }
@@ -89,8 +100,6 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     protected int getLayoutResId() {
         return 0;
     }
-
-    ;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -189,7 +198,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         fragmentTransaction.commit();
     }
 
-    public void initNavigationHeader() {
+    private void initNavigationHeader() {
         View rootView = navigationView.getHeaderView(0);
 
         // Prepare profile photo.
@@ -209,5 +218,30 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         TextView subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
         headlineTextView.setText(ProfileFormatter.formatNameAndAge(this, profile));
         subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(this, profile));
+    }
+
+    private void showAppInfo() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(
+                        infoImageView,
+                        getString(R.string.app_info_title),
+                        getString(R.string.app_info_body))
+                        // All options below are optional
+                        .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.primaryTextColorDark)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.primaryTextColorDark)      // Specify the color of the title text
+                        .descriptionTextSize(14)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.secondaryTextColorDark)  // Specify the color of the description text
+//                        .textColor(R.color.secondaryTextColorDark)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        //.dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(true)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        //.icon(Drawable)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60));                  // Specify the target radius (in dp)
     }
 }
