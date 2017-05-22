@@ -329,7 +329,7 @@ public class MessagingActivity
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            setTitle(getString(R.string.messages_activity_title, partner.getFirstName()));
+            setTitle(partner.getFirstName());
             getLoaderManager().initLoader(LOADER_ID, null, MessagingActivity.this);
             new ReportMessagesReadAsyncTask().execute();
             new Thread(new CheckForNewMessagesRunnable()).start();

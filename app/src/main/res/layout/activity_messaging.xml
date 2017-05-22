@@ -50,7 +50,7 @@
         <EditText
             android:id="@+id/newMessageEditText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content" android:hint="@string/enter_message_hint"
             android:layout_weight="1"
             android:inputType="textAutoCorrect|textMultiLine"
             android:maxLines="5" />

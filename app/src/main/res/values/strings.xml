@@ -83,8 +83,8 @@
     </string>
 
     <!-- Messages Activity -->
-    <string name="messages_activity_title">Conversation with %1$s</string>
     <string name="no_messages_message">Break the silence! Send a message!</string>
+    <string name="enter_message_hint">Type your message</string>
     <string name="sendButtonContentDescription">A button that sends the current message.</string>
     <string name="fuckOffButtonContentDescription">This is the famous fuck off button.</string>
     <string name="fuck_off_dialog_title">The famous fuck off button</string>
