@@ -101,6 +101,12 @@
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
 
+    <!-- View profile activity -->
+    <string name="view_profile_title">User Info</string>
+    <string name="fuck_off_label">Fuck off</string>
+    <string name="report_label">Report</string>
+    <string name="report_button_content_description">A button to report a user</string>
+
     <!-- About Activity -->
     <string name="about_app_heading">About Ego Eater App</string>
     <string name="about_app_body_text">

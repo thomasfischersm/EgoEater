@@ -39,6 +39,7 @@ import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.firebase.actions.NotifyNewMessageClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.FuckOffUiHelper;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
 import com.playposse.egoeater.util.SimpleAlertDialog;
@@ -126,7 +127,7 @@ public class MessagingActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fuckOffMenuItem:
-                fuckOff();
+                FuckOffUiHelper.fuckOff(this, partnerId);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -207,28 +208,6 @@ public class MessagingActivity
         messagesCursorAdapter.swapCursor(null);
         messagesRecyclerView.setVisibility(GONE);
         noMessagesTextView.setVisibility(VISIBLE);
-    }
-
-    private void fuckOff() {
-        SimpleAlertDialog.confirm(
-                this,
-                R.string.fuck_off_dialog_title,
-                R.string.fuck_off_dialog_text,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        fuckOffConfirmed();
-                    }
-                }
-        );
-    }
-
-    private void fuckOffConfirmed() {
-        EgoEaterPreferences.addFuckOffUser(this, partnerId);
-        new FuckOffClientAction(this, partnerId).execute();
-        FuckOffUtil.eraseUserLocally(getContentResolver(), partnerId);
-
-        startActivity(new Intent(this, MatchesActivity.class));
     }
 
     /**
