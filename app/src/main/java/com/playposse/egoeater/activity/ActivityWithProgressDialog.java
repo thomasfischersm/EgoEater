@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 /**
  * An {@link Activity} that has a progress dialog.
@@ -36,5 +37,14 @@ public abstract class ActivityWithProgressDialog extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AnalyticsUtil.reportScreenName(getApplication(), getClass().getSimpleName());
+
+        CurrentActivity.setCurrentActivity(getClass());
     }
 }

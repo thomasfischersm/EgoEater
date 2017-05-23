@@ -147,15 +147,6 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        AnalyticsUtil.reportScreenName(getApplication(), getClass().getSimpleName());
-
-        CurrentActivity.setCurrentActivity(getClass());
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
 

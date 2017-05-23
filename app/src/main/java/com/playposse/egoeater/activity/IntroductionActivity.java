@@ -19,7 +19,7 @@ import com.playposse.egoeater.util.AnalyticsUtil;
 /**
  * An {@link Activity} that shows introductory slides to the user after the first user log on.
  */
-public class IntroductionActivity extends AppCompatActivity {
+public class IntroductionActivity extends ActivityWithProgressDialog {
 
     private static final String LOG_TAG = IntroductionActivity.class.getSimpleName();
 
