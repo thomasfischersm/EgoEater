@@ -1,5 +1,6 @@
 package com.playposse.egoeater.util;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,9 @@ import android.widget.LinearLayout;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ReportAbuseClientAction;
+
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
 /**
  * Utility that shows a simple alert dialog.
@@ -149,7 +153,11 @@ public final class SimpleAlertDialog {
 
     }
 
-    public static void showReportAbuseDialog(final Context context, final long abuserId) {
+    public static void showReportAbuseDialog(
+            final Context context,
+            final long abuserId,
+            final Application application) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final EditText editText = new EditText(builder.getContext());
         editText.setHint(R.string.report_abuse_dialog_note_hint);
@@ -193,6 +201,8 @@ public final class SimpleAlertDialog {
                                                 abuserId,
                                                 note);
                                 reportAbuseClientAction.execute();
+
+                                AnalyticsUtil.reportEvent(application, reportAbuseEvent, "");
                             }
                         }
                 )

@@ -110,7 +110,10 @@ public class ViewProfileActivity
         View.OnClickListener reportClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleAlertDialog.showReportAbuseDialog(ViewProfileActivity.this, profileId);
+                SimpleAlertDialog.showReportAbuseDialog(
+                        ViewProfileActivity.this,
+                        profileId,
+                        getApplication());
             }
         };
         reportImageView.setOnClickListener(reportClickListener);
