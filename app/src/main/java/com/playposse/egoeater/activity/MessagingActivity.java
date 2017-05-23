@@ -75,6 +75,7 @@ public class MessagingActivity
 
     private MessagesCursorAdapter messagesCursorAdapter;
     private ContentObserver contentObserver;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected int getLayoutResId() {
@@ -101,7 +102,8 @@ public class MessagingActivity
         partnerId = ExtraConstants.getProfileId(getIntent());
 
         // Build the RecyclerView for messages.
-        messagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        messagesRecyclerView.setLayoutManager(linearLayoutManager);
         messagesCursorAdapter = new MessagesCursorAdapter();
         messagesRecyclerView.setAdapter(messagesCursorAdapter);
 
@@ -212,25 +214,18 @@ public class MessagingActivity
     }
 
     @Nullable
-    private static GregorianCalendar isDifferentDay(
+    private static boolean isDifferentDay(
             @Nullable Long previousMessageCreated,
-            Long currentMessageCreated) {
-
-        GregorianCalendar current = new GregorianCalendar();
-        current.setTimeInMillis(currentMessageCreated);
+            GregorianCalendar current) {
 
         if (previousMessageCreated == null) {
-            return current;
+            return true;
         }
 
         GregorianCalendar previous = new GregorianCalendar();
         previous.setTimeInMillis(previousMessageCreated);
 
-        if (previous.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)) {
-            return current;
-        } else {
-            return null;
-        }
+        return previous.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR);
     }
 
     private static boolean isToday(GregorianCalendar calendar) {
@@ -279,7 +274,7 @@ public class MessagingActivity
         }
 
         @Override
-        protected void onBindViewHolder(MessagesViewHolder holder, int position, Cursor cursor) {
+        protected void onBindViewHolder(final MessagesViewHolder holder, final int position, Cursor cursor) {
             // Read from cursor.
             SmartCursor smartCursor = new SmartCursor(cursor, MessageTable.COLUMN_NAMES);
             long senderId = smartCursor.getLong(MessageTable.SENDER_PROFILE_ID_COLUMN);
@@ -304,8 +299,10 @@ public class MessagingActivity
             GlideUtil.loadCircular(holder.getProfileImageView(), senderPhotoUrl);
 
             // Show date if appropriate.
-            GregorianCalendar currentCalendar = isDifferentDay(previousCreated, currentCreated);
-            if (currentCalendar != null) {
+            GregorianCalendar currentCalendar = new GregorianCalendar();
+            currentCalendar.setTimeInMillis(currentCreated);
+            boolean isDifferentDay = isDifferentDay(previousCreated, currentCalendar);
+            if (isDifferentDay) {
                 holder.getDateTextView().setVisibility(VISIBLE);
                 if (isToday(currentCalendar)) {
                     holder.getDateTextView().setText(R.string.today_date);
@@ -319,6 +316,18 @@ public class MessagingActivity
                 holder.getDateTextView().setVisibility(GONE);
             }
 
+            // Prepare timestamp
+            holder.getTimeTextView().setVisibility(GONE);
+            DateFormat dateFormat =
+                    android.text.format.DateFormat.getDateFormat(getApplicationContext());
+            DateFormat timeFormat =
+                    android.text.format.DateFormat.getTimeFormat(getApplicationContext());
+            String currentDateStr = dateFormat.format(currentCalendar.getTime()) + " "
+                    + timeFormat.format(currentCalendar.getTime());
+            holder.getTimeTextView().setText(currentDateStr);
+
+
+
             // Add click listener to partner photo.
             if (senderId == partnerId) {
                 holder.getProfileImageView().setOnClickListener(new View.OnClickListener() {
@@ -328,6 +337,22 @@ public class MessagingActivity
                     }
                 });
             }
+
+            // Add click listener to show the time stamp.
+            final TextView timeTextView = holder.getTimeTextView();
+            holder.getMessageTextView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int visibility = timeTextView.getVisibility();
+                    timeTextView.setVisibility((visibility == GONE) ? VISIBLE : GONE);
+                    timeTextView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            linearLayoutManager.scrollToPosition(position);
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -339,6 +364,7 @@ public class MessagingActivity
         private final TextView dateTextView;
         private final ImageView profileImageView;
         private final TextView messageTextView;
+        private final TextView timeTextView;
 
         private MessagesViewHolder(View itemView) {
             super(itemView);
@@ -346,6 +372,7 @@ public class MessagingActivity
             dateTextView = (TextView) itemView.findViewById(R.id.dateTextView);
             profileImageView = (ImageView) itemView.findViewById(R.id.profileImageView);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
+            timeTextView = (TextView) itemView.findViewById(R.id.timeTextView);
         }
 
         public TextView getDateTextView() {
@@ -358,6 +385,10 @@ public class MessagingActivity
 
         private TextView getMessageTextView() {
             return messageTextView;
+        }
+
+        public TextView getTimeTextView() {
+            return timeTextView;
         }
     }
 

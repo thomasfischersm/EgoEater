@@ -38,4 +38,14 @@
             android:contentDescription="@string/profile_photo_content_description"
             android:scaleType="centerCrop" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/timeTextView"
+        style="@style/caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/secondaryTextColorLight"
+        android:visibility="gone" />
 </LinearLayout>
