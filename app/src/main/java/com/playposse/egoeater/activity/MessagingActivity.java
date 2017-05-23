@@ -130,7 +130,7 @@ public class MessagingActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.fuckOffMenuItem:
-                FuckOffUiHelper.fuckOff(this, partnerId);
+                FuckOffUiHelper.fuckOff(this, partnerId, getApplication());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

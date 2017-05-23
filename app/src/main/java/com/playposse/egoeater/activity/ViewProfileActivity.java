@@ -2,13 +2,9 @@ package com.playposse.egoeater.activity;
 
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Loader;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -20,15 +16,12 @@ import android.widget.TextView;
 
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
-import com.playposse.egoeater.contentprovider.EgoEaterContract;
-import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.FuckOffUiHelper;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.SimpleAlertDialog;
-import com.playposse.egoeater.util.SmartCursor;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -107,7 +100,7 @@ public class ViewProfileActivity
         View.OnClickListener fuckOffClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FuckOffUiHelper.fuckOff(ViewProfileActivity.this, profileId);
+                FuckOffUiHelper.fuckOff(ViewProfileActivity.this, profileId, getApplication());
             }
         };
         fuckOffImageView.setOnClickListener(fuckOffClickListener);

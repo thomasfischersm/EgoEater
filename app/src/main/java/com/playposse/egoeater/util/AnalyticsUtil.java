@@ -14,6 +14,8 @@ public class AnalyticsUtil {
     public static enum AnalyticsCategory {
         firebaseEvent,
         ratingEvent,
+        fuckOffEvent,
+        reportAbuseEvent,
     }
 
     public static void reportEvent(
