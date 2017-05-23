@@ -13,10 +13,7 @@ public class AnalyticsUtil {
 
     public static enum AnalyticsCategory {
         firebaseEvent,
-    }
-
-    public static enum ScreenName {
-        introductionDeckSlide,
+        ratingEvent,
     }
 
     public static void reportEvent(
