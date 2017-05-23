@@ -18,5 +18,7 @@ public class MatchesActivity extends ParentActivity {
         addMainFragment(new MatchesFragment());
 
         setTitle(R.string.matches_activity_title);
+
+        selectActivityTab(MATCHES_ACTIVITY_TAB_POSITION);
     }
 }

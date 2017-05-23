@@ -12,5 +12,7 @@ public class ViewOwnProfileActivity extends ParentWithLocationCheckActivity {
         super.onCreate(savedInstanceState);
 
         addMainFragment(new ViewOwnProfileFragment());
+
+        selectActivityTab(PROFILE_ACTIVITY_TAB_POSITION);
     }
 }

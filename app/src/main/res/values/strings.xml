@@ -168,6 +168,12 @@
     <string name="logout_nav">Log out</string>
 
 
+    <!-- Activity selection bar -->
+    <string name="profile_activity_selector">Profile</string>
+    <string name="rating_activity_selector">Rating</string>
+    <string name="matches_activity_selector">Matches</string>
+
+
     <!-- Progress loading dialog -->
     <string name="progress_dialog_title">Crunching data…</string>
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>

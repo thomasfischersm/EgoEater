@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -40,12 +41,18 @@ import com.playposse.egoeater.util.ProfileFormatter;
  */
 public abstract class ParentActivity extends ActivityWithProgressDialog {
 
+    protected static final int PROFILE_ACTIVITY_TAB_POSITION = 0;
+    protected static final int RATING_ACTIVITY_TAB_POSITION = 1;
+    protected static final int MATCHES_ACTIVITY_TAB_POSITION = 2;
+
     private DrawerLayout drawerLayout;
     private LinearLayout mainFragmentContainer;
     private NavigationView navigationView;
     private ImageView infoImageView;
+    private TabLayout activityTabLayout;
 
     private ActionBarDrawerToggle drawerToggle;
+    private ActivityTabSelectedListener tabSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             mainFragmentContainer = (LinearLayout) findViewById(R.id.mainFragmentContainer);
             navigationView = (NavigationView) findViewById(R.id.navigationView);
             infoImageView = (ImageView) findViewById(R.id.infoImageView);
+            activityTabLayout = (TabLayout) findViewById(R.id.activityTabLayout);
 
             drawerToggle = new ActionBarDrawerToggle(
                     this,
@@ -84,6 +92,9 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             });
 
             initNavigationHeader();
+
+            tabSelectedListener = new ActivityTabSelectedListener();
+            activityTabLayout.addOnTabSelectedListener(tabSelectedListener);
         }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -234,5 +245,50 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
                         .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                         //.icon(Drawable)                     // Specify a custom drawable to draw as the target
                         .targetRadius(60));                  // Specify the target radius (in dp)
+    }
+
+    /**
+     * Selects the specified tab.
+     */
+    protected void selectActivityTab(int position) {
+        activityTabLayout.removeOnTabSelectedListener(tabSelectedListener);
+        TabLayout.Tab tab = activityTabLayout.getTabAt(position);
+        if (tab != null) {
+            tab.select();
+        }
+        activityTabLayout.addOnTabSelectedListener(tabSelectedListener);
+    }
+
+    /**
+     * A {@link TabLayout.OnTabSelectedListener} that launches the selected activity.
+     */
+    private class ActivityTabSelectedListener implements TabLayout.OnTabSelectedListener {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            switch (tab.getPosition()) {
+                case 0:
+                    finish();
+                    startActivity(new Intent(ParentActivity.this, ViewOwnProfileActivity.class));
+                    break;
+                case 1:
+                    finish();
+                    startActivity(new Intent(ParentActivity.this, RatingActivity.class));
+                    break;
+                case 2:
+                    finish();
+                    startActivity(new Intent(ParentActivity.this, MatchesActivity.class));
+                    break;
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            // Ignore.
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            // Ignore.
+        }
     }
 }

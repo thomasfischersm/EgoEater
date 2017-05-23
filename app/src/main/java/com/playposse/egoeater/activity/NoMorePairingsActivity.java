@@ -27,6 +27,8 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
         super.onCreate(savedInstanceState);
 
         addMainFragment(new NoMorePairingsFragment());
+
+        selectActivityTab(RATING_ACTIVITY_TAB_POSITION);
     }
 
     @Override
