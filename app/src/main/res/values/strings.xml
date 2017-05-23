@@ -194,6 +194,11 @@
         <item>@string/photo_picker_dialog_delete_item</item>
     </array>
 
+    <!-- Report abuse dialog -->
+    <string name="report_abuse_dialog_title">Report Abuse</string>
+    <string name="report_abuse_dialog_note_hint">Describe the abuse issue.</string>
+    <string name="report_abuse_dialog_button">Report</string>
+
     <!-- Options menu -->
     <string name="profile_menu">Profile</string>
     <string name="rating_menu">Rating</string>

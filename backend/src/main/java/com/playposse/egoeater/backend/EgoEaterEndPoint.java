@@ -24,6 +24,7 @@ import com.playposse.egoeater.backend.serveractions.GetMatchesServerAction;
 import com.playposse.egoeater.backend.serveractions.GetMaxMessageIndexServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByDistanceServerAction;
 import com.playposse.egoeater.backend.serveractions.GetProfilesByIdServerAction;
+import com.playposse.egoeater.backend.serveractions.ReportAbuseServerAction;
 import com.playposse.egoeater.backend.serveractions.ReportMessageReadServerAction;
 import com.playposse.egoeater.backend.serveractions.ReportRankingServerAction;
 import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
@@ -201,5 +202,14 @@ public class EgoEaterEndPoint {
             @Named("partnerId") long partnerId) throws BadRequestException, IOException {
 
         FuckOffServerAction.fuckOff(sessionId, partnerId);
+    }
+
+    @ApiMethod(name = "reportAbuse")
+    public void reportAbuse(
+            @Named("sessionId") long sessionId,
+            @Named("abuserId") long abuserId,
+            @Named("note") String note) throws BadRequestException {
+
+        ReportAbuseServerAction.reportAbuse(sessionId, abuserId, note);
     }
 }

@@ -3,9 +3,16 @@ package com.playposse.egoeater.util;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.clientactions.ReportAbuseClientAction;
 
 /**
  * Utility that shows a simple alert dialog.
@@ -140,5 +147,85 @@ public final class SimpleAlertDialog {
                         })
                 .show();
 
+    }
+
+    public static void showReportAbuseDialog(final Context context, final long abuserId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final EditText editText = new EditText(builder.getContext());
+        editText.setHint(R.string.report_abuse_dialog_note_hint);
+        editText.setMaxLines(5);
+        editText.setInputType(
+                InputType.TYPE_CLASS_TEXT
+                        | InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                        | InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        editText.setLayoutParams(layoutParams);
+
+        final AlertDialog dialog = builder
+                .setTitle(R.string.report_abuse_dialog_title)
+//                .setMessage(messageId)
+                .setNegativeButton(
+                        R.string.dialog_cancel_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setPositiveButton(
+                        R.string.report_abuse_dialog_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                String note = editText.getText().toString();
+                                if (StringUtil.isEmpty(note)) {
+                                    return;
+                                }
+
+                                dialog.dismiss();
+
+                                ReportAbuseClientAction reportAbuseClientAction =
+                                        new ReportAbuseClientAction(
+                                                context,
+                                                abuserId,
+                                                note);
+                                reportAbuseClientAction.execute();
+                            }
+                        }
+                )
+                .setView(editText)
+                .create();
+
+        // Enable the positive button only when the user has entered text.
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dlg) {
+                final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setEnabled(false);
+
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        // Ignore
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        // Ignore
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String note = editText.getText().toString();
+                        positiveButton.setEnabled(!StringUtil.isEmpty(note));
+                    }
+                });
+            }
+        });
+
+        dialog.show();
     }
 }

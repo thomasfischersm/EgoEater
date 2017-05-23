@@ -27,6 +27,7 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.FuckOffUiHelper;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 import com.playposse.egoeater.util.SmartCursor;
 
 import static android.view.View.GONE;
@@ -112,6 +113,15 @@ public class ViewProfileActivity
         fuckOffImageView.setOnClickListener(fuckOffClickListener);
         fuckOffTextView.setOnClickListener(fuckOffClickListener);
 
+        // Set OnClickListeners for the report abuse action.
+        View.OnClickListener reportClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleAlertDialog.showReportAbuseDialog(ViewProfileActivity.this, profileId);
+            }
+        };
+        reportImageView.setOnClickListener(reportClickListener);
+        reportTextView.setOnClickListener(reportClickListener);
 
         // Change main profile photo.
         profilePhoto1ImageView.setOnClickListener(new View.OnClickListener() {
