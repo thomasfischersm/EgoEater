@@ -100,6 +100,7 @@
         and tell this person to fuck off!
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
+    <string name="today_date">Today</string>
 
     <!-- View profile activity -->
     <string name="view_profile_title">User Info</string>

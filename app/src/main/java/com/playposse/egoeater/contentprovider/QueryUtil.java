@@ -258,13 +258,41 @@ public final class QueryUtil {
         }
     }
 
+    public static Long getLastMessageCreated(
+            ContentResolver contentResolver,
+            long profileId,
+            long partnerId) {
+
+        String profileStr = Long.toString(profileId);
+        String partnerStr = Long.toString(partnerId);
+
+        Cursor cursor = contentResolver.query(
+                MessageTable.CONTENT_URI,
+                new String[]{MessageTable.CREATED_COLUMN},
+                "((sender_profile_id = ?) and (recipient_profile_id = ?)) " +
+                        "or ((sender_profile_id = ?) and (recipient_profile_id = ?))",
+                new String[]{
+                        profileStr,
+                        partnerStr,
+                        partnerStr,
+                        profileStr},
+                MessageTable.MESSAGE_INDEX_COLUMN + " desc");
+
+        try {
+            if ((cursor != null) && (cursor.moveToNext())) {
+                return cursor.getLong(0);
+            } else {
+                return null;
+            }
+        } finally {
+            cursor.close();
+        }
+    }
+
     /**
      * Marks a match as locked. This happens when one of the users sends the first message.
      */
-    public static void lockMatch(
-            ContentResolver contentResolver,
-            long profileId) {
-
+    public static void lockMatch(ContentResolver contentResolver, long profileId) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MatchTable.IS_LOCKED_COLUMN, true);
 

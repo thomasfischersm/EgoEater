@@ -51,11 +51,16 @@ public class SendMessageClientAction extends ApiClientAction<Void> {
             messageIndex++;
         }
 
+        Long previousMessageCreated =
+                QueryUtil.getLastMessageCreated(contentResolver, senderId, recipientId);
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(EgoEaterContract.MessageTable.SENDER_PROFILE_ID_COLUMN, senderId);
         contentValues.put(EgoEaterContract.MessageTable.RECIPIENT_PROFILE_ID_COLUMN, recipientId);
         contentValues.put(EgoEaterContract.MessageTable.MESSAGE_INDEX_COLUMN, messageIndex);
         contentValues.put(EgoEaterContract.MessageTable.IS_RECEIVED_COLUMN, false);
+        contentValues.put(EgoEaterContract.MessageTable.CREATED_COLUMN, System.currentTimeMillis());
+        contentValues.put(EgoEaterContract.MessageTable.PREVIOUS_MESSAGE_CREATED_COLUMN, previousMessageCreated);
         contentValues.put(EgoEaterContract.MessageTable.MESSAGE_CONTENT_COLUMN, messageContent);
 
         contentResolver.insert(EgoEaterContract.MessageTable.CONTENT_URI, contentValues);

@@ -111,7 +111,10 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             List<MessageBean> messages,
             long senderProfileId,
             long profileId) {
+
+        ContentResolver contentResolver = context.getContentResolver();
         ContentValues[] contentValuesArray = new ContentValues[messages.size()];
+        Long previousMessageCreated = null;
         for (int i = 0; i < messages.size(); i++) {
             MessageBean message = messages.get(i);
             long recipientProfileId =
@@ -123,10 +126,12 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             contentValuesArray[i].put(MessageTable.MESSAGE_INDEX_COLUMN, message.getMessageIndex());
             contentValuesArray[i].put(MessageTable.IS_RECEIVED_COLUMN, message.getReceived());
             contentValuesArray[i].put(MessageTable.CREATED_COLUMN, message.getCreated());
+            contentValuesArray[i].put(MessageTable.PREVIOUS_MESSAGE_CREATED_COLUMN, previousMessageCreated);
             contentValuesArray[i].put(MessageTable.MESSAGE_CONTENT_COLUMN, message.getMessageContent());
+
+            previousMessageCreated = message.getCreated();
         }
 
-        ContentResolver contentResolver = context.getContentResolver();
         contentResolver.bulkInsert(MessageTable.CONTENT_URI, contentValuesArray);
     }
 
@@ -142,17 +147,20 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             long senderProfileId,
             long profileId) {
 
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
         long recipientProfileId =
                 inverse(message.getSenderProfileId(), senderProfileId, profileId);
+        Long previousMessageCreated =
+                QueryUtil.getLastMessageCreated(contentResolver, profileId, senderProfileId);
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MessageTable.SENDER_PROFILE_ID_COLUMN, message.getSenderProfileId());
         contentValues.put(MessageTable.RECIPIENT_PROFILE_ID_COLUMN, recipientProfileId);
         contentValues.put(MessageTable.MESSAGE_INDEX_COLUMN, message.getMessageIndex());
         contentValues.put(MessageTable.IS_RECEIVED_COLUMN, false);
+        contentValues.put(MessageTable.PREVIOUS_MESSAGE_CREATED_COLUMN, previousMessageCreated);
         contentValues.put(MessageTable.MESSAGE_CONTENT_COLUMN, message.getMessageContent());
 
-        ContentResolver contentResolver = getApplicationContext().getContentResolver();
         contentResolver.insert(MessageTable.CONTENT_URI, contentValues);
     }
 

@@ -8,9 +8,11 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,6 +43,9 @@ import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
 import com.playposse.egoeater.util.SmartCursor;
 import com.playposse.egoeater.util.StringUtil;
+
+import java.text.DateFormat;
+import java.util.GregorianCalendar;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -206,6 +211,36 @@ public class MessagingActivity
         noMessagesTextView.setVisibility(VISIBLE);
     }
 
+    @Nullable
+    private static GregorianCalendar isDifferentDay(
+            @Nullable Long previousMessageCreated,
+            Long currentMessageCreated) {
+
+        GregorianCalendar current = new GregorianCalendar();
+        current.setTimeInMillis(currentMessageCreated);
+
+        if (previousMessageCreated == null) {
+            return current;
+        }
+
+        GregorianCalendar previous = new GregorianCalendar();
+        previous.setTimeInMillis(previousMessageCreated);
+
+        if (previous.get(Calendar.DAY_OF_YEAR) != current.get(Calendar.DAY_OF_YEAR)) {
+            return current;
+        } else {
+            return null;
+        }
+    }
+
+    private static boolean isToday(GregorianCalendar calendar) {
+        GregorianCalendar today = new GregorianCalendar();
+
+        return (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR))
+                && (calendar.get(Calendar.MONTH) == today.get(Calendar.MONTH))
+                && (calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH));
+    }
+
     /**
      * A cursor adapter for messages.
      */
@@ -249,6 +284,8 @@ public class MessagingActivity
             SmartCursor smartCursor = new SmartCursor(cursor, MessageTable.COLUMN_NAMES);
             long senderId = smartCursor.getLong(MessageTable.SENDER_PROFILE_ID_COLUMN);
             long recipientId = smartCursor.getLong(MessageTable.RECIPIENT_PROFILE_ID_COLUMN);
+            Long currentCreated = smartCursor.getLong(MessageTable.CREATED_COLUMN);
+            Long previousCreated = smartCursor.getLong(MessageTable.PREVIOUS_MESSAGE_CREATED_COLUMN);
             String message = smartCursor.getString(MessageTable.MESSAGE_CONTENT_COLUMN);
 
             // Look up the profile information.
@@ -265,6 +302,22 @@ public class MessagingActivity
             // Populate the view.
             holder.getMessageTextView().setText(message);
             GlideUtil.loadCircular(holder.getProfileImageView(), senderPhotoUrl);
+
+            // Show date if appropriate.
+            GregorianCalendar currentCalendar = isDifferentDay(previousCreated, currentCreated);
+            if (currentCalendar != null) {
+                holder.getDateTextView().setVisibility(VISIBLE);
+                if (isToday(currentCalendar)) {
+                    holder.getDateTextView().setText(R.string.today_date);
+                } else {
+                    DateFormat dateFormat =
+                            android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                    String currentDateStr = dateFormat.format(currentCalendar.getTime());
+                    holder.getDateTextView().setText(currentDateStr);
+                }
+            } else {
+                holder.getDateTextView().setVisibility(GONE);
+            }
 
             // Add click listener to partner photo.
             if (senderId == partnerId) {
@@ -283,14 +336,20 @@ public class MessagingActivity
      */
     private static class MessagesViewHolder extends RecyclerView.ViewHolder {
 
+        private final TextView dateTextView;
         private final ImageView profileImageView;
         private final TextView messageTextView;
 
         private MessagesViewHolder(View itemView) {
             super(itemView);
 
+            dateTextView = (TextView) itemView.findViewById(R.id.dateTextView);
             profileImageView = (ImageView) itemView.findViewById(R.id.profileImageView);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
+        }
+
+        public TextView getDateTextView() {
+            return dateTextView;
         }
 
         private ImageView getProfileImageView() {

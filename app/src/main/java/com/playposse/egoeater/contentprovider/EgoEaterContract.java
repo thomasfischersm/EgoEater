@@ -254,6 +254,7 @@ public class EgoEaterContract {
         public static final String MESSAGE_INDEX_COLUMN = "message_index";
         public static final String IS_RECEIVED_COLUMN = "is_received";
         public static final String CREATED_COLUMN = "created";
+        public static final String PREVIOUS_MESSAGE_CREATED_COLUMN = "previous_message_created";
         public static final String MESSAGE_CONTENT_COLUMN = "message_content";
 
         public static final String[] COLUMN_NAMES = new String[]{
@@ -263,6 +264,7 @@ public class EgoEaterContract {
                 MESSAGE_INDEX_COLUMN,
                 IS_RECEIVED_COLUMN,
                 CREATED_COLUMN,
+                PREVIOUS_MESSAGE_CREATED_COLUMN,
                 MESSAGE_CONTENT_COLUMN};
 
         static final String SQL_CREATE_TABLE =
@@ -273,6 +275,7 @@ public class EgoEaterContract {
                         + "MESSAGE_INDEX INTEGER, "
                         + "IS_RECEIVED BOOLEAN DEFAULT FALSE, "
                         + "CREATED DATETIME, "
+                        + "PREVIOUS_MESSAGE_CREATED, "
                         + "MESSAGE_CONTENT TEXT)";
     }
 
