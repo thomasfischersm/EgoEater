@@ -18,8 +18,8 @@
         <shape
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="#f2463d" />
-            <size android:height="100dp" android:width="100dp"/>
+            <solid android:color="#f44b3e" />
+            <size android:height="570dp" android:width="570dp"/>
         </shape>
     </item>
     <item
@@ -30,8 +30,8 @@
         <shape
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="#f24f44" />
-            <size android:height="80dp" android:width="80dp"/>
+            <solid android:color="#f45144" />
+            <size android:height="435dp" android:width="435dp"/>
         </shape>
     </item>
     <item
@@ -42,8 +42,8 @@
         <shape
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="#f25449" />
-            <size android:height="50dp" android:width="50dp"/>
+            <solid android:color="#f4574a" />
+            <size android:height="300dp" android:width="300dp"/>
         </shape>
     </item>
 </layer-list>
