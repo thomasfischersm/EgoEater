@@ -17,7 +17,12 @@ public class SaveProfileClientAction extends ApiClientAction<Void> {
     public SaveProfileClientAction(Context context, String profileText, Callback<Void> callback) {
         super(context, callback);
 
-        this.profileText = profileText;
+        // Prevent the call failing due to a missing parameter.
+        if ((profileText == null) || (profileText.equals(""))) {
+            this.profileText = " ";
+        } else {
+            this.profileText = profileText;
+        }
     }
 
     @Override

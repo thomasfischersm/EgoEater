@@ -78,6 +78,10 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
         ProfileParcelable profile = new ProfileParcelable(userBean);
         originalProfileText = profile.getProfileText();
 
+        if (originalProfileText == null) {
+            originalProfileText = "";
+        }
+
         if (profile.getPhotoUrl0() != null) {
             GlideUtil.load(profilePhoto0ImageView, profile.getPhotoUrl0());
         }

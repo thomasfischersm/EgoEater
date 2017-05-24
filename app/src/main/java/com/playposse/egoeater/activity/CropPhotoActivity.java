@@ -143,7 +143,7 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
 
     private void loadImageFromLocalUri(Uri uri) {
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap( // TODO: Capture SecurityException and ask for android.permission.READ_EXTERNAL_STORAGE permision.
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                     getContentResolver(),
                     uri);
             cropImageView.setImageBitmap(bitmap);
