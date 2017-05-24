@@ -14,8 +14,6 @@ public class ProfileBean {
 
     private long userId;
     private String firstName;
-    private String lastName; // TODO: Don't expose last name
-    private String name; // TODO: Don't expose name!
     private String profileText;
     private int distance;
     private String city;
@@ -38,8 +36,6 @@ public class ProfileBean {
 
         userId = egoEaterProfile.getId();
         firstName = egoEaterProfile.getFirstName();
-        lastName = egoEaterProfile.getLastName();
-        name = egoEaterProfile.getName();
         profileText = egoEaterProfile.getProfileText();
         this.distance = (int) rawDistance;
         city = egoEaterProfile.getCity();
@@ -59,14 +55,6 @@ public class ProfileBean {
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getProfileText() {

@@ -77,7 +77,7 @@ public class EgoEaterEndPoint {
     public UserBean uploadProfilePhoto(
             @Named("sessionId") long sessionId,
             @Named("photoIndex") int photoIndex,
-            PhotoBean photoBean) throws BadRequestException {
+            PhotoBean photoBean) throws BadRequestException, IOException {
 
         log.info("got a photo of size " + photoBean.getBytes().length);
         return UploadProfilePhotoServerAction.uploadProfilePhoto(sessionId, photoIndex, photoBean);
@@ -94,7 +94,7 @@ public class EgoEaterEndPoint {
     @ApiMethod(name = "saveProfile")
     public UserBean saveProfile(
             @Named("sessionId") long sessionId,
-            @Named("profileText") String profileText) throws BadRequestException {
+            @Named("profileText") String profileText) throws BadRequestException, IOException {
 
         return SaveProfileServerAction.saveProfile(sessionId, profileText);
     }

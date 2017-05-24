@@ -1,14 +1,20 @@
 package com.playposse.egoeater.firebase;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.firebase.actions.FirebaseClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyMessageReadClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyNewMatchesClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyNewMessageClientAction;
+import com.playposse.egoeater.firebase.actions.NotifyProfileUpdatedClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyUnmatchClientAction;
 import com.playposse.egoeater.util.AnalyticsUtil;
 
@@ -29,8 +35,11 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
     private static final String NOTIFY_NEW_MESSAGE_TYPE = "notifyNewMessage";
     private static final String NOTIFY_MESSAGE_READ_DATA_TYPE = "notifyMessageRead";
     private static final String NOTIFY_UNMATCH_DATA_TYPE = "notifyUnmatch";
+    private static final String NOTIFY_PROFILE_UPDATED_DATA_TYPE = "notifyProfileUpdated";
 
-    public static final String ALL_DEVICES_TOPIC = "allDevices";
+    private static final String ALL_DEVICES_TOPIC = "allDevices";
+    private static final String PROFILE_UPDATE_TOPIC_PREFIX = "/topics/profile-";
+
 
     @Override
     public void onCreate() {
@@ -65,6 +74,9 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
             case NOTIFY_UNMATCH_DATA_TYPE:
                 execute(new NotifyUnmatchClientAction(remoteMessage));
                 break;
+            case NOTIFY_PROFILE_UPDATED_DATA_TYPE:
+                execute(new NotifyProfileUpdatedClientAction(remoteMessage));
+                break;
             default:
                 Log.w(LOG_CAT, "Received an unknown message type from Firebase: "
                         + data.get(TYPE_KEY));
@@ -80,5 +92,45 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
                 getApplication(),
                 firebaseEvent,
                 action.getClass().getSimpleName());
+    }
+
+    public static void subscribeToTopicsOnAppStart(final Context context) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                subscribeToAllDevicesTopic();
+                subscribeToAllProfileUpdates(context);
+            }
+        }).start();
+    }
+
+    public static void subscribeToAllDevicesTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic(ALL_DEVICES_TOPIC);
+    }
+
+    public static void subscribeToProfileUpdates(long profileId) {
+        String topic = PROFILE_UPDATE_TOPIC_PREFIX + Long.toString(profileId);
+        FirebaseMessaging.getInstance().subscribeToTopic(topic);
+    }
+
+    private static void subscribeToAllProfileUpdates(Context context) {
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(
+                ProfileTable.CONTENT_URI,
+                new String[]{ProfileTable.PROFILE_ID_COLUMN},
+                null,
+                null,
+                null);
+
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    long profileId = cursor.getLong(0);
+                    subscribeToProfileUpdates(profileId);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
     }
 }

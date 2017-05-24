@@ -33,7 +33,7 @@ public class GetProfilesByDistanceServerActionApiTest extends AbstractApiTest {
                 + profiles.getItems().size());
 
         for (ProfileBean profileBean : profiles.getItems()) {
-            Log.i(LOG_TAG, "getProfilesByDistance: Got profile for " + profileBean.getName()
+            Log.i(LOG_TAG, "getProfilesByDistance: Got profile for " + profileBean.getFirstName()
                     + " with gender " + profileBean.getGender());
         }
     }

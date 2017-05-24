@@ -9,9 +9,11 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.UserBean;
+import com.playposse.egoeater.backend.firebase.NotifyProfileUpdatedFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.ProfilePhoto;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,13 +32,13 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
     public static final String PNG_FILE_EXTENSION = ".png";
 
     public static UserBean uploadProfilePhoto(long sessionId, int photoIndex, PhotoBean photoBean)
-            throws BadRequestException {
+            throws BadRequestException, IOException {
 
         return uploadProfilePhoto(sessionId, photoIndex, photoBean.getBytes());
     }
 
     public static UserBean uploadProfilePhoto(long sessionId, int photoIndex, byte[] photoContent)
-            throws BadRequestException {
+            throws BadRequestException, IOException {
 
         // Verify input.
         if ((photoIndex < 0) || (photoIndex > 2)) {
@@ -63,6 +65,8 @@ public class UploadProfilePhotoServerAction extends AbstractServerAction {
             profilePhotos.add(profilePhoto);
         }
         ofy().save().entity(egoEaterUser).now();
+
+        NotifyProfileUpdatedFirebaseServerAction.notifyProfileUpdated(egoEaterUser.getId());
 
         return new UserBean(egoEaterUser);
     }

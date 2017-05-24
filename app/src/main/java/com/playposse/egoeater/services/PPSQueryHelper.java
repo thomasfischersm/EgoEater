@@ -14,6 +14,7 @@ import android.util.Log;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.QueryUtil;
+import com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService;
 import com.playposse.egoeater.storage.ProfileParcelable;
 
 import java.util.ArrayList;
@@ -218,6 +219,7 @@ public class PPSQueryHelper {
         for (ProfileBean profile : profiles) {
             ContentValues contentValues = ProfileParcelable.toContentValues(profile);
             contentValuesList.add(contentValues);
+            EgoEaterFirebaseMessagingService.subscribeToProfileUpdates(profile.getUserId());
         }
 
         ContentValues[] contentValuesArray =

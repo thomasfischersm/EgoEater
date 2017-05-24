@@ -51,8 +51,6 @@ public class EgoEaterContract {
         public static final String ID_COLUMN = _ID;
         public static final String PROFILE_ID_COLUMN = "profile_id";
         public static final String FIRST_NAME_COLUMN = "first_name";
-        public static final String LAST_NAME_COLUMN = "last_name";
-        public static final String NAME_COLUMN = "name";
         public static final String PROFILE_TEXT_COLUMN = "profile_text";
         public static final String DISTANCE_COLUMN = "distance";
         public static final String CITY_COLUMN = "city";
@@ -71,8 +69,6 @@ public class EgoEaterContract {
                 ID_COLUMN,
                 PROFILE_ID_COLUMN,
                 FIRST_NAME_COLUMN,
-                LAST_NAME_COLUMN,
-                NAME_COLUMN,
                 PROFILE_TEXT_COLUMN,
                 DISTANCE_COLUMN,
                 CITY_COLUMN,
@@ -92,8 +88,6 @@ public class EgoEaterContract {
                         + "(_ID INTEGER PRIMARY KEY, "
                         + "PROFILE_ID INTEGER, "
                         + "FIRST_NAME TEXT, "
-                        + "LAST_NAME TEXT, "
-                        + "NAME TEXT, "
                         + "PROFILE_TEXT TEXT, "
                         + "DISTANCE INTEGER, "
                         + "CITY TEXT, "

@@ -174,19 +174,19 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             super(message);
         }
 
-        public long getSenderProfileId() {
+        private long getSenderProfileId() {
             return getLong(SENDER_PROFILE_ID_KEY);
         }
 
-        public boolean isMessageIncluded() {
+        private boolean isMessageIncluded() {
             return getBoolean(IS_MESSAGE_INCLUDED_KEY);
         }
 
-        public int getMessageIndex() {
+        private int getMessageIndex() {
             return getInteger(MESSAGE_INDEX_KEY);
         }
 
-        public String getMessageContent() {
+        private String getMessageContent() {
             return data.get(MESSAGE_CONTENT_KEY);
         }
     }

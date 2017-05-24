@@ -7,6 +7,7 @@ android {
         applicationId "com.playposse.egoeater"
         minSdkVersion 16
         targetSdkVersion 25
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -62,6 +63,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.volley:volley:1.0.0'
 }

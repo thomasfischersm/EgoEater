@@ -122,7 +122,7 @@ public final class QueryUtil {
                 winnerContentValues,
                 ProfileTable.PROFILE_ID_COLUMN + " = ?",
                 new String[]{Long.toString(winnerId)});
-        Log.i(LOG_TAG, "saveRating: Updated winner: " + winner.getName() + " before "
+        Log.i(LOG_TAG, "saveRating: Updated winner: " + winner.getFirstName() + " before "
                 + winner.getWins() + " " + winner.getLosses() + " " + winner.getWinsLossesSum()
                 + " after " + winnerContentValues.get(ProfileTable.WINS_COLUMN)
                 + " " + winnerContentValues.get(ProfileTable.WINS_LOSSES_SUM_COLUMN));
@@ -137,7 +137,7 @@ public final class QueryUtil {
                 loserContentValues,
                 ProfileTable.PROFILE_ID_COLUMN + " = ?",
                 new String[]{Long.toString(loserId)});
-        Log.i(LOG_TAG, "saveRating: Updated loser: " + loser.getName() + " before "
+        Log.i(LOG_TAG, "saveRating: Updated loser: " + loser.getFirstName() + " before "
                 + loser.getWins() + " " + loser.getLosses() + " " + loser.getWinsLossesSum()
                 + " after " + loserContentValues.get(ProfileTable.LOSSES_COLUMN)
                 + " " + loserContentValues.get(ProfileTable.WINS_LOSSES_SUM_COLUMN));

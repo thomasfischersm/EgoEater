@@ -3,21 +3,19 @@ package com.playposse.egoeater;
 import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.multidex.MultiDexApplication;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
-import com.playposse.egoeater.storage.EgoEaterPreferences;
-
-import static com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService.ALL_DEVICES_TOPIC;
+import com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService;
 
 /**
  * Implementation of {@link Application} for Bag Zombie app.
  */
-public class EgoEaterApplication extends Application {
+public class EgoEaterApplication extends MultiDexApplication {
 
     private Tracker tracker;
 
@@ -25,12 +23,12 @@ public class EgoEaterApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        FirebaseMessaging.getInstance().subscribeToTopic(ALL_DEVICES_TOPIC);
+        EgoEaterFirebaseMessagingService.subscribeToTopicsOnAppStart(getApplicationContext());
 
         // Trigger Firebase to retrieve a token before it is needed during sign in.
         FirebaseInstanceId.getInstance().getToken();
 
-//        getApplicationContext().deleteDatabase("egoEaterDb");
+        getApplicationContext().deleteDatabase("egoEaterDb");
 //        createTestMatches();
 //        EgoEaterPreferences.reset(getApplicationContext());
     }

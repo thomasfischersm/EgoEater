@@ -22,8 +22,6 @@ public class ProfileParcelable implements Parcelable {
 
     private long profileId;
     private String firstName;
-    private String lastName;
-    private String name;
     private String profileText;
     private double distance;
     private String city;
@@ -54,8 +52,6 @@ public class ProfileParcelable implements Parcelable {
     public ProfileParcelable(SmartCursor smartCursor) {
         profileId = smartCursor.getLong(ProfileTable.PROFILE_ID_COLUMN);
         firstName = smartCursor.getString(ProfileTable.FIRST_NAME_COLUMN);
-        lastName = smartCursor.getString(ProfileTable.LAST_NAME_COLUMN);
-        name = smartCursor.getString(ProfileTable.NAME_COLUMN);
         profileText = smartCursor.getString(ProfileTable.PROFILE_TEXT_COLUMN);
         distance = smartCursor.getDouble(ProfileTable.DISTANCE_COLUMN);
         city = smartCursor.getString(ProfileTable.CITY_COLUMN);
@@ -74,8 +70,6 @@ public class ProfileParcelable implements Parcelable {
     public ProfileParcelable(UserBean userBean) {
         profileId = userBean.getUserId();
         firstName = userBean.getFirstName();
-        lastName = userBean.getLastName();
-        name = userBean.getName();
         profileText = userBean.getProfileText();
         distance = -1;
         city = userBean.getCity();
@@ -102,8 +96,6 @@ public class ProfileParcelable implements Parcelable {
     private ProfileParcelable(Parcel source) {
         profileId = source.readLong();
         firstName = source.readString();
-        lastName = source.readString();
-        name = source.readString();
         profileText = source.readString();
         distance = source.readDouble();
         city = source.readString();
@@ -128,8 +120,6 @@ public class ProfileParcelable implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(profileId);
         dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeString(name);
         dest.writeString(profileText);
         dest.writeDouble(distance);
         dest.writeString(city);
@@ -149,8 +139,6 @@ public class ProfileParcelable implements Parcelable {
         ContentValues contentValues = new ContentValues();
         contentValues.put(EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN, profile.getUserId());
         contentValues.put(EgoEaterContract.ProfileTable.FIRST_NAME_COLUMN, profile.getFirstName());
-        contentValues.put(EgoEaterContract.ProfileTable.LAST_NAME_COLUMN, profile.getLastName());
-        contentValues.put(EgoEaterContract.ProfileTable.NAME_COLUMN, profile.getName());
         contentValues.put(EgoEaterContract.ProfileTable.PROFILE_TEXT_COLUMN, profile.getProfileText());
         contentValues.put(EgoEaterContract.ProfileTable.DISTANCE_COLUMN, profile.getDistance());
         contentValues.put(EgoEaterContract.ProfileTable.CITY_COLUMN, profile.getCity());
@@ -186,14 +174,6 @@ public class ProfileParcelable implements Parcelable {
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getProfileText() {
