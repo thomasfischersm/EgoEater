@@ -176,14 +176,10 @@ public class RatingProfileFragment extends Fragment {
                     Log.e(LOG_TAG, "loadImages: Unexpected mainImageIndex: " + mainImageIndex);
                     break;
             }
-        }
 
-        // Hide extra image slots
-        if (profile.getPhotoUrl1() == null) {
-            photo1CardView.setVisibility(View.GONE);
-        }
-        if (profile.getPhotoUrl2() == null) {
-            photo2CardView.setVisibility(View.GONE);
+            // Hide extra image slots
+            photo1CardView.setVisibility((profile.getPhotoUrl1() != null) ? View.VISIBLE : View.GONE);
+            photo2CardView.setVisibility((profile.getPhotoUrl2() != null) ? View.VISIBLE : View.GONE);
         }
     }
 
