@@ -45,7 +45,7 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
             @Override
             public void onClick(View v) {
                 EgoEaterPreferences.setHasSeenIntroDeck(getApplicationContext(), true);
-                GlobalRouting.onLoginComplete(getApplicationContext());
+                GlobalRouting.onLoginComplete(IntroductionActivity.this);
             }
         });
     }
