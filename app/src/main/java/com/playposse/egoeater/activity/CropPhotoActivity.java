@@ -1,10 +1,14 @@
 package com.playposse.egoeater.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -99,9 +103,19 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
     protected void onResume() {
         super.onResume();
 
+        int readPermission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        boolean hasReadPermissions = (readPermission == PackageManager.PERMISSION_GRANTED);
+
         if (!hasFirstProfilePhoto) {
             // Pick the Facebook profile photo.
             loadFbProfilePhoto();
+        } else if (!hasReadPermissions) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
         } else if (!hasPhotoFromGallery) {
             // Pick a photo from the gallery.
             startActivityToRequestPhoto();
@@ -112,7 +126,7 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data); // TODO: android.os.TransactionTooLargeException: data parcel size 1140516 bytes
 
         if (requestCode == PICK_IMAGE_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -129,7 +143,7 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
 
     private void loadImageFromLocalUri(Uri uri) {
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap( // TODO: Capture SecurityException and ask for android.permission.READ_EXTERNAL_STORAGE permision.
                     getContentResolver(),
                     uri);
             cropImageView.setImageBitmap(bitmap);

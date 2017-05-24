@@ -44,6 +44,8 @@ public class RatingActivity
 
         ratingFragment = new RatingFragment();
         addMainFragment(ratingFragment);
+
+        selectActivityTab(RATING_ACTIVITY_TAB_POSITION);
     }
 
     @Override
