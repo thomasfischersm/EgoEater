@@ -44,7 +44,7 @@
             android:id="@+id/getStartedButton"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="290dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="4dp"
             android:background="@drawable/capsule_button_bg"
