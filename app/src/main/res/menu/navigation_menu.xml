@@ -14,22 +14,18 @@
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="@string/matches_nav" />
     </group>
-    <item android:title="">
-        <menu>
-            <group>
-                <item
-                    android:id="@+id/send_feedback_menu_item"
-                    android:icon="@drawable/ic_feedback_black_24dp"
-                    android:title="@string/send_feedback_nav" />
-                <item
-                    android:id="@+id/about_menu_item"
-                    android:icon="@drawable/ic_info_black_24dp"
-                    android:title="@string/about_nav" />
-                <item
-                    android:id="@+id/logout_menu_item"
-                    android:icon="@drawable/ic_power_settings_new_black_24dp"
-                    android:title="@string/logout_nav" />
-            </group>
-        </menu>
-    </item>
+    <group>
+        <item
+            android:id="@+id/send_feedback_menu_item"
+            android:icon="@drawable/ic_feedback_black_24dp"
+            android:title="@string/send_feedback_nav" />
+        <item
+            android:id="@+id/about_menu_item"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/about_nav" />
+        <item
+            android:id="@+id/logout_menu_item"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="@string/logout_nav" />
+    </group>
 </menu>
