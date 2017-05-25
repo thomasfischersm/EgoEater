@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,9 @@ import com.playposse.egoeater.util.SimpleAlertDialog;
 public class ViewOwnProfileFragment extends Fragment {
 
     private ImageView profilePhoto0ImageView;
+    private CardView photo1CardView;
     private ImageView profilePhoto1ImageView;
+    private CardView photo2CardView;
     private ImageView profilePhoto2ImageView;
     private ImageView emptyPhoto1ImageView;
     private ImageView emptyPhoto2ImageView;
@@ -50,7 +53,9 @@ public class ViewOwnProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_view_own_profile, container, false);
 
         profilePhoto0ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto0ImageView);
+        photo1CardView = (CardView) rootView.findViewById(R.id.photo1CardView);
         profilePhoto1ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto1ImageView);
+        photo2CardView = (CardView) rootView.findViewById(R.id.photo2CardView);
         profilePhoto2ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto2ImageView);
         emptyPhoto1ImageView = (ImageView) rootView.findViewById(R.id.emptyPhoto1ImageView);
         emptyPhoto2ImageView = (ImageView) rootView.findViewById(R.id.emptyPhoto2ImageView);
@@ -63,16 +68,19 @@ public class ViewOwnProfileFragment extends Fragment {
                 0,
                 profilePhoto0ImageView,
                 null,
+                null,
                 EgoEaterPreferences.getProfilePhotoUrl0(getContext()));
         initProfilePhoto(
                 1,
                 profilePhoto1ImageView,
                 emptyPhoto1ImageView,
+                photo1CardView,
                 EgoEaterPreferences.getProfilePhotoUrl1(getContext()));
         initProfilePhoto(
                 2,
                 profilePhoto2ImageView,
                 emptyPhoto2ImageView,
+                photo2CardView,
                 EgoEaterPreferences.getProfilePhotoUrl2(getContext()));
 
         UserBean userBean = EgoEaterPreferences.getUser(getContext());
@@ -96,6 +104,7 @@ public class ViewOwnProfileFragment extends Fragment {
             final int photoIndex,
             ImageView imageView,
             @Nullable ImageView emptyView,
+            @Nullable CardView cardView,
             String photoUrl) {
 
         if (photoUrl != null) {
@@ -104,10 +113,16 @@ public class ViewOwnProfileFragment extends Fragment {
             if (emptyView != null) {
                 emptyView.setVisibility(View.GONE);
             }
+            if (cardView != null) {
+                cardView.setVisibility(View.VISIBLE);
+            }
         } else {
             imageView.setVisibility(View.GONE);
             if (emptyView != null) {
                 emptyView.setVisibility(View.VISIBLE);
+            }
+            if (cardView != null) {
+                cardView.setVisibility(View.GONE);
             }
         }
 
@@ -168,11 +183,13 @@ public class ViewOwnProfileFragment extends Fragment {
         switch (photoIndex) {
             case 1:
                 profilePhoto1ImageView.setImageBitmap(null);
+                photo1CardView.setVisibility(View.GONE);
                 profilePhoto1ImageView.setVisibility(View.GONE);
                 emptyPhoto1ImageView.setVisibility(View.VISIBLE);
                 break;
             case 2:
                 profilePhoto2ImageView.setImageBitmap(null);
+                photo2CardView.setVisibility(View.GONE);
                 profilePhoto2ImageView.setVisibility(View.GONE);
                 emptyPhoto2ImageView.setVisibility(View.VISIBLE);
                 break;

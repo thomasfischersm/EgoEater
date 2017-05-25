@@ -29,7 +29,7 @@ public class EgoEaterApplication extends MultiDexApplication {
         // Trigger Firebase to retrieve a token before it is needed during sign in.
         FirebaseInstanceId.getInstance().getToken();
 
-        getApplicationContext().deleteDatabase("egoEaterDb");
+//        getApplicationContext().deleteDatabase("egoEaterDb");
 //        createTestMatches();
 //        EgoEaterPreferences.reset(getApplicationContext());
     }
