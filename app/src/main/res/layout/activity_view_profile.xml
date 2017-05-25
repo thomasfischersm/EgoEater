@@ -89,8 +89,9 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/thumbnail1CardView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
                         android:scaleType="fitCenter"
@@ -101,7 +102,7 @@
 
                         <ImageView
                             android:id="@+id/profilePhoto1ImageView"
-                            android:layout_width="150dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:contentDescription="@string/profile_photo_content_description" />
@@ -109,7 +110,8 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/thumbnail2CardView"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
@@ -120,12 +122,17 @@
 
                         <ImageView
                             android:id="@+id/profilePhoto2ImageView"
-                            android:layout_width="150dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
                             android:contentDescription="@string/profile_photo_content_description"
                             android:scaleType="fitCenter" />
                     </android.support.v7.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <TextView
