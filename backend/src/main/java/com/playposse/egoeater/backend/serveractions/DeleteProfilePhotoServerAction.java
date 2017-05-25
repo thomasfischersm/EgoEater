@@ -4,7 +4,10 @@ import com.google.api.server.spi.response.BadRequestException;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.playposse.egoeater.backend.beans.UserBean;
+import com.playposse.egoeater.backend.firebase.NotifyProfileUpdatedFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
+
+import java.io.IOException;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -14,7 +17,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 public class DeleteProfilePhotoServerAction extends AbstractServerAction {
 
     public static UserBean deleteProfilePhoto(long sessionId, int photoIndex)
-            throws BadRequestException {
+            throws BadRequestException, IOException {
 
         // Verify input.
         if ((photoIndex < 1) || (photoIndex > 2)) {
@@ -34,6 +37,8 @@ public class DeleteProfilePhotoServerAction extends AbstractServerAction {
         Storage storage = StorageOptions.getDefaultInstance().getService();
         deleteProfilePhoto(photoIndex, egoEaterUser, storage);
         ofy().save().entity(egoEaterUser).now();
+
+        NotifyProfileUpdatedFirebaseServerAction.notifyProfileUpdated(egoEaterUser.getId());
 
         return new UserBean(egoEaterUser);
     }

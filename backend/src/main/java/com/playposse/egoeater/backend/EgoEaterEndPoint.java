@@ -86,7 +86,7 @@ public class EgoEaterEndPoint {
     @ApiMethod(name = "deleteProfilePhoto")
     public UserBean deleteProfilePhoto(
             @Named("sessionId") long sessionId,
-            @Named("photoIndex") int photoIndex) throws BadRequestException {
+            @Named("photoIndex") int photoIndex) throws BadRequestException, IOException {
 
         return DeleteProfilePhotoServerAction.deleteProfilePhoto(sessionId, photoIndex);
     }
