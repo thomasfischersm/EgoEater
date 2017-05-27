@@ -43,9 +43,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/save_button_label"
+                android:textAllCaps="true"
                 android:textColor="@color/primaryTextColorDark" />
         </FrameLayout>
     </android.support.v7.widget.Toolbar>
@@ -159,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_info"
-                    android:textColor="@color/primaryTextColorLight" />
+                    android:textColor="@color/colorPrimary" />
 
                 <EditText
                     android:id="@+id/profileEditText"
@@ -175,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:text="@string/profile_info"
-                    android:textColor="@color/primaryTextColorLight" />
+                    android:textColor="@color/secondaryTextColorLight" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

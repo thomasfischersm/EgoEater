@@ -17,11 +17,6 @@
             android:layout_weight="1"
             tools:layout="@layout/fragment_rating_profile" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/secondaryTextColorLight" />
-
         <fragment
             android:id="@+id/rightProfileFragment"
             android:name="com.playposse.egoeater.activity.RatingProfileFragment"
