@@ -126,7 +126,7 @@
                     android:layout_gravity="bottom|start"
                     android:background="@drawable/scrim_bg"
                     android:orientation="vertical"
-                    android:paddingBottom="14dp"
+                    android:paddingBottom="20dp"
                     android:paddingEnd="16dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
@@ -146,6 +146,8 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:lines="2"
+                        android:layout_marginTop="5dp"
+                        android:lineSpacingExtra="5dp"
                         android:textColor="@color/secondaryScrimTextDark" />
                 </LinearLayout>
             </FrameLayout>
@@ -173,6 +175,7 @@
 
                 <TextView
                     android:id="@+id/characterCountTextView"
+                    style="@style/caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

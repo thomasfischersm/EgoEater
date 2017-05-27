@@ -139,22 +139,24 @@
                     style="@style/caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:text="@string/profile_info"
-                    android:textColor="@color/primaryTextColorLight" />
+                    android:textColor="@color/secondaryTextColorLight" />
 
                 <TextView
                     android:id="@+id/profileTextView"
                     style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
                     android:layout_marginBottom="15dp"
                     android:textColor="@color/secondaryTextColorLight" />
 
                 <View
                     android:layout_width="280dp"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@color/secondaryTextColorLight" />
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -170,13 +172,16 @@
 
                     <TextView
                         android:id="@+id/fuckOffTextView"
-                        style="@style/body1"
+                        style="@style/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:paddingEnd="45dp"
                         android:paddingRight="45dp"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         android:text="@string/fuck_off_label"
+                        android:textAllCaps="true"
                         android:textColor="@color/secondaryTextColorLight" />
 
                     <ImageView
@@ -189,11 +194,14 @@
 
                     <TextView
                         android:id="@+id/reportTextView"
-                        style="@style/body1"
+                        style="@style/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:paddingStart="8dp"
+                        android:paddingLeft="8dp"
                         android:text="@string/report_label"
+                        android:textAllCaps="true"
                         android:textColor="@color/secondaryTextColorLight" />
                 </LinearLayout>
             </LinearLayout>
