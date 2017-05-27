@@ -20,6 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/profile_photo_content_description"
                 android:scaleType="fitCenter" />
 
             <LinearLayout
@@ -44,7 +45,7 @@
                     style="@style/body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryTextColorDark" />
+                    android:textColor="@color/secondaryScrimTextDark" />
             </LinearLayout>
         </FrameLayout>
 
@@ -61,10 +62,12 @@
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/photo1CardView"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:cardPreventCornerOverlap="false"
                     app:cardUseCompatPadding="true"
                     app:contentPaddingBottom="-4dp"
@@ -72,8 +75,8 @@
 
                     <ImageView
                         android:id="@+id/profilePhoto1ImageView"
-                        android:layout_width="105dp"
-                        android:layout_height="75dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/profile_photo_content_description"
                         android:scaleType="fitCenter" />
@@ -81,10 +84,11 @@
 
                 <ImageView
                     android:id="@+id/emptyPhoto1ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/profile_photo_content_description"
                     android:scaleType="fitCenter"
@@ -92,10 +96,12 @@
                     android:visibility="gone" />
 
                 <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/photo2CardView"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     app:cardPreventCornerOverlap="false"
                     app:cardUseCompatPadding="true"
                     app:contentPaddingBottom="-4dp"
@@ -103,22 +109,27 @@
 
                     <ImageView
                         android:id="@+id/profilePhoto2ImageView"
-                        android:layout_width="105dp"
-                        android:layout_height="75dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter" />
                 </android.support.v7.widget.CardView>
 
                 <ImageView
                     android:id="@+id/emptyPhoto2ImageView"
-                    android:layout_width="105dp"
-                    android:layout_height="75dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_photo_slot"
                     android:visibility="gone" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <TextView
@@ -126,14 +137,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_info"
-                android:textColor="@color/primaryTextColorLight" />
+                android:textColor="@color/secondaryTextColorLight" />
 
             <TextView
                 android:id="@+id/profileTextView"
                 style="@style/body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondaryTextColorLight" />
+                android:textColor="@color/primaryTextColorLight" />
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -143,11 +154,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/header"
-            android:tint="@color/primaryTextColorDark"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="-28dp"
             android:elevation="6dp"
-            android:src="@drawable/ic_mode_edit_black_24dp" />
+            android:src="@drawable/ic_mode_edit_black_24dp"
+            android:tint="@color/primaryTextColorDark" />
     </RelativeLayout>
 </ScrollView>

@@ -54,11 +54,11 @@
             android:inputType="textAutoCorrect|textMultiLine"
             android:maxLines="5" />
 
-        <ImageButton
-            android:id="@+id/sendButton"
+        <ImageView
+            android:id="@+id/sendImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/send_button_content_description"
             android:src="@drawable/ic_send_black_24dp" />
     </LinearLayout>

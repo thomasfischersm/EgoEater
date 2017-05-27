@@ -62,7 +62,7 @@
         <item name="android:fontFamily">sans-serif-regular</item>
     </style>
 
-    <style name="button" parent="android:Widget.Holo.Light.Button">
+    <style name="button" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textSize">@dimen/button_textSize</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>

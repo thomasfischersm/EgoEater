@@ -66,7 +66,7 @@ public class MessagingActivity
     private RecyclerView messagesRecyclerView;
     private TextView noMessagesTextView;
     private EditText newMessageEditText;
-    private ImageButton sendButton;
+    private ImageView sendImageView;
 
     private long profileId;
     private long partnerId;
@@ -95,7 +95,7 @@ public class MessagingActivity
         messagesRecyclerView = (RecyclerView) findViewById(R.id.messagesRecyclerView);
         noMessagesTextView = (TextView) findViewById(R.id.noMessagesTextView);
         newMessageEditText = (EditText) findViewById(R.id.newMessageEditText);
-        sendButton = (ImageButton) findViewById(R.id.sendButton);
+        sendImageView = (ImageView) findViewById(R.id.sendImageView);
 
         // Look up information in the intent and preferences.
         profileId = EgoEaterPreferences.getUser(this).getUserId();
@@ -111,7 +111,7 @@ public class MessagingActivity
         new LoadProfileAsyncTask().execute();
 
         // Add click listener to send messages.
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        sendImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();

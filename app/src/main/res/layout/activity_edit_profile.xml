@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/saveTextView"
-                style="@style/body1"
+                style="@style/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:lines="2"
-                        android:textColor="@color/primaryTextColorDark" />
+                        android:textColor="@color/secondaryScrimTextDark" />
                 </LinearLayout>
             </FrameLayout>
 

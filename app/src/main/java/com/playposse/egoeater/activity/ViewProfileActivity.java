@@ -24,6 +24,7 @@ import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class ViewProfileActivity
@@ -175,8 +176,8 @@ public class ViewProfileActivity
         boolean hasPhoto1 = profile.getPhotoUrl1() != null;
         boolean hasPhoto2 = profile.getPhotoUrl2() != null;
         if (hasPhoto1 || hasPhoto2) {
-            thumbnail1CardView.setVisibility(hasPhoto1 ? VISIBLE : GONE);
-            thumbnail2CardView.setVisibility(hasPhoto2 ? VISIBLE : GONE);
+            thumbnail1CardView.setVisibility(hasPhoto1 ? VISIBLE : INVISIBLE);
+            thumbnail2CardView.setVisibility(hasPhoto2 ? VISIBLE : INVISIBLE);
         } else {
             thumbnailLayout.setVisibility(GONE);
         }
