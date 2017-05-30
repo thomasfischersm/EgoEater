@@ -6,10 +6,10 @@
         android:bottomLeftRadius="22dp"
         android:topLeftRadius="22dp"
         android:topRightRadius="22dp" />
-    <solid android:color="@color/disabledTextColorLight" />
+    <solid android:color="#EDEDED" />
     <padding
-        android:bottom="20dp"
-        android:left="22dp"
+        android:bottom="13dp"
+        android:left="20dp"
         android:right="22dp"
-        android:top="20dp" />
+        android:top="13dp" />
 </shape>

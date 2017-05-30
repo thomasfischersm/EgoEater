@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom|start"
         android:background="@drawable/scrim_bg"
         android:orientation="vertical"
@@ -20,18 +20,32 @@
         android:paddingLeft="16dp"
         android:paddingStart="16dp">
 
-        <TextView
-            android:id="@+id/headlineTextView"
-            style="@style/headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColorDark" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="start|bottom"
+            >
 
-        <TextView
-            android:id="@+id/subHeadTextView"
-            style="@style/body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/secondaryScrimTextDark" />
+            <TextView
+                android:id="@+id/headlineTextView"
+                style="@style/headline"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryTextColorDark" />
+
+            <TextView
+                android:id="@+id/subHeadTextView"
+                style="@style/body1"
+                android:layout_weight="0"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondaryScrimTextDark" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </FrameLayout>

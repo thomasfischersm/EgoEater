@@ -15,7 +15,7 @@
         android:contentDescription="@string/rate_users_graphic_content_description" />
 
     <LinearLayout
-        android:layout_width="260dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"

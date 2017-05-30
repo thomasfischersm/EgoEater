@@ -10,12 +10,13 @@
     <color name="primaryTextColorLight">#232323</color>
     <color name="secondaryTextColorLight">#777777</color>
     <color name="disabledTextColorLight">#BFBFBF</color>
+    <color name="divider">#E2E2E2</color>
     <color name="backgroundLight">#FAFAFA</color>
 
     <!-- Dark theme -->
     <color name="primaryTextColorDark">#FFFFFF</color>
     <color name="secondaryTextColorDark">#B3FFFFFF</color>
-    <color name="secondaryScrimTextDark">#B3FFFFFF</color>
+    <color name="secondaryScrimTextDark">#CCFFFFFF</color>
     <color name="disabledTextColorDark">#4DFFFFFF</color>
     <color name="backgroundDark">#232323</color>
 </resources>
