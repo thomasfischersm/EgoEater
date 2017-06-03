@@ -42,7 +42,7 @@
     <string name="select_profile_photo_chooser">Select profile photo</string>
 
     <!-- ViewOwnProfileActivity -->
-    <string name="age_separator">, </string>
+    <string name="age_separator">,\u0020</string>
     <string name="profile_edit_text_hint">Enter a short profile here.</string>
     <string name="profile_info">Profile Info</string>
 
