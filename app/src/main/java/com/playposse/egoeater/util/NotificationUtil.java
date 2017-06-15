@@ -38,7 +38,13 @@ public final class NotificationUtil {
                 R.drawable.ic_noun_882380_cc,
                 R.string.unmatch_notification_title,
                 R.string.unmatch_notification_text,
-                MatchesActivity.class);
+                MatchesActivity.class),
+        NotLoggedIn(
+                5,
+                R.drawable.ic_favorite_border_black_24dp,
+                R.string.not_logged_in_notification_title,
+                R.string.not_logged_in_notification_text,
+                MatchesActivity.class),
         ;
         private int notificationId;
         private int iconId;

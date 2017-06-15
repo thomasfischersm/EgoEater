@@ -271,6 +271,8 @@
     </string>
     <string name="unmatch_notification_title">Unmatched</string>
     <string name="unmatch_notification_text">You have been unmatched.</string>
+    <string name="not_logged_in_notification_title">Matches were recalculated!</string>
+    <string name="not_logged_in_notification_text">Please, log in to check if there is someone new for you!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

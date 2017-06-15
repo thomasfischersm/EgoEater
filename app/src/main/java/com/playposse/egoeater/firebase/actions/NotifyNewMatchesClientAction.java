@@ -19,6 +19,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchAndProfileQu
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.MatchParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.DatabaseDumper;
@@ -43,6 +44,7 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
         onlyLostMatches, // The user only lost matches.
         noChange, // The list of matches hasn't changed.
         noMatchYet, // Special case: The user doesn't have any matches yet.
+        notLoggedIn, // Special case: The user is not logged in. We couldn't determine if there are new matches.
         error,
     }
 
@@ -63,6 +65,10 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
     }
 
     private UpdateState processNewMatches() {
+        if (EgoEaterPreferences.getSessionId(getApplicationContext()) == null) {
+            return UpdateState.notLoggedIn;
+        }
+
         try {
             List<MatchParcelable> existingMatches = getExistingMatches();
             List<MatchBean> newMatches = getNewMatches();
@@ -233,6 +239,9 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
                 break;
             case onlyLostMatches:
                 NotificationUtil.sendNotification(context, NotificationType.OnlyLostMatches);
+                break;
+            case notLoggedIn:
+                NotificationUtil.sendNotification(context, NotificationType.NotLoggedIn);
                 break;
             case noChange:
                 // Ignore.
