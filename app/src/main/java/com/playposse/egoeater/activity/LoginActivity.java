@@ -18,6 +18,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
@@ -26,6 +27,7 @@ import com.playposse.egoeater.clientactions.SignInClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,10 +37,14 @@ public class LoginActivity extends ParentActivity {
 
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
+    private static final String HAS_SHOWN_SESSION_EXPIRATION_DIALOG =
+            "hasShownSessionExpirationDialog";
+
     private TextView logoTextView;
     private Button loginButton;
 
     private CallbackManager callbackManager;
+    private boolean hasShownSessionExpirationDialog = false;
 
     @Override
     protected int getLayoutResId() {
@@ -96,6 +102,8 @@ public class LoginActivity extends ParentActivity {
         // Load the external font for the logo.
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nexa_bold.otf");
         logoTextView.setTypeface(typeface);
+
+        showSessionExpiredDialogIfRequested(savedInstanceState);
     }
 
     @Override
@@ -144,5 +152,27 @@ public class LoginActivity extends ParentActivity {
         byte[] sha = outputStream.toByteArray();
         String base64 = Base64.encodeToString(sha, 0);
         Log.i(LOG_TAG, shaStr + " -> " + base64);
+    }
+
+    private void showSessionExpiredDialogIfRequested(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            hasShownSessionExpirationDialog =
+                    savedInstanceState.getBoolean(HAS_SHOWN_SESSION_EXPIRATION_DIALOG, false);
+        }
+
+        if (ExtraConstants.hasSessionExpired(getIntent()) && !hasShownSessionExpirationDialog) {
+            SimpleAlertDialog.alert(
+                    this,
+                    R.string.session_expired_dialog_title,
+                    R.string.session_expired_dialog_message);
+            hasShownSessionExpirationDialog = true;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(HAS_SHOWN_SESSION_EXPIRATION_DIALOG, hasShownSessionExpirationDialog);
     }
 }

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -57,6 +58,8 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        redirectToLoginIfSessionExpired();
 
         int activityResId = getLayoutResId();
         if (activityResId != 0) {
@@ -289,6 +292,18 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
             // Ignore.
+        }
+    }
+
+    private void redirectToLoginIfSessionExpired() {
+        if (this instanceof LoginActivity) {
+            // Skip this check for the login activity.
+            return;
+        }
+
+        if (EgoEaterPreferences.getSessionId(this) == null) {
+            finish();
+            GlobalRouting.onSessionExpired(this);
         }
     }
 }

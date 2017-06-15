@@ -26,6 +26,9 @@ public abstract class ApiClientAction<D> {
 
     private static final String LOG_TAG = ApiClientAction.class.getSimpleName();
 
+    private static final String MISSING_SESSION_EXCEPTION_MESSAGE =
+            "Required parameter sessionId must be specified.";
+
     @Nullable
     private static EgoEaterApi api;
 
@@ -136,6 +139,13 @@ public abstract class ApiClientAction<D> {
                 exception = ex;
                 Log.e(LOG_TAG, "Failed to execute: " + this.getClass().getName(), ex);
                 GlobalRouting.onCloudError(context);
+            } catch (NullPointerException ex) {
+                if (MISSING_SESSION_EXCEPTION_MESSAGE.equals(ex.getMessage())) {
+                    // The session has expired. Re-direct to the login page gracefully.
+                    GlobalRouting.onSessionExpired(getContext());
+                } else {
+                    throw ex;
+                }
             }
 
             return null;

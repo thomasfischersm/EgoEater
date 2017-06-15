@@ -65,4 +65,13 @@ public class GlobalRouting {
         EgoEaterPreferences.clearSessionId(context);
         context.startActivity(new Intent(context, LoginActivity.class));
     }
+
+    /**
+     * Routes the user to the login activity when the session has expired or is missing. The login
+     * activity is started with a special intent parameter to show the user a dialog to explain the
+     * session expiration.
+     */
+    public static void onSessionExpired(Context context) {
+        ExtraConstants.startLoginActivityWithSessionExpirationDialog(context);
+    }
 }

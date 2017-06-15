@@ -205,6 +205,13 @@
     <string name="report_abuse_dialog_note_hint">Describe the abuse issue.</string>
     <string name="report_abuse_dialog_button">Report</string>
 
+    <!-- Session expired dialog on the login activity -->
+    <string name="session_expired_dialog_title">Session expired</string>
+    <string name="session_expired_dialog_message">
+        Your session has expired. Please, log in again.\n\n
+        Note: Your session will automatically expire when you sign into a different device.
+    </string>
+
     <!-- Options menu -->
     <string name="profile_menu">Profile</string>
     <string name="rating_menu">Rating</string>
