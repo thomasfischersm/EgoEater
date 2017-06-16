@@ -42,8 +42,8 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
     private static final String PHOTO_INDEX_FIELD_NAME = "photoIndex";
 
     private final long sessionId;
-    private final int photoIndex;
 
+    private int photoIndex;
     private Bitmap bitmap;
     private byte[] fileContent;
 
@@ -79,6 +79,8 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
 
     @Override
     protected String executeAsync() throws IOException {
+        adjustPhotoIndexIfNecessary();
+
         if (bitmap == null) {
             bitmap = BitmapFactory.decodeByteArray(fileContent, 0, fileContent.length);
         }
@@ -111,6 +113,19 @@ public class UploadProfilePhotoToServletClientAction extends ApiClientAction<Str
         EgoEaterPreferences.setHasFirstProfilePhoto(getContext(), true);
 
         return photoUrl;
+    }
+
+    /**
+     * Checks if the photoIndex needs to be adjusted down.
+     */
+    private void adjustPhotoIndexIfNecessary() {
+        if ((photoIndex == 2) && (EgoEaterPreferences.getProfilePhotoUrl1(getContext()) == null)) {
+            photoIndex = 1;
+        }
+
+        if ((photoIndex == 1) && (EgoEaterPreferences.getProfilePhotoUrl0(getContext()) == null)) {
+            photoIndex = 0;
+        }
     }
 
     private static void storePhotoUrlInPreferences(
