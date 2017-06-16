@@ -12,4 +12,8 @@
     <dimen name="menu_textSize">14sp</dimen>
     <dimen name="caption_textSize">12sp</dimen>
     <dimen name="button_textSize">14sp</dimen>
+
+    <!-- Drag and drop dimensions -->
+    <dimen name="drag_shadow_width">120dp</dimen>
+    <dimen name="drag_shadow_height">80dp</dimen>
 </resources>

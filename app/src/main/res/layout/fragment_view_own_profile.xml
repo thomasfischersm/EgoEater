@@ -31,32 +31,30 @@
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
                 android:paddingLeft="16dp"
-                android:paddingStart="16dp"
-                >
+                android:paddingStart="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="start|bottom"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/headlineTextView"
-                        android:layout_weight="0"
                         style="@style/headline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0"
                         android:textColor="@color/primaryTextColorDark" />
 
                     <TextView
                         android:id="@+id/subHeadTextView"
                         style="@style/body1"
-                        android:layout_weight="0"
-                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0"
                         android:textColor="@color/secondaryScrimTextDark" />
 
                 </LinearLayout>
@@ -135,25 +133,26 @@
                     android:id="@+id/emptyPhoto2ImageView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_photo_slot"
                     android:visibility="gone" />
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <TextView
                 style="@style/caption"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/profile_info"
                 android:textColor="@color/secondaryTextColorLight" />
 

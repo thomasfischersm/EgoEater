@@ -19,4 +19,8 @@
     <color name="secondaryScrimTextDark">#CCFFFFFF</color>
     <color name="disabledTextColorDark">#4DFFFFFF</color>
     <color name="backgroundDark">#232323</color>
+
+    <!-- Drag and drop colors -->
+    <color name="availableDragTargetTint">#80558B2F</color>
+    <color name="activeDragTargetTint">#80AED581</color>
 </resources>

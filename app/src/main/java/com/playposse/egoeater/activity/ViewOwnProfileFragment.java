@@ -1,11 +1,15 @@
 package com.playposse.egoeater.activity;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +21,22 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.DeleteProfilePhotoClientAction;
+import com.playposse.egoeater.clientactions.SwapProfilePhotosClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
+import com.playposse.egoeater.util.PhotoDragShadowBuilder;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.SimpleAlertDialog;
+
+import static android.view.View.*;
 
 /**
  * A {@link Fragment} that lets the user edit his/her profile.
  */
 public class ViewOwnProfileFragment extends Fragment {
+
+    private static final String LOG_TAG = ViewOwnProfileFragment.class.getSimpleName();
 
     private ImageView profilePhoto0ImageView;
     private CardView photo1CardView;
@@ -64,6 +74,26 @@ public class ViewOwnProfileFragment extends Fragment {
         profileTextView = (TextView) rootView.findViewById(R.id.profileTextView);
         editButton = (FloatingActionButton) rootView.findViewById(R.id.editButton);
 
+        refreshPhotos();
+
+        UserBean userBean = EgoEaterPreferences.getUser(getContext());
+        ProfileParcelable profile = new ProfileParcelable(userBean);
+        headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
+        subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(getContext(), profile));
+        profileTextView.setText(profile.getProfileText());
+
+        editButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+                startActivity(new Intent(getContext(), EditProfileActivity.class));
+            }
+        });
+
+        return rootView;
+    }
+
+    private void refreshPhotos() {
         initProfilePhoto(
                 0,
                 profilePhoto0ImageView,
@@ -82,22 +112,6 @@ public class ViewOwnProfileFragment extends Fragment {
                 emptyPhoto2ImageView,
                 photo2CardView,
                 EgoEaterPreferences.getProfilePhotoUrl2(getContext()));
-
-        UserBean userBean = EgoEaterPreferences.getUser(getContext());
-        ProfileParcelable profile = new ProfileParcelable(userBean);
-        headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
-        subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(getContext(), profile));
-        profileTextView.setText(profile.getProfileText());
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-                startActivity(new Intent(getContext(), EditProfileActivity.class));
-            }
-        });
-
-        return rootView;
     }
 
     private void initProfilePhoto(
@@ -109,24 +123,24 @@ public class ViewOwnProfileFragment extends Fragment {
 
         if (photoUrl != null) {
             GlideUtil.load(imageView, photoUrl);
-            imageView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(VISIBLE);
             if (emptyView != null) {
-                emptyView.setVisibility(View.GONE);
+                emptyView.setVisibility(GONE);
             }
             if (cardView != null) {
-                cardView.setVisibility(View.VISIBLE);
+                cardView.setVisibility(VISIBLE);
             }
         } else {
-            imageView.setVisibility(View.GONE);
+            imageView.setVisibility(GONE);
             if (emptyView != null) {
-                emptyView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(VISIBLE);
             }
             if (cardView != null) {
-                cardView.setVisibility(View.GONE);
+                cardView.setVisibility(GONE);
             }
         }
 
-        View.OnClickListener clickListenerToDialog = new View.OnClickListener() {
+        OnClickListener clickListenerToDialog = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 SimpleAlertDialog.confirmPhoto(
@@ -144,7 +158,7 @@ public class ViewOwnProfileFragment extends Fragment {
                         });
             }
         };
-        View.OnClickListener clickListenerToPickActivity = new View.OnClickListener() {
+        OnClickListener clickListenerToPickActivity = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickPhoto(photoIndex);
@@ -158,6 +172,8 @@ public class ViewOwnProfileFragment extends Fragment {
         if (emptyView != null) {
             emptyView.setOnClickListener(clickListenerToPickActivity);
         }
+
+        enableDragAndDrop(imageView, emptyView, photoIndex);
     }
 
     private void pickPhoto(int photoIndex) {
@@ -197,16 +213,129 @@ public class ViewOwnProfileFragment extends Fragment {
         switch (photoIndex) {
             case 1:
                 profilePhoto1ImageView.setImageBitmap(null);
-                photo1CardView.setVisibility(View.GONE);
-                profilePhoto1ImageView.setVisibility(View.GONE);
-                emptyPhoto1ImageView.setVisibility(View.VISIBLE);
+                photo1CardView.setVisibility(GONE);
+                profilePhoto1ImageView.setVisibility(GONE);
+                emptyPhoto1ImageView.setVisibility(VISIBLE);
                 break;
             case 2:
                 profilePhoto2ImageView.setImageBitmap(null);
-                photo2CardView.setVisibility(View.GONE);
-                profilePhoto2ImageView.setVisibility(View.GONE);
-                emptyPhoto2ImageView.setVisibility(View.VISIBLE);
+                photo2CardView.setVisibility(GONE);
+                profilePhoto2ImageView.setVisibility(GONE);
+                emptyPhoto2ImageView.setVisibility(VISIBLE);
                 break;
+        }
+    }
+
+    private void enableDragAndDrop(
+            final ImageView imageView,
+            @Nullable ImageView emptyPhotoImageView,
+            final int photoIndex) {
+
+        // Set long click listener to start drags on the particular ImageView.
+        imageView.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                ClipData clipData = ClipData.newPlainText(null, Integer.toString(photoIndex));
+
+                view.startDrag(
+                        clipData,
+                        new PhotoDragShadowBuilder(imageView),
+                        null,
+                        0);
+                return true;
+            }
+        });
+
+        // Set listener to receive drag drops on the particular view.
+        PhotoDragListener dragListener = new PhotoDragListener(imageView, photoIndex);
+        imageView.setOnDragListener(dragListener);
+        if (emptyPhotoImageView != null) {
+            emptyPhotoImageView.setOnDragListener(dragListener);
+        }
+    }
+
+    /**
+     * Swaps photos that are in two different slots.
+     */
+    private void swapPhotos(int sourcePhotoIndex, int destPhotoIndex) {
+        // Ignore if the same source and destination.
+        if (sourcePhotoIndex == destPhotoIndex) {
+            return;
+        }
+
+        ((ActivityWithProgressDialog) getActivity()).showLoadingProgress();
+
+        new SwapProfilePhotosClientAction(
+                getContext(),
+                sourcePhotoIndex,
+                destPhotoIndex,
+                new ApiClientAction.Callback<UserBean>() {
+                    @Override
+                    public void onResult(UserBean data) {
+                        onSwapPhotosComplete();
+                    }
+                }).execute();
+    }
+
+    private void onSwapPhotosComplete() {
+        // Rebuild the data in the UI.
+        refreshPhotos();
+
+        ((ActivityWithProgressDialog) getActivity()).dismissLoadingProgress();
+    }
+
+    private int getAvailableDragTargetTint() {
+        return ContextCompat.getColor(getContext(), R.color.availableDragTargetTint);
+    }
+
+    private int getActiveDragTargetTint() {
+        return ContextCompat.getColor(getContext(), R.color.activeDragTargetTint);
+    }
+
+    /**
+     * A {@link OnDragListener} that listens for photos to be dropped into different slots.
+     */
+    private class PhotoDragListener implements OnDragListener {
+        private final ImageView imageView;
+        private final int photoIndex;
+
+        private PhotoDragListener(ImageView imageView, int photoIndex) {
+            this.imageView = imageView;
+            this.photoIndex = photoIndex;
+        }
+
+        @Override
+        public boolean onDrag(View view, DragEvent event) {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    imageView.setColorFilter(getAvailableDragTargetTint());
+                    imageView.invalidate();
+                    return true;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    imageView.setColorFilter(getActiveDragTargetTint());
+                    imageView.invalidate();
+                    return true;
+                case DragEvent.ACTION_DRAG_LOCATION:
+                    // Ignore the event
+                    return true;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    imageView.setColorFilter(getAvailableDragTargetTint());
+                    imageView.invalidate();
+                    return true;
+                case DragEvent.ACTION_DROP:
+                    String photoIndexStr =
+                            event.getClipData().getItemAt(0).getText().toString();
+                    int sourcePhotoIndex = Integer.parseInt(photoIndexStr);
+                    swapPhotos(sourcePhotoIndex, photoIndex);
+                    return true;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    imageView.clearColorFilter();
+                    imageView.invalidate();
+                    return true;
+                default:
+                    Log.e(LOG_TAG, "onDrag: Unknown drag action type: " + event.getAction());
+                    return false;
+            }
         }
     }
 }

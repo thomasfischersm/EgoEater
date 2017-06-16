@@ -30,6 +30,7 @@ import com.playposse.egoeater.backend.serveractions.ReportRankingServerAction;
 import com.playposse.egoeater.backend.serveractions.SaveProfileServerAction;
 import com.playposse.egoeater.backend.serveractions.SendMessageServerAction;
 import com.playposse.egoeater.backend.serveractions.SignInServerAction;
+import com.playposse.egoeater.backend.serveractions.SwapProfilePhotosServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateFirebaseTokenServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateLocationServerAction;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
@@ -211,5 +212,17 @@ public class EgoEaterEndPoint {
             @Named("note") String note) throws BadRequestException {
 
         ReportAbuseServerAction.reportAbuse(sessionId, abuserId, note);
+    }
+
+    @ApiMethod(name = "swapProfilePhotos")
+    public UserBean swapProfilePhotos(
+            @Named("sessionId") long sessionId,
+            @Named("sourcePhotoId") int sourcePhotoId,
+            @Named("destinationPhotoId") int destinationPhotoId) throws BadRequestException {
+
+        return SwapProfilePhotosServerAction.swapProfilePhotos(
+                sessionId,
+                sourcePhotoId,
+                destinationPhotoId);
     }
 }
