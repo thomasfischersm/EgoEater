@@ -180,6 +180,20 @@ public class ViewOwnProfileFragment extends Fragment {
     }
 
     private void clearPhotoSlot(int photoIndex) {
+        if ((photoIndex == 1) && (EgoEaterPreferences.getProfilePhotoUrl1(getContext()) != null)) {
+            // We actually need to clear the next photo slot and move the photo from slot 2 to slot
+            // 1.
+            initProfilePhoto(
+                    1,
+                    profilePhoto1ImageView,
+                    emptyPhoto1ImageView,
+                    photo1CardView,
+                    EgoEaterPreferences.getProfilePhotoUrl1(getContext()));
+
+            photoIndex = 2;
+        }
+
+
         switch (photoIndex) {
             case 1:
                 profilePhoto1ImageView.setImageBitmap(null);
