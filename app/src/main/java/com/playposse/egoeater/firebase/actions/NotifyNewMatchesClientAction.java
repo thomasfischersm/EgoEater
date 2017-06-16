@@ -79,14 +79,15 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
             List<MatchBean> updateMatches = new ArrayList<>();
 
             for (MatchBean matchBean : newMatches) {
-                int existingMatchIndex = getIndex(existingMatches, matchBean.getMatchId());
+                Long partnerId = matchBean.getOtherProfileBean().getUserId();
+                int existingMatchIndex = getIndexByPartnerId(existingMatches, partnerId);
                 if (existingMatchIndex >= 0) {
                     updateMatches.add(matchBean);
                 } else {
                     insertMatches.add(matchBean);
                 }
 
-                int deleteMatchIndex = getIndex(deleteMatches, matchBean.getMatchId());
+                int deleteMatchIndex = getIndexByPartnerId(deleteMatches, partnerId);
                 if (deleteMatchIndex >= 0) {
                     deleteMatches.remove(deleteMatchIndex);
                 }
@@ -102,6 +103,12 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
             boolean hasInserts = insertMatches.size() > 0;
             boolean hasUpdates = updateMatches.size() > 0;
             boolean hasDeletes = deleteMatches.size() > 0;
+
+            Log.i(LOG_TAG, "processNewMatches: hasExisting: " + hasExisting);
+            Log.i(LOG_TAG, "processNewMatches: hasInserts: " + hasInserts);
+            Log.i(LOG_TAG, "processNewMatches: hasUpdates: " + hasUpdates);
+            Log.i(LOG_TAG, "processNewMatches: hasDeletes: " + hasDeletes);
+
             if (hasDeletes && !hasInserts && !hasUpdates) {
                 return UpdateState.onlyLostMatches;
             } else if (hasDeletes || hasInserts || hasUpdates) {
@@ -117,10 +124,20 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
         }
     }
 
-    private int getIndex(List<MatchParcelable> existingMatches, long matchId) {
+    private int getIndexByMatchId(List<MatchParcelable> existingMatches, long matchId) {
         for (int i = 0; i < existingMatches.size(); i++) {
             MatchParcelable matchParcelable = existingMatches.get(i);
             if (matchParcelable.getCloudMatchId() == matchId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getIndexByPartnerId(List<MatchParcelable> existingMatches, long partnerId) {
+        for (int i = 0; i < existingMatches.size(); i++) {
+            MatchParcelable matchParcelable = existingMatches.get(i);
+            if (matchParcelable.getOtherProfile().getProfileId() == partnerId) {
                 return i;
             }
         }
