@@ -16,6 +16,7 @@ public class NotifyNewMessageFirebaseServerAction extends FirebaseServerAction {
     private static final String IS_MESSAGE_INCLUDED_KEY = "isMessageIncluded";
     private static final String MESSAGE_INDEX_KEY = "messageIndex";
     private static final String MESSAGE_CONTENT_KEY = "messageContent";
+    private static final String MESSAGE_CREATED = "messageCreated";
 
     public static String notifyNewMessage(
             long senderProfileId,
@@ -34,6 +35,7 @@ public class NotifyNewMessageFirebaseServerAction extends FirebaseServerAction {
         rootNode.put(IS_MESSAGE_INCLUDED_KEY, isMessageIncluded);
         rootNode.put(MESSAGE_INDEX_KEY, messageIndex);
         rootNode.put(MESSAGE_CONTENT_KEY, message);
+        rootNode.put(MESSAGE_CREATED, System.currentTimeMillis());
 
         return sendMessageToDevice(
                 recipientFirebaseToken,

@@ -32,6 +32,7 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
     private static final String IS_MESSAGE_INCLUDED_KEY = "isMessageIncluded";
     private static final String MESSAGE_INDEX_KEY = "messageIndex";
     private static final String MESSAGE_CONTENT_KEY = "messageContent";
+    private static final String MESSAGE_CREATED = "messageCreated";
 
     public NotifyNewMessageClientAction(RemoteMessage remoteMessage) {
         super(remoteMessage);
@@ -158,6 +159,7 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
         contentValues.put(MessageTable.RECIPIENT_PROFILE_ID_COLUMN, recipientProfileId);
         contentValues.put(MessageTable.MESSAGE_INDEX_COLUMN, message.getMessageIndex());
         contentValues.put(MessageTable.IS_RECEIVED_COLUMN, false);
+        contentValues.put(MessageTable.CREATED_COLUMN, message.getMessageCreated());
         contentValues.put(MessageTable.PREVIOUS_MESSAGE_CREATED_COLUMN, previousMessageCreated);
         contentValues.put(MessageTable.MESSAGE_CONTENT_COLUMN, message.getMessageContent());
 
@@ -188,6 +190,10 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
 
         private String getMessageContent() {
             return data.get(MESSAGE_CONTENT_KEY);
+        }
+
+        private long getMessageCreated() {
+            return getLong(MESSAGE_CREATED);
         }
     }
 }
