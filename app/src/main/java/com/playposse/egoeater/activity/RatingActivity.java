@@ -14,6 +14,10 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.DatabaseDumper;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 
 /**
@@ -38,6 +42,8 @@ public class RatingActivity
     private ProfileParcelable leftProfile;
     private ProfileParcelable rightProfile;
 
+    private ExecutorService threadPoolExecutor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +61,9 @@ public class RatingActivity
         leftRatingProfileFragment = ratingFragment.getLeftRatingProfileFragment();
         rightRatingProfileFragment = ratingFragment.getRightRatingProfileFragment();
 
-        new LoadPairingAsyncTask().execute();
+        threadPoolExecutor = Executors.newCachedThreadPool();
+
+        new LoadPairingAsyncTask().executeOnExecutor(Executors.newCachedThreadPool());
     }
 
     @Override
@@ -65,6 +73,16 @@ public class RatingActivity
         pairing = savedInstanceState.getParcelable(PAIRING_KEY);
         leftProfile = savedInstanceState.getParcelable(LEFT_PROFILE_KEY);
         rightProfile = savedInstanceState.getParcelable(RIGHT_PROFILE_KEY);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (threadPoolExecutor != null) {
+            threadPoolExecutor.shutdown();
+            threadPoolExecutor = null;
+        }
     }
 
     @Override
@@ -83,7 +101,13 @@ public class RatingActivity
             return;
         }
 
-        new StoreRatingAsyncTask(pairing, leftProfile, rightProfile, profile).execute();
+        if (threadPoolExecutor != null) {
+            new StoreRatingAsyncTask(pairing, leftProfile, rightProfile, profile)
+                    .executeOnExecutor(threadPoolExecutor);
+        } else {
+            new StoreRatingAsyncTask(pairing, leftProfile, rightProfile, profile)
+                    .execute();
+        }
     }
 
     /**
@@ -167,7 +191,11 @@ public class RatingActivity
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    new LoadPairingAsyncTask().execute();
+                    if (threadPoolExecutor != null) {
+                        new LoadPairingAsyncTask().executeOnExecutor(threadPoolExecutor);
+                    } else {
+                        new LoadPairingAsyncTask().execute();
+                    }
                 }
             });
 
@@ -175,7 +203,6 @@ public class RatingActivity
 
             DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
 
-            Log.i(LOG_TAG, "Done StoreRatingAsyncTask");
             return null;
         }
     }
