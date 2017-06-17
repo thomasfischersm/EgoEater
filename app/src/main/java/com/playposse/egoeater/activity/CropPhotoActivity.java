@@ -143,12 +143,13 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
 
     private void loadImageFromLocalUri(Uri uri) {
         try {
+            Log.i(LOG_TAG, "loadImageFromLocalUri: Got image from gallery: " + uri);
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                     getContentResolver(),
                     uri);
             cropImageView.setImageBitmap(bitmap);
         } catch (IOException ex) {
-            Log.e(LOG_TAG, "onActivityResult: Failed to get photo from gallery.", ex);
+            Log.e(LOG_TAG, "loadImageFromLocalUri: Failed to get photo from gallery.", ex);
         }
     }
 
