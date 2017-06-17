@@ -226,7 +226,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     }
 
     private void showAppInfo() {
-        TapTargetView.showFor(this,                 // `this` is an Activity
+        TapTargetView.showFor(this,
                 TapTarget.forView(
                         infoImageView,
                         getString(R.string.app_info_title),

@@ -157,6 +157,13 @@
     </string>
 
 
+    <!-- No connectivity activity -->
+    <string name="no_connectivity_heading">The network is unavailable.</string>
+    <string name="no_connectivity_message">
+        To prevent errors, the Ego Eater will continue when network access is restored.
+    </string>
+
+
     <!-- Navigation drawer -->
     <string name="drawer_open">Navigation drawer opens</string>
     <string name="drawer_close">Navigation drawer closes</string>

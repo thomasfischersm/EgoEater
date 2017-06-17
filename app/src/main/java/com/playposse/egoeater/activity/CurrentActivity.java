@@ -1,6 +1,7 @@
 package com.playposse.egoeater.activity;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 
 /**
  * Static place to remember what the current activity is. Android doesn't support knowing the
@@ -18,6 +19,7 @@ public final class CurrentActivity {
     private CurrentActivity() {
     }
 
+    @Nullable
     public static Class<? extends Activity> getCurrentActivity() {
         return currentActivity;
     }

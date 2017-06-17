@@ -2,7 +2,9 @@ package com.playposse.egoeater;
 
 import android.app.Application;
 import android.content.ContentValues;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -12,6 +14,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.NetworkConnectivityBroadcastReceiver;
 
 /**
  * Implementation of {@link Application} for Bag Zombie app.
@@ -19,6 +22,7 @@ import com.playposse.egoeater.storage.EgoEaterPreferences;
 public class EgoEaterApplication extends MultiDexApplication {
 
     private Tracker tracker;
+    private NetworkConnectivityBroadcastReceiver connectivityBroadcastReceiver;
 
     @Override
     public void onCreate() {
@@ -29,9 +33,23 @@ public class EgoEaterApplication extends MultiDexApplication {
         // Trigger Firebase to retrieve a token before it is needed during sign in.
         FirebaseInstanceId.getInstance().getToken();
 
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        connectivityBroadcastReceiver = new NetworkConnectivityBroadcastReceiver();
+        registerReceiver(connectivityBroadcastReceiver, filter);
+
 //        getApplicationContext().deleteDatabase("egoEaterDb");
 //        createTestMatches();
 //        EgoEaterPreferences.reset(getApplicationContext());
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        if (connectivityBroadcastReceiver != null) {
+            unregisterReceiver(connectivityBroadcastReceiver);
+            connectivityBroadcastReceiver = null;
+        }
     }
 
     /**

@@ -74,4 +74,8 @@ public class GlobalRouting {
     public static void onSessionExpired(Context context) {
         ExtraConstants.startLoginActivityWithSessionExpirationDialog(context);
     }
+
+    public static void onNetworkAvailable(Context context) {
+        onStartup(context);
+    }
 }

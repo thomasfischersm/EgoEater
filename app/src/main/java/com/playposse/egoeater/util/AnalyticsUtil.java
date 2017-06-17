@@ -16,6 +16,8 @@ public class AnalyticsUtil {
         ratingEvent,
         fuckOffEvent,
         reportAbuseEvent,
+        connectivityLost,
+        connectivityRestored,
     }
 
     public static void reportEvent(
