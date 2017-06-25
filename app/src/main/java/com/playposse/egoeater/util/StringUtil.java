@@ -2,6 +2,8 @@ package com.playposse.egoeater.util;
 
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * Helpful methods for dealing with strings.
  */
@@ -23,5 +25,16 @@ public class StringUtil {
             }
         }
         return count;
+    }
+
+    public static String concat(List<String> strs, String separator) {
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            if (sb.length() > 0) {
+                sb.append(separator);
+            }
+            sb.append(str);
+        }
+        return sb.toString();
     }
 }

@@ -1,10 +1,8 @@
 package com.playposse.egoeater.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -48,6 +46,7 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
     private TextView subHeadTextView;
     private EditText profileEditText;
     private TextView characterCountTextView;
+    private TextView profileBuilderLink;
 
     private String originalProfileText;
 
@@ -71,6 +70,7 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
         subHeadTextView = (TextView) findViewById(R.id.subHeadTextView);
         profileEditText = (EditText) findViewById(R.id.profileEditText);
         characterCountTextView = (TextView) findViewById(R.id.characterCountTextView);
+        profileBuilderLink = (TextView) findViewById(R.id.profileBuilderLink);
 
         setSupportActionBar(toolbar);
 
@@ -132,6 +132,14 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
                             },
                             150);
                 }
+            }
+        });
+
+        profileBuilderLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), ProfileBuilderActivity.class));
             }
         });
     }

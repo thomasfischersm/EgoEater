@@ -128,9 +128,18 @@
         <activity
             android:name=".activity.EditProfileActivity"
             android:parentActivityName=".activity.ViewOwnProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.IntroductionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.IntroductionActivity" />
-        <activity android:name=".activity.NoConnectivityActivity"></activity>
+        <activity
+            android:name=".activity.NoConnectivityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ProfileBuilderActivity"
+            android:parentActivityName=".activity.EditProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

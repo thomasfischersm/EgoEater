@@ -50,6 +50,7 @@
     <string name="edit_profile_activity_title">Edit profile text</string>
     <string name="discard_button_content_description">Discard button</string>
     <string name="characterCounter">%1$d / %2$d</string>
+    <string name="profile_builder_link">Try the profile builder!</string>
 
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>
@@ -162,6 +163,29 @@
     <string name="no_connectivity_message">
         To prevent errors, the Ego Eater will continue when network access is restored.
     </string>
+
+
+    <!-- Profile Builder -->
+    <string name="profile_builder_title">Profile builder</string>
+    <string name="discard_button_button">Discard</string>
+    <string name="continue_button_button">Continue</string>
+    <string name="replace_profile_button">Replace profile</string>
+    <string name="profile_builder_intro_message">
+        Having a short, concise profile with the most important information up front is critical.\n
+        \n
+        Users absorb profiles quickly to create a gut reaction and vote.\n
+        \n
+        This profile builder will help you create a profile snapshot like this:\n
+        Santa Monica, CA - Wants long-term / engineer / no kids / yogi, adventurer / must like
+        dogs\n
+        \n
+        Remember, only an about Twitter sizes message will show up during profile comparison. Of
+        course, you can add more text for actual matches.
+    </string>
+    <string name="profile_text_preview_title">Preview</string>
+    <string name="profile_text_reorder_title">Reorder using drag\'n\'drop</string>
+    <string name="profile_options_separator">,\u0020</string>
+    <string name="profile_questions_separator">\u0020/\u0020</string>
 
 
     <!-- Navigation drawer -->
@@ -287,7 +311,4 @@
     <string name="unmatch_notification_text">You have been unmatched.</string>
     <string name="not_logged_in_notification_title">Matches were recalculated!</string>
     <string name="not_logged_in_notification_text">Please, log in to check if there is someone new for you!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

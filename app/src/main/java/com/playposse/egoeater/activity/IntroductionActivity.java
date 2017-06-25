@@ -89,7 +89,7 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
 
         @Override
         public void onPageSelected(int position) {
-            String screenName = IntroductionActivity.class.getSimpleName();
+            String screenName = IntroductionActivity.class.getSimpleName() + position;
             AnalyticsUtil.reportScreenName(getApplication(), screenName);
         }
 

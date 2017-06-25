@@ -20,9 +20,9 @@
 
             <ImageView
                 android:id="@+id/discardImageView"
-                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:contentDescription="@string/discard_button_content_description"
                 android:src="@drawable/ic_close_black_24dp"
                 android:tint="@color/primaryTextColorDark" />
@@ -43,9 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/save_button_label"
                 android:textAllCaps="true"
                 android:textColor="@color/primaryTextColorDark" />
@@ -144,10 +144,10 @@
                         style="@style/body1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="2"
                         android:layout_marginTop="5dp"
+                        android:ellipsize="end"
                         android:lineSpacingExtra="5dp"
+                        android:lines="2"
                         android:textColor="@color/secondaryScrimTextDark" />
                 </LinearLayout>
             </FrameLayout>
@@ -181,6 +181,14 @@
                     android:layout_gravity="end"
                     android:text="@string/profile_info"
                     android:textColor="@color/secondaryTextColorLight" />
+
+                <TextView
+                    android:id="@+id/profileBuilderLink"
+                    style="@style/caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_builder_link"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

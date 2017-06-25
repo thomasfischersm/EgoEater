@@ -1,0 +1,117 @@
+{"questions": [
+  {
+    "prompt": "What are your relationship goals?",
+    "options": [
+      "want marriage",
+      "want long-term",
+      "want short-term",
+      "want hookup",
+      "want platonic",
+      "want poly"
+  ]},
+  {
+    "prompt": "What are your deal breakers?",
+    "options": [
+      "must have college degree",
+      "must be tall",
+      "must like pets",
+      "must want kids",
+      "must not want kids",
+      "must be active",
+      "must be Democrat",
+      "must be Republican",
+      "must be religious",
+      "must NOT be religious"
+    ]
+  },
+  {
+    "prompt": "What are your stats?",
+    "options": [
+      "doctor",
+      "lawyer",
+      "yoga teacher",
+      "fitness professional",
+      "health professional",
+      "teacher",
+      "scientist",
+      "engineer",
+      "sales professional",
+      "artist",
+      "high school graduate",
+      "college graduate",
+      "master degree",
+      "PhD",
+      "never married",
+      "no kids",
+      "got kid(s)",
+      "tall",
+      "White",
+      "Asian",
+      "Latin",
+      "Black",
+      "Mixed ethnic background"
+    ]
+  },
+  {
+    "prompt": "What is your lifestyle?",
+    "options": [
+      "gym rat",
+      "bookworm",
+      "movie lover",
+      "political debater",
+      "couch potato",
+      "nature buff",
+      "family oriented",
+      "art lover",
+      "traveller",
+      "foodie",
+      "DIY lover",
+      "city slicker",
+      "country person",
+      "dreamer",
+      "vegan",
+      "meat eater"
+    ]
+  },
+  {
+    "prompt": "What is your personality?",
+    "options": [
+      "fun",
+      "funny",
+      "adventurous",
+      "intellectual",
+      "open minded",
+      "great listener",
+      "easy going",
+      "ambitious",
+      "colorful",
+      "curious"
+    ]
+  },
+  {
+    "prompt": "What are your hobbies?",
+    "options": [
+      "Yoga",
+      "Working out",
+      "Running",
+      "Swimming",
+      "Hiking",
+      "Rock climbing",
+      "Eating out",
+      "Concerts",
+      "Dancing",
+      "Watching to movies",
+      "Sleeping",
+      "Traveling",
+      "Snowboarding",
+      "Skiing",
+      "Surfing",
+      "Golfing",
+      "Fishing",
+      "Reading",
+      "Visit Museums",
+      "Cooking",
+      "Writing"
+    ]
+  }
+]}
