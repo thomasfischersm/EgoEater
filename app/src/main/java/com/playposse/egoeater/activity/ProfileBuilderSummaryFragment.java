@@ -2,6 +2,7 @@ package com.playposse.egoeater.activity;
 
 import android.content.ClipData;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -178,7 +179,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 ClipData data = ClipData.newPlainText("", Integer.toString(position));
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(textView);
+                View.DragShadowBuilder shadowBuilder = new TextViewDragShadowBuilder(textView);
                 textView.startDrag(data, shadowBuilder, textView, 0);
                 return true;
             } else {
@@ -226,6 +227,25 @@ public class ProfileBuilderSummaryFragment extends Fragment {
                     return false;
             }
 
+        }
+    }
+
+    /**
+     * A {@link View.DragShadowBuilder} that Sets the touch point to the left side of the dragged
+     * view. The text doesn't fill the whole width. So, if a user touches pretty far left, the text
+     * may show up left of the screen. The user will not know which text he or she is dragging.
+     */
+    private class TextViewDragShadowBuilder extends View.DragShadowBuilder {
+
+        private TextViewDragShadowBuilder(View view) {
+            super(view);
+        }
+
+        @Override
+        public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+            super.onProvideShadowMetrics(outShadowSize, outShadowTouchPoint);
+
+            outShadowTouchPoint.set(0, outShadowSize.y / 2);
         }
     }
 }
