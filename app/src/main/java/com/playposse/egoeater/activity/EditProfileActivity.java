@@ -30,7 +30,7 @@ import com.playposse.egoeater.util.SimpleAlertDialog;
  */
 public class EditProfileActivity extends ActivityWithProgressDialog {
 
-    private static final int MAX_PROFILE_CHARACTER_COUNT = 500;
+    public static final int MAX_PROFILE_CHARACTER_COUNT = 500;
 
     private Toolbar toolbar;
     private ImageView discardImageView;
