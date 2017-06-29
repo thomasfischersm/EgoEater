@@ -1,6 +1,6 @@
 {"questions": [
   {
-    "prompt": "What are your relationship goals?",
+    "prompt": "What are your relationship goals? (Optional)",
     "options": [
       "want marriage",
       "want long-term",
@@ -10,7 +10,7 @@
       "want poly"
   ]},
   {
-    "prompt": "What are your deal breakers?",
+    "prompt": "What are your deal breakers? (Optional)",
     "options": [
       "must have college degree",
       "must be tall",
@@ -25,7 +25,7 @@
     ]
   },
   {
-    "prompt": "What are your stats?",
+    "prompt": "What are your stats? (Optional)",
     "options": [
       "doctor",
       "lawyer",
@@ -53,7 +53,7 @@
     ]
   },
   {
-    "prompt": "What is your lifestyle?",
+    "prompt": "What is your lifestyle? (Optional)",
     "options": [
       "gym rat",
       "bookworm",
@@ -74,7 +74,7 @@
     ]
   },
   {
-    "prompt": "What is your personality?",
+    "prompt": "What is your personality? (Optional)",
     "options": [
       "fun",
       "funny",
@@ -89,7 +89,7 @@
     ]
   },
   {
-    "prompt": "What are your hobbies?",
+    "prompt": "What are your hobbies? (Optional)",
     "options": [
       "Yoga",
       "Working out",

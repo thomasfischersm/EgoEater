@@ -186,6 +186,7 @@
     <string name="profile_text_reorder_title">Reorder using drag\'n\'drop</string>
     <string name="profile_options_separator">,\u0020</string>
     <string name="profile_questions_separator">\u0020/\u0020</string>
+    <string name="other_option_label">Other:\u0020</string>
 
 
     <!-- Navigation drawer -->

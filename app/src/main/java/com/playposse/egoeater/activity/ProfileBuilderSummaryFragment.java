@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.data.profilewizard.ProfileAnswer;
+import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.ProfileFormatter;
@@ -36,7 +38,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
     private TextView subHeadTextView;
     private RecyclerView summaryRecyclerView;
 
-    private ProfileBuilderFragment.SummaryStateHolder summaryStateHolder;
+    private ProfileUserData profileUserData;
     private ProfileSummaryAdapter profileSummaryAdapter;
 
     public ProfileBuilderSummaryFragment() {
@@ -60,8 +62,8 @@ public class ProfileBuilderSummaryFragment extends Fragment {
 //        Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof ProfileBuilderFragment) {
             ProfileBuilderFragment profileBuilderFragment = (ProfileBuilderFragment) parentFragment;
-            summaryStateHolder = profileBuilderFragment.getSummaryStateHolder();
-            summaryStateHolder.init();
+            profileUserData = profileBuilderFragment.getProfileUserData();
+            profileUserData.refreshOrder();
         }
 
         summaryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,8 +79,8 @@ public class ProfileBuilderSummaryFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if (isVisibleToUser && (summaryStateHolder != null) && (profileSummaryAdapter != null)) {
-            summaryStateHolder.init();
+        if (isVisibleToUser && (profileUserData != null) && (profileSummaryAdapter != null)) {
+            profileUserData.refreshOrder();
             profileSummaryAdapter.notifyDataSetChanged();
         }
     }
@@ -89,7 +91,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
      */
     private void refreshPreview() {
         UserBean userBean = EgoEaterPreferences.getUser(getContext());
-        userBean.setProfileText(summaryStateHolder.getProfileString());
+        userBean.setProfileText(profileUserData.toString(getContext()));
         ProfileParcelable profile = new ProfileParcelable(userBean);
 
         headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
@@ -98,7 +100,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
     }
 
     private void moveSummary(int fromPosition, int toPosition) {
-        summaryStateHolder.move(fromPosition, toPosition);
+        profileUserData.move(fromPosition, toPosition);
         profileSummaryAdapter.notifyDataSetChanged();
         refreshPreview();
     }
@@ -127,7 +129,9 @@ public class ProfileBuilderSummaryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ProfileSummaryViewHolder holder, int position) {
-            String optionsStr = summaryStateHolder.getSelectedOptionsString(position);
+            Integer questionIndex = profileUserData.getAnswersOrder().get(position);
+            ProfileAnswer answer = profileUserData.getAnswer(questionIndex);
+            String optionsStr = answer.toString(getContext());
             TextView textView = holder.getTextView();
             textView.setText(optionsStr);
 
@@ -138,7 +142,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return summaryStateHolder.getCount();
+            return profileUserData.getAnswersOrder().size();
         }
 
         class ProfileSummaryViewHolder extends RecyclerView.ViewHolder {

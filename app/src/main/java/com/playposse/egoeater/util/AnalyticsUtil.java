@@ -18,6 +18,7 @@ public class AnalyticsUtil {
         reportAbuseEvent,
         connectivityLost,
         connectivityRestored,
+        enteredOtherProfileOption,
     }
 
     public static void reportEvent(

@@ -1,6 +1,9 @@
 package com.playposse.egoeater.util;
 
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -36,5 +39,30 @@ public class StringUtil {
             sb.append(str);
         }
         return sb.toString();
+    }
+
+    @javax.annotation.Nullable
+    public static String getCleanString(TextView textView) {
+        return getCleanString(textView.getText().toString());
+    }
+
+    @javax.annotation.Nullable
+    public static String getCleanString(EditText editText) {
+        return getCleanString(editText.getText());
+    }
+
+    @javax.annotation.Nullable
+    public static String getCleanString(Editable editable) {
+        return getCleanString(editable.toString());
+    }
+
+    @javax.annotation.Nullable
+    public static String getCleanString(String str) {
+        if (str == null) {
+            return null;
+        } else {
+            str = str.trim();
+            return (str.length() > 0) ? str : null;
+        }
     }
 }

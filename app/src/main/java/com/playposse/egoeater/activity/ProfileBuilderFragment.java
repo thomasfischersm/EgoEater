@@ -1,5 +1,6 @@
 package com.playposse.egoeater.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,25 +14,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
-import com.playposse.egoeater.data.profilewizard.ProfileQuestion;
+import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.SimpleAlertDialog;
-import com.playposse.egoeater.util.StringUtil;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * A {@link Fragment} that shows multiple fragments, that the user can swipe through, to build a
@@ -41,22 +37,12 @@ public class ProfileBuilderFragment extends Fragment {
 
     private static final String LOG_TAG = ProfileBuilderFragment.class.getSimpleName();
 
-    /**
-     * A {@link Map} between the question index and the selected options.
-     */
-    private final Map<Integer, List<String>> selectedOptionsMap = new HashMap<>();
-
-    /**
-     * A {@link List} that holds the question indexes in the order that the user wants to present
-     * them in the final profile text.
-     */
-    private final List<Integer> orderedQuestionIndexList = new ArrayList<>();
-
     private ViewPager profileBuilderViewPager;
     private Button discardButton;
     private Button continueButton;
     private Button saveButton;
 
+    private ProfileUserData profileUserData;
     private ProfileBuilderConfiguration profileBuilderConfiguration;
     private ProfilePagerAdapter profilePagerAdapter;
 
@@ -70,15 +56,13 @@ public class ProfileBuilderFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            selectedOptionsMap.clear();
-            for (String key : savedInstanceState.keySet()) {
-                try {
-                    int questionIndex = Integer.parseInt(key);
-                    selectedOptionsMap.put(questionIndex, savedInstanceState.getStringArrayList(key));
-                } catch (NumberFormatException ex) {
-                    // Ignore keys that aren't numbers.
-                }
+            try {
+                profileUserData = ProfileUserData.read(savedInstanceState);
+            } catch (JSONException ex) {
+                Log.e(LOG_TAG, "onCreate: Failed to read profile builder user data.", ex);
             }
+        } else {
+            profileUserData = new ProfileUserData();
         }
     }
 
@@ -141,7 +125,7 @@ public class ProfileBuilderFragment extends Fragment {
 
     private void onSaveClicked() {
         ((ActivityWithProgressDialog) getActivity()).showLoadingProgress();
-        String profileStr = getSummaryStateHolder().getProfileString();
+        String profileStr = profileUserData.toString(getContext());
         new SaveProfileClientAction(
                 getContext(),
                 profileStr,
@@ -154,6 +138,9 @@ public class ProfileBuilderFragment extends Fragment {
     }
 
     private void onSaveComplete() {
+        // Record any other fields with Google Analytics.
+        profileUserData.recordAnalytics(getActivity());
+
         ((ActivityWithProgressDialog) getActivity()).dismissLoadingProgress();
         startEditProfileActivity();
     }
@@ -167,19 +154,19 @@ public class ProfileBuilderFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        for (Entry<Integer, List<String>> entry : selectedOptionsMap.entrySet()) {
-            String key = entry.getKey().toString();
-            ArrayList<String> value = new ArrayList<>(entry.getValue());
-            outState.putStringArrayList(key, value);
+        try {
+            profileUserData.save(outState);
+        } catch (JSONException ex) {
+            Log.e(LOG_TAG, "onSaveInstanceState: Failed to save profile builder user data.", ex);
         }
     }
 
-    public QuestionStateHolder getQuestionStateHolder(int questionIndex) {
-        return new QuestionStateHolder(questionIndex);
+    public ProfileUserData getProfileUserData() {
+        return profileUserData;
     }
 
-    public SummaryStateHolder getSummaryStateHolder() {
-        return new SummaryStateHolder();
+    public ProfileBuilderConfiguration getProfileBuilderConfiguration() {
+        return profileBuilderConfiguration;
     }
 
     private void refreshButtonVisibility(int position) {
@@ -272,6 +259,12 @@ public class ProfileBuilderFragment extends Fragment {
         @Override
         public void onPageSelected(int position) {
             refreshButtonVisibility(position);
+
+            // Hide keyboard in case it was opened to edit an other option.
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getActivity().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(discardButton.getWindowToken(), 0);
         }
 
         @Override
@@ -299,86 +292,6 @@ public class ProfileBuilderFragment extends Fragment {
         @Override
         public void onPageScrollStateChanged(int state) {
             // Nothing to do.
-        }
-    }
-
-    /**
-     * A callback for child {@link Fragment}s to retrieve question configurations and store
-     * question responses.
-     */
-    class QuestionStateHolder {
-
-        private final int questionIndex;
-
-        private QuestionStateHolder(int questionIndex) {
-            this.questionIndex = questionIndex;
-        }
-
-        ProfileQuestion getQuestion() {
-            return profileBuilderConfiguration.getQuestions().get(questionIndex);
-        }
-
-        List<String> getSelectedOptions() {
-            if (!selectedOptionsMap.containsKey(questionIndex)) {
-                selectedOptionsMap.put(questionIndex, new ArrayList<String>());
-            }
-            return selectedOptionsMap.get(questionIndex);
-        }
-
-        public void saveAnswer(List<String> selectedOptions) {
-            selectedOptionsMap.put(questionIndex, selectedOptions);
-        }
-    }
-
-    /**
-     * A callback for child {@link Fragment}s to access all selected options and to re-order them.
-     */
-    class SummaryStateHolder {
-
-        void init() {
-            orderedQuestionIndexList.clear();
-            for (int i = 0; i < profileBuilderConfiguration.getQuestions().size(); i++) {
-                if ((selectedOptionsMap.containsKey(i)) && (selectedOptionsMap.get(i).size() > 0)) {
-                    orderedQuestionIndexList.add(i);
-                }
-            }
-        }
-
-        List<String> getSelectedOptions(int positionIndex) {
-            int questionIndex = orderedQuestionIndexList.get(positionIndex);
-            return selectedOptionsMap.get(questionIndex);
-        }
-
-        String getSelectedOptionsString(int positionIndex) {
-            String optionsSeparator = getString(R.string.profile_options_separator);
-            List<String> selectedOptions = getSelectedOptions(positionIndex);
-            if ((selectedOptions != null) && (selectedOptions.size()> 0)) {
-                return StringUtil.concat(selectedOptions, optionsSeparator);
-            } else {
-                return null;
-            }
-        }
-
-        String getProfileString() {
-            String questionsSeparator = getString(R.string.profile_questions_separator);
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < getCount(); i++) {
-                if (sb.length() > 0) {
-                    sb.append(questionsSeparator);
-                }
-                sb.append(getSelectedOptionsString(i));
-            }
-            return sb.toString();
-        }
-
-        int getCount() {
-            return orderedQuestionIndexList.size();
-        }
-
-        void move(int fromPositionIndex, int toPositionIndex) {
-            int questionIndex = orderedQuestionIndexList.remove(fromPositionIndex);
-            orderedQuestionIndexList.add(toPositionIndex, questionIndex);
         }
     }
 }
