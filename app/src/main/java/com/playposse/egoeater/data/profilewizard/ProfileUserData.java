@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.playposse.egoeater.activity.EditProfileActivity.MAX_PROFILE_CHARACTER_COUNT;
+
 /**
  * Stores the profile data that a user enters to generate the profile text.
  */
@@ -126,7 +128,7 @@ public class ProfileUserData {
 
     private String toJson() throws JSONException {
         JSONArray answersArray = new JSONArray();
-        for (ProfileAnswer answer: questionIndexToAnswerMap.values()) {
+        for (ProfileAnswer answer : questionIndexToAnswerMap.values()) {
             answersArray.put(answer.toJson());
         }
 
@@ -162,7 +164,13 @@ public class ProfileUserData {
 
             sb.append(answerStr);
         }
-        return sb.toString();
+
+        // Enforce max character count
+        if (sb.length() <= MAX_PROFILE_CHARACTER_COUNT) {
+            return sb.toString();
+        } else {
+            return sb.substring(0, MAX_PROFILE_CHARACTER_COUNT);
+        }
     }
 
     public void recordAnalytics(Activity activity) {
