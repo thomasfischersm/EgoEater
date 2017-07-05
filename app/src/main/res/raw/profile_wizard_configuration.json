@@ -49,7 +49,7 @@
       "Asian",
       "Latin",
       "Black",
-      "Mixed ethnic background"
+      "Mixed ethnicity"
     ]
   },
   {
@@ -63,29 +63,51 @@
       "nature buff",
       "family oriented",
       "art lover",
-      "traveller",
+      "traveler",
       "foodie",
       "DIY lover",
       "city slicker",
       "country person",
       "dreamer",
       "vegan",
-      "meat eater"
+      "meat eater",
+      "bathtub and wine devotee"
     ]
   },
   {
     "prompt": "What is your personality? (Optional)",
     "options": [
-      "fun",
-      "funny",
+      "laugh at myself",
+      "love to laugh",
+      "great sense of humor",
       "adventurous",
       "intellectual",
-      "open minded",
+      "open-minded",
       "great listener",
       "easy going",
       "ambitious",
       "colorful",
-      "curious"
+      "curious",
+      "old soul",
+      "child at heart",
+      "hard to pin down",
+      "from a family with big personalities",
+      "quirky like Zooey",
+      "social butterfly",
+      "life of the party",
+      "good listener",
+      "spontaneous",
+      "educated",
+      "passionate",
+      "dare devil",
+      "neat freak",
+      "hard worker",
+      "complete package",
+      "sarcastic",
+      "tell it like it is",
+      "driven",
+      "down to earth",
+      "youngest child"
     ]
   },
   {
@@ -97,10 +119,11 @@
       "Swimming",
       "Hiking",
       "Rock climbing",
-      "Eating out",
+      "Dining out",
       "Concerts",
       "Dancing",
-      "Watching to movies",
+      "Watching movies",
+      "Watching sports",
       "Sleeping",
       "Traveling",
       "Snowboarding",
@@ -109,9 +132,39 @@
       "Golfing",
       "Fishing",
       "Reading",
-      "Visit Museums",
+      "Visit museums",
       "Cooking",
-      "Writing"
+      "Writing",
+      "Coffee and conversation",
+      "Volunteer",
+      "Cat",
+      "Dog",
+      "Sky diving"
+    ]
+  },
+  {
+    "prompt": "What kind of substance use do you enjoy? (Optional)",
+    "options": [
+      "Sugar is the devil",
+      "Social drinker",
+      "Smoker",
+      "Cigar aficionado",
+      "420 friendly",
+      "Happy psychedelics",
+      "Whiskey lover",
+      "Home brewer"
+    ]
+  },
+  {
+    "prompt": "What are you attracted to? (Optional)",
+    "options": [
+      "sapiosexual",
+      "family and god",
+      "career oriented",
+      "love volunteering",
+      "live like you mean it",
+      "polymath",
+      "healthy lifestyle"
     ]
   }
 ]}
