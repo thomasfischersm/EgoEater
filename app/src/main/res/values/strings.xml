@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ego Eater</string>
+    <string name="app_name">Beeline</string>
     <string name="facebook_app_id">1840650169531250</string>
 
     <!-- Login activity -->
@@ -61,7 +61,7 @@
         No more pairings are available
     </string>
     <string name="no_more_pairings_message">
-        Ego Eater has only recently launched. Your support is
+        Beeline has only recently launched. Your support is
         critical for starting profiles.\n\nUnfortunately, there are no more users in your area to
         vote on. Please, stick with us.\n\nWe\'ll notify you if someone new signs up in your area.
     </string>
@@ -71,7 +71,7 @@
     <string name="no_matches_heading">You do not have any matches</string>
     <string name="no_matches_message">
         Rank more profiles to find people who like you back.\n\n
-        Ego Eater is a brand new app. There may not be any profiles left to rank. Be a hero and
+        Beeline is a brand new app. There may not be any profiles left to rank. Be a hero and
         stick with us to start this.
     </string>
     <string name="match_lock_icon_title">Match lock explanation</string>
@@ -110,9 +110,9 @@
     <string name="report_button_content_description">A button to report a user</string>
 
     <!-- About Activity -->
-    <string name="about_app_heading">About Ego Eater App</string>
+    <string name="about_app_heading">About Beeline App</string>
     <string name="about_app_body_text">
-        Ego Eater is an Android app for online dating. You compare two profiles and pick the one you
+        Beeline is an Android app for online dating. You compare two profiles and pick the one you
         like better. With enough comparison picks, the app will create a ranking from whom you like
         the most to least.\n
         \n
@@ -136,7 +136,7 @@
         \n
         When we get to a big  city with a big dating pool, we suddenly see the creme of the crop.
         Some of us won\'t settle for anything less and keep chasing unattainable "gods" and
-        "goddesses." Ego Eater slots you with only a small number of matches that you actually have
+        "goddesses." Beeline slots you with only a small number of matches that you actually have
         a chance with.\n
         \n
         Avoid wasting time by sending hundreds of messages to girls that never message you back.
@@ -146,7 +146,7 @@
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
         I love to hear from you. Send your feedback to
-        <a href="mailto:thomas@playposse.com?subject=Feedback About Ego Eater Android App">thomas@playposse.com</a>.
+        <a href="mailto:thomas@playposse.com?subject=Feedback About Beeline Android App">thomas@playposse.com</a>.
     </string>
     <string name="about_credits_heading">Credits and copyright</string>
     <string name="about_credits_body_text">
@@ -161,7 +161,7 @@
     <!-- No connectivity activity -->
     <string name="no_connectivity_heading">The network is unavailable.</string>
     <string name="no_connectivity_message">
-        To prevent errors, the Ego Eater will continue when network access is restored.
+        To prevent errors, the Beeline will continue when network access is restored.
     </string>
 
 
@@ -256,7 +256,7 @@
     <string name="feedback_dialog_title">Send us feedback!</string>
     <string name="feedback_dialog_message">An e-mail will be opened where you can send me feedback.</string>
     <string name="feedback_email_recipient">thomas@playposse.com</string>
-    <string name="feedback_email_subject">Feedback About Ego Eater Android App</string>
+    <string name="feedback_email_subject">Feedback About Beeline Android App</string>
     <string name="feedback_email_body">Please, send me your feedback. I care about hearing from you.</string>
 
     <!-- Common text -->
@@ -283,18 +283,18 @@
 
     <!-- Notifications -->
     <string name="updated_matches_notification_title">
-        Woohoo! Ego Eater has new matches for you!
+        Woohoo! Beeline has new matches for you!
     </string>
     <string name="updated_matches_notification_text">
-        Once a day, Ego Eater runs an algorithm to pair the hotties of the world. The algorithm just
+        Once a day, Beeline runs an algorithm to pair the hotties of the world. The algorithm just
         finished running. You\'ve got some hot peeps to check out!
     </string>
 
     <string name="only_lost_matches_notification_title">
-        You\'ve had some matches in Ego Eater. Now they are gone.
+        You\'ve had some matches in Beeline. Now they are gone.
     </string>
     <string name="only_lost_matches_notification_text">
-        Once a day, Ego Eater runs an algorithm to pair the hotties of the world. The last person
+        Once a day, Beeline runs an algorithm to pair the hotties of the world. The last person
         just lost interest in you. But fret not. There are many things you can do. (1) Rank more
         users to find the special one who\'s into you. (2) Text your matches faster. Once you sent
         the first message, the match becomes locked. (3) This is the hardest yet most satisfying.

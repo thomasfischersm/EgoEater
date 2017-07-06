@@ -52,7 +52,7 @@ public class ReportAbuseServerAction extends AbstractServerAction {
             msg.setFrom(new InternetAddress("thomaspaniolo@gmail.com", "Thomas Fischer"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress("thomaspaniolo@gmail.com", "Thomas Fischer"));
-            msg.setSubject("An Ego Eater User Reported An Abuse");
+            msg.setSubject("An Beeline User Reported An Abuse");
             String cleanNote = note.replaceAll("<", ""); // Prevent simple attacks.
             msg.setText("Details: " + cleanNote);
             Transport.send(msg);
