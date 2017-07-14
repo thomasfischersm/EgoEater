@@ -3,8 +3,8 @@
     <string name="facebook_app_id">1840650169531250</string>
 
     <!-- Login activity -->
-    <string name="app_title">ego•eater</string>
-    <string name="tag_line">Realistic and effective dating</string>
+    <string name="app_title">beeline</string>
+    <string name="tag_line">Direct path to highest mutual attraction.</string>
     <string name="login_button_label">Log in with Facebook</string>
     <string name="background_content_description">Background texture</string>
 
@@ -43,11 +43,11 @@
 
     <!-- ViewOwnProfileActivity -->
     <string name="age_separator">,\u0020</string>
-    <string name="profile_edit_text_hint">Enter a short profile here.</string>
     <string name="profile_info">Profile Info</string>
 
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile text</string>
+    <string name="profile_edit_text_hint">Enter a short profile here.</string>
     <string name="discard_button_content_description">Discard button</string>
     <string name="characterCounter">%1$d / %2$d</string>
     <string name="profile_builder_link">Try the profile builder!</string>
@@ -244,14 +244,6 @@
         Note: Your session will automatically expire when you sign into a different device.
     </string>
 
-    <!-- Options menu -->
-    <string name="profile_menu">Profile</string>
-    <string name="rating_menu">Rating</string>
-    <string name="matches_menu">Matches</string>
-    <string name="send_feedback_menu">Send feedback</string>
-    <string name="about_menu">About</string>
-    <string name="logout_menu">Logout</string>
-
     <!-- Send Us Feedback option -->
     <string name="feedback_dialog_title">Send us feedback!</string>
     <string name="feedback_dialog_message">An e-mail will be opened where you can send me feedback.</string>
@@ -268,6 +260,8 @@
     <string name="new_message_icon_content_description">An icon that indicates that a new message has arrived.</string>
     <string name="love_icon_content_description">A heart shaped icon that indicates that you like that user.</string>
     <string name="info_icon_content_description">Info icon</string>
+
+    <!-- Feature discovery -->
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
         1. Choose between two users repeatedly.\n
