@@ -170,6 +170,7 @@
     <string name="back_button_button">Back</string>
     <string name="next_button_button">Next</string>
     <string name="done_button_button">Done</string>
+    <string name="profile_builder_page_index">%1$d of %2$d</string>
     <string name="profile_builder_intro_heading">Welcome to Profile Builder</string>
     <string name="profile_builder_intro_message">
         Having a short, concise profile with the most important information up front is critical.\n

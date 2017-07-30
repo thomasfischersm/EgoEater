@@ -10,46 +10,45 @@
         android:id="@+id/profileBuilderViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:elevation="8dp"
         android:background="@color/primaryTextColorDark"
-        style="?android:attr/buttonBarStyle">
+        android:elevation="8dp"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/discardButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:text="@string/back_button_button"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/back_button_button" />
 
         <TextView
+            android:id="@+id/pageIndexTextView"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="1 of 9"/>
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/continueButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:text="@string/next_button_button"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/next_button_button" />
 
         <Button
             android:id="@+id/saveButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:text="@string/done_button_button"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="@string/done_button_button" />
     </LinearLayout>
 </LinearLayout>

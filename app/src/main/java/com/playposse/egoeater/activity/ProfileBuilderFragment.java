@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
@@ -38,6 +39,7 @@ public class ProfileBuilderFragment extends Fragment {
     private static final String LOG_TAG = ProfileBuilderFragment.class.getSimpleName();
 
     private ViewPager profileBuilderViewPager;
+    private TextView pageIndexTextView;
     private Button discardButton;
     private Button continueButton;
     private Button saveButton;
@@ -49,7 +51,6 @@ public class ProfileBuilderFragment extends Fragment {
     public ProfileBuilderFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class ProfileBuilderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile_builder, container, false);
 
         profileBuilderViewPager = (ViewPager) rootView.findViewById(R.id.profileBuilderViewPager);
+        pageIndexTextView = (TextView) rootView.findViewById(R.id.pageIndexTextView);
         discardButton = (Button) rootView.findViewById(R.id.discardButton);
         continueButton = (Button) rootView.findViewById(R.id.continueButton);
         saveButton = (Button) rootView.findViewById(R.id.saveButton);
@@ -179,6 +181,19 @@ public class ProfileBuilderFragment extends Fragment {
         }
     }
 
+    private void refreshPageIndex() {
+        if ((profileBuilderViewPager != null) && (profileBuilderConfiguration != null)) {
+            int currentPage = profileBuilderViewPager.getCurrentItem() + 1;
+            int pageCount = profileBuilderConfiguration.getQuestions().size() + 2;
+            String pageIndexStr =
+                    getString(R.string.profile_builder_page_index, currentPage, pageCount);
+            pageIndexTextView.setText(pageIndexStr);
+        }
+    }
+
+    /**
+     * An {@link AsyncTask} that loads the question data from the resources and parses the JSON.
+     */
     private class ProfileBuilderConfigurationLoadingTask
             extends AsyncTask<Void, Void, ProfileBuilderConfiguration> {
 
@@ -205,6 +220,7 @@ public class ProfileBuilderFragment extends Fragment {
             profileBuilderViewPager.addOnPageChangeListener(new AnalyticsPageChangeListener());
 
             refreshButtonVisibility(profileBuilderViewPager.getCurrentItem());
+            refreshPageIndex();
         }
     }
 
@@ -259,6 +275,7 @@ public class ProfileBuilderFragment extends Fragment {
         @Override
         public void onPageSelected(int position) {
             refreshButtonVisibility(position);
+            refreshPageIndex();
 
             // Hide keyboard in case it was opened to edit an other option.
             InputMethodManager inputMethodManager =
