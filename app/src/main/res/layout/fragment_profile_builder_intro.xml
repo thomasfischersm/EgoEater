@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="Welcome to Profile Builder"
+        android:text="@string/profile_builder_intro_heading"
         android:padding="10dp"/>
 
     <TextView
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="* all steps are optional"
+        android:text="@string/profile_builder_intro_footnote"
         android:padding="10dp"/>
-
 </LinearLayout>
