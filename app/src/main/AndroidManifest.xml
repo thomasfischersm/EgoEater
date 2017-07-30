@@ -27,8 +27,7 @@
             android:value="GlideModule" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="5e6d81f10c3b91abdbb377d69ca013c8a8fecb3e"
-            />
+            android:value="5e6d81f10c3b91abdbb377d69ca013c8a8fecb3e" />
 
         <provider
             android:name=".contentprovider.EgoEaterContentProvider"
@@ -107,7 +106,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/IntroAppTheme" />
         <activity
             android:name=".activity.ViewOwnProfileActivity"
             android:screenOrientation="portrait" />
@@ -137,7 +137,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.IntroductionActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/IntroAppTheme" />
         <activity
             android:name=".activity.NoConnectivityActivity"
             android:screenOrientation="portrait" />

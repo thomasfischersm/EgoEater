@@ -6,6 +6,7 @@
     <color name="colorAccent">#FF9800</color>
     <color name="emphasis">#31b6e7</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="introNavigationBarColor">#00796B</color>
 
     <!-- Light theme -->
     <color name="primaryTextColorLight">#232323</color>

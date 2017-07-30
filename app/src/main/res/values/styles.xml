@@ -11,6 +11,9 @@
         <item name="actionBarTheme">@style/MyApp.ActionBarTheme</item>
     </style>
 
+    <style name="IntroAppTheme" parent="@style/AppTheme">
+    </style>
+
     <style name="MyApp.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/primaryTextColorDark</item>
     </style>
