@@ -14,6 +14,8 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_text_preview_title" />
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,10 +47,34 @@
                 android:textColor="@color/secondaryScrimTextDark" />
         </LinearLayout>
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/profile_text_reorder_title" />
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <TextView
+                style="@style/subheader"
+                android:textColor="@color/primaryTextColorLight"
+                android:fontFamily="sans-serif-medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/profile_text_reorder_title"/>
+
+            <TextView
+                style="@style/body1"
+                android:textColor="@color/secondaryTextColorLight"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/profile_text_reorder_subtitle"/>
+
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/summaryRecyclerView"
