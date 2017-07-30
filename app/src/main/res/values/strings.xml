@@ -50,7 +50,8 @@
     <string name="profile_edit_text_hint">Enter a short profile here.</string>
     <string name="discard_button_content_description">Discard button</string>
     <string name="characterCounter">%1$d / %2$d</string>
-    <string name="profile_builder_link">Try the profile builder!</string>
+    <string name="profile_builder_upsell">Try the profile builder</string>
+    <string name="profile_builder_upsell_action">Build</string>
 
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>

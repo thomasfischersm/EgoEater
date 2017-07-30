@@ -1,6 +1,7 @@
 package com.playposse.egoeater.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.playposse.egoeater.R;
@@ -21,5 +22,12 @@ public class ProfileBuilderActivity extends ParentActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.profile_builder_title);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(this, EditProfileActivity.class));
     }
 }

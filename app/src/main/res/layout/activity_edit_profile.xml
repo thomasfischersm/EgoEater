@@ -182,14 +182,6 @@
                     android:layout_gravity="end"
                     android:text="@string/profile_info"
                     android:textColor="@color/secondaryTextColorLight" />
-
-                <TextView
-                    android:id="@+id/profileBuilderLink"
-                    style="@style/caption"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_builder_link"
-                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
