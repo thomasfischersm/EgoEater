@@ -5,10 +5,16 @@
     android:orientation="vertical"
     tools:context="com.playposse.egoeater.activity.ProfileBuilderQuestionFragment">
 
+
     <TextView
         android:id="@+id/questionTextView"
+        style="@style/subheader"
+        android:textColor="@color/primaryTextColorLight"
+        android:fontFamily="sans-serif-medium"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="30dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/optionsRecyclerView"

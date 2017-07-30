@@ -22,7 +22,7 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:paddingLeft">4dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
@@ -66,5 +66,10 @@
     <style name="button" parent="android:Widget.Holo.Light.TextView">
         <item name="android:textSize">@dimen/button_textSize</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/disabledTextColorLight</item>
     </style>
 </resources>

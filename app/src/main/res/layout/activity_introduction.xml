@@ -5,14 +5,18 @@
     android:id="@+id/activity_student_introduction_deck"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".activity.IntroductionActivity">
 
+
+    <!--
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/background_content_description"
         android:scaleType="centerCrop"
         android:src="@drawable/login_bg" />
+     -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +47,8 @@
         <Button
             android:id="@+id/getStartedButton"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="290dp"
-            android:layout_height="56dp"
+            android:layout_width="200dp"
+            android:layout_height="44dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="4dp"
             android:background="@drawable/capsule_button_bg"

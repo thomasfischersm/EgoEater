@@ -68,7 +68,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/new_message_icon_content_description"
                 android:src="@drawable/ic_chat_bubble_black_24dp"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/colorSecondary" />
 
             <TextView
                 android:id="@+id/newMessagesTextView"

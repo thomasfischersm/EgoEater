@@ -167,9 +167,9 @@
 
     <!-- Profile Builder -->
     <string name="profile_builder_title">Profile builder</string>
-    <string name="discard_button_button">Discard</string>
-    <string name="continue_button_button">Continue</string>
-    <string name="replace_profile_button">Replace profile</string>
+    <string name="back_button_button">Back</string>
+    <string name="next_button_button">Next</string>
+    <string name="done_button_button">Done</string>
     <string name="profile_builder_intro_message">
         Having a short, concise profile with the most important information up front is critical.\n
         \n
@@ -184,6 +184,8 @@
     </string>
     <string name="profile_text_preview_title">Preview</string>
     <string name="profile_text_reorder_title">Reorder using drag\'n\'drop</string>
+    <string name="profile_text_reorder_subtitle">Orange marker shows how much will fit onto
+        your profile in the rating screen.</string>
     <string name="profile_options_separator">,\u0020</string>
     <string name="profile_questions_separator">\u0020/\u0020</string>
     <string name="other_option_label">Other:\u0020</string>
