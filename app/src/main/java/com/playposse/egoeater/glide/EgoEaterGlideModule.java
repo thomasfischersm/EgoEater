@@ -11,6 +11,7 @@ import com.bumptech.glide.module.GlideModule;
  * A configuration class for the Glide library.
  */
 public class EgoEaterGlideModule implements GlideModule {
+
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         // Enable the highest photo quality.

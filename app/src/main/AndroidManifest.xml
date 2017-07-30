@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/beeline_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
             android:resource="@xml/analytics_global_config" />
@@ -24,6 +25,10 @@
         <meta-data
             android:name="com.playposse.egoeater.glide.EgoEaterGlideModule"
             android:value="GlideModule" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5e6d81f10c3b91abdbb377d69ca013c8a8fecb3e"
+            />
 
         <provider
             android:name=".contentprovider.EgoEaterContentProvider"

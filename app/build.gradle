@@ -26,6 +26,7 @@ android {
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -64,8 +65,12 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
     compile 'com.android.support:multidex:1.0.1'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.volley:volley:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'

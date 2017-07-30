@@ -170,6 +170,7 @@
     <string name="back_button_button">Back</string>
     <string name="next_button_button">Next</string>
     <string name="done_button_button">Done</string>
+    <string name="profile_builder_intro_heading">Welcome to Profile Builder</string>
     <string name="profile_builder_intro_message">
         Having a short, concise profile with the most important information up front is critical.\n
         \n
@@ -182,6 +183,7 @@
         Remember, only an about Twitter sizes message will show up during profile comparison. Of
         course, you can add more text for actual matches.
     </string>
+    <string name="profile_builder_intro_footnote">* all steps are optional</string>
     <string name="profile_text_preview_title">Preview</string>
     <string name="profile_text_reorder_title">Reorder using drag\'n\'drop</string>
     <string name="profile_text_reorder_subtitle">Orange marker shows how much will fit onto
