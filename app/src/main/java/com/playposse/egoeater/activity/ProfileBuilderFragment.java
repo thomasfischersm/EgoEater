@@ -27,6 +27,7 @@ import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.StringUtil;
 
 import org.json.JSONException;
 
@@ -115,14 +116,19 @@ public class ProfileBuilderFragment extends Fragment {
         discardImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleAlertDialog.confirmDiscard(
-                        getContext(),
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                startEditProfileActivity();
-                            }
-                        });
+                if ((profileUserData != null) && profileUserData.isEmpty()) {
+                    // Nothing to lose -> dismiss without confirm dialog!
+                    startEditProfileActivity();
+                } else {
+                    SimpleAlertDialog.confirmDiscard(
+                            getContext(),
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    startEditProfileActivity();
+                                }
+                            });
+                }
             }
         });
 
@@ -188,16 +194,21 @@ public class ProfileBuilderFragment extends Fragment {
     }
 
     private void onSaveClicked() {
-        SimpleAlertDialog.confirm(
-                getActivity(),
-                R.string.confirm_save_profile_title,
-                R.string.confirm_save_profile_body,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        onSaveConfirmed();
-                    }
-                });
+        if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(getActivity()))) {
+            // The user hasn't filled out the profile text yet. Skip the confirm dialog.
+            onSaveConfirmed();
+        } else {
+            SimpleAlertDialog.confirm(
+                    getActivity(),
+                    R.string.confirm_save_profile_title,
+                    R.string.confirm_save_profile_body,
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            onSaveConfirmed();
+                        }
+                    });
+        }
     }
 
     private void onSaveConfirmed() {

@@ -130,6 +130,15 @@ public class ProfileUserData {
         outState.putString(BUNDLE_KEY, toJson());
     }
 
+    public boolean isEmpty() {
+        for (ProfileAnswer answer : questionIndexToAnswerMap.values()) {
+            if (!answer.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public String toJson() throws JSONException {
         JSONArray answersArray = new JSONArray();
         for (ProfileAnswer answer : questionIndexToAnswerMap.values()) {
