@@ -9,19 +9,22 @@
     <TextView
         android:id="@+id/questionTextView"
         style="@style/subheader"
-        android:textColor="@color/primaryTextColorLight"
-        android:fontFamily="sans-serif-medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:paddingEnd="30dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingStart="30dp"
+        android:paddingTop="30dp"
         android:textAlignment="center"
-        android:padding="30dp"/>
+        android:textColor="@color/primaryTextColorLight" />
 
     <TextView
         style="@style/body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:lineSpacingMultiplier="1.2"
+        android:layout_marginBottom="30dp"
         android:text="@string/profile_builder_optional_hint"
         android:textAlignment="center"
         android:textColor="@color/secondaryTextColorLight" />
