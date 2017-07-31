@@ -115,6 +115,10 @@ public class ProfileUserData {
      */
     public static ProfileUserData read(Bundle savedInstanceState) throws JSONException {
         String json = savedInstanceState.getString(BUNDLE_KEY);
+        return read(json);
+    }
+
+    public static ProfileUserData read(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
         return new ProfileUserData(jsonObject);
     }
@@ -126,7 +130,7 @@ public class ProfileUserData {
         outState.putString(BUNDLE_KEY, toJson());
     }
 
-    private String toJson() throws JSONException {
+    public String toJson() throws JSONException {
         JSONArray answersArray = new JSONArray();
         for (ProfileAnswer answer : questionIndexToAnswerMap.values()) {
             answersArray.put(answer.toJson());

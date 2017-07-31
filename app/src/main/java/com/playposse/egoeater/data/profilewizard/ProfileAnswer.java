@@ -32,7 +32,11 @@ public class ProfileAnswer {
 
     public ProfileAnswer(JSONObject jsonObject) throws JSONException {
         questionIndex = jsonObject.getInt(QUESTION_INDEX_NAME);
-        otherAnswer = jsonObject.getString(OTHER_ANSWER_NAME);
+        if (jsonObject.isNull(OTHER_ANSWER_NAME)) {
+            otherAnswer = null;
+        } else {
+            otherAnswer = jsonObject.getString(OTHER_ANSWER_NAME);
+        }
 
         JSONArray selectedOptionsArray = jsonObject.getJSONArray(SELECTED_OPTIONS_NAME);
         for (int i = 0; i < selectedOptionsArray.length(); i++) {

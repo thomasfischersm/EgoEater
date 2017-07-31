@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.data.profilewizard.ProfileUserData;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,6 +44,8 @@ public final class EgoEaterPreferences {
     private static final String QUERY_RADIUS_KEY = "queryRadius";
     private static final String FUCK_OFF_USERS_KEY = "fuckOffUsers";
     private static final String PISSED_OFF_USERS_KEY = "pissedOffUsers";
+    private static final String PROFILE_BUILDER_LAST_USER_DATA = "profileBuilderLastUserData";
+    private static final String PROFILE_BUILDER_LAST_PROFILE_TEXT = "profileBuilderlastProfileText";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
@@ -216,6 +221,33 @@ public final class EgoEaterPreferences {
 
     public static void addPissedOffUser(Context context, long profileId) {
         addValueToLongSet(context, PISSED_OFF_USERS_KEY, profileId);
+    }
+
+    public static ProfileUserData getProfileBuilderLastUserData(Context context)
+            throws JSONException {
+
+        String json = getString(context, PROFILE_BUILDER_LAST_USER_DATA);
+
+        if (json == null) {
+            return new ProfileUserData();
+        }
+
+        return ProfileUserData.read(json);
+    }
+
+    public static void setProfileBuilderLastUserData(
+            Context context,
+            ProfileUserData profileUserData) throws JSONException {
+
+        setString(context, PROFILE_BUILDER_LAST_USER_DATA, profileUserData.toJson());
+    }
+
+    public static String getProfileBuilderLastProfileText(Context context) {
+        return getString(context, PROFILE_BUILDER_LAST_PROFILE_TEXT);
+    }
+
+    public static void setProfileBuilderLastProfileText(Context context, String profileText) {
+        setString(context, PROFILE_BUILDER_LAST_PROFILE_TEXT, profileText);
     }
 
     private static String getString(Context context, String key) {

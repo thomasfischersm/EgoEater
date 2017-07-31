@@ -29,9 +29,6 @@ import com.playposse.egoeater.util.ProfileFormatter;
 /**
  * A {@link Fragment} that shows the selected options of all questions and allows the user to
  * re-order the profile with drag'n'drop.
- * <p>
- * TODO: Test what happens when going from the summary to the last question, making changes and
- * coming back to the summary.
  */
 public class ProfileBuilderSummaryFragment extends Fragment {
 

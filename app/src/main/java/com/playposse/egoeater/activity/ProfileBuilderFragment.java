@@ -23,6 +23,7 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.SimpleAlertDialog;
 
@@ -56,14 +57,33 @@ public class ProfileBuilderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            try {
+                String currentProfileText = EgoEaterPreferences.getProfileText(getActivity());
+                String lastProfileText =
+                        EgoEaterPreferences.getProfileBuilderLastProfileText(getActivity());
+                if (currentProfileText.equals(lastProfileText)) {
+                    // If the user hasn't hand edited the profile since the last profile builder
+                    // run, remember the preferences. Otherwise, let the user start over with a
+                    // clean slate.
+                    profileUserData =
+                            EgoEaterPreferences.getProfileBuilderLastUserData(getActivity());
+                } else {
+                    profileUserData = new ProfileUserData();
+                }
+            } catch (JSONException ex) {
+                Log.e(
+                        LOG_TAG,
+                        "onCreate: Failed to retrieve ProfileUserData from preferences.",
+                        ex);
+                profileUserData = new ProfileUserData();
+            }
+        } else  {
             try {
                 profileUserData = ProfileUserData.read(savedInstanceState);
             } catch (JSONException ex) {
                 Log.e(LOG_TAG, "onCreate: Failed to read profile builder user data.", ex);
             }
-        } else {
-            profileUserData = new ProfileUserData();
         }
     }
 
@@ -155,6 +175,18 @@ public class ProfileBuilderFragment extends Fragment {
                         onSaveComplete();
                     }
                 }).execute();
+
+        // Save the last profile builder state to the preferences, so that the user can pick off
+        // where he or she left off.
+        try {
+            EgoEaterPreferences.setProfileBuilderLastUserData(getActivity(), profileUserData);
+            EgoEaterPreferences.setProfileBuilderLastProfileText(getActivity(), profileStr);
+        } catch (JSONException ex) {
+            Log.e(
+                    LOG_TAG,
+                    "onSaveConfirmed: Failed to save profile builder state to preferences.",
+                    ex);
+        }
     }
 
     private void onSaveComplete() {
