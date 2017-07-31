@@ -14,36 +14,54 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_text_preview_title" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:background="@drawable/scrim_bg"
-            android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingEnd="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingStart="16dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/headlineTextView"
-                style="@style/headline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primaryTextColorDark" />
+            <com.playposse.egoeater.util.BottomCropImageView
+                android:id="@+id/profilePhotoImageView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignBottom="@+id/scrimContainer"
+                android:layout_alignEnd="@+id/scrimContainer"
+                android:layout_alignLeft="@+id/scrimContainer"
+                android:layout_alignRight="@+id/scrimContainer"
+                android:layout_alignStart="@+id/scrimContainer"
+                android:layout_alignTop="@+id/scrimContainer"
+                android:layout_gravity="bottom" />
 
-            <TextView
-                android:id="@+id/subHeadTextView"
-                style="@style/body1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/scrimContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:ellipsize="end"
-                android:lineSpacingExtra="5dp"
-                android:lines="2"
-                android:textColor="@color/secondaryScrimTextDark" />
-        </LinearLayout>
+                android:layout_gravity="bottom|start"
+                android:background="@drawable/scrim_bg"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingStart="16dp">
+
+                <TextView
+                    android:id="@+id/headlineTextView"
+                    style="@style/headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryTextColorDark" />
+
+                <TextView
+                    android:id="@+id/subHeadTextView"
+                    style="@style/body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="5dp"
+                    android:lines="2"
+                    android:textColor="@color/secondaryScrimTextDark" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,22 +71,22 @@
 
             <TextView
                 style="@style/subheader"
-                android:textColor="@color/primaryTextColorLight"
-                android:fontFamily="sans-serif-medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/profile_text_reorder_title"
                 android:textAlignment="center"
-                android:text="@string/profile_text_reorder_title"/>
+                android:textColor="@color/primaryTextColorLight" />
 
             <TextView
                 style="@style/body1"
-                android:textColor="@color/secondaryTextColorLight"
-                android:layout_marginTop="8dp"
-                android:lineSpacingMultiplier="1.2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/profile_text_reorder_subtitle"
                 android:textAlignment="center"
-                android:text="@string/profile_text_reorder_subtitle"/>
+                android:textColor="@color/secondaryTextColorLight" />
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView

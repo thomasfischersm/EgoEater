@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.R;
@@ -22,12 +23,13 @@ import com.playposse.egoeater.data.profilewizard.ProfileAnswer;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
 
 /**
  * A {@link Fragment} that shows the selected options of all questions and allows the user to
  * re-order the profile with drag'n'drop.
- *
+ * <p>
  * TODO: Test what happens when going from the summary to the last question, making changes and
  * coming back to the summary.
  */
@@ -35,6 +37,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
 
     private static final String LOG_TAG = ProfileBuilderSummaryFragment.class.getSimpleName();
 
+    private ImageView profilePhotoImageView;
     private TextView headlineTextView;
     private TextView subHeadTextView;
     private RecyclerView summaryRecyclerView;
@@ -50,11 +53,12 @@ public class ProfileBuilderSummaryFragment extends Fragment {
     public View onCreateView(
             LayoutInflater inflater,
             ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
 
         View rootView =
                 inflater.inflate(R.layout.fragment_profile_builder_summary, container, false);
 
+        profilePhotoImageView = (ImageView) rootView.findViewById(R.id.profilePhotoImageView);
         summaryRecyclerView = (RecyclerView) rootView.findViewById(R.id.summaryRecyclerView);
         headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
@@ -70,6 +74,9 @@ public class ProfileBuilderSummaryFragment extends Fragment {
         summaryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         profileSummaryAdapter = new ProfileSummaryAdapter();
         summaryRecyclerView.setAdapter(profileSummaryAdapter);
+
+        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl1(getActivity());
+        GlideUtil.load(profilePhotoImageView, photoUrl);
 
         refreshPreview();
 
