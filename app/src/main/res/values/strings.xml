@@ -187,10 +187,8 @@
         course, you can add more text for actual matches.
     </string>
     <string name="profile_builder_intro_footnote">* all steps are optional</string>
-    <string name="profile_text_preview_title">Preview</string>
-    <string name="profile_text_reorder_title">Reorder using drag\'n\'drop</string>
-    <string name="profile_text_reorder_subtitle">Orange marker shows how much will fit onto
-        your profile in the rating screen.</string>
+    <string name="profile_builder_optional_hint">(Optional)</string>
+    <string name="profile_text_reorder_instruction">Rearrange the items in desired order.</string>
     <string name="profile_options_separator">,\u0020</string>
     <string name="profile_questions_separator">\u0020/\u0020</string>
     <string name="other_option_label">Other:\u0020</string>

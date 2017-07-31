@@ -16,6 +16,16 @@
         android:textAlignment="center"
         android:padding="30dp"/>
 
+    <TextView
+        style="@style/body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/profile_builder_optional_hint"
+        android:textAlignment="center"
+        android:textColor="@color/secondaryTextColorLight" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/optionsRecyclerView"
         android:layout_width="match_parent"

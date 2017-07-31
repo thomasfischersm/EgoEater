@@ -9,11 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_text_preview_title" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -70,21 +65,12 @@
             android:padding="30dp">
 
             <TextView
-                style="@style/subheader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/profile_text_reorder_title"
-                android:textAlignment="center"
-                android:textColor="@color/primaryTextColorLight" />
-
-            <TextView
                 style="@style/body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="@string/profile_text_reorder_subtitle"
+                android:text="@string/profile_text_reorder_instruction"
                 android:textAlignment="center"
                 android:textColor="@color/secondaryTextColorLight" />
         </LinearLayout>
