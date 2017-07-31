@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.R;
@@ -39,6 +40,9 @@ public class ProfileBuilderFragment extends Fragment {
 
     private static final String LOG_TAG = ProfileBuilderFragment.class.getSimpleName();
 
+    private ImageView discardImageView;
+    private TextView titleTextView;
+    private TextView resetTextView;
     private ViewPager profileBuilderViewPager;
     private TextView pageIndexTextView;
     private Button backButton;
@@ -95,6 +99,9 @@ public class ProfileBuilderFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_profile_builder, container, false);
 
+        discardImageView = (ImageView) rootView.findViewById(R.id.discardImageView);
+        titleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
+        resetTextView = (TextView) rootView.findViewById(R.id.resetTextView);
         profileBuilderViewPager = (ViewPager) rootView.findViewById(R.id.profileBuilderViewPager);
         pageIndexTextView = (TextView) rootView.findViewById(R.id.pageIndexTextView);
         backButton = (Button) rootView.findViewById(R.id.backButton);
@@ -102,6 +109,39 @@ public class ProfileBuilderFragment extends Fragment {
         saveButton = (Button) rootView.findViewById(R.id.saveButton);
 
         new ProfileBuilderConfigurationLoadingTask().execute();
+
+        titleTextView.setText(R.string.profile_builder_title);
+
+        discardImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleAlertDialog.confirmDiscard(
+                        getContext(),
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                startEditProfileActivity();
+                            }
+                        });
+            }
+        });
+
+        resetTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleAlertDialog.confirm(
+                        getActivity(),
+                        R.string.confirm_reset_title,
+                        R.string.confirm_reset_body,
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                onResetConfirmed();
+                            }
+                        }
+                );
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +167,12 @@ public class ProfileBuilderFragment extends Fragment {
         return rootView;
     }
 
+    private void onResetConfirmed() {
+        profileUserData = new ProfileUserData();
+        profileBuilderViewPager.setCurrentItem(0);
+        profilePagerAdapter.notifyDataSetChanged();
+    }
+
     private void onContinueClicked() {
         int currentIndex = profileBuilderViewPager.getCurrentItem();
         if (currentIndex < profilePagerAdapter.getCount() - 1) {
@@ -139,15 +185,6 @@ public class ProfileBuilderFragment extends Fragment {
         if (currentIndex > 0) {
             profileBuilderViewPager.setCurrentItem(currentIndex - 1);
         }
-//
-//        SimpleAlertDialog.confirmDiscard(
-//                getContext(),
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        startEditProfileActivity();
-//                    }
-//                });
     }
 
     private void onSaveClicked() {
@@ -308,6 +345,11 @@ public class ProfileBuilderFragment extends Fragment {
         @Override
         public int getCount() {
             return profileBuilderConfiguration.getQuestions().size() + 2;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 

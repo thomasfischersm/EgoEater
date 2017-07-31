@@ -11,17 +11,13 @@ import com.playposse.egoeater.R;
  * select for the profile. The final slide allows the user to re-order the selection to put the
  * most important item first.
  */
-public class ProfileBuilderActivity extends ParentActivity {
+public class ProfileBuilderActivity extends ActivityWithProgressDialog {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addMainFragment(new ProfileBuilderFragment());
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(R.string.profile_builder_title);
-        }
+        setContentView(R.layout.activity_profile_builder);
     }
 
     @Override
