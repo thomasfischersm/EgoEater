@@ -43,6 +43,7 @@
                     style="@style/headline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="50dp"
                     android:textColor="@color/primaryTextColorDark" />
 
                 <TextView
@@ -58,22 +59,14 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <LinearLayout
+        <TextView
+            style="@style/body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="30dp">
-
-            <TextView
-                style="@style/body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:lineSpacingMultiplier="1.2"
-                android:text="@string/profile_text_reorder_instruction"
-                android:textAlignment="center"
-                android:textColor="@color/secondaryTextColorLight" />
-        </LinearLayout>
+            android:layout_margin="15dp"
+            android:text="@string/profile_text_reorder_instruction"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryTextColorLight" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/summaryRecyclerView"
