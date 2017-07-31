@@ -49,6 +49,7 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
     private TextView characterCountTextView;
 
     private String originalProfileText;
+    private Snackbar profileBuilderSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +135,29 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
             }
         });
 
+        profileEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (profileBuilderSnackbar != null) {
+                    profileBuilderSnackbar.dismiss();
+                    profileBuilderSnackbar = null;
+
+                    scrollView.postDelayed(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.fullScroll(View.FOCUS_DOWN);
+
+                                }
+                            },
+                            200);
+                }
+            }
+        });
+
         View rootView = findViewById(android.R.id.content);
-        Snackbar.make(rootView, R.string.profile_builder_upsell, Snackbar.LENGTH_INDEFINITE)
+        profileBuilderSnackbar = Snackbar
+                .make(rootView, R.string.profile_builder_upsell, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.profile_builder_upsell_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -144,8 +166,8 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
                                 new Intent(getApplicationContext(),
                                         ProfileBuilderActivity.class));
                     }
-                })
-                .show();
+                });
+        profileBuilderSnackbar.show();
     }
 
     private void saveAndExit() {
