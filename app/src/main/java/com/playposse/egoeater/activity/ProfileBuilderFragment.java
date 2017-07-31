@@ -24,6 +24,7 @@ import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.util.AnalyticsUtil;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import org.json.JSONException;
 
@@ -115,7 +116,7 @@ public class ProfileBuilderFragment extends Fragment {
 
     private void onBackClicked() {
         int currentIndex = profileBuilderViewPager.getCurrentItem();
-        if (currentIndex >0) {
+        if (currentIndex > 0) {
             profileBuilderViewPager.setCurrentItem(currentIndex - 1);
         }
 //
@@ -130,6 +131,19 @@ public class ProfileBuilderFragment extends Fragment {
     }
 
     private void onSaveClicked() {
+        SimpleAlertDialog.confirm(
+                getActivity(),
+                R.string.confirm_save_profile_title,
+                R.string.confirm_save_profile_body,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        onSaveConfirmed();
+                    }
+                });
+    }
+
+    private void onSaveConfirmed() {
         ((ActivityWithProgressDialog) getActivity()).showLoadingProgress();
         String profileStr = profileUserData.toString(getContext());
         new SaveProfileClientAction(
