@@ -22,7 +22,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/discardButton"
+            android:id="@+id/backButton"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"

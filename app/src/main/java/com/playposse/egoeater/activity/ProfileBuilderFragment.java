@@ -24,7 +24,6 @@ import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.util.AnalyticsUtil;
-import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import org.json.JSONException;
 
@@ -40,7 +39,7 @@ public class ProfileBuilderFragment extends Fragment {
 
     private ViewPager profileBuilderViewPager;
     private TextView pageIndexTextView;
-    private Button discardButton;
+    private Button backButton;
     private Button continueButton;
     private Button saveButton;
 
@@ -77,16 +76,16 @@ public class ProfileBuilderFragment extends Fragment {
 
         profileBuilderViewPager = (ViewPager) rootView.findViewById(R.id.profileBuilderViewPager);
         pageIndexTextView = (TextView) rootView.findViewById(R.id.pageIndexTextView);
-        discardButton = (Button) rootView.findViewById(R.id.discardButton);
+        backButton = (Button) rootView.findViewById(R.id.backButton);
         continueButton = (Button) rootView.findViewById(R.id.continueButton);
         saveButton = (Button) rootView.findViewById(R.id.saveButton);
 
         new ProfileBuilderConfigurationLoadingTask().execute();
 
-        discardButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDiscardClicked();
+                onBackClicked();
             }
         });
 
@@ -114,15 +113,20 @@ public class ProfileBuilderFragment extends Fragment {
         }
     }
 
-    private void onDiscardClicked() {
-        SimpleAlertDialog.confirmDiscard(
-                getContext(),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        startEditProfileActivity();
-                    }
-                });
+    private void onBackClicked() {
+        int currentIndex = profileBuilderViewPager.getCurrentItem();
+        if (currentIndex >0) {
+            profileBuilderViewPager.setCurrentItem(currentIndex - 1);
+        }
+//
+//        SimpleAlertDialog.confirmDiscard(
+//                getContext(),
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        startEditProfileActivity();
+//                    }
+//                });
     }
 
     private void onSaveClicked() {
@@ -172,13 +176,12 @@ public class ProfileBuilderFragment extends Fragment {
     }
 
     private void refreshButtonVisibility(int position) {
-        if (position < profilePagerAdapter.getCount() - 1) {
-            continueButton.setVisibility(View.VISIBLE);
-            saveButton.setVisibility(View.GONE);
-        } else {
-            continueButton.setVisibility(View.GONE);
-            saveButton.setVisibility(View.VISIBLE);
-        }
+        boolean onLastPage = (position == (profilePagerAdapter.getCount() - 1));
+        boolean onFirstPage = profileBuilderViewPager.getCurrentItem() == 0;
+
+        backButton.setVisibility(onFirstPage ? View.INVISIBLE : View.VISIBLE);
+        continueButton.setVisibility(onLastPage ? View.GONE : View.VISIBLE);
+        saveButton.setVisibility(onLastPage ? View.VISIBLE : View.GONE);
     }
 
     private void refreshPageIndex() {
@@ -281,7 +284,7 @@ public class ProfileBuilderFragment extends Fragment {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getActivity().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(discardButton.getWindowToken(), 0);
+            inputMethodManager.hideSoftInputFromWindow(backButton.getWindowToken(), 0);
         }
 
         @Override
