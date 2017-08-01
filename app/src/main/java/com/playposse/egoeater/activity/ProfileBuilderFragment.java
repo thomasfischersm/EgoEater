@@ -67,7 +67,7 @@ public class ProfileBuilderFragment extends Fragment {
                 String currentProfileText = EgoEaterPreferences.getProfileText(getActivity());
                 String lastProfileText =
                         EgoEaterPreferences.getProfileBuilderLastProfileText(getActivity());
-                if (currentProfileText.equals(lastProfileText)) {
+                if ((currentProfileText != null) && currentProfileText.equals(lastProfileText)) {
                     // If the user hasn't hand edited the profile since the last profile builder
                     // run, remember the preferences. Otherwise, let the user start over with a
                     // clean slate.
