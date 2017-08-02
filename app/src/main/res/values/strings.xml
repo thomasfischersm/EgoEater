@@ -188,6 +188,7 @@
     </string>
     <string name="profile_builder_intro_footnote">* all steps are optional</string>
     <string name="profile_builder_optional_hint">(Optional)</string>
+    <string name="profile_builder_other_hint">e.g. adventurous barefoot doctor</string>
     <string name="profile_text_reorder_instruction">Rearrange the items in desired order.</string>
     <string name="profile_options_separator">,\u0020</string>
     <string name="profile_questions_separator">\u0020/\u0020</string>
