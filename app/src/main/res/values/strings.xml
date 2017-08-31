@@ -4,7 +4,7 @@
 
     <!-- Login activity -->
     <string name="app_title">beeline</string>
-    <string name="tag_line">Your direct path to highest mutual attraction.</string>
+    <string name="tag_line">Direct path to highest mutual attraction.</string>
     <string name="login_button_label">Log in with Facebook</string>
     <string name="background_content_description">Background texture</string>
 
@@ -12,7 +12,7 @@
     <string name="getting_started_button">Get started</string>
     <string name="rate_users_title">Pick the one you like better</string>
     <string name="rate_users_body">
-        Let our algorithm determine the nuanced landscape of your dating preferences.
+        Help the algorithm determine your unique dating preferences.
     </string>
     <string name="rate_users_graphic_content_description">
         Illustration that depicts two profiles shown side by side and suggests the user to pick the
@@ -59,7 +59,7 @@
 
     <!-- No more pairings available activity -->
     <string name="no_more_pairings_heading">
-        No More Available Pairings
+        There are no more pairings available.
     </string>
     <string name="no_more_pairings_message">
         Beeline has only recently launched. Your support is
@@ -91,15 +91,15 @@
     <string name="fuck_off_button_content_description">This is the famous fuck off button.</string>
     <string name="fuck_off_dialog_title">The famous fuck off button</string>
     <string name="fuck_off_dialog_text">
-        Warning! This action cannot be undone! You will never hear from this person again.\n
+        Warning! This action cannot be undone! You will never hear from this person again. \n
         \n
-        Think long and hard before proceeding. You\'ve told us your preferences. We\'ve given you
-        the best match that\'s interested in you. If you are going to reject this person, we are
-        going to give you the next person on your list. If you ranked them right, you are going to
+        Please, think long and hard before proceeding. Based on your preferences, we\'ve given you
+        the best match that\'s interested in you. If you reject this person, we'll give you
+        the next person on your list. If you ranked them right, you are going to
         like them less.\n
         \n
-        If this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
-        and tell this person to fuck off!
+        But, if you're absolutely sure this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
+        and tell 'em to fuck off!
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
     <string name="today_date">Today</string>
@@ -283,7 +283,7 @@
 
     <!-- Notifications -->
     <string name="updated_matches_notification_title">
-        Psst! Beeline has new matches for you!
+        Woohoo! Beeline has new matches for you!
     </string>
     <string name="updated_matches_notification_text">
         Once a day, Beeline runs an algorithm to pair you beautiful people. The algorithm just
@@ -305,7 +305,7 @@
         New message!
     </string>
     <string name="new_message_notification_text">
-        Check out what someone's writing you!
+        Check out what a cutie's writing you!
     </string>
     <string name="unmatch_notification_title">Unmatched</string>
     <string name="unmatch_notification_text">You have been unmatched.</string>
