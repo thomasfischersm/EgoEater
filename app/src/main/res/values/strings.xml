@@ -91,14 +91,14 @@
     <string name="fuck_off_button_content_description">This is the famous fuck off button.</string>
     <string name="fuck_off_dialog_title">The famous fuck off button</string>
     <string name="fuck_off_dialog_text">
-        Warning! This action cannot be undone! You will never hear from this person again. \n
+        Warning! This action cannot be undone! You will NEVER hear from this person again. \n
         \n
         Please, think long and hard before proceeding. Based on your preferences, we\'ve given you
-        the best match that\'s interested in you. If you reject this person, we'll give you
+        the best match that\'s interested in you. If you reject this person, you'll get
         the next person on your list. If you ranked them right, you are going to
         like them less.\n
         \n
-        But, if you're absolutely sure this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
+        But, if you're absolutely sure this isn\'t going anywhere, then do the merciful thing. Throw this person back into the wild
         and tell 'em to fuck off!
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
@@ -127,19 +127,14 @@
     </string>
     <string name="about_background_heading">Background</string>
     <string name="about_background_body_text">
-        We\'ve all been there: It's one of those group situations, where, after a little while, the
-        group branches off into pairs. Jenny, the runner, goes
-        with Fred, also a runner. James always watches indie flicks. He\'ll end up with April
-        because she does the same.\n
+        We've all been there: messages that go nowhere; likes, winks, and pokes sent with no response; 
+        conversations that fizzle and die. How can it be so hard to meet someone you like and who actually likes you back?\n
         \n
-        When we get to a big  city with a big dating pool, we suddenly see the creme of the crop.
-        Some of us won\'t settle for anything less than chasing unattainable "gods" and
-        "goddesses." Beeline slots you with only a small number of matches that you actually have
-        a chance with.\n
+        Fortunately, Beeline's got your back. It slots you with only a small number of matches that are 
+        genuinely interested in you.\n
         \n
-        Avoid wasting time by sending hundreds of messages with zero responses.
-        Avoid getting your inbox flooded by thousands of messages. Get focused right on a hand-
-        selected number of people that are your high value matches.
+        Avoid wasting time by sending hundreds of messages with zero responses. Get focused on a chosen few 
+        and create your own connections. What are you waiting for?
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
@@ -286,19 +281,14 @@
         Woohoo! Beeline has new matches for you!
     </string>
     <string name="updated_matches_notification_text">
-        Once a day, Beeline runs an algorithm to pair you beautiful people. The algorithm just
-        finished running. You\'ve been matched!
+        The algorithm just finished running. You\'ve been matched!
     </string>
 
     <string name="only_lost_matches_notification_title">
         You\'ve had some matches in Beeline. Now they are gone.
     </string>
     <string name="only_lost_matches_notification_text">
-        Once a day, Beeline runs an algorithm to pair you beautiful people. The last person
-        just lost interest in you. But don't worry. There are many things you can do. (1) Rank more
-        users to find the special one who\'s into you. (2) Text your matches faster. Once you send
-        the first message, the match becomes locked. (3)Become more attractive. Put a smile on your face
-        by following your passion.
+        Don't worry! Rank more profiles to find who likes you back.
     </string>
 
     <string name="new_message_notification_title">
