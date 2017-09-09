@@ -21,8 +21,8 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         multiDexEnabled true
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
