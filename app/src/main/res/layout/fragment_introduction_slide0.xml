@@ -7,36 +7,7 @@
 
     <ImageView
         android:id="@+id/illustrationImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/introduction_graphic0"
-        app:layout_marginTopPercent="10%"
-        android:contentDescription="@string/rate_users_graphic_content_description" />
-
-    <LinearLayout
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_horizontal"
-            android:text="@string/rate_users_title"
-            android:textColor="@color/primaryTextColorDark" />
-
-        <TextView
-            style="@style/body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/rate_users_body"
-            android:textColor="@color/secondaryTextColorDark" />
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/infographics0"/>
 </android.support.percent.PercentRelativeLayout>
