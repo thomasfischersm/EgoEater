@@ -117,24 +117,27 @@
         like better. With enough comparison picks, the app will create a ranking from whom you like
         the most to least.\n
         \n
-        Next the app limits every user to maximum 10 matches. You get matched based on whom you
+        The app limits every user to maximum 10 matches. You get matched based on whom you
         like the most and who likes you back. If you both are super popular, chances are you\'ll get
-        matched up unless either of you runs out of matches.\n
+        matched up unless either of you runs out of matches. If you are more "average" attractive, chances 
+        are that your top choices will run out of matches before you\'d get considered. 
+        You\'ll likely match with other average attractive people who also couldn\'t get their first choices.
         \n
+       
         Of course, there is a chance that you and your main squeeze are a niche. Say you are both
-        into punk. You might like each other back as number one while the rest of the dating world couldn't
-        care less about you two.
+        into punk. You might like each other back immediately and hit it off.
     </string>
     <string name="about_background_heading">Background</string>
     <string name="about_background_body_text">
-        We've all been there: messages that go nowhere; likes, winks, and pokes sent with no response; 
-        conversations that fizzle and die. How can it be so hard to meet someone you like and who actually likes you back?\n
+        We've all been there: hours of swiping that go nowhere; annoyingly creepy messages;
+        conversations that fizzle and die. It can be damn hard to meet someone you like who also likes you back.\n
         \n
-        Fortunately, Beeline's got your back. It slots you with only a small number of matches that are 
-        genuinely interested in you.\n
+        Fortunately, Beeline's got your back. Through your comparisons, it knows exactly how much you are attracted to each person 
+        and who is highly attracted back. Beeline then matches you ONLY with 
+        people who have the highest mutual attraction. Think mutual control, likes, and potential. \n 
         \n
-        Avoid wasting time by sending hundreds of messages with zero responses. Get focused on a chosen few 
-        and create your own connections. What are you waiting for?
+        No more wasting time on sending hundreds of messages with zero responses. Focus on your chosen few 
+        and let those sparks fly. What are you waiting for?
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
@@ -175,7 +178,8 @@
         Santa Monica, CA - Wants long-term / engineer / no kids / yogi, adventurer / must like
         dogs\n
         \n
-       Of course, you can add more text for actual matches.
+       Remember: Choose your words carefully. Potential matches wil see only a short Twitter-size message.
+       Feel free to add more text for your actual matches. While it won't show up in comparison, it'll be visible once you're matched.
     </string>
     <string name="profile_builder_intro_footnote">* all steps are optional</string>
     <string name="profile_builder_optional_hint">(Optional)</string>
@@ -265,10 +269,10 @@
     <!-- Feature discovery -->
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
-        1. Choose between two users repeatedly.\n
-        2. The app creates a stack ranking.\n
+        1. You choose between two users repeatedly.\n
+        2. The app then creates a stack ranking.\n
         3. A daily algorithm matches for mutual attraction.\n
-        4. Everyone is limited to the top 10 matches.
+        4. Enjoy your top 10 matches!
     </string>
 
     <!-- Common button labels -->
