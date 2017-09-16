@@ -117,14 +117,9 @@
         like better. With enough comparison picks, the app will create a ranking from whom you like
         the most to least.\n
         \n
-        The app limits every user to maximum 10 matches. You get matched based on whom you
-        like the most and who likes you back. If you both are super popular, chances are you\'ll get
-        matched up unless either of you runs out of matches. If you are more "average" attractive, chances 
-        are that your top choices will run out of matches before you\'d get considered. 
-        You\'ll likely match with other average attractive people who also couldn\'t get their first choices.
+        You'll then get your best mutual choices based on this ranking, with a maximum 10 matches. 
         \n
-       
-        Of course, there is a chance that you and your main squeeze are a niche. Say you are both
+        Of course, there's a chance that you and your main squeeze are a niche. Say you are both
         into punk. You might like each other back immediately and hit it off.
     </string>
     <string name="about_background_heading">Background</string>
@@ -134,7 +129,7 @@
         \n
         Fortunately, Beeline's got your back. Through your comparisons, it knows exactly how much you are attracted to each person 
         and who is highly attracted back. Beeline then matches you ONLY with 
-        people who have the highest mutual attraction. Think mutual control, likes, and potential. \n 
+        people who have the highest mutual attraction. Think mutual super likes, not simply likes. \n 
         \n
         No more wasting time on sending hundreds of messages with zero responses. Focus on your chosen few 
         and let those sparks fly. What are you waiting for?
@@ -269,10 +264,10 @@
     <!-- Feature discovery -->
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
-        1. You choose between two users repeatedly.\n
-        2. The app then creates a stack ranking.\n
-        3. A daily algorithm matches for mutual attraction.\n
-        4. Enjoy your top 10 matches!
+        1. Choose between two profiles repeatedly.\n
+        2. App creates profile rankings.\n
+        3. Algorithm matches for mutual attraction.\n
+        4. Algorithm reaches max of top 10 matches.
     </string>
 
     <!-- Common button labels -->
