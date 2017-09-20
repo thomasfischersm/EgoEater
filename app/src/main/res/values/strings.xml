@@ -265,9 +265,9 @@
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
         1. Choose between two profiles repeatedly.\n
-        2. App creates profile rankings.\n
-        3. Algorithm matches for mutual attraction.\n
-        4. Algorithm reaches max of top 10 matches.
+        2. Find your repeat top choices.\n
+        3. Sit tight while others make their picks.\n
+        4. Discover your top 10 mutual attraction matches.
     </string>
 
     <!-- Common button labels -->
