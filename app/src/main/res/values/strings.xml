@@ -12,7 +12,7 @@
     <string name="getting_started_button">Get started</string>
     <string name="rate_users_title">Pick the one you like better</string>
     <string name="rate_users_body">
-        Let the algorithm learn the nuanced landscape of your dating preferences versus the general yes/no buckets of swiping.
+        Help the algorithm determine your unique dating preferences.
     </string>
     <string name="rate_users_graphic_content_description">
         Illustration that depicts two profiles shown side by side and suggests the user to pick the
@@ -21,15 +21,15 @@
     <string name="get_matched_title">Get matched for maximum mutual attraction</string>
     <string name="get_matched_body">
         Tired of hundreds of matches that go nowhere? Based on your ranking, we know exactly who
-        is totally hot for who and you feel the same way.
+        is into you.
     </string>
     <string name="get_matched_content_description">
         Illustration that depicts dating matches.
     </string>
     <string name="start_a_conversation_title">Start a small number of high quality conversations</string>
     <string name="start_a_conversation_body">
-        Through mutual ranking, you will have much higher quality prospects. Further, everyone is
-        limited to contact only the 10 best matches. Start a genuine conversation with right people.
+        Through mutual ranking, you will have much higher quality prospects. Everyone is
+        limited to contact only the 10 best matches daily. Start a genuine conversation now!
     </string>
     <string name="start_a_conversation_content_description">
         A diagram that shows message bubbles.
@@ -47,7 +47,7 @@
 
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile text</string>
-    <string name="profile_edit_text_hint">Enter a short profile here.</string>
+    <string name="profile_edit_text_hint">Enter a short profile</string>
     <string name="discard_button_content_description">Discard button</string>
     <string name="characterCounter">%1$d / %2$d</string>
     <string name="profile_builder_upsell">Try the profile builder</string>
@@ -59,7 +59,7 @@
 
     <!-- No more pairings available activity -->
     <string name="no_more_pairings_heading">
-        No more pairings are available
+        There are no more pairings available.
     </string>
     <string name="no_more_pairings_message">
         Beeline has only recently launched. Your support is
@@ -73,14 +73,14 @@
     <string name="no_matches_message">
         Rank more profiles to find people who like you back.\n\n
         Beeline is a brand new app. There may not be any profiles left to rank. Be a hero and
-        stick with us to start this.
+        stick with us.
     </string>
     <string name="match_lock_icon_title">Match lock explanation</string>
     <string name="match_lock_icon_explanation">
         Once you message a match, that match becomes locked. The daily algorithm won\'t remove the
         match.\n
         \n
-        If you like the person, message them quickly. If you want someone "better," keep ranking
+        If you like the person, message them quickly. Not that into it? No worries. Keep ranking
         more profiles.
     </string>
 
@@ -91,15 +91,15 @@
     <string name="fuck_off_button_content_description">This is the famous fuck off button.</string>
     <string name="fuck_off_dialog_title">The famous fuck off button</string>
     <string name="fuck_off_dialog_text">
-        Warning! This action cannot be undone! You will never ever hear or see this person again.\n
+        Warning! This action cannot be undone! You will NEVER hear from this person again. \n
         \n
-        Think long and hard before proceeding. You\'ve told us your preferences. We\'ve given you
-        the best match that\'s interested in you. If you are going to reject this person, we are
-        going to give you the next person down your list. If you ranked them right, you are going to
+        Please, think long and hard before proceeding. Based on your preferences, we\'ve given you
+        the best match that\'s interested in you. If you reject this person, you'll get
+        the next person on your list. If you ranked them right, you are going to
         like them less.\n
         \n
-        If this isn\'t going anywhere, do the merciful thing. Throw this person back into the wild
-        and tell this person to fuck off!
+        But, if you're absolutely sure this isn\'t going anywhere, then do the merciful thing. Throw this person back into the wild
+        and tell 'em to fuck off!
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
     <string name="today_date">Today</string>
@@ -117,36 +117,26 @@
         like better. With enough comparison picks, the app will create a ranking from whom you like
         the most to least.\n
         \n
-        Next the app limits every user to maximum 10 matches. Matches are made based on whom you
-        like the most and who likes you back. If you both are super popular, chances are you\'ll get
-        matched up unless either of you runs out of matches. If you are more average attractive,
-        chances are that your top choices will run out of matches before you\'d even get considered.
-        You\'ll likely end up matching with other average attractive people who couldn\'t get their
-        first choices.\n
+        You'll then get your best mutual choices based on this ranking, with a maximum 10 matches. 
         \n
-        There is of course the chance that you and your hottie are a niche. Say you are both super
-        into punk. You might like each other back as number one while the world doesn\'t care about
-        you two.
+        Of course, there's a chance that you and your main squeeze are a niche. Say you are both
+        into punk. You might like each other back immediately and hit it off.
     </string>
     <string name="about_background_heading">Background</string>
     <string name="about_background_body_text">
-        We\'ve all been in group situations, e.g. a class or summer camp. After a little while, the
-        group develops an understanding of who gets paired up with who. Jenny, the runner, goes
-        with Fred, also a runner. James always watches indie flicks. He\'ll end up with April
-        because she does the same.\n
+        We've all been there: hours of swiping that go nowhere; annoyingly creepy messages;
+        conversations that fizzle and die. It can be damn hard to meet someone you like who also likes you back.\n
         \n
-        When we get to a big  city with a big dating pool, we suddenly see the creme of the crop.
-        Some of us won\'t settle for anything less and keep chasing unattainable "gods" and
-        "goddesses." Beeline slots you with only a small number of matches that you actually have
-        a chance with.\n
+        Fortunately, Beeline's got your back. Through your comparisons, it knows exactly how much you are attracted to each person 
+        and who is highly attracted back. Beeline then matches you ONLY with 
+        people who have the highest mutual attraction. Think mutual super likes, not simply likes. \n 
         \n
-        Avoid wasting time by sending hundreds of messages to girls that never message you back.
-        Avoid getting your inbox flooded by thousands of messages. Get focused right on a hand
-        selected number of people that are your high value matches.
+        No more wasting time on sending hundreds of messages with zero responses. Focus on your chosen few 
+        and let those sparks fly. What are you waiting for?
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
-        I love to hear from you. Send your feedback to
+        I'd love to hear from you. Send your feedback to
         <a href="mailto:thomas@playposse.com?subject=Feedback About Beeline Android App">thomas@playposse.com</a>.
     </string>
     <string name="about_credits_heading">Credits and copyright</string>
@@ -183,8 +173,8 @@
         Santa Monica, CA - Wants long-term / engineer / no kids / yogi, adventurer / must like
         dogs\n
         \n
-        Remember, only an about Twitter sizes message will show up during profile comparison. Of
-        course, you can add more text for actual matches.
+       Remember: Choose your words carefully. Potential matches wil see only a short Twitter-size message.
+       Feel free to add more text for your actual matches. While it won't show up in comparison, it'll be visible once you're matched.
     </string>
     <string name="profile_builder_intro_footnote">* all steps are optional</string>
     <string name="profile_builder_optional_hint">(Optional)</string>
@@ -221,9 +211,9 @@
     <string name="progress_dialog_message">Please be impatient and drum your fingers!</string>
 
     <!-- Location permission dialog -->
-    <string name="location_permission_dialog_title">Hoohoo, where are you?</string>
+    <string name="location_permission_dialog_title">Bzz! Where are you?</string>
     <string name="location_permission_dialog_message">
-        To match you up with local hotties, we gotta know where you are. Please, enable the location
+        To find your perfect match, we gotta know where you are. Please, enable the location
         service.
     </string>
 
@@ -256,7 +246,7 @@
 
     <!-- Send Us Feedback option -->
     <string name="feedback_dialog_title">Send us feedback!</string>
-    <string name="feedback_dialog_message">An e-mail will be opened where you can send me feedback.</string>
+    <string name="feedback_dialog_message">An e-mail will open where you can send me feedback.</string>
     <string name="feedback_email_recipient">thomas@playposse.com</string>
     <string name="feedback_email_subject">Feedback About Beeline Android App</string>
     <string name="feedback_email_body">Please, send me your feedback. I care about hearing from you.</string>
@@ -274,10 +264,10 @@
     <!-- Feature discovery -->
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
-        1. Choose between two users repeatedly.\n
-        2. The app creates a stack ranking.\n
-        3. A daily algorithm matches for mutual attraction.\n
-        4. Everyone is limited to the top 10 matches.
+        1. Choose between two profiles repeatedly.\n
+        2. Find your repeat top choices.\n
+        3. Sit tight while others make their picks.\n
+        4. Discover your top 10 mutual attraction matches.
     </string>
 
     <!-- Common button labels -->
@@ -290,27 +280,21 @@
         Woohoo! Beeline has new matches for you!
     </string>
     <string name="updated_matches_notification_text">
-        Once a day, Beeline runs an algorithm to pair the hotties of the world. The algorithm just
-        finished running. You\'ve got some hot peeps to check out!
+        The algorithm just finished running. You\'ve been matched!
     </string>
 
     <string name="only_lost_matches_notification_title">
         You\'ve had some matches in Beeline. Now they are gone.
     </string>
     <string name="only_lost_matches_notification_text">
-        Once a day, Beeline runs an algorithm to pair the hotties of the world. The last person
-        just lost interest in you. But fret not. There are many things you can do. (1) Rank more
-        users to find the special one who\'s into you. (2) Text your matches faster. Once you sent
-        the first message, the match becomes locked. (3) This is the hardest yet most satisfying.
-        Become more attractive. Hit the gym. Get new clothes. Put a smile on your face by following
-        your passion.
+        Don't worry! Rank more profiles to find who likes you back.
     </string>
 
     <string name="new_message_notification_title">
         New message!
     </string>
     <string name="new_message_notification_text">
-        Check out what a cutie is writing you!
+        Check out what a cutie's writing you!
     </string>
     <string name="unmatch_notification_title">Unmatched</string>
     <string name="unmatch_notification_text">You have been unmatched.</string>
