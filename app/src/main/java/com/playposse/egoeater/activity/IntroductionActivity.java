@@ -1,13 +1,11 @@
 package com.playposse.egoeater.activity;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -52,7 +50,7 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
 
     private class IntroductionSlidePagerAdapter extends FragmentPagerAdapter {
 
-        public IntroductionSlidePagerAdapter(FragmentManager fragmentManager) {
+        private IntroductionSlidePagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
@@ -65,6 +63,8 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
                     return new IntroductionSlide1Fragment();
                 case 2:
                     return new IntroductionSlide2Fragment();
+                case 3:
+                    return new IntroductionSlide3Fragment();
                 default:
                     throw new IllegalStateException(
                             "Unexpected introduction deck was requested: " + position);
@@ -73,7 +73,7 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 
