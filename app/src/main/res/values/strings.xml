@@ -94,12 +94,12 @@
         Warning! This action cannot be undone! You will NEVER hear from this person again. \n
         \n
         Please, think long and hard before proceeding. Based on your preferences, we\'ve given you
-        the best match that\'s interested in you. If you reject this person, you'll get
+        the best match that\'s interested in you. If you reject this person, you\'ll get
         the next person on your list. If you ranked them right, you are going to
         like them less.\n
         \n
-        But, if you're absolutely sure this isn\'t going anywhere, then do the merciful thing. Throw this person back into the wild
-        and tell 'em to fuck off!
+        But, if you\'re absolutely sure this isn\'t going anywhere, then do the merciful thing. Throw this person back into the wild
+        and tell \'em to fuck off!
     </string>
     <string name="fuck_off_menu_title">Fuck off</string>
     <string name="today_date">Today</string>
@@ -117,17 +117,17 @@
         like better. With enough comparison picks, the app will create a ranking from whom you like
         the most to least.\n
         \n
-        You'll then get your best mutual choices based on this ranking, with a maximum 10 matches. 
+        You\'ll then get your best mutual choices based on this ranking, with a maximum 10 matches.
         \n
-        Of course, there's a chance that you and your main squeeze are a niche. Say you are both
+        Of course, there\'s a chance that you and your main squeeze are a niche. Say you are both
         into punk. You might like each other back immediately and hit it off.
     </string>
     <string name="about_background_heading">Background</string>
     <string name="about_background_body_text">
-        We've all been there: hours of swiping that go nowhere; annoyingly creepy messages;
+        We\'ve all been there: hours of swiping that go nowhere; annoyingly creepy messages;
         conversations that fizzle and die. It can be damn hard to meet someone you like who also likes you back.\n
         \n
-        Fortunately, Beeline's got your back. Through your comparisons, it knows exactly how much you are attracted to each person 
+        Fortunately, Beeline\'s got your back. Through your comparisons, it knows exactly how much you are attracted to each person
         and who is highly attracted back. Beeline then matches you ONLY with 
         people who have the highest mutual attraction. Think mutual super likes, not simply likes. \n 
         \n
@@ -136,7 +136,7 @@
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
-        I'd love to hear from you. Send your feedback to
+        I\'d love to hear from you. Send your feedback to
         <a href="mailto:thomas@playposse.com?subject=Feedback About Beeline Android App">thomas@playposse.com</a>.
     </string>
     <string name="about_credits_heading">Credits and copyright</string>
@@ -174,7 +174,7 @@
         dogs\n
         \n
        Remember: Choose your words carefully. Potential matches wil see only a short Twitter-size message.
-       Feel free to add more text for your actual matches. While it won't show up in comparison, it'll be visible once you're matched.
+       Feel free to add more text for your actual matches. While it won\'t show up in comparison, it\'ll be visible once you\'re matched.
     </string>
     <string name="profile_builder_intro_footnote">* all steps are optional</string>
     <string name="profile_builder_optional_hint">(Optional)</string>
@@ -287,14 +287,14 @@
         You\'ve had some matches in Beeline. Now they are gone.
     </string>
     <string name="only_lost_matches_notification_text">
-        Don't worry! Rank more profiles to find who likes you back.
+        Don\'t worry! Rank more profiles to find who likes you back.
     </string>
 
     <string name="new_message_notification_title">
         New message!
     </string>
     <string name="new_message_notification_text">
-        Check out what a cutie's writing you!
+        Check out what a cutie\'s writing you!
     </string>
     <string name="unmatch_notification_title">Unmatched</string>
     <string name="unmatch_notification_text">You have been unmatched.</string>
