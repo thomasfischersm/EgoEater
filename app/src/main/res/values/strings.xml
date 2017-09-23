@@ -264,10 +264,10 @@
     <!-- Feature discovery -->
     <string name="app_info_title">How The Algorithm Works</string>
     <string name="app_info_body">
-        1. Choose between two profiles repeatedly.\n
-        2. Find your repeat top choices.\n
-        3. Sit tight while others make their picks.\n
-        4. Discover your top 10 mutual attraction matches.
+        1. Choose between two profiles repeatedly.
+\n2. Find your repeat top choices.
+\n3. Sit tight while others make their picks.
+\n4. Discover your top 10 mutual attraction matches.
     </string>
 
     <!-- Common button labels -->
