@@ -44,7 +44,7 @@
     },
     {
       "prompt": "What is your ethnicity?",
-      "Options": [
+      "options": [
         "Asian",
         "White",
         "Latin",
