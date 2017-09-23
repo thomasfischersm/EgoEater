@@ -1,170 +1,156 @@
-{"questions": [
-  {
-    "prompt": "What are your relationship goals?",
-    "options": [
-      "Want marriage",
-      "Want long-term",
-      "Want short-term",
-      "Want hookup",
-      "Want platonic",
-      "Want poly"
-  ]},
-  {
-    "prompt": "What are your deal breakers?",
-    "options": [
-      "must have college degree",
-      "must be tall",
-      "must like pets",
-      "must want kids",
-      "must not want kids",
-      "must be active",
-      "must be Democrat",
-      "must be Republican",
-      "must be religious",
-      "must NOT be religious"
-    ]
-  },
-  {
-    "prompt": "What are your stats?",
-    "options": [
-      "doctor",
-      "lawyer",
-      "yoga teacher",
-      "fitness professional",
-      "health professional",
-      "teacher",
-      "scientist",
-      "engineer",
-      "sales professional",
-      "artist",
-      "high school graduate",
-      "college graduate",
-      "master degree",
-      "PhD",
-      "never married",
-      "no kids",
-      "got kid(s)",
-      "tall",
-      "White",
-      "Asian",
-      "Latin",
-      "Black",
-      "Mixed ethnicity"
-    ]
-  },
-  {
-    "prompt": "What is your lifestyle?",
-    "options": [
-      "gym rat",
-      "bookworm",
-      "movie lover",
-      "political debater",
-      "couch potato",
-      "nature buff",
-      "family oriented",
-      "art lover",
-      "traveler",
-      "foodie",
-      "DIY lover",
-      "city slicker",
-      "country person",
-      "dreamer",
-      "vegan",
-      "meat eater",
-      "bathtub and wine devotee"
-    ]
-  },
-  {
-    "prompt": "What is your personality?",
-    "options": [
-      "laugh at myself",
-      "love to laugh",
-      "great sense of humor",
-      "adventurous",
-      "intellectual",
-      "open-minded",
-      "great listener",
-      "easy going",
-      "ambitious",
-      "colorful",
-      "curious",
-      "old soul",
-      "child at heart",
-      "hard to pin down",
-      "from a family with big personalities",
-      "quirky like Zooey",
-      "social butterfly",
-      "life of the party",
-      "good listener",
-      "spontaneous",
-      "educated",
-      "passionate",
-      "dare devil",
-      "neat freak",
-      "hard worker",
-      "complete package",
-      "sarcastic",
-      "tell it like it is",
-      "driven",
-      "down to earth",
-      "youngest child"
-    ]
-  },
-  {
-    "prompt": "What are your hobbies?",
-    "options": [
-      "Yoga",
-      "Working out",
-      "Running",
-      "Swimming",
-      "Hiking",
-      "Rock climbing",
-      "Dining out",
-      "Concerts",
-      "Dancing",
-      "Watching movies",
-      "Watching sports",
-      "Sleeping",
-      "Traveling",
-      "Snowboarding",
-      "Skiing",
-      "Surfing",
-      "Golfing",
-      "Fishing",
-      "Reading",
-      "Visit museums",
-      "Cooking",
-      "Writing",
-      "Coffee and conversation",
-      "Volunteer",
-      "Cat",
-      "Dog",
-      "Sky diving"
-    ]
-  },
-  {
-    "prompt": "What kind of substance use do you enjoy?",
-    "options": [
-      "Sugar is the devil",
-      "Social drinker",
-      "Smoker",
-      "Cigar aficionado",
-      "420 friendly",
-      "Happy psychedelics",
-      "Whiskey lover",
-      "Home brewer"
-    ]
-  },
-  {
-    "prompt": "What are you attracted to?",
-    "options": [
-      "sapiosexual",
-      "family and god",
-      "career oriented",
-      "love volunteering",
-      "live like you mean it",
-      "polymath",
-      "healthy lifestyle"
-    ]
-  }
-]}
+{
+  "questions": [
+    {
+      "prompt": "What are your relationship goals?",
+      "options": [
+        "wants marriage",
+        "wants long-term",
+        "wants short-term",
+        "wants casual",
+        "wants platonic",
+        "wants poly"
+      ]
+    },
+    {
+      "prompt": "What are your deal breakers?",
+      "options": [
+        "must have college degree",
+        "tall men only",
+        "must like pets",
+        "must want kids",
+        "must NOT want kids",
+        "must be active",
+        "must be loyal",
+        "must be spiritual",
+        "must NOT be spiritual"
+      ]
+    },
+    {
+      "prompt": "What do you do for a living?",
+      "options": [
+        "lawyer",
+        "fitness professional",
+        "health professional",
+        "teacher",
+        "scientist",
+        "engineer",
+        "sales professional",
+        "artist",
+        "writer",
+        "student",
+        "grad student",
+        "PhD student"
+      ]
+    },
+    {
+      "prompt": "What is your ethnicity?",
+      "Options": [
+        "Asian",
+        "White",
+        "Latin",
+        "Black",
+        "Native American",
+        "Middle Eastern",
+        "Indian",
+        "Mixed ethnicity"
+      ]
+    },
+    {
+      "prompt": "What is your lifestyle?",
+      "options": [
+        "gym rat",
+        "bookworm",
+        "movie lover",
+        "political debater",
+        "couch potato",
+        "nature lover",
+        "love my family",
+        "art lover",
+        "traveler",
+        "foodie",
+        "nature buff",
+        "city slicker",
+        "country person",
+        "dreamer",
+        "vegan",
+        "meat eater",
+        "bathtub and wine devotee"
+      ]
+    },
+    {
+      "prompt": "What is your personality?",
+      "options": [
+        "laugh at myself",
+        "love to laugh",
+        "adventurous",
+        "open-minded",
+        "easygoing",
+        "hard to pin down",
+        "ambitious",
+        "hilarious",
+        "colorful",
+        "optimistic",
+        "old soul",
+        "sarcastic",
+        "neat freak",
+        "tell it like it is",
+        "child at heart",
+        "spontaneous",
+        "daredevil",
+        "honest",
+        "down to earth",
+        "complete package"
+      ]
+    },
+    {
+      "prompt": "What are your hobbies?",
+      "options": [
+        "yoga",
+        "running",
+        "swimming",
+        "hiking",
+        "rock climbing",
+        "brunching",
+        "dancing",
+        "Netflix binging",
+        "traveling",
+        "reading",
+        "gourmet cooking",
+        "writing",
+        "volunteering"
+      ]
+    },
+    {
+      "prompt": "What kind of substances do you enjoy, if any?",
+      "options": [
+        "sugar",
+        "social drinker",
+        "smoker",
+        "420 friendly",
+        "happy psychedelics",
+        "whiskey lover",
+        "home brewer",
+        "none"
+      ]
+    },
+    {
+      "prompt": "What are you attracted to in a partner?",
+      "options": [
+        "sapiosexual",
+        "Interested in family and religion",
+        "must be career-oriented",
+        "looking for polymath",
+        "looking for farmers’ market buddy",
+        "looking for Netflix & chill cuddler",
+        "loves honesty",
+        "digs a sense of humor",
+        "must be charismatic",
+        "must be confident",
+        "must be humble",
+        "must be reliable",
+        "must be trustworthy"
+      ]
+    }
+  ]
+}
+
