@@ -113,26 +113,92 @@
     <!-- About Activity -->
     <string name="about_app_heading">About Beeline App</string>
     <string name="about_app_body_text">
-        Beeline is an Android app for online dating. You compare two profiles and pick the one you
-        like better. With enough comparison picks, the app will create a ranking from whom you like
-        the most to least.\n
+        Compare-to-rank revolutionizes online dating. Dating is a two sided problem. You can find
+        out the hard way who likes you through weeding outs tons of “hi” messages that go nowhere.
+        Or you can use Beeline.
         \n
-        You\'ll then get your best mutual choices based on this ranking, with a maximum 10 matches.
+        \nWe\'ll show you two profiles, and you pick the one you feel more attracted to. The app will
+        ask you to compare your favorite profile against another winning profile. Choosing the same
+        profiles over others again? They’re definitely your soulmates. (Just kidding. But they are
+        your top picks.)
         \n
-        Of course, there\'s a chance that you and your main squeeze are a niche. Say you are both
-        into punk. You might like each other back immediately and hit it off.
+        \nAt the same time, everyone else compares and ranks profiles. Once a day, an algorithm
+        matches people for the highest mutual attraction. Think mutual super likes, not simple
+        swipe-right likes.
     </string>
-    <string name="about_background_heading">Background</string>
+    <string name="about_background_heading">In-Depth</string>
     <string name="about_background_body_text">
-        We\'ve all been there: hours of swiping that go nowhere; annoyingly creepy messages;
-        conversations that fizzle and die. It can be damn hard to meet someone you like who also likes you back.\n
+        Tired of endless unanswered messages? Totally over those awkward “hello\'s” that go nowhere
+        and ready to match with someone who really likes you back?
         \n
-        Fortunately, Beeline\'s got your back. Through your comparisons, it knows exactly how much you are attracted to each person
-        and who is highly attracted back. Beeline then matches you ONLY with 
-        people who have the highest mutual attraction. Think mutual super likes, not simply likes. \n 
+        \nWith Beeline, you are in control of who matches with you. Why trust an algorithm to pick
+        your soulmate anyway? A computer can match two people with similar interests, but it can\'t
+        determine the why behind why they do what they do. Just because they both love Daredevil
+        doesn\'t necessarily mean they’re compatible.
         \n
-        No more wasting time on sending hundreds of messages with zero responses. Focus on your chosen few 
-        and let those sparks fly. What are you waiting for?
+        \nWe, on the other hand, constantly size up people and choose who we want to get to know. We
+        spend our lives reading people. With Beeline, you get to keep reading people. You are the
+        algorithm.
+        \n
+        \nSound too good to be true?
+        \n
+        \nA game-proof mechanism ensures that if your guy chose you, he truly picked you over
+        everyone else.
+        \n
+        \nHere\'s how: You\'ll be shown two profiles side by side. We\'ve distilled robust
+        information on each person into an easy-to-read profile. You decide whom you you\'d rather
+        date: Artsy boy with a soft spot for vegan ice cream, or sexy geek who enjoys jazz shows?
+        Over consecutive comparisons, you teach the app which guys you find most attractive.
+        Repeatedly picking the same guy over others? He might just be your other pea in a pod.
+        \n
+        \nAnd get this: Guys go through the same process. They also have to choose one girl over the
+        others, so there can be only a handful of girls who keep winning. (Think no swiping right on
+        every girl.) Only those with the strongest mutual attraction get matched.
+        \n
+        \nAt this point, you have both handpicked each other. It’s not just a swiped, casual like.
+        You can send each other meaningful messages assured that there is high mutual interest.
+        \n
+        \nSay goodbye to low-investment matches. Say hello to meaningful conversations and highest
+        mutual attraction.
+    </string>
+    <string name="about_faq_heading">FAQ</string>
+    <string name="about_faq_body_text">
+        <b>Q: I find rating people demeaning.</b>\n
+        A: We do, too! Beeline is not about rating people. You choose whom you’d rather meet based
+        on the profiles you see. Do you prefer a snowboarder over a hobby gardener?\n
+    \n
+        <b>Q: What if I like both profiles?</b>\n
+        A: The same profiles will come up in future match-ups. Taking all these match-ups together,
+        the app will realize that you like them both very similarly.\n
+    \n
+        <b>Q: What if I select the wrong profile by mistake?</b>\n
+        A: Don\'t worry about it. The app will match-up the profiles against other profiles later.
+        The wrong tap will be recognized as an anomaly. Simply keep comparing more profiles.\n
+    \n
+        <b>Q: This seems like a popularity contest.</b>\n
+        A: Beeline only matches you with people who really like you back, which means you are free
+        to be yourself. Enjoy a relaxing night in writing poetry and listening to Coltrane? Love
+        being the life of the party? You may just find a special someone who is into that, too.\n
+    \n
+        Another unique aspect of the app is “local peaks” in the distribution: Within certain
+        subgroups different people win the popularity contest. Say if you are a skateboarding punk,
+        you are likely attracted to people inside of that group. If you love hiking and nature, you
+        are likely attracted to people inside of that group. Beeline helps you find your people.\n
+    \n
+        <b>Q: Why am I not getting matched with the people that I select?</b>\n
+        A: With Beeline, we cut to the chase: you only get matched with people who really like you
+        back.\n
+    \n
+        <b>Q: I don’t have anybody to compare!</b>\n
+        A: Beeline is a brand new app with an innovative and superior approach, but enough users
+        have to give us a chance to get this off the ground. If you don’t have anyone to match, it
+        means you are the first person in your area. Help us out: tell your single friends about
+        Beeline!\n
+    \n
+        <b>Q: How can I close my account?</b>\n
+        A: This is a brand new app, and we are still adding more features. Please email
+        <a href="mailto:thomas@playposse.com?subject=Please, close my Beeline account">thomas@playposse.com</a>
+        to close your account.
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
