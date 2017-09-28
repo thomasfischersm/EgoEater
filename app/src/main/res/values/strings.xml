@@ -337,6 +337,13 @@
 \n4. Discover your top 10 mutual attraction matches.
     </string>
 
+    <string name="comparison_info_title">Compare profiles</string>
+    <string name="comparison_info_body">
+        1. Review the profiles.
+\n2. Tap your preferred profile for a date.
+\n3. Rinse and repeat.
+    </string>
+
     <!-- Common button labels -->
     <string name="dialog_okay_button">Okay</string>
     <string name="dialog_continue_button">Continue</string>

@@ -46,9 +46,11 @@ public final class EgoEaterPreferences {
     private static final String PISSED_OFF_USERS_KEY = "pissedOffUsers";
     private static final String PROFILE_BUILDER_LAST_USER_DATA = "profileBuilderLastUserData";
     private static final String PROFILE_BUILDER_LAST_PROFILE_TEXT = "profileBuilderlastProfileText";
+    private static final String HAS_SEEN_COMPARISON_INFO_KEY = "hasSeenComparisonInfo";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
+    private static final boolean HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
     private static final int QUERY_RADIUS_DEFAULT = 0;
 
@@ -248,6 +250,17 @@ public final class EgoEaterPreferences {
 
     public static void setProfileBuilderLastProfileText(Context context, String profileText) {
         setString(context, PROFILE_BUILDER_LAST_PROFILE_TEXT, profileText);
+    }
+
+    public static boolean hasSeenComparisonInfo(Context context) {
+        return getBoolean(
+                context,
+                HAS_SEEN_COMPARISON_INFO_KEY,
+                HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE);
+    }
+
+    public static void setHasSeenComparisonInfo(Context context, boolean hasSeenComparisonInfo) {
+        setBoolean(context, HAS_SEEN_COMPARISON_INFO_KEY, hasSeenComparisonInfo);
     }
 
     private static String getString(Context context, String key) {
