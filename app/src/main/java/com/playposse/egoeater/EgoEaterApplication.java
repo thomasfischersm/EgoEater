@@ -13,7 +13,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.MatchTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService;
-import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.NetworkConnectivityBroadcastReceiver;
 
 /**
@@ -39,7 +38,7 @@ public class EgoEaterApplication extends MultiDexApplication {
 
 //        getApplicationContext().deleteDatabase("egoEaterDb");
 //        createTestMatches();
-        EgoEaterPreferences.reset(getApplicationContext());
+//        EgoEaterPreferences.reset(getApplicationContext());
     }
 
     @Override

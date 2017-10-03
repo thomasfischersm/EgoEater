@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/beeline_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
             android:resource="@xml/analytics_global_config" />
@@ -146,6 +145,7 @@
             android:name=".activity.ProfileBuilderActivity"
             android:parentActivityName=".activity.EditProfileActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ProfileNotReadyActivity"></activity>
     </application>
 
 </manifest>

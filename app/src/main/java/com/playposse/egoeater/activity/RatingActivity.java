@@ -3,20 +3,18 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.DatabaseDumper;
+import com.playposse.egoeater.util.ProfileUtil;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 
@@ -63,7 +61,11 @@ public class RatingActivity
 
         threadPoolExecutor = Executors.newCachedThreadPool();
 
-        new LoadPairingAsyncTask().executeOnExecutor(Executors.newCachedThreadPool());
+        if (ProfileUtil.isReady(this)) {
+            new LoadPairingAsyncTask().executeOnExecutor(Executors.newCachedThreadPool());
+        } else {
+            startActivity(new Intent(this, ProfileNotReadyActivity.class));
+        }
     }
 
     @Override

@@ -222,6 +222,15 @@
     </string>
 
 
+    <!-- Profile not ready activity -->
+    <string name="profile_not_ready_heading">Not so fast!</string>
+    <string name="profile_not_ready_message">
+        Before you get to look at profiles, you have to complete your own profile.
+        \n
+        \nPlease ensure that you have a main photo and bio.
+    </string>
+
+
     <!-- Profile Builder -->
     <string name="profile_builder_title">Profile builder</string>
     <string name="reset_link">Reset</string>
@@ -374,4 +383,7 @@
     <string name="unmatch_notification_text">You have been unmatched.</string>
     <string name="not_logged_in_notification_title">Matches were recalculated!</string>
     <string name="not_logged_in_notification_text">Please, log in to check if there is someone new for you!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
