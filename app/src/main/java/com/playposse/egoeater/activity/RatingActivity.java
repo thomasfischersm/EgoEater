@@ -5,13 +5,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.DatabaseDumper;
 import com.playposse.egoeater.util.ProfileUtil;
+import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -97,12 +100,32 @@ public class RatingActivity
     }
 
     @Override
-    public void onProfileSelected(ProfileParcelable profile) {
+    public void onProfileSelected(final ProfileParcelable profile) {
         if (profile == null) {
             Log.e(LOG_TAG, "onProfileSelected: Got a null profile!");
             return;
         }
 
+        if (EgoEaterPreferences.hasFirstProfileBeenSelected(this)) {
+            onProfileConfirmed(profile);
+        } else {
+            SimpleAlertDialog.confirm(
+                    this,
+                    R.string.first_selection_dialog_header,
+                    R.string.first_selection_dialog_message,
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            EgoEaterPreferences.setFirstProfileBeenSelected(
+                                    RatingActivity.this,
+                                    true);
+                            onProfileConfirmed(profile);
+                        }
+                    });
+        }
+    }
+
+    private void onProfileConfirmed(ProfileParcelable profile) {
         if (threadPoolExecutor != null) {
             new StoreRatingAsyncTask(pairing, leftProfile, rightProfile, profile)
                     .executeOnExecutor(threadPoolExecutor);

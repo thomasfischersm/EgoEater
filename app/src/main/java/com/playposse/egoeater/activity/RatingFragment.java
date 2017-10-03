@@ -42,7 +42,6 @@ public class RatingFragment extends Fragment {
 
         if (!EgoEaterPreferences.hasSeenComparisonInfo(getContext())) {
             showFeatureDiscover();
-            EgoEaterPreferences.setHasSeenComparisonInfo(getContext(), true);
         }
     }
 
@@ -78,6 +77,13 @@ public class RatingFragment extends Fragment {
                         .tintTarget(true)                   // Whether to tint the target view's color
                         .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                         //.icon(Drawable)                     // Specify a custom drawable to draw as the target
-                        .targetRadius(60));                  // Specify the target radius (in dp)
+                        .targetRadius(60),                    // Specify the target radius (in dp)
+                new TapTargetView.Listener() {
+                    @Override
+                    public void onTargetDismissed(TapTargetView view, boolean userInitiated) {
+                        EgoEaterPreferences.setHasSeenComparisonInfo(getContext(), true);
+                    }
+                });
+
     }
 }

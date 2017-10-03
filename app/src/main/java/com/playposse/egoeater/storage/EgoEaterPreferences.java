@@ -47,10 +47,12 @@ public final class EgoEaterPreferences {
     private static final String PROFILE_BUILDER_LAST_USER_DATA = "profileBuilderLastUserData";
     private static final String PROFILE_BUILDER_LAST_PROFILE_TEXT = "profileBuilderlastProfileText";
     private static final String HAS_SEEN_COMPARISON_INFO_KEY = "hasSeenComparisonInfo";
+    private static final String HAS_FIRST_PROFILE_BEEN_SELECTED_KEY = "hasFirstProfileBeenSelected";
 
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE = false;
+    private static final boolean HAS_FIRST_PROFILE_BEEN_SELECTED_KEY_DEFAULT_VALUE = false;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
     private static final int QUERY_RADIUS_DEFAULT = 0;
 
@@ -261,6 +263,20 @@ public final class EgoEaterPreferences {
 
     public static void setHasSeenComparisonInfo(Context context, boolean hasSeenComparisonInfo) {
         setBoolean(context, HAS_SEEN_COMPARISON_INFO_KEY, hasSeenComparisonInfo);
+    }
+
+    public static boolean hasFirstProfileBeenSelected(Context context) {
+        return getBoolean(
+                context,
+                HAS_FIRST_PROFILE_BEEN_SELECTED_KEY,
+                HAS_FIRST_PROFILE_BEEN_SELECTED_KEY_DEFAULT_VALUE);
+    }
+
+    public static void setFirstProfileBeenSelected(
+            Context context,
+            boolean hasFirstProfileBeenSelected) {
+
+        setBoolean(context, HAS_FIRST_PROFILE_BEEN_SELECTED_KEY, hasFirstProfileBeenSelected);
     }
 
     private static String getString(Context context, String key) {

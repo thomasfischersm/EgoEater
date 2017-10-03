@@ -56,6 +56,12 @@
     <!-- RatingActivity -->
     <string name="distance_snippet">&#160;(%1$d miles)</string>
     <string name="choose_hint">or</string>
+    <string name="first_selection_dialog_header">You tapped a profile</string>
+    <string name="first_selection_dialog_message">
+        Tap a profile to tell us that you prefer that person.
+        \n
+        \nWe\'ll show you the next profiles to compare.
+    </string>
 
     <!-- No more pairings available activity -->
     <string name="no_more_pairings_heading">
