@@ -269,7 +269,7 @@
     <string name="drawer_open">Navigation drawer opens</string>
     <string name="drawer_close">Navigation drawer closes</string>
     <string name="profile_nav">Profile</string>
-    <string name="rating_nav">Rating</string>
+    <string name="rating_nav">Comparing</string>
     <string name="matches_nav">Matches</string>
     <string name="send_feedback_nav">Send feedback</string>
     <string name="about_nav">About</string>
@@ -278,7 +278,7 @@
 
     <!-- Activity selection bar -->
     <string name="profile_activity_selector">Profile</string>
-    <string name="rating_activity_selector">Rating</string>
+    <string name="rating_activity_selector">Comparing</string>
     <string name="matches_activity_selector">Matches</string>
 
 
