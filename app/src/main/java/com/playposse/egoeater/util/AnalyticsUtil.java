@@ -32,6 +32,9 @@ public class AnalyticsUtil {
                 .setCategory(category.name())
                 .setAction(action)
                 .build());
+
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableExceptionReporting(true);
     }
 
     public static void reportScreenName(Application defaultApp, String screenName) {

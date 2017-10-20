@@ -1,6 +1,5 @@
 package com.playposse.egoeater.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -15,7 +14,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +28,6 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
-import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.EmailUtil;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.LogoutUtil;
@@ -66,11 +63,11 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             setContentView(activityResId);
         } else {
             setContentView(R.layout.activity_parent);
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-            mainFragmentContainer = (LinearLayout) findViewById(R.id.mainFragmentContainer);
-            navigationView = (NavigationView) findViewById(R.id.navigationView);
-            infoImageView = (ImageView) findViewById(R.id.infoImageView);
-            activityTabLayout = (TabLayout) findViewById(R.id.activityTabLayout);
+            drawerLayout = findViewById(R.id.drawerLayout);
+            mainFragmentContainer = findViewById(R.id.mainFragmentContainer);
+            navigationView = findViewById(R.id.navigationView);
+            infoImageView = findViewById(R.id.infoImageView);
+            activityTabLayout = findViewById(R.id.activityTabLayout);
 
             drawerToggle = new ActionBarDrawerToggle(
                     this,
@@ -100,7 +97,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             activityTabLayout.addOnTabSelectedListener(tabSelectedListener);
         }
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         applyCustomFontToActionBar();
 
