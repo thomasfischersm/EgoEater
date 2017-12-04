@@ -22,9 +22,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
         <meta-data
-            android:name="com.playposse.egoeater.glide.EgoEaterGlideModule"
-            android:value="GlideModule" />
-        <meta-data
             android:name="io.fabric.ApiKey"
             android:value="5e6d81f10c3b91abdbb377d69ca013c8a8fecb3e" />
 

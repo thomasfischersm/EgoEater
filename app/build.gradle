@@ -76,19 +76,25 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services-location:11.6.2'
     compile 'com.google.android.gms:play-services-analytics:11.6.2'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:facebook-core:4.+'
+    compile 'com.facebook.android:facebook-login:4.+'
     compile 'com.google.code.findbugs:jsr305:3.0.2'
     compile 'com.google.firebase:firebase-core:11.6.2'
     compile 'com.google.firebase:firebase-messaging:11.6.2'
     compile 'com.google.firebase:firebase-analytics:11.6.2'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
-    compile 'com.github.bumptech.glide:glide:4.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.3.1'
+//    implementation 'com.github.bumptech.glide:okhttp3-integration:4.3.1@aar'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
     compile 'com.android.support:multidex:1.0.2'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.http-client:google-http-client-android:1.23.0'
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+
     testCompile 'junit:junit:4.12'
+
     androidTestCompile 'com.android.volley:volley:1.0.0'
 }
 

@@ -14,14 +14,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
+import com.playposse.egoeater.glide.GlideApp;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.SimpleAlertDialog;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -184,13 +184,16 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
             GlobalRouting.onCloudError(this);
         }
 
-        Glide
+        GlideApp
                 .with(this)
-                .load(fbPhotoUrl)
                 .asBitmap()
+                .load(fbPhotoUrl)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                    public void onResourceReady(
+                            Bitmap bitmap,
+                            Transition<? super Bitmap> transition) {
+
                         // Set the image manually, so that Glide won't do any resizing of the photo.
                         // For the cropping to work, the maximum resolution (not the screen
                         // resolution) has to be used.

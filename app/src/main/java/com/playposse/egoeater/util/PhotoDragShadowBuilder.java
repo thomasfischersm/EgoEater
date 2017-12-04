@@ -8,14 +8,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View.DragShadowBuilder;
 import android.widget.ImageView;
 
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.playposse.egoeater.R;
 
 /**
@@ -62,15 +59,16 @@ public class PhotoDragShadowBuilder extends DragShadowBuilder {
             Drawable shadowDrawable = scaleBitmapDrawable((BitmapDrawable) photoDrawable);
             shadowDrawable.draw(canvas);
             Log.i(LOG_TAG, "onDrawShadow: Drew scaled BitmapDrawable");
-        } else if (photoDrawable instanceof GlideBitmapDrawable) {
-            // Try to scale the photo.
-            Drawable shadowDrawable = scaleBitmapDrawable((GlideBitmapDrawable) photoDrawable);
-            shadowDrawable.draw(canvas);
-            Log.i(LOG_TAG, "onDrawShadow: Drew scaled GlideBitmapDrawable");
+//        } else if (photoDrawable instanceof GlideBitmapDrawable) {
+//            // Try to scale the photo.
+//            Drawable shadowDrawable = scaleBitmapDrawable((GlideBitmapDrawable) photoDrawable);
+//            shadowDrawable.draw(canvas);
+//            Log.i(LOG_TAG, "onDrawShadow: Drew scaled GlideBitmapDrawable");
         } else {
             // Fall back to drawing the photo without scaling.
             photoDrawable.draw(canvas);
-            Log.i(LOG_TAG, "onDrawShadow: Drew unscaled photo");
+            Log.e(LOG_TAG, "onDrawShadow: Drew unscaled photo of "
+                    + photoDrawable.getClass().getName());
         }
     }
 
@@ -80,10 +78,10 @@ public class PhotoDragShadowBuilder extends DragShadowBuilder {
     }
 
 
-    @NonNull
-    private Drawable scaleBitmapDrawable(GlideBitmapDrawable photoDrawable) {
-        return scaleBitmapDrawable(photoDrawable.getBitmap());
-    }
+//    @NonNull
+//    private Drawable scaleBitmapDrawable(GlideBitmapDrawable photoDrawable) {
+//        return scaleBitmapDrawable(photoDrawable.getBitmap());
+//    }
 
     @NonNull
     private Drawable scaleBitmapDrawable(Bitmap photoBitmap) {
