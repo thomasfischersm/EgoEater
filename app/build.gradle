@@ -59,7 +59,7 @@ dependencies {
     compile('com.google.api-client:google-api-client:1.23.0') {
         exclude module: 'httpclient'
     }
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true;
     }
 
