@@ -2,13 +2,13 @@ package com.playposse.egoeater.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -16,21 +16,17 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SignInClientAction;
-import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.util.SimpleAlertDialog;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 
 public class LoginActivity extends ParentActivity {
@@ -74,11 +70,17 @@ public class LoginActivity extends ParentActivity {
                     @Override
                     public void onCancel() {
                         Log.e(LOG_TAG, "Facebook login was canceled.");
+                        Toast.makeText(
+                                LoginActivity.this,
+                                R.string.facebook_login_canceled,
+                                Toast.LENGTH_LONG)
+                                .show();
                     }
 
                     @Override
-                    public void onError(FacebookException error) {
-                        Log.e(LOG_TAG, "Facebook login failed: " + error.getMessage());
+                    public void onError(FacebookException ex) {
+                        Log.e(LOG_TAG, "Facebook login failed: " + ex.getMessage());
+                        throw ex;
                     }
                 });
         Log.i(LOG_TAG, "Facebook callback registered.");

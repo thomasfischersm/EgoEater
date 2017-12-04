@@ -7,6 +7,7 @@
     <string name="tag_line">Direct path to highest mutual attraction.</string>
     <string name="login_button_label">Log in with Facebook</string>
     <string name="background_content_description">Background texture</string>
+    <string name="facebook_login_canceled">Facebook login was cancelled.</string>
 
     <!-- Introduction deck activity -->
     <string name="getting_started_button">Get started</string>
