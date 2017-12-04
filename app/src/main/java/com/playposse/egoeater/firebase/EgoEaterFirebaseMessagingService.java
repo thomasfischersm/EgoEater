@@ -8,7 +8,6 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.firebase.actions.FirebaseClientAction;
 import com.playposse.egoeater.firebase.actions.NotifyMessageReadClientAction;
@@ -58,6 +57,12 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
 
         if (data == null) {
             // Ignore. This might be a test message from the Firebase console.
+            Log.e(LOG_CAT, "onMessageReceived: Received a Firebase message without data!");
+            return;
+        }
+
+        if (data.get(TYPE_KEY) == null) {
+            Log.e(LOG_CAT, "onMessageReceived: Received a Firebase message without a type!");
             return;
         }
 
