@@ -33,7 +33,8 @@ public class GlobalRouting {
      * </ul>
      */
     public static void onStartup(Context context) {
-        if (EgoEaterPreferences.getSessionId(context) == null) {
+        if ((EgoEaterPreferences.getSessionId(context) == null)
+                || (EgoEaterPreferences.getUser(context) == null)) {
             context.startActivity(new Intent(context, LoginActivity.class));
         } else {
             onLoginComplete(context);

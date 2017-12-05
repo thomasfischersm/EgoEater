@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
@@ -75,6 +76,11 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
         setSupportActionBar(toolbar);
 
         UserBean userBean = EgoEaterPreferences.getUser(this);
+        if (userBean == null) {
+            // Be defensive. This NPE shows up in Crashlytics.
+            GlobalRouting.onStartup(this);
+            return;
+        }
         ProfileParcelable profile = new ProfileParcelable(userBean);
         originalProfileText = profile.getProfileText();
 
