@@ -1,7 +1,6 @@
 package com.playposse.egoeater.activity;
 
 import android.content.ClipData;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,6 +40,12 @@ public class ProfileBuilderSummaryFragment extends Fragment {
 
     private ProfileUserData profileUserData;
     private ProfileSummaryAdapter profileSummaryAdapter;
+
+    /**
+     * Stores the textPadding. For some reason, the drag operation loses the padding. So, it has
+     * to be restored at the end of the drag operation.
+     */
+    private Integer textPadding;
 
     public ProfileBuilderSummaryFragment() {
         // Required empty public constructor
@@ -143,6 +148,11 @@ public class ProfileBuilderSummaryFragment extends Fragment {
             // Initiate drag'n'drop.
             textView.setOnTouchListener(new StartDragTouchListener(textView, position));
             textView.setOnDragListener(new SummaryDragListener(position));
+
+            // Store text padding to restore it later.
+            if (textPadding == null) {
+                textPadding = textView.getPaddingTop();
+            }
         }
 
         @Override
@@ -224,7 +234,13 @@ public class ProfileBuilderSummaryFragment extends Fragment {
                     moveSummary(fromPosition, position);
                     return true;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    view.setBackgroundColor(Color.TRANSPARENT);
+                    view.setBackgroundResource(R.drawable.builder_item_bg);
+
+                    // I don't know why this has to be set again here. For some reason, the padding
+                    // gets lost after dragging.
+                    if (textPadding != null) {
+                        view.setPadding(textPadding, textPadding, textPadding, textPadding);
+                    }
                     return true;
                 default:
                     Log.e(LOG_TAG, "onDrag: Unknown drag action type: " + event.getAction());
