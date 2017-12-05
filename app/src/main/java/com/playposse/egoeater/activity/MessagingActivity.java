@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.ExtraConstants;
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.GetMaxMessageIndexClientAction;
@@ -92,13 +93,20 @@ public class MessagingActivity
         }
 
         // Find the views.
-        messagesRecyclerView = (RecyclerView) findViewById(R.id.messagesRecyclerView);
-        noMessagesTextView = (TextView) findViewById(R.id.noMessagesTextView);
-        newMessageEditText = (EditText) findViewById(R.id.newMessageEditText);
-        sendImageView = (ImageView) findViewById(R.id.sendImageView);
+        messagesRecyclerView = findViewById(R.id.messagesRecyclerView);
+        noMessagesTextView = findViewById(R.id.noMessagesTextView);
+        newMessageEditText = findViewById(R.id.newMessageEditText);
+        sendImageView = findViewById(R.id.sendImageView);
 
         // Look up information in the intent and preferences.
-        profileId = EgoEaterPreferences.getUser(this).getUserId();
+        Long userId = EgoEaterPreferences.getUser(this).getUserId();
+        if (userId == null) {
+            // This strange case shows up in the logs. I don't know how the userId could be null
+            // for this activity. Let's send the user back to the login screen.
+            GlobalRouting.onStartup(this);
+            return;
+        }
+        profileId = userId;
         partnerId = ExtraConstants.getProfileId(getIntent());
 
         // Build the RecyclerView for messages.
