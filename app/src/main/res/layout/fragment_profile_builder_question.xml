@@ -5,6 +5,7 @@
     android:orientation="vertical"
     tools:context="com.playposse.egoeater.activity.ProfileBuilderQuestionFragment">
 
+    <include layout="@layout/include_profile_preview" />
 
     <TextView
         android:id="@+id/questionTextView"

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.playposse.egoeater.util.BottomCropImageView
+        android:id="@+id/profilePhotoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/scrimContainer"
+        android:layout_alignEnd="@+id/scrimContainer"
+        android:layout_alignLeft="@+id/scrimContainer"
+        android:layout_alignRight="@+id/scrimContainer"
+        android:layout_alignStart="@+id/scrimContainer"
+        android:layout_alignTop="@+id/scrimContainer"
+        android:layout_gravity="bottom"/>
+
+    <LinearLayout
+        android:id="@+id/scrimContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:background="@drawable/scrim_bg"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/headlineTextView"
+            style="@style/headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="25dp"
+            android:textColor="@color/primaryTextColorDark"/>
+
+        <TextView
+            android:id="@+id/subHeadTextView"
+            style="@style/body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="5dp"
+            android:lines="2"
+            android:textColor="@color/secondaryScrimTextDark"/>
+    </LinearLayout>
+</RelativeLayout>

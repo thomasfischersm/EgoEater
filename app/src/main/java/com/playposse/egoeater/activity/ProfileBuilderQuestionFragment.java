@@ -1,6 +1,7 @@
 package com.playposse.egoeater.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,16 +14,25 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.data.profilewizard.ProfileAnswer;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
 import com.playposse.egoeater.data.profilewizard.ProfileQuestion;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.GlideUtil;
+import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.StringUtil;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A {@link Fragment} that shows a question to the user and offers options for the user to check
@@ -34,8 +44,11 @@ public class ProfileBuilderQuestionFragment extends Fragment {
 
     private static final String QUESTION_INDEX_PARAM = "questionIndex";
 
-    private TextView questionTextView;
-    private RecyclerView optionsRecyclerView;
+    @BindView(R.id.questionTextView) TextView questionTextView;
+    @BindView(R.id.optionsRecyclerView) RecyclerView optionsRecyclerView;
+    @BindView(R.id.profilePhotoImageView) ImageView profilePhotoImageView;
+    @BindView(R.id.headlineTextView) TextView headlineTextView;
+    @BindView(R.id.subHeadTextView) TextView subHeadTextView;
 
     private int questionIndex;
     private ProfileBuilderConfiguration profileBuilderConfiguration;
@@ -63,15 +76,14 @@ public class ProfileBuilderQuestionFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
+            @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
 
         View rootView =
                 inflater.inflate(R.layout.fragment_profile_builder_question, container, false);
 
-        questionTextView = (TextView) rootView.findViewById(R.id.questionTextView);
-        optionsRecyclerView = (RecyclerView) rootView.findViewById(R.id.optionsRecyclerView);
+        ButterKnife.bind(this, rootView);
 
         Fragment parentFragment = getFragmentManager().findFragmentById(R.id.mainFragmentContainer);
         if (parentFragment instanceof ProfileBuilderFragment) {
@@ -87,7 +99,35 @@ public class ProfileBuilderQuestionFragment extends Fragment {
         questionTextView.setText(questionPrompt);
         optionsRecyclerView.setAdapter(new OptionsAdapter());
         optionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Build preview
+        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl1(getActivity());
+        GlideUtil.load(profilePhotoImageView, photoUrl);
+        refreshPreview();
+
         return rootView;
+    }
+
+    /**
+     * Sets the data  for the profile text preview. This lets the user see approximately how much of
+     * the profile text will be visible.
+     */
+    void refreshPreview() {
+        if (profileUserData == null) {
+            // This is called very early in the lifecycle stage. Let's wait for later.
+            return;
+        }
+
+        // Need to refresh to get the latest state.
+        profileUserData.refreshOrder();
+
+        UserBean userBean = EgoEaterPreferences.getUser(getContext());
+        userBean.setProfileText(profileUserData.toString(getContext()));
+        ProfileParcelable profile = new ProfileParcelable(userBean);
+
+        headlineTextView.setText(ProfileFormatter.formatNameAndAge(getContext(), profile));
+        subHeadTextView.setText(
+                ProfileFormatter.formatCityStateDistanceAndProfile(getContext(), profile));
     }
 
     /**
@@ -154,7 +194,7 @@ public class ProfileBuilderQuestionFragment extends Fragment {
             OptionsViewHolder(View rootView) {
                 super(rootView);
 
-                optionCheckBox = (CheckBox) rootView.findViewById(R.id.optionCheckBox);
+                optionCheckBox = rootView.findViewById(R.id.optionCheckBox);
             }
 
             abstract void onBindViewHolder(int position);
@@ -174,7 +214,7 @@ public class ProfileBuilderQuestionFragment extends Fragment {
             RegularOptionsViewHolder(View rootView) {
                 super(rootView);
 
-                optionTextView = (TextView) rootView.findViewById(R.id.optionTextView);
+                optionTextView = rootView.findViewById(R.id.optionTextView);
             }
 
             @Override
@@ -193,7 +233,10 @@ public class ProfileBuilderQuestionFragment extends Fragment {
                 getOptionCheckBox().setOnCheckedChangeListener(
                         new CompoundButton.OnCheckedChangeListener() {
                             @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            public void onCheckedChanged(
+                                    CompoundButton buttonView,
+                                    boolean isChecked) {
+
                                 boolean isSelected =
                                         selectedOptions.contains(optionText);
 
@@ -202,6 +245,8 @@ public class ProfileBuilderQuestionFragment extends Fragment {
                                 } else if (!isChecked && isSelected) {
                                     selectedOptions.remove(optionText);
                                 }
+
+                                refreshPreview();
                             }
                         });
 
@@ -229,9 +274,9 @@ public class ProfileBuilderQuestionFragment extends Fragment {
             OtherOptionViewHolder(View rootView) {
                 super(rootView);
 
-                otherOptionEditText = (EditText) rootView.findViewById(R.id.otherOptionEditText);
+                otherOptionEditText = rootView.findViewById(R.id.otherOptionEditText);
 
-                getOtherOptionEditText().addTextChangedListener(new TextWatcher() {
+                otherOptionEditText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                         // Ignore.
@@ -261,6 +306,8 @@ public class ProfileBuilderQuestionFragment extends Fragment {
                                     Log.d(LOG_TAG, "afterTextChanged: Changed checkbox: "
                                             + isNotEmpty);
                                 }
+
+                                refreshPreview();
                             }
                         });
                     }
@@ -288,11 +335,13 @@ public class ProfileBuilderQuestionFragment extends Fragment {
                                     getOtherOptionEditText().setText("");
                                     answer.setOtherAnswer(null);
                                 }
+
+                                refreshPreview();
                             }
                         });
             }
 
-            public EditText getOtherOptionEditText() {
+            EditText getOtherOptionEditText() {
                 return otherOptionEditText;
             }
         }

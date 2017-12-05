@@ -379,6 +379,12 @@ public class ProfileBuilderFragment extends Fragment {
             refreshButtonVisibility(position);
             refreshPageIndex();
 
+            // Tell the fragment that it has become visible to update itself.
+            Fragment fragment = profilePagerAdapter.getItem(position);
+            if (fragment instanceof ProfileBuilderQuestionFragment) {
+                ((ProfileBuilderQuestionFragment) fragment).refreshPreview();
+            }
+
             // Hide keyboard in case it was opened to edit an other option.
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getActivity().getSystemService(
