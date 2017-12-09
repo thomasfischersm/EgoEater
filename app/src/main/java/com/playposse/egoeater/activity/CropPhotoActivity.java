@@ -63,9 +63,9 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
         photoIndex = ExtraConstants.getPhotoIndex(getIntent());
         hasFirstProfilePhoto = EgoEaterPreferences.hasFirstProfilePhoto(this);
 
-        discardImageView = (ImageView) findViewById(R.id.discardImageView);
-        saveTextView = (TextView) findViewById(R.id.saveTextView);
-        cropImageView = (CropImageView) findViewById(R.id.cropImageView);
+        discardImageView = findViewById(R.id.discardImageView);
+        saveTextView = findViewById(R.id.saveTextView);
+        cropImageView = findViewById(R.id.cropImageView);
 
         // If the user hasn't picked a profile photo yet, the user must pick a profile photo to
         // continue.
@@ -83,6 +83,13 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Sanity check because this crashed in production.
+                CropPhotoActivity context = CropPhotoActivity.this;
+                if (EgoEaterPreferences.getSessionId(context) == null) {
+                    GlobalRouting.onSessionExpired(context);
+                    return;
+                }
+
                 showLoadingProgress();
                 new UploadProfilePhotoToServletClientAction(
                         getApplicationContext(),
