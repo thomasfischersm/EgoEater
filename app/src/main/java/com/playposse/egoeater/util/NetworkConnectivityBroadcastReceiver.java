@@ -11,6 +11,8 @@ import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.activity.NoConnectivityActivity;
 import com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * A {@link BroadcastReceiver} that observes the network state. If there is no network connectivity,
  * the user will be directed to a warning page to suspend any possible network activity caused by
@@ -26,7 +28,9 @@ public class NetworkConnectivityBroadcastReceiver extends BroadcastReceiver {
         boolean isOnNoConnectivityActivity = NoConnectivityActivity.class.equals(currentActivity);
 
         if (noConnectivity && (currentActivity != null) && !isOnNoConnectivityActivity) {
-            context.startActivity(new Intent(context, NoConnectivityActivity.class));
+            Intent newActivityIntent = new Intent(context, NoConnectivityActivity.class);
+            newActivityIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(newActivityIntent);
             AnalyticsUtil.reportEvent(application, AnalyticsCategory.connectivityLost, "");
         } else if (isOnNoConnectivityActivity && !noConnectivity) {
             GlobalRouting.onNetworkAvailable(context);
