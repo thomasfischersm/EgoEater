@@ -44,6 +44,7 @@ public class ExtraConstants {
 
     public static void startLoginActivityWithSessionExpirationDialog(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(SESSION_EXPIRED_FLAG, true);
         context.startActivity(intent);
     }
