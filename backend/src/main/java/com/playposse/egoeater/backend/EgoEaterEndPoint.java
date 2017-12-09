@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
 import javax.inject.Named;
 
 /**
@@ -106,7 +107,7 @@ public class EgoEaterEndPoint {
             @Named("latitude") double latitude,
             @Named("longitude") double longitude,
             @Named("city") String city,
-            @Named("state") String state,
+            @Nullable @Named("state") String state,
             @Named("country") String country) throws BadRequestException {
 
         return UpdateLocationServerAction.updateLocation(
