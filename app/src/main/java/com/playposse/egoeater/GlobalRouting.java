@@ -64,7 +64,9 @@ public class GlobalRouting {
      */
     public static void onCloudError(Context context) {
         EgoEaterPreferences.clearSessionId(context);
-        context.startActivity(new Intent(context, LoginActivity.class));
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     /**
