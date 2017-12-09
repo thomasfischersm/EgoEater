@@ -215,6 +215,10 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
 
         // Prepare profile info.
         UserBean userBean = EgoEaterPreferences.getUser(this);
+        if (userBean == null) {
+            GlobalRouting.onSessionExpired(this);
+            return;
+        }
         ProfileParcelable profile = new ProfileParcelable(userBean);
         TextView headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
         TextView subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
