@@ -227,7 +227,7 @@
     <!-- No connectivity activity -->
     <string name="no_connectivity_heading">The network is unavailable.</string>
     <string name="no_connectivity_message">
-        To prevent errors, the Beeline will continue when network access is restored.
+        To prevent errors, Beeline will continue when network access is restored.
     </string>
 
 
@@ -328,6 +328,8 @@
         Your session has expired. Please, log in again.\n\n
         Note: Your session will automatically expire when you sign into a different device.
     </string>
+    <string name="login_connectivity_dialog_title">No network!</string>
+    <string name="login_connectivity_dialog_message">This app requires network access to log in with Facebook and to connect you with awesome people!</string>
 
     <!-- Send Us Feedback option -->
     <string name="feedback_dialog_title">Send us feedback!</string>

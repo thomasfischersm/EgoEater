@@ -25,6 +25,7 @@ import com.playposse.egoeater.clientactions.SignInClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.WaitingForConnectionDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
@@ -104,6 +105,13 @@ public class LoginActivity extends ParentActivity {
         // Load the external font for the logo.
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/nexa_bold.otf");
         logoTextView.setTypeface(typeface);
+
+        // Show network connectivity dialog to block the user from causing Facebook connectivity
+        // errors.
+        WaitingForConnectionDialog.showIfNecessary(
+                this,
+                R.string.login_connectivity_dialog_title,
+                R.string.login_connectivity_dialog_message);
 
         showSessionExpiredDialogIfRequested(savedInstanceState);
     }
