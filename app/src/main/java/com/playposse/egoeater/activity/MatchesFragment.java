@@ -29,7 +29,7 @@ import com.playposse.egoeater.util.NotificationUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
 import com.playposse.egoeater.util.ResponsiveGridLayoutManager;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.playposse.egoeater.util.SmartCursor;
 
 import static android.view.View.GONE;

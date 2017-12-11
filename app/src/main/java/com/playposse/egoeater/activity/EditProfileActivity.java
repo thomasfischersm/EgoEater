@@ -24,7 +24,7 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 /**
  * An {@link Activity} where the user edits the profile text. Contrast this with the

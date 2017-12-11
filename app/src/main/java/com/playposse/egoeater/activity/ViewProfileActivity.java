@@ -21,7 +21,7 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.FuckOffUiHelper;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;

@@ -10,9 +10,9 @@ import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.clientactions.FuckOffClientAction;
 import com.playposse.egoeater.contentprovider.FuckOffUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
-import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 
 /**
  * A class to share the functionality of the fuck off action.

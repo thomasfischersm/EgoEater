@@ -1,4 +1,4 @@
-package com.playposse.egoeater.util;
+package com.playposse.egoeater.util.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;

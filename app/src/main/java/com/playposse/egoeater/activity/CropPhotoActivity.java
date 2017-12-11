@@ -24,7 +24,7 @@ import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.playposse.egoeater.glide.GlideApp;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;

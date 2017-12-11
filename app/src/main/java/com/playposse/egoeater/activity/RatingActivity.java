@@ -14,7 +14,7 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.DatabaseDumper;
 import com.playposse.egoeater.util.ProfileUtil;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

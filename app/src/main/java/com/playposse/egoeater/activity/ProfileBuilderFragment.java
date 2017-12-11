@@ -26,7 +26,7 @@ import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;
 import com.playposse.egoeater.data.profilewizard.ProfileUserData;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
-import com.playposse.egoeater.util.SimpleAlertDialog;
+import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.playposse.egoeater.util.StringUtil;
 
 import org.json.JSONException;
