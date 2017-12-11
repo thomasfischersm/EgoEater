@@ -10,6 +10,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.util.DataMunchUtil;
 import com.playposse.egoeater.util.IntegerUtil;
 import com.playposse.egoeater.util.SmartCursor;
+import com.playposse.egoeater.util.StringUtil;
 
 import java.util.List;
 
@@ -141,7 +142,7 @@ public class ProfileParcelable implements Parcelable {
         ContentValues contentValues = new ContentValues();
         contentValues.put(EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN, profile.getUserId());
         contentValues.put(EgoEaterContract.ProfileTable.FIRST_NAME_COLUMN, profile.getFirstName());
-        contentValues.put(EgoEaterContract.ProfileTable.PROFILE_TEXT_COLUMN, profile.getProfileText());
+        contentValues.put(EgoEaterContract.ProfileTable.PROFILE_TEXT_COLUMN, StringUtil.trim(profile.getProfileText()));
         contentValues.put(EgoEaterContract.ProfileTable.DISTANCE_COLUMN, profile.getDistance());
         contentValues.put(EgoEaterContract.ProfileTable.CITY_COLUMN, profile.getCity());
         contentValues.put(EgoEaterContract.ProfileTable.STATE_COLUMN, profile.getState());

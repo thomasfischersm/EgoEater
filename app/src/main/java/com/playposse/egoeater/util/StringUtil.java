@@ -65,4 +65,9 @@ public class StringUtil {
             return (str.length() > 0) ? str : null;
         }
     }
+
+    @javax.annotation.Nullable
+    public static String trim(String str) {
+        return (str != null) ? str.trim() : null;
+    }
 }

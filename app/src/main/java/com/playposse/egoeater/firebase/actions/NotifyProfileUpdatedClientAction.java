@@ -5,12 +5,11 @@ import android.content.ContentValues;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
-import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.firebase.FirebaseMessage;
-import com.playposse.egoeater.storage.ProfileParcelable;
+import com.playposse.egoeater.util.StringUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +64,7 @@ public class NotifyProfileUpdatedClientAction extends FirebaseClientAction {
         // Create ContentValues.
         ContentValues contentValues = new ContentValues();
         contentValues.put(ProfileTable.FIRST_NAME_COLUMN, profileBean.getFirstName());
-        contentValues.put(ProfileTable.PROFILE_TEXT_COLUMN, profileBean.getProfileText());
+        contentValues.put(ProfileTable.PROFILE_TEXT_COLUMN, StringUtil.trim(profileBean.getProfileText()));
         contentValues.put(ProfileTable.DISTANCE_COLUMN, profileBean.getDistance());
         contentValues.put(ProfileTable.CITY_COLUMN, profileBean.getCity());
         contentValues.put(ProfileTable.STATE_COLUMN, profileBean.getState());

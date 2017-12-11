@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
+import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTable;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.firebase.EgoEaterFirebaseMessagingService;
 import com.playposse.egoeater.storage.ProfileParcelable;
@@ -78,15 +79,20 @@ public class PPSQueryHelper {
     static Map<Integer, List<Long>> getProfileIdsByRankStatus(
             ContentResolver contentResolver) {
 
+        // Build where clause to filter incomplete profiles
+        String where = ProfileTable.PROFILE_TEXT_COLUMN + " is not null "
+                + " and " + ProfileTable.PROFILE_TEXT_COLUMN + " !='' "
+                + " and " + ProfileTable.PHOTO_URL_0_COLUMN + " is not null";
+
         // Query the profile ranking status.
         Cursor cursor = contentResolver.query(
-                EgoEaterContract.ProfileTable.CONTENT_URI,
+                ProfileTable.CONTENT_URI,
                 new String[]{
-                        EgoEaterContract.ProfileTable.PROFILE_ID_COLUMN,
-                        EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN},
+                        ProfileTable.PROFILE_ID_COLUMN,
+                        ProfileTable.WINS_LOSSES_SUM_COLUMN},
+                where,
                 null,
-                null,
-                EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN + " desc");
+                ProfileTable.WINS_LOSSES_SUM_COLUMN + " desc");
 
         // Sort profiles by ranking status.
         Map<Integer, List<Long>> profileIdsByRankStatus = new HashMap<>();
@@ -160,9 +166,9 @@ public class PPSQueryHelper {
     static Integer getUnrankedProfilesCount(ContentResolver contentResolver) {
         // Count profiles that are cached and not compared yet.
         Cursor profileCursor = contentResolver.query(
-                EgoEaterContract.ProfileTable.CONTENT_URI,
-                new String[]{EgoEaterContract.ProfileTable.ID_COLUMN},
-                EgoEaterContract.ProfileTable.WINS_LOSSES_SUM_COLUMN + " = ?",
+                ProfileTable.CONTENT_URI,
+                new String[]{ProfileTable.ID_COLUMN},
+                ProfileTable.WINS_LOSSES_SUM_COLUMN + " = ?",
                 new String[]{"0"},
                 null);
         if (profileCursor == null) {
@@ -225,7 +231,7 @@ public class PPSQueryHelper {
         ContentValues[] contentValuesArray =
                 contentValuesList.toArray(new ContentValues[contentValuesList.size()]);
         contentResolver.bulkInsert(
-                EgoEaterContract.ProfileTable.CONTENT_URI,
+                ProfileTable.CONTENT_URI,
                 contentValuesArray);
         Log.i(LOG_TAG, "saveProfiles: Saved profiles to the device: " + contentValuesArray.length);
 
