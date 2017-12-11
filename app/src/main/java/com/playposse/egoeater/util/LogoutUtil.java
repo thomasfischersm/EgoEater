@@ -1,9 +1,8 @@
 package com.playposse.egoeater.util;
 
 import android.app.Activity;
-import android.content.Intent;
 
-import com.playposse.egoeater.activity.LoginActivity;
+import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 /**
@@ -13,7 +12,7 @@ public class LogoutUtil {
 
     public static void logout(Activity activity) {
         EgoEaterPreferences.clearSessionId(activity);
-        activity.finish();
-        activity.startActivity(new Intent(activity, LoginActivity.class));
+
+        GlobalRouting.onLogout(activity);
     }
 }
