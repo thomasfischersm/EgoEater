@@ -78,18 +78,20 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
             List<MatchBean> insertMatches = new ArrayList<>();
             List<MatchBean> updateMatches = new ArrayList<>();
 
-            for (MatchBean matchBean : newMatches) {
-                Long partnerId = matchBean.getOtherProfileBean().getUserId();
-                int existingMatchIndex = getIndexByPartnerId(existingMatches, partnerId);
-                if (existingMatchIndex >= 0) {
-                    updateMatches.add(matchBean);
-                } else {
-                    insertMatches.add(matchBean);
-                }
+            if (newMatches != null) {
+                for (MatchBean matchBean : newMatches) {
+                    Long partnerId = matchBean.getOtherProfileBean().getUserId();
+                    int existingMatchIndex = getIndexByPartnerId(existingMatches, partnerId);
+                    if (existingMatchIndex >= 0) {
+                        updateMatches.add(matchBean);
+                    } else {
+                        insertMatches.add(matchBean);
+                    }
 
-                int deleteMatchIndex = getIndexByPartnerId(deleteMatches, partnerId);
-                if (deleteMatchIndex >= 0) {
-                    deleteMatches.remove(deleteMatchIndex);
+                    int deleteMatchIndex = getIndexByPartnerId(deleteMatches, partnerId);
+                    if (deleteMatchIndex >= 0) {
+                        deleteMatches.remove(deleteMatchIndex);
+                    }
                 }
             }
 
