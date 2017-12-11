@@ -146,5 +146,4 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.ProfileNotReadyActivity"/>
     </application>
-
 </manifest>
