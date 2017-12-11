@@ -100,16 +100,16 @@ public class ProfileBuilderFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_profile_builder, container, false);
 
-        discardImageView = (ImageView) rootView.findViewById(R.id.discardImageView);
-        titleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
-        resetTextView = (TextView) rootView.findViewById(R.id.resetTextView);
-        profileBuilderViewPager = (ViewPager) rootView.findViewById(R.id.profileBuilderViewPager);
-        pageIndexTextView = (TextView) rootView.findViewById(R.id.pageIndexTextView);
-        backButton = (Button) rootView.findViewById(R.id.backButton);
-        continueButton = (Button) rootView.findViewById(R.id.continueButton);
-        saveButton = (Button) rootView.findViewById(R.id.saveButton);
+        discardImageView = rootView.findViewById(R.id.discardImageView);
+        titleTextView = rootView.findViewById(R.id.titleTextView);
+        resetTextView = rootView.findViewById(R.id.resetTextView);
+        profileBuilderViewPager = rootView.findViewById(R.id.profileBuilderViewPager);
+        pageIndexTextView = rootView.findViewById(R.id.pageIndexTextView);
+        backButton = rootView.findViewById(R.id.backButton);
+        continueButton = rootView.findViewById(R.id.continueButton);
+        saveButton = rootView.findViewById(R.id.saveButton);
 
-        new ProfileBuilderConfigurationLoadingTask().execute();
+        new ProfileBuilderConfigurationLoadingTask(getContext()).execute();
 
         titleTextView.setText(R.string.profile_builder_title);
 
@@ -294,10 +294,16 @@ public class ProfileBuilderFragment extends Fragment {
     private class ProfileBuilderConfigurationLoadingTask
             extends AsyncTask<Void, Void, ProfileBuilderConfiguration> {
 
+        private final Context context;
+
+        private ProfileBuilderConfigurationLoadingTask(Context context) {
+            this.context = context;
+        }
+
         @Override
         protected ProfileBuilderConfiguration doInBackground(Void... params) {
             try {
-                return ProfileBuilderConfiguration.load(getContext());
+                return ProfileBuilderConfiguration.load(context);
             } catch (IOException | JSONException ex) {
                 Log.e(LOG_TAG, "doInBackground: Failed to load profile builder configuration", ex);
                 return null;
