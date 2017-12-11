@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.playposse.egoeater.util.BottomCropImageView
+    <com.playposse.egoeater.util.ui.BottomCropImageView
         android:id="@+id/profilePhotoImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

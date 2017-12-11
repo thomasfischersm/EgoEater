@@ -1,4 +1,4 @@
-package com.playposse.egoeater.util;
+package com.playposse.egoeater.util.ui;
 
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -6,7 +6,6 @@ import android.provider.BaseColumns;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.util.Log;
-import android.view.ViewGroup;
 
 /**
  * A cursor adapter for {@link Adapter}. Apparently, Android oversaw providing this.

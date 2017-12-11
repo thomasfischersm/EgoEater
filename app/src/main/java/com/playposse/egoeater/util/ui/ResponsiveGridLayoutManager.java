@@ -1,4 +1,4 @@
-package com.playposse.egoeater.util;
+package com.playposse.egoeater.util.ui;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;

@@ -25,7 +25,7 @@ import com.playposse.egoeater.clientactions.SwapProfilePhotosClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
-import com.playposse.egoeater.util.PhotoDragShadowBuilder;
+import com.playposse.egoeater.util.ui.PhotoDragShadowBuilder;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 

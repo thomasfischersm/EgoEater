@@ -27,8 +27,8 @@ import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.NotificationUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
-import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
-import com.playposse.egoeater.util.ResponsiveGridLayoutManager;
+import com.playposse.egoeater.util.ui.RecyclerViewCursorAdapter;
+import com.playposse.egoeater.util.ui.ResponsiveGridLayoutManager;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.playposse.egoeater.util.SmartCursor;
 

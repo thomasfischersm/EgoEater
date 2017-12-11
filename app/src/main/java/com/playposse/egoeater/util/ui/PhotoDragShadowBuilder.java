@@ -1,4 +1,4 @@
-package com.playposse.egoeater.util;
+package com.playposse.egoeater.util.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

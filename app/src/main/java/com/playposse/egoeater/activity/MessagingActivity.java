@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.FuckOffUiHelper;
 import com.playposse.egoeater.util.GlideUtil;
-import com.playposse.egoeater.util.RecyclerViewCursorAdapter;
+import com.playposse.egoeater.util.ui.RecyclerViewCursorAdapter;
 import com.playposse.egoeater.util.SmartCursor;
 import com.playposse.egoeater.util.StringUtil;
 
