@@ -219,13 +219,15 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         // Prepare profile info.
         UserBean userBean = EgoEaterPreferences.getUser(this);
         if (userBean == null) {
+            Log.e(LOG_TAG, "initNavigationHeader: The user is missing from the preferences!");
             GlobalRouting.onSessionExpired(this);
             return;
         }
         if (userBean.getUserId() == null) {
             Log.e(LOG_TAG, "initNavigationHeader: The UserBean.userId is null when it " +
                     "shouldn't be!");
-            // Skip over the next code to fail silently.
+            // Send back to login to fix this.
+            GlobalRouting.onSessionExpired(this);
             return;
         }
         ProfileParcelable profile = new ProfileParcelable(userBean);
