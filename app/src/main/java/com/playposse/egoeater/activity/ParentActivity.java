@@ -15,6 +15,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,6 +39,8 @@ import com.playposse.egoeater.util.ProfileFormatter;
  * toolbar.
  */
 public abstract class ParentActivity extends ActivityWithProgressDialog {
+
+    private static final String LOG_TAG = ParentActivity.class.getSimpleName();
 
     protected static final int PROFILE_ACTIVITY_TAB_POSITION = 0;
     protected static final int RATING_ACTIVITY_TAB_POSITION = 1;
@@ -219,9 +222,15 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             GlobalRouting.onSessionExpired(this);
             return;
         }
+        if (userBean.getUserId() == null) {
+            Log.e(LOG_TAG, "initNavigationHeader: The UserBean.userId is null when it " +
+                    "shouldn't be!");
+            // Skip over the next code to fail silently.
+            return;
+        }
         ProfileParcelable profile = new ProfileParcelable(userBean);
-        TextView headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
-        TextView subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
+        TextView headlineTextView = rootView.findViewById(R.id.headlineTextView);
+        TextView subHeadTextView = rootView.findViewById(R.id.subHeadTextView);
         headlineTextView.setText(ProfileFormatter.formatNameAndAge(this, profile));
         subHeadTextView.setText(ProfileFormatter.formatCityStateAndDistance(this, profile));
     }
