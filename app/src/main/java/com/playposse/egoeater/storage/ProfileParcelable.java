@@ -1,7 +1,6 @@
 package com.playposse.egoeater.storage;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,6 +8,7 @@ import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.util.DataMunchUtil;
+import com.playposse.egoeater.util.IntegerUtil;
 import com.playposse.egoeater.util.SmartCursor;
 
 import java.util.List;
@@ -19,6 +19,8 @@ import static com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTab
  * A {@link Parcelable} that contains the profile information.
  */
 public class ProfileParcelable implements Parcelable {
+
+    private static final int NULL_AGE = 0;
 
     private long profileId;
     private String firstName;
@@ -75,7 +77,7 @@ public class ProfileParcelable implements Parcelable {
         city = userBean.getCity();
         state = userBean.getState();
         country = userBean.getCountry();
-        age = DataMunchUtil.getAge(userBean.getBirthday());;
+        age = IntegerUtil.get(DataMunchUtil.getAge(userBean.getBirthday()), NULL_AGE);
         gender = userBean.getGender();
         if (userBean.getProfilePhotoUrls() != null) {
             if (userBean.getProfilePhotoUrls().size() > 0) {
