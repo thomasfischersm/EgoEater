@@ -8,6 +8,7 @@
     <string name="login_button_label">Log in with Facebook</string>
     <string name="background_content_description">Background texture</string>
     <string name="facebook_login_canceled">Facebook login was cancelled.</string>
+    <string name="facebook_login_failed_toast">Something unexpected went wrong with the Facebook login.</string>
 
     <!-- Introduction deck activity -->
     <string name="getting_started_button">Get started</string>

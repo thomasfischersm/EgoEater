@@ -51,8 +51,8 @@ public class LoginActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        logoTextView = (TextView) findViewById(R.id.logoTextView);
-        loginButton = (Button) findViewById(R.id.loginButton);
+        logoTextView = findViewById(R.id.logoTextView);
+        loginButton = findViewById(R.id.loginButton);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -118,6 +118,14 @@ public class LoginActivity extends ParentActivity {
 
     private void onFbLoginCompleted(LoginResult loginResult) {
         Log.i(LOG_TAG, "onFbLoginCompleted: Got FB login.");
+
+        if (loginResult.getAccessToken() == null) {
+            // Crashlytics reported this being unexpectedly null.
+            Toast.makeText(this, R.string.facebook_login_failed_toast, Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
         showLoadingProgress();
         new SignInClientAction(
                 this,
