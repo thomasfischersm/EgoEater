@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -91,17 +92,30 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
                 }
 
                 showLoadingProgress();
-                new UploadProfilePhotoToServletClientAction(
-                        getApplicationContext(),
-                        photoIndex,
-                        cropImageView.getCroppedImage(),
-                        new ApiClientAction.Callback<String>() {
-                            @Override
-                            public void onResult(String photoUrl) {
-                                onServerActionComplete();
-                            }
-                        })
-                        .execute();
+
+                Bitmap croppedImage = cropImageView.getCroppedImage();
+
+                if (croppedImage != null) {
+                    new UploadProfilePhotoToServletClientAction(
+                            getApplicationContext(),
+                            photoIndex,
+                            croppedImage,
+                            new ApiClientAction.Callback<String>() {
+                                @Override
+                                public void onResult(String photoUrl) {
+                                    onServerActionComplete();
+                                }
+                            })
+                            .execute();
+                } else {
+                    Toast.makeText(
+                            CropPhotoActivity.this,
+                            R.string.crop_failure_toast,
+                            Toast.LENGTH_LONG)
+                            .show();
+                    Log.e(LOG_TAG, "onClick: Failed to crop the image. The library returned a " +
+                            "null image!");
+                }
             }
         });
     }

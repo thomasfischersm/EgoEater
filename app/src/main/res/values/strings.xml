@@ -42,6 +42,7 @@
     <string name="delete_button_label">Delete</string>
     <string name="cancel_button_label">Cancel</string>
     <string name="select_profile_photo_chooser">Select profile photo</string>
+    <string name="crop_failure_toast">Something went wrong cropping the image.</string>
 
     <!-- ViewOwnProfileActivity -->
     <string name="age_separator">,\u0020</string>
