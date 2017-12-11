@@ -1,5 +1,6 @@
 package com.playposse.egoeater.activity;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -56,6 +57,16 @@ public class RatingFragment extends Fragment {
     }
 
     private void showFeatureDiscover() {
+        // Be super defensive on getting the context because rare crashes show up in production.
+        final Context context;
+        if (getContext() != null) {
+            context = getContext();
+        } else if (getActivity() != null) {
+            context = getActivity();
+        } else {
+            context = null; // We failed.
+        }
+
         TapTargetView.showFor(getActivity(),
                 TapTarget.forView(
                         orCircleTextView,
@@ -81,7 +92,11 @@ public class RatingFragment extends Fragment {
                 new TapTargetView.Listener() {
                     @Override
                     public void onTargetDismissed(TapTargetView view, boolean userInitiated) {
-                        EgoEaterPreferences.setHasSeenComparisonInfo(getContext(), true);
+                        if (context != null) {
+                            EgoEaterPreferences.setHasSeenComparisonInfo(
+                                    context,
+                                    true);
+                        }
                     }
                 });
 
