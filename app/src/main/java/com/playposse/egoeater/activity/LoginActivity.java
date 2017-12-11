@@ -26,6 +26,7 @@ import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.playposse.egoeater.util.dialogs.WaitingForConnectionDialog;
+import com.playposse.egoeater.util.dialogs.WaitingForFirebaseIdDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
@@ -42,6 +43,7 @@ public class LoginActivity extends ParentActivity {
 
     private CallbackManager callbackManager;
     private boolean hasShownSessionExpirationDialog = false;
+    private WaitingForFirebaseIdDialog.CheckFirebaseIdRunnable checkFirebaseIdRunnable;
 
     @Override
     protected int getLayoutResId() {
@@ -117,6 +119,24 @@ public class LoginActivity extends ParentActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (checkFirebaseIdRunnable != null) {
+            checkFirebaseIdRunnable.restart();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (checkFirebaseIdRunnable != null) {
+            checkFirebaseIdRunnable.close();
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -124,9 +144,10 @@ public class LoginActivity extends ParentActivity {
         Log.i(LOG_TAG, "LoginActivity.onActivityResult has been called.");
     }
 
-    private void onFbLoginCompleted(LoginResult loginResult) {
+    private void onFbLoginCompleted(final LoginResult loginResult) {
         Log.i(LOG_TAG, "onFbLoginCompleted: Got FB login.");
 
+        // Ensure that Facebook returned an access token.
         if (loginResult.getAccessToken() == null) {
             // Crashlytics reported this being unexpectedly null.
             Toast.makeText(this, R.string.facebook_login_failed_toast, Toast.LENGTH_LONG)
@@ -134,10 +155,30 @@ public class LoginActivity extends ParentActivity {
             return;
         }
 
+        // Ensure that Firebase has received an id.
+        if (checkFirebaseIdRunnable != null) {
+            checkFirebaseIdRunnable.close();
+        }
+        checkFirebaseIdRunnable = WaitingForFirebaseIdDialog.showIfNecessary(
+                this,
+                R.string.firebase_id_missing_dialog_title,
+                R.string.firebase_id_missing_dialog_message,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        String fbAccessToken = loginResult.getAccessToken().getToken();
+                        onFireBaseIdEnsured(fbAccessToken);
+                    }
+                });
+    }
+
+    private void onFireBaseIdEnsured(String fbAccessToken) {
+
+        // Start the actual login with the cloud.
         showLoadingProgress();
         new SignInClientAction(
                 this,
-                loginResult.getAccessToken().getToken(),
+                fbAccessToken,
                 new ApiClientAction.Callback<UserBean>() {
                     @Override
                     public void onResult(UserBean data) {

@@ -330,6 +330,8 @@
     </string>
     <string name="login_connectivity_dialog_title">No network!</string>
     <string name="login_connectivity_dialog_message">This app requires network access to log in with Facebook and to connect you with awesome people!</string>
+    <string name="firebase_id_missing_dialog_title">Waiting for Firebase id</string>
+    <string name="firebase_id_missing_dialog_message">Please, ensure that you have internet connectivity and the Google play services installed.</string>
 
     <!-- Send Us Feedback option -->
     <string name="feedback_dialog_title">Send us feedback!</string>
