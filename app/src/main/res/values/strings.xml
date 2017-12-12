@@ -47,6 +47,7 @@
     <!-- ViewOwnProfileActivity -->
     <string name="age_separator">,\u0020</string>
     <string name="profile_info">Profile Info</string>
+    <string name="deactivate_account_link">Deactivate account</string>
 
     <!-- EditProfileActivity -->
     <string name="edit_profile_activity_title">Edit profile text</string>
@@ -239,6 +240,19 @@
         \nPlease ensure that you have a main photo and bio.
     </string>
 
+
+    <!-- Deactivate account activity -->
+    <string name="deactivate_account_warning">You are about to close your account.\n\nI personally read all comments. This is my baby, I try to make it better. Your feedback might help me direct my efforts to where they are most needed.</string>
+    <string name="deactivate_account_reason">Reason</string>
+    <string name="deactivate_account_button">Close account</string>
+    <string name="deactivate_account_cancel_button">Cancel</string>
+    <string name="deactivate_account_confirmation">Your account is closed.\n\nFacebook may still show this app for you. To remove it from Facebook, you have to do so on Facebook.\n\nIf you want to come back, simply start this app and sign in again.</string>
+
+
+    <!-- Reactivate account activity -->
+    <string name="reactivate_account_title">Re-activate Account</string>
+    <string name="reactivate_account_welcome">I\'m glad to you are giving Beeline another try.\n\nLet me know if I can do anything to make your experience better this time. You can use the send feedback link in the navigation drawer to contact me. I personally read those messages.</string>
+    <string name="reactivate_account_button">Reactivate</string>
 
     <!-- Profile Builder -->
     <string name="profile_builder_title">Profile builder</string>

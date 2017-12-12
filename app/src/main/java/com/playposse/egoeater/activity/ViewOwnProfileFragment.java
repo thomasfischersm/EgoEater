@@ -25,11 +25,19 @@ import com.playposse.egoeater.clientactions.SwapProfilePhotosClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.GlideUtil;
-import com.playposse.egoeater.util.ui.PhotoDragShadowBuilder;
 import com.playposse.egoeater.util.ProfileFormatter;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
+import com.playposse.egoeater.util.ui.PhotoDragShadowBuilder;
 
-import static android.view.View.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.OnDragListener;
+import static android.view.View.OnLongClickListener;
+import static android.view.View.VISIBLE;
 
 /**
  * A {@link Fragment} that lets the user edit his/her profile.
@@ -38,17 +46,18 @@ public class ViewOwnProfileFragment extends Fragment {
 
     private static final String LOG_TAG = ViewOwnProfileFragment.class.getSimpleName();
 
-    private ImageView profilePhoto0ImageView;
-    private CardView photo1CardView;
-    private ImageView profilePhoto1ImageView;
-    private CardView photo2CardView;
-    private ImageView profilePhoto2ImageView;
-    private ImageView emptyPhoto1ImageView;
-    private ImageView emptyPhoto2ImageView;
-    private TextView headlineTextView;
-    private TextView subHeadTextView;
-    private TextView profileTextView;
-    private FloatingActionButton editButton;
+    @BindView(R.id.profilePhoto0ImageView) ImageView profilePhoto0ImageView;
+    @BindView(R.id.photo1CardView) CardView photo1CardView;
+    @BindView(R.id.profilePhoto1ImageView) ImageView profilePhoto1ImageView;
+    @BindView(R.id.photo2CardView) CardView photo2CardView;
+    @BindView(R.id.profilePhoto2ImageView) ImageView profilePhoto2ImageView;
+    @BindView(R.id.emptyPhoto1ImageView) ImageView emptyPhoto1ImageView;
+    @BindView(R.id.emptyPhoto2ImageView) ImageView emptyPhoto2ImageView;
+    @BindView(R.id.headlineTextView) TextView headlineTextView;
+    @BindView(R.id.subHeadTextView) TextView subHeadTextView;
+    @BindView(R.id.profileTextView) TextView profileTextView;
+    @BindView(R.id.editButton) FloatingActionButton editButton;
+    @BindView(R.id.deactivate_account_link) TextView deactivateAccountLink;
 
     public ViewOwnProfileFragment() {
         // Required empty public constructor
@@ -60,19 +69,12 @@ public class ViewOwnProfileFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_view_own_profile, container, false);
+        View rootView = inflater.inflate(
+                R.layout.fragment_view_own_profile,
+                container,
+                false);
 
-        profilePhoto0ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto0ImageView);
-        photo1CardView = (CardView) rootView.findViewById(R.id.photo1CardView);
-        profilePhoto1ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto1ImageView);
-        photo2CardView = (CardView) rootView.findViewById(R.id.photo2CardView);
-        profilePhoto2ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto2ImageView);
-        emptyPhoto1ImageView = (ImageView) rootView.findViewById(R.id.emptyPhoto1ImageView);
-        emptyPhoto2ImageView = (ImageView) rootView.findViewById(R.id.emptyPhoto2ImageView);
-        headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
-        subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
-        profileTextView = (TextView) rootView.findViewById(R.id.profileTextView);
-        editButton = (FloatingActionButton) rootView.findViewById(R.id.editButton);
+        ButterKnife.bind(this, rootView);
 
         refreshPhotos();
 
@@ -282,6 +284,11 @@ public class ViewOwnProfileFragment extends Fragment {
         refreshPhotos();
 
         ((ActivityWithProgressDialog) getActivity()).dismissLoadingProgress();
+    }
+
+    @OnClick(R.id.deactivate_account_link)
+    public void onDeactivateAccountClicked() {
+        startActivity(new Intent(getActivity(), DeactivateAccountActivity.class));
     }
 
     private int getAvailableDragTargetTint() {

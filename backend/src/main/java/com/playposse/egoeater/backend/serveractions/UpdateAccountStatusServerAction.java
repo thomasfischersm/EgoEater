@@ -9,6 +9,8 @@ import com.playposse.egoeater.backend.util.RefUtil;
 
 import java.io.IOException;
 
+import javax.annotation.Nullable;
+
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
@@ -16,19 +18,22 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  */
 public class UpdateAccountStatusServerAction extends AbstractServerAction {
 
-    public static UserBean deactivateAccount(long sessionId)
+    public static UserBean deactivateAccount(long sessionId, @Nullable String reason)
             throws BadRequestException, IOException {
 
-        return updateAccount(sessionId, false);
+        return updateAccount(sessionId, false, reason);
     }
 
     public static UserBean reactivateAccount(long sessionId)
             throws BadRequestException, IOException {
 
-        return updateAccount(sessionId, true);
+        return updateAccount(sessionId, true, null);
     }
 
-    private static UserBean updateAccount(long sessionId, boolean newActiveState)
+    private static UserBean updateAccount(
+            long sessionId,
+            boolean newActiveState,
+            @Nullable String reason)
             throws BadRequestException, IOException {
 
         // Verify session id and find user.
@@ -43,7 +48,7 @@ public class UpdateAccountStatusServerAction extends AbstractServerAction {
 
         // Log action.
         DeactivationLog log =
-                new DeactivationLog(RefUtil.createUserRef(egoEaterUser), newActiveState);
+                new DeactivationLog(RefUtil.createUserRef(egoEaterUser), newActiveState, reason);
         ofy().save().entity(log);
 
         return new UserBean(egoEaterUser);

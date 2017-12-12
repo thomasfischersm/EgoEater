@@ -6,10 +6,11 @@ import android.util.Log;
 
 import com.playposse.egoeater.activity.CropPhotoActivity;
 import com.playposse.egoeater.activity.IntroductionActivity;
-import com.playposse.egoeater.activity.ViewOwnProfileActivity;
 import com.playposse.egoeater.activity.LoginActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.activity.RatingActivity;
+import com.playposse.egoeater.activity.ReactivateAccountActivity;
+import com.playposse.egoeater.activity.ViewOwnProfileActivity;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.StringUtil;
@@ -84,6 +85,12 @@ public class GlobalRouting {
 
     public static void onLogout(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void onRequiresAccountReactivation(Context context) {
+        Intent intent = new Intent(context, ReactivateAccountActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

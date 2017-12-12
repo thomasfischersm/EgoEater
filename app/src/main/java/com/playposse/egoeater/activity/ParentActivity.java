@@ -59,6 +59,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        redirectToAccountActivationIfNecessary();
         redirectToLoginIfSessionExpired();
 
         int activityResId = getLayoutResId();
@@ -316,6 +317,18 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         if (EgoEaterPreferences.getSessionId(this) == null) {
             finish();
             GlobalRouting.onSessionExpired(this);
+        }
+    }
+
+    private void redirectToAccountActivationIfNecessary() {
+        if (this instanceof ReactivateAccountActivity) {
+            // Skip this check if we are already on the activity to reactivate the account.
+            return;
+        }
+
+        if (!EgoEaterPreferences.isActive(this)) {
+            finish();
+            GlobalRouting.onRequiresAccountReactivation(this);
         }
     }
 }

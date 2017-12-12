@@ -229,10 +229,12 @@ public class EgoEaterEndPoint {
     }
 
     @ApiMethod(name = "deactivateAccount")
-    public UserBean deactivateAccount(@Named("sessionId") long sessionId)
+    public UserBean deactivateAccount(
+            @Named("sessionId") long sessionId,
+            @Nullable @Named("reason") String reason)
             throws BadRequestException, IOException {
 
-        return UpdateAccountStatusServerAction.deactivateAccount(sessionId);
+        return UpdateAccountStatusServerAction.deactivateAccount(sessionId, reason);
     }
 
     @ApiMethod(name = "reactivateAccount")
