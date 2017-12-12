@@ -26,6 +26,7 @@ public final class EgoEaterPreferences {
     private static final String USER_ID_KEY = "userId";
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String FB_PROFILE_ID_KEY = "fbProfileId";
+    private static final String IS_ACTIVE_KEY = "isActive";
     private static final String FIRST_NAME_KEY = "firstName";
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
@@ -49,6 +50,7 @@ public final class EgoEaterPreferences {
     private static final String HAS_SEEN_COMPARISON_INFO_KEY = "hasSeenComparisonInfo";
     private static final String HAS_FIRST_PROFILE_BEEN_SELECTED_KEY = "hasFirstProfileBeenSelected";
 
+    private static final boolean IS_ACTIVE_DEFAULT_VALUE = true;
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE = false;
@@ -63,6 +65,7 @@ public final class EgoEaterPreferences {
         setLong(context, USER_ID_KEY, userBean.getUserId());
         setLong(context, SESSION_ID_KEY, userBean.getSessionId());
         setString(context, FB_PROFILE_ID_KEY, userBean.getFbProfileId());
+        setBoolean(context, IS_ACTIVE_KEY, userBean.getActive());
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
@@ -98,6 +101,7 @@ public final class EgoEaterPreferences {
                 .setUserId(getLong(context, USER_ID_KEY))
                 .setSessionId(getLong(context, SESSION_ID_KEY))
                 .setFbProfileId(getString(context, FB_PROFILE_ID_KEY))
+                .setActive(isActive(context))
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY))
@@ -142,6 +146,14 @@ public final class EgoEaterPreferences {
 
     public static String getFirebaseToken(Context context) {
         return getString(context, FIREBASE_TOKEN_KEY);
+    }
+
+    public static void setActive(Context context, boolean isActive) {
+        setBoolean(context, IS_ACTIVE_KEY, isActive);
+    }
+
+    public static boolean isActive(Context context) {
+        return getBoolean(context, IS_ACTIVE_KEY, IS_ACTIVE_DEFAULT_VALUE);
     }
 
     public static String getProfilePhotoUrl0(Context context) {

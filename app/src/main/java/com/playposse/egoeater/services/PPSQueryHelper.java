@@ -82,7 +82,8 @@ public class PPSQueryHelper {
         // Build where clause to filter incomplete profiles
         String where = ProfileTable.PROFILE_TEXT_COLUMN + " is not null "
                 + " and " + ProfileTable.PROFILE_TEXT_COLUMN + " !='' "
-                + " and " + ProfileTable.PHOTO_URL_0_COLUMN + " is not null";
+                + " and " + ProfileTable.PHOTO_URL_0_COLUMN + " is not null"
+                + " and " + ProfileTable.IS_ACTIVE_COLUMN;
 
         // Query the profile ranking status.
         Cursor cursor = contentResolver.query(
