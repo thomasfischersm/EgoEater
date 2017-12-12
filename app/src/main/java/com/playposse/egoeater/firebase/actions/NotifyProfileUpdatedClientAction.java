@@ -63,6 +63,7 @@ public class NotifyProfileUpdatedClientAction extends FirebaseClientAction {
 
         // Create ContentValues.
         ContentValues contentValues = new ContentValues();
+        contentValues.put(ProfileTable.IS_ACTIVE_COLUMN, profileBean.getActive());
         contentValues.put(ProfileTable.FIRST_NAME_COLUMN, profileBean.getFirstName());
         contentValues.put(ProfileTable.PROFILE_TEXT_COLUMN, StringUtil.trim(profileBean.getProfileText()));
         contentValues.put(ProfileTable.DISTANCE_COLUMN, profileBean.getDistance());

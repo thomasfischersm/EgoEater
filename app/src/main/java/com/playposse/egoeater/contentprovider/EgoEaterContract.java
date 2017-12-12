@@ -50,6 +50,7 @@ public class EgoEaterContract {
 
         public static final String ID_COLUMN = _ID;
         public static final String PROFILE_ID_COLUMN = "profile_id";
+        public static final String IS_ACTIVE_COLUMN = "is_active";
         public static final String FIRST_NAME_COLUMN = "first_name";
         public static final String PROFILE_TEXT_COLUMN = "profile_text";
         public static final String DISTANCE_COLUMN = "distance";
@@ -81,7 +82,8 @@ public class EgoEaterContract {
                 PHOTO_URL_2_COLUMN,
                 WINS_COLUMN,
                 LOSSES_COLUMN,
-                WINS_LOSSES_SUM_COLUMN};
+                WINS_LOSSES_SUM_COLUMN,
+                IS_ACTIVE_COLUMN};
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE PROFILE "
@@ -100,7 +102,8 @@ public class EgoEaterContract {
                         + "PHOTO_URL_2 TEXT, "
                         + "WINS INTEGER DEFAULT 0, "
                         + "LOSSES INTEGER DEFAULT 0,"
-                        + "WINS_LOSSES_SUM INTEGER DEFAULT 0)";
+                        + "WINS_LOSSES_SUM INTEGER DEFAULT 0,"
+                        + "IS_ACTIVE BOOLEAN DEFAULT TRUE)";
     }
 
     private static Uri createContentUri(String path) {

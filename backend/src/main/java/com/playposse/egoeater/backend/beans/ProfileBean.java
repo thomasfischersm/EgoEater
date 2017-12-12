@@ -13,6 +13,7 @@ import java.util.List;
 public class ProfileBean {
 
     private long userId;
+    private boolean isActive;
     private String firstName;
     private String profileText;
     private int distance;
@@ -35,6 +36,7 @@ public class ProfileBean {
                 egoEaterProfile.getLongitude());
 
         userId = egoEaterProfile.getId();
+        isActive = egoEaterProfile.isActive();
         firstName = egoEaterProfile.getFirstName();
         profileText = egoEaterProfile.getProfileText();
         this.distance = (int) rawDistance;
@@ -51,6 +53,10 @@ public class ProfileBean {
 
     public long getUserId() {
         return userId;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public String getFirstName() {
