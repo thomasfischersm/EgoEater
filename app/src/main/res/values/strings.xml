@@ -206,9 +206,8 @@
         Beeline!\n
     \n
         <b>Q: How can I close my account?</b>\n
-        A: This is a brand new app, and we are still adding more features. Please email
-        <a href="mailto:thomas@playposse.com?subject=Please, close my Beeline account">thomas@playposse.com</a>
-        to close your account.
+        A: This is a brand new app, and we are still adding more features. Go to your profile and
+        look in the lower right hand corner for a link to deactivate your account.
     </string>
     <string name="about_feedback_heading">Send Us Feedback!</string>
     <string name="about_feedback_body_text">
