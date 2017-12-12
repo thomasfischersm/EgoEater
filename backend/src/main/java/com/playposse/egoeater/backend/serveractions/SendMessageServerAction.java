@@ -50,12 +50,17 @@ public class SendMessageServerAction extends AbstractServerAction {
         ofy().save().entity(conversation);
 
         // Send Firebase message to tell the recipient about the new message.
-        int messageIndex = conversation.getMessages().size() - 1;
-        NotifyNewMessageFirebaseServerAction.notifyNewMessage(
-                egoEaterUser.getId(),
-                recipientUser.getFirebaseToken(),
-                messageIndex,
-                message);
+        if (recipientUser.isActive()) {
+            int messageIndex = conversation.getMessages().size() - 1;
+            NotifyNewMessageFirebaseServerAction.notifyNewMessage(
+                    egoEaterUser.getId(),
+                    recipientUser.getFirebaseToken(),
+                    messageIndex,
+                    message);
+        } else {
+            log.info("Not informing recipient of the new message because the recipient is no " +
+                    "longer active.");
+        }
     }
 
     private static Conversation createConversation(
