@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -39,6 +40,10 @@ public class SignInClientAction extends ApiClientAction<UserBean> {
         Log.i(LOG_TAG, "executeAsync: Called to cloud for signIn has completed.");
 
         EgoEaterPreferences.setUser(context, userBean);
+
+        // Update Crashlytics with the user information.
+        Crashlytics.setUserIdentifier(Long.toString(userBean.getUserId()));
+        Crashlytics.setUserName(userBean.getFirstName() + " " + userBean.getLastName());
 
         return userBean;
     }
