@@ -30,7 +30,12 @@ public class GetProfilesByIdClientAction extends ApiClientAction<List<ProfileBea
         if ((profileIds == null) || (profileIds.size() == 0)) {
             return new ArrayList<>(0);
         } else {
-            return getApi().getProfilesById(profileIds, getSessionId()).execute().getItems();
+            List<ProfileBean> profileBeans =
+                    getApi().getProfilesById(profileIds, getSessionId()).execute().getItems();
+            if (profileBeans == null) {
+                profileBeans = new ArrayList<>();
+            }
+            return profileBeans;
         }
     }
 
