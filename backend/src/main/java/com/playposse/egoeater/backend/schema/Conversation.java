@@ -23,15 +23,10 @@ import java.util.List;
 @Cache
 public class Conversation {
 
-    @Id
-    private Long id;
-    @Index
-    private Ref<EgoEaterUser> profileRefA;
-    @Index
-    private Ref<EgoEaterUser> profileRefB;
-
+    @Id private Long id;
+    @Index private Ref<EgoEaterUser> profileRefA;
+    @Index private Ref<EgoEaterUser> profileRefB;
     private Long created;
-
     private List<Message> messages;
 
     public Conversation() {

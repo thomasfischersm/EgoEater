@@ -3,6 +3,7 @@ package com.playposse.egoeater.backend.util;
 import com.googlecode.objectify.ObjectifyService;
 import com.playposse.egoeater.backend.schema.AbuseReport;
 import com.playposse.egoeater.backend.schema.Conversation;
+import com.playposse.egoeater.backend.schema.DeactivationLog;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.FuckOffLog;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
@@ -24,6 +25,7 @@ public class ObjectifyRegistrationServletContextListener implements ServletConte
     public void contextInitialized(ServletContextEvent sce) {
         ObjectifyService.register(AbuseReport.class);
         ObjectifyService.register(Conversation.class);
+        ObjectifyService.register(DeactivationLog.class);
         ObjectifyService.register(EgoEaterUser.class);
         ObjectifyService.register(FuckOffLog.class);
         ObjectifyService.register(IntermediateMatching.class);
