@@ -135,6 +135,13 @@ public class GenerateMatchesServlet extends HttpServlet {
             Ranking ranking = iterator.next();
             Ref<EgoEaterUser> ratedProfileId = ranking.getRatedProfileId();
 
+            // Skip over inactive users.
+            if (!isActive(ranking.getProfileId())) {
+                log.info("Skipping over user because of inActive: "
+                        + ranking.getProfileId().getKey().getId());
+                continue;
+            }
+
             // Detect if ranking of the next user is starting.
             if (!ranking.getProfileId().equals(profileId)) {
                 if (profileId != null) {
@@ -351,5 +358,10 @@ public class GenerateMatchesServlet extends HttpServlet {
                     ofy().save()
                             .entity(userB));
         }
+    }
+
+    private static boolean isActive(Ref<EgoEaterUser> profileId) {
+        EgoEaterUser user = ofy().load().key(profileId.getKey()).now();
+        return user.isActive();
     }
 }
