@@ -15,34 +15,27 @@ import java.util.List;
 @Cache
 public class EgoEaterUser {
 
-    @Id
-    private Long id;
-    @Index
-    private String fbProfileId;
-    @Index
-    private Long sessionId = null;
+    @Id private Long id;
+    @Index private String fbProfileId;
+    @Index private Long sessionId = null;
     private String firebaseToken;
     private Long lastLogin = System.currentTimeMillis();
     private Long created = System.currentTimeMillis();
-    @Index
-    private boolean isActive = true;
+    @Index private boolean isActive = true;
     private String firstName;
     private String lastName;
     private String name;
     private String email;
     private String profileText;
-    @Index
-    private double latitude;
-    @Index
-    private double longitude;
+    @Index private double latitude;
+    @Index private double longitude;
     private String city;
     private String state;
     private String country;
     // FB stores the birthday as mm/dd/yyyy, yyyy, or mm/dd depending on privacy settings.
     private String birthday;
     // FB stores this as 'male', 'female', or a custom value.
-    @Index
-    private String gender;
+    @Index private String gender;
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
     private List<Long> fuckOffList = new ArrayList<>();
     private List<Long> pissedOffList = new ArrayList<>();
