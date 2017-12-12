@@ -2,7 +2,6 @@ package com.playposse.egoeater.backend.serveractions;
 
 import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.UserBean;
-import com.playposse.egoeater.backend.firebase.FirebaseServerAction;
 import com.playposse.egoeater.backend.firebase.NotifyProfileUpdatedFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.DeactivationLog;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
@@ -15,7 +14,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 /**
  * A server action that closes the users account.
  */
-public class UpdateAccountStateServerAction extends AbstractServerAction {
+public class UpdateAccountStatusServerAction extends AbstractServerAction {
 
     public static UserBean deactivateAccount(long sessionId)
             throws BadRequestException, IOException {

@@ -17,7 +17,7 @@ import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.beans.UserBean;
-import com.playposse.egoeater.backend.serveractions.UpdateAccountStateServerAction;
+import com.playposse.egoeater.backend.serveractions.UpdateAccountStatusServerAction;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
 import com.playposse.egoeater.backend.serveractions.FuckOffServerAction;
 import com.playposse.egoeater.backend.serveractions.GetConversationServerAction;
@@ -232,13 +232,13 @@ public class EgoEaterEndPoint {
     public UserBean deactivateAccount(@Named("sessionId") long sessionId)
             throws BadRequestException, IOException {
 
-        return UpdateAccountStateServerAction.deactivateAccount(sessionId);
+        return UpdateAccountStatusServerAction.deactivateAccount(sessionId);
     }
 
     @ApiMethod(name = "reactivateAccount")
     public UserBean reactivateAccount(@Named("sessionId") long sessionId)
             throws BadRequestException, IOException {
 
-        return UpdateAccountStateServerAction.reactivateAccount(sessionId);
+        return UpdateAccountStatusServerAction.reactivateAccount(sessionId);
     }
 }

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
