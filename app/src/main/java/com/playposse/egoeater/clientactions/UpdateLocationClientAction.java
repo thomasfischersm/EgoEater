@@ -39,8 +39,9 @@ public class UpdateLocationClientAction extends ApiClientAction<Void> {
     protected Void executeAsync() throws IOException {
         // Send location information to the cloud.
         UserBean userBean = getApi()
-                .updateLocation(getSessionId(), latitude, longitude, city, country)
+                .updateLocation(getSessionId(), latitude, longitude, country)
                 .setState(state) // Some countries don't have a state.
+                .setCity(city) // Some areas don't appear to have a city in the location.
                 .execute();
 
         // Store the information on the device.

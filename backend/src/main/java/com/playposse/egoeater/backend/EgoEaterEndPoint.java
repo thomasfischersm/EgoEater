@@ -107,7 +107,7 @@ public class EgoEaterEndPoint {
             @Named("sessionId") long sessionId,
             @Named("latitude") double latitude,
             @Named("longitude") double longitude,
-            @Named("city") String city,
+            @Nullable @Named("city") String city,
             @Nullable @Named("state") String state,
             @Named("country") String country) throws BadRequestException {
 

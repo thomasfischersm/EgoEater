@@ -4,6 +4,8 @@ import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 
+import javax.annotation.Nullable;
+
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
@@ -15,8 +17,8 @@ public class UpdateLocationServerAction extends AbstractServerAction {
             long sessionId,
             double latitude,
             double longitude,
-            String city,
-            String state,
+            @Nullable String city,
+            @Nullable String state,
             String country) throws BadRequestException {
 
         // Verify session id and find user.
