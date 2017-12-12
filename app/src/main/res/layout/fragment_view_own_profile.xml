@@ -1,10 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.playposse.egoeater.activity.ViewOwnProfileFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context="com.playposse.egoeater.activity.ViewOwnProfileFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/profile_photo_content_description"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:textColor="@color/primaryTextColorDark" />
+                        android:textColor="@color/primaryTextColorDark"/>
 
                     <TextView
                         android:id="@+id/subHeadTextView"
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="0"
-                        android:textColor="@color/secondaryScrimTextDark" />
+                        android:textColor="@color/secondaryScrimTextDark"/>
 
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:contentDescription="@string/profile_photo_content_description"
-                        android:scaleType="fitCenter" />
+                        android:scaleType="fitCenter"/>
                 </android.support.v7.widget.CardView>
 
                 <ImageView
@@ -106,8 +106,8 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/profile_photo_content_description"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/empty_photo_slot"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/empty_photo_slot"/>
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/photo2CardView"
@@ -126,7 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitCenter" />
+                        android:scaleType="fitCenter"/>
                 </android.support.v7.widget.CardView>
 
                 <ImageView
@@ -138,13 +138,13 @@
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/empty_photo_slot"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/empty_photo_slot"/>
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <TextView
@@ -154,7 +154,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/profile_info"
-                android:textColor="@color/secondaryTextColorLight" />
+                android:textColor="@color/secondaryTextColorLight"/>
 
             <TextView
                 android:id="@+id/profileTextView"
@@ -162,7 +162,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="5dp"
-                android:textColor="@color/primaryTextColorLight" />
+                android:textColor="@color/primaryTextColorLight"/>
+
+            <TextView
+                android:id="@+id/deactivate_account_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/deactivate_account_link"/>
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
@@ -176,7 +183,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="-28dp"
             android:elevation="6dp"
-            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
-            android:tint="@color/primaryTextColorDark" />
+            android:tint="@color/primaryTextColorDark"
+            app:srcCompat="@drawable/ic_mode_edit_black_24dp"/>
     </RelativeLayout>
 </ScrollView>
