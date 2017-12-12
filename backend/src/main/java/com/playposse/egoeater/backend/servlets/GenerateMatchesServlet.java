@@ -362,6 +362,6 @@ public class GenerateMatchesServlet extends HttpServlet {
 
     private static boolean isActive(Ref<EgoEaterUser> profileId) {
         EgoEaterUser user = ofy().load().key(profileId.getKey()).now();
-        return user.isActive();
+        return (user != null) && user.isActive();
     }
 }
