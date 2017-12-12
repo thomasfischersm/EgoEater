@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
@@ -31,15 +33,20 @@ import com.playposse.egoeater.util.dialogs.WaitingForFirebaseIdDialog;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends ParentActivity {
 
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     private static final String HAS_SHOWN_SESSION_EXPIRATION_DIALOG =
             "hasShownSessionExpirationDialog";
+    private static final String FACEBOOK_CONNECTION_EXCEPTION_MESSAGE =
+            "CONNECTION_FAILURE: CONNECTION_FAILURE";
 
-    private TextView logoTextView;
-    private Button loginButton;
+    @BindView(R.id.logoTextView) TextView logoTextView;
+    @BindView(R.id.loginButton)  Button loginButton;
 
     private CallbackManager callbackManager;
     private boolean hasShownSessionExpirationDialog = false;
@@ -54,8 +61,7 @@ public class LoginActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        logoTextView = findViewById(R.id.logoTextView);
-        loginButton = findViewById(R.id.loginButton);
+        ButterKnife.bind(this);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -140,8 +146,25 @@ public class LoginActivity extends ParentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.i(LOG_TAG, "LoginActivity.onActivityResult has been called.");
+        try {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+            Log.i(LOG_TAG, "LoginActivity.onActivityResult has been called.");
+        } catch (FacebookAuthorizationException ex) {
+            Log.e(LOG_TAG, "onActivityResult: Failed to login with Facebook.");
+            Crashlytics.logException(ex);
+
+            if (ex.getMessage().contains(FACEBOOK_CONNECTION_EXCEPTION_MESSAGE)) {
+                // An educated guess is that the connection was down or bad.
+                Toast.makeText(
+                        this, R.string.facebook_login_no_connection_toast,
+                        Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                // General Facebook login error toast.
+                Toast.makeText(this, R.string.facebook_login_failed_toast, Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
     }
 
     private void onFbLoginCompleted(final LoginResult loginResult) {
@@ -152,6 +175,7 @@ public class LoginActivity extends ParentActivity {
             // Crashlytics reported this being unexpectedly null.
             Toast.makeText(this, R.string.facebook_login_failed_toast, Toast.LENGTH_LONG)
                     .show();
+            Crashlytics.logException(new NullPointerException());
             return;
         }
 
