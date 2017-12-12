@@ -1,4 +1,4 @@
-package com.playposse.egoeater.backend.sevlets;
+package com.playposse.egoeater.backend.servlets;
 
 import com.google.appengine.api.datastore.QueryResultIterable;
 import com.google.appengine.api.datastore.QueryResultIterator;

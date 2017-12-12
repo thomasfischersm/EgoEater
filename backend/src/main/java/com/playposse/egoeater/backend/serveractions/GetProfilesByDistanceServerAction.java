@@ -1,12 +1,8 @@
 package com.playposse.egoeater.backend.serveractions;
 
 import com.google.api.server.spi.response.BadRequestException;
-import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.Key;
-import com.playposse.egoeater.backend.EgoEaterEndPoint;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
-import com.playposse.egoeater.backend.schema.GeoTest;
 import com.playposse.egoeater.backend.util.DataMunchUtil;
 
 import java.util.ArrayList;
@@ -67,7 +63,8 @@ public class GetProfilesByDistanceServerAction extends AbstractServerAction {
         double minLongitude = longitude - delta;
         double maxLongitude = longitude + delta;
         log.info("select * from EgoEaterUser where gender='" + oppositeGender
-                + "' and latitude>" + minLatitude
+                + "' and isActive=TRUE"
+                + " and latitude>" + minLatitude
                 + " and latitude<" + maxLatitude
                 + " and longitude>" + minLongitude
                 + " and longitude<" + maxLongitude);
@@ -80,6 +77,7 @@ public class GetProfilesByDistanceServerAction extends AbstractServerAction {
                 .filter("longitude >", minLongitude)
                 .filter("longitude <", maxLongitude)
                 .filter("gender =", oppositeGender)
+                .filter("isActive =", true)
                 .keys()
                 .list();
 

@@ -24,6 +24,8 @@ public class EgoEaterUser {
     private String firebaseToken;
     private Long lastLogin = System.currentTimeMillis();
     private Long created = System.currentTimeMillis();
+    @Index
+    private boolean isActive = true;
     private String firstName;
     private String lastName;
     private String name;
@@ -95,6 +97,14 @@ public class EgoEaterUser {
 
     public Long getCreated() {
         return created;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public String getFirstName() {

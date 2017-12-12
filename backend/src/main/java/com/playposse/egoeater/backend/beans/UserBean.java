@@ -14,6 +14,7 @@ public class UserBean {
     private long userId;
     private long sessionId;
     private String fbProfileId;
+    private boolean isActive;
     private String firstName;
     private String lastName;
     private String name;
@@ -34,6 +35,7 @@ public class UserBean {
         userId = egoEaterUser.getId();
         sessionId = egoEaterUser.getSessionId();
         fbProfileId = egoEaterUser.getFbProfileId();
+        isActive = egoEaterUser.isActive();
         firstName = egoEaterUser.getFirstName();
         lastName = egoEaterUser.getLastName();
         name = egoEaterUser.getName();
@@ -61,6 +63,10 @@ public class UserBean {
 
     public String getFbProfileId() {
         return fbProfileId;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public String getFirstName() {

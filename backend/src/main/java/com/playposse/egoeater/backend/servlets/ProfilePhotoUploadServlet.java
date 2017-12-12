@@ -1,11 +1,9 @@
-package com.playposse.egoeater.backend.sevlets;
+package com.playposse.egoeater.backend.servlets;
 
 import com.google.api.server.spi.response.BadRequestException;
-import com.playposse.egoeater.backend.EgoEaterEndPoint;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UploadProfilePhotoServerAction;
 
-import org.apache.commons.fileupload.DefaultFileItemFactory;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;

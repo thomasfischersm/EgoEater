@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>GenerateMatchesServlet</servlet-name>
-        <servlet-class>com.playposse.egoeater.backend.sevlets.GenerateMatchesServlet</servlet-class>
+        <servlet-class>com.playposse.egoeater.backend.servlets.GenerateMatchesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GenerateMatchesServlet</servlet-name>
@@ -24,12 +24,22 @@
 
     <servlet>
         <servlet-name>ProfilePhotoUploadServlet</servlet-name>
-        <servlet-class>com.playposse.egoeater.backend.sevlets.ProfilePhotoUploadServlet</servlet-class>
+        <servlet-class>com.playposse.egoeater.backend.servlets.ProfilePhotoUploadServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProfilePhotoUploadServlet</servlet-name>
         <url-pattern>/uploadProfilePhoto</url-pattern>
     </servlet-mapping>
+
+    <!-- Keep this around for the next time, a new column has to be re-indexed. -->
+    <!--<servlet>-->
+        <!--<servlet-name>ReindexUsersServlet</servlet-name>-->
+        <!--<servlet-class>com.playposse.egoeater.backend.servlets.ReindexUsersServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>ReindexUsersServlet</servlet-name>-->
+        <!--<url-pattern>/reindexUsers</url-pattern>-->
+    <!--</servlet-mapping>-->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
