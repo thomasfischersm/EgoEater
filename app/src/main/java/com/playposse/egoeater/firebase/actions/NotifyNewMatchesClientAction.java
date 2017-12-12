@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
@@ -122,6 +123,7 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
             }
         } catch (InterruptedException | RemoteException | OperationApplicationException ex) {
             Log.e(LOG_TAG, "execute: Failed to handle Firebase message about new matches.", ex);
+            Crashlytics.logException(ex);
             return UpdateState.error;
         }
     }

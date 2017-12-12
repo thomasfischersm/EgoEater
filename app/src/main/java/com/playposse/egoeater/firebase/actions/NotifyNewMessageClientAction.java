@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.MessageBean;
@@ -65,6 +66,7 @@ public class NotifyNewMessageClientAction extends FirebaseClientAction {
             QueryUtil.incrementUnreadMessages(contentResolver, senderProfileId);
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "execute: Failed to process new message.", ex);
+            Crashlytics.logException(ex);
         }
     }
 

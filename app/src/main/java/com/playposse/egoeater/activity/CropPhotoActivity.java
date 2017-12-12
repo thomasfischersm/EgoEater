@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
@@ -171,6 +172,7 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
             cropImageView.setImageBitmap(bitmap);
         } catch (IOException ex) {
             Log.e(LOG_TAG, "loadImageFromLocalUri: Failed to get photo from gallery.", ex);
+            Crashlytics.logException(ex);
         }
     }
 

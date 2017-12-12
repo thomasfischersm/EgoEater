@@ -1,8 +1,5 @@
 package com.playposse.egoeater.clientactions;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -10,6 +7,9 @@ import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.playposse.egoeater.GlobalRouting;
@@ -138,6 +138,7 @@ public abstract class ApiClientAction<D> {
             } catch (IOException ex) {
                 exception = ex;
                 Log.e(LOG_TAG, "Failed to execute: " + this.getClass().getName(), ex);
+                Crashlytics.logException(ex);
                 GlobalRouting.onCloudError(context);
             } catch (NullPointerException ex) {
                 if (MISSING_SESSION_EXCEPTION_MESSAGE.equals(ex.getMessage())) {

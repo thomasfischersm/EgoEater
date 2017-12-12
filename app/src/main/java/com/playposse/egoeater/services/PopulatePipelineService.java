@@ -2,7 +2,6 @@ package com.playposse.egoeater.services;
 
 import android.app.IntentService;
 import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +13,12 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
-import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
-import com.playposse.egoeater.contentprovider.EgoEaterContract.DeleteDuplicateProfiles;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
-import com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileIdTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.CollectionsUtil;
@@ -100,7 +97,7 @@ public class PopulatePipelineService extends IntentService {
             isActive = false;
         } catch (InterruptedException | RemoteException | OperationApplicationException ex) {
             Log.e(LOG_TAG, "run: Failed to rebuild pipeline2.", ex);
-            ex.printStackTrace();
+            Crashlytics.logException(ex);
         }
     }
 

@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,6 +77,7 @@ public class HttpGeoCoder {
                             callback.onGeoResponse(gpsString);
                         } catch (JSONException ex) {
                             Log.e(LOG_CAT, "Failed to parse geo JSON response.", ex);
+                            Crashlytics.logException(ex);
                         }
                     }
                 },

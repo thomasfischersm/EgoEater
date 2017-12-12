@@ -3,12 +3,11 @@ package com.playposse.egoeater.util;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.playposse.egoeater.util.StringUtil;
+import com.crashlytics.android.Crashlytics;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -61,6 +60,7 @@ public class DataMunchUtil {
             }
         } catch (ParseException ex) {
             Log.e(LOG_TAG, "getAge: Couldn't parse FB date: " + birthday, ex);
+            Crashlytics.logException(ex);
             return null;
         }
     }

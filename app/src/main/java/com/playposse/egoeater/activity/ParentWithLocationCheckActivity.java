@@ -19,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -193,6 +194,7 @@ public abstract class ParentWithLocationCheckActivity
             // TODO: We could call the cloud to get the updated distance to each profile.
         } catch (IOException ex) {
             Log.e(LOG_TAG, "checkLocationSync: Failed to update location information.", ex);
+            Crashlytics.logException(ex);
         }
     }
 

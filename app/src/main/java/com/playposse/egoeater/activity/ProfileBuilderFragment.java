@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
@@ -81,6 +82,7 @@ public class ProfileBuilderFragment extends Fragment {
                         LOG_TAG,
                         "onCreate: Failed to retrieve ProfileUserData from preferences.",
                         ex);
+                Crashlytics.logException(ex);
                 profileUserData = new ProfileUserData();
             }
         } else  {
@@ -88,6 +90,7 @@ public class ProfileBuilderFragment extends Fragment {
                 profileUserData = ProfileUserData.read(savedInstanceState);
             } catch (JSONException ex) {
                 Log.e(LOG_TAG, "onCreate: Failed to read profile builder user data.", ex);
+                Crashlytics.logException(ex);
             }
         }
     }
@@ -234,6 +237,7 @@ public class ProfileBuilderFragment extends Fragment {
                     LOG_TAG,
                     "onSaveConfirmed: Failed to save profile builder state to preferences.",
                     ex);
+            Crashlytics.logException(ex);
         }
     }
 
@@ -258,6 +262,7 @@ public class ProfileBuilderFragment extends Fragment {
             profileUserData.save(outState);
         } catch (JSONException ex) {
             Log.e(LOG_TAG, "onSaveInstanceState: Failed to save profile builder user data.", ex);
+            Crashlytics.logException(ex);
         }
     }
 
@@ -306,6 +311,7 @@ public class ProfileBuilderFragment extends Fragment {
                 return ProfileBuilderConfiguration.load(context);
             } catch (IOException | JSONException ex) {
                 Log.e(LOG_TAG, "doInBackground: Failed to load profile builder configuration", ex);
+                Crashlytics.logException(ex);
                 return null;
             }
         }
