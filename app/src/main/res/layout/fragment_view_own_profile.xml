@@ -176,7 +176,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="-28dp"
             android:elevation="6dp"
-            android:src="@drawable/ic_mode_edit_black_24dp"
+            app:srcCompat="@drawable/ic_mode_edit_black_24dp"
             android:tint="@color/primaryTextColorDark" />
     </RelativeLayout>
 </ScrollView>
