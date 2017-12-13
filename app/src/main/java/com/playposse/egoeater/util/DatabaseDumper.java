@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +15,10 @@ public final class DatabaseDumper {
 
     private static final String LOG_TAG = DatabaseDumper.class.getSimpleName();
 
-    public static void dumpTables(MainDatabaseHelper mainDatabaseHelper) {
-        SQLiteDatabase readableDatabase = mainDatabaseHelper.getReadableDatabase();
+    private DatabaseDumper() {}
+
+    public static void dumpTables(SQLiteOpenHelper databaseHelper) {
+        SQLiteDatabase readableDatabase = databaseHelper.getReadableDatabase();
 
         try {
             List<String> tableNames = queryTableNames(readableDatabase);

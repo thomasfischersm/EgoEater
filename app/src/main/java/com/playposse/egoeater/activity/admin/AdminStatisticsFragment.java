@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.AdminStatisticsBean;
-import com.playposse.egoeater.clientactions.GetAdminStatisticsClientAction;
+import com.playposse.egoeater.clientactions.admin.GetAdminStatisticsClientAction;
 
 import java.util.Locale;
 

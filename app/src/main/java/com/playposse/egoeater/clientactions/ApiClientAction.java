@@ -78,7 +78,7 @@ public abstract class ApiClientAction<D> {
     }
 
     public final void execute() {
-        new ClientActionAsyncTask().execute();
+        new ClientActionAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public final D executeBlocking() throws InterruptedException {

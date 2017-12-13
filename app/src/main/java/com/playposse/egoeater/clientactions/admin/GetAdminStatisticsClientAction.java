@@ -1,8 +1,9 @@
-package com.playposse.egoeater.clientactions;
+package com.playposse.egoeater.clientactions.admin;
 
 import android.content.Context;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.AdminStatisticsBean;
+import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 
 import java.io.IOException;

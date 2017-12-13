@@ -1,4 +1,4 @@
-package com.playposse.egoeater.backend.beans;
+package com.playposse.egoeater.backend.beans.admin;
 
 /**
  * A transport bean that contains statistics about the users. It is only for the eyes of admins.

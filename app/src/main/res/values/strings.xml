@@ -423,4 +423,8 @@
 
     <!-- Admin menu -->
     <string name="admin_menu_statistics">Statistics</string>
+    <string name="admin_menu_refresh">Refresh</string>
+
+    <!-- Admin toasts -->
+    <string name="admin_refresh_success_toast">Successfully refreshed the admin database.</string>
 </resources>

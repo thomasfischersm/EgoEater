@@ -1,11 +1,12 @@
-package com.playposse.egoeater.backend.serveractions;
+package com.playposse.egoeater.backend.serveractions.admin;
 
 import com.google.api.server.spi.response.BadRequestException;
-import com.playposse.egoeater.backend.beans.AdminStatisticsBean;
+import com.playposse.egoeater.backend.beans.admin.AdminStatisticsBean;
 import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.Match;
 import com.playposse.egoeater.backend.schema.Rating;
+import com.playposse.egoeater.backend.serveractions.AbstractServerAction;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 

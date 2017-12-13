@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.playposse.egoeater.GlobalRouting;
@@ -36,6 +37,7 @@ import com.playposse.egoeater.util.EmailUtil;
 import com.playposse.egoeater.util.GlideUtil;
 import com.playposse.egoeater.util.LogoutUtil;
 import com.playposse.egoeater.util.ProfileFormatter;
+import com.playposse.egoeater.util.admin.AdminImportUtil;
 
 /**
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
@@ -178,6 +180,9 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
                 Intent intent = new Intent(this, AdminStatisticsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                return true;
+            case R.id.admin_refresh_action:
+                AdminImportUtil.refresh(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
