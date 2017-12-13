@@ -30,8 +30,8 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
 
         setContentView(R.layout.activity_introduction);
 
-        introductionSlidePager = (ViewPager) findViewById(R.id.introductionSlidePager);
-        getStartedButton = (Button) findViewById(R.id.getStartedButton);
+        introductionSlidePager = findViewById(R.id.introductionSlidePager);
+        getStartedButton = findViewById(R.id.getStartedButton);
 
         IntroductionSlidePagerAdapter pagerAdapter =
                 new IntroductionSlidePagerAdapter(getSupportFragmentManager());
