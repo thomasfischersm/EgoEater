@@ -1,0 +1,99 @@
+package com.playposse.egoeater.contentprovider.admin;
+
+import android.net.Uri;
+import android.provider.BaseColumns;
+
+/**
+ * A contract for {@link AdminContentProvider}.
+ */
+public class AdminContract {
+
+    public static final String AUTHORITY = "com.playposse.egoeater.provider.admin";
+
+    private static final String CONTENT_SCHEME = "content";
+
+    private AdminContract() {
+    }
+
+    private static Uri createContentUri(String path) {
+        return new Uri.Builder()
+                .scheme(CONTENT_SCHEME)
+                .encodedAuthority(AUTHORITY)
+                .appendPath(path)
+                .build();
+    }
+
+    /**
+     * Stores rule sets
+     */
+    public static class EgoEaterUserTable implements BaseColumns {
+
+        public static final String PATH = "egoEaterUser";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String TABLE_NAME = "ego_eater_user";
+
+        public static final String ID_COLUMN = _ID;
+        public static final String FB_PROFILE_ID_COLUMN = "fb_profile_id";
+        public static final String LAST_LOGIN_COLUMN = "last_login";
+        public static final String CREATED_COLUMN = "created";
+        public static final String IS_ACTIVE_COLUMN = "is_active";
+        public static final String FIRST_NAME_COLUMN = "first_name";
+        public static final String LAST_NAME_COLUMN = "last_name";
+        public static final String EMAIL_COLUMN = "email";
+        public static final String PROFILE_TEXT_COLUMN = "profile_text";
+        public static final String LATITUDE_COLUMN = "latitude";
+        public static final String LONGITUDE_COLUMN = "longitude";
+        public static final String CITY_COLUMN = "city";
+        public static final String STATE_COLUMN = "state";
+        public static final String COUNTRY_COLUMN = "country";
+        public static final String BIRTHDAY_COLUMN = "birthday";
+        public static final String GENDER_COLUMN = "gender";
+        public static final String PROFILE_PHOTO_0_COLUMN = "profile_photo_0";
+        public static final String PROFILE_PHOTO_1_COLUMN = "profile_photo_1";
+        public static final String PROFILE_PHOTO_2_COLUMN = "profile_photo_2";
+
+        public static final String[] COLUMN_NAMES = new String[]{
+                ID_COLUMN,
+                FB_PROFILE_ID_COLUMN,
+                LAST_LOGIN_COLUMN,
+                CREATED_COLUMN,
+                IS_ACTIVE_COLUMN,
+                FIRST_NAME_COLUMN,
+                LAST_NAME_COLUMN,
+                EMAIL_COLUMN,
+                PROFILE_TEXT_COLUMN,
+                LATITUDE_COLUMN,
+                LONGITUDE_COLUMN,
+                CITY_COLUMN,
+                STATE_COLUMN,
+                COUNTRY_COLUMN,
+                BIRTHDAY_COLUMN,
+                GENDER_COLUMN,
+                PROFILE_PHOTO_0_COLUMN,
+                PROFILE_PHOTO_1_COLUMN,
+                PROFILE_PHOTO_2_COLUMN};
+
+        static final String SQL_CREATE_TABLE =
+                "CREATE TABLE ego_eater_user "
+                        + "(_id INTEGER PRIMARY KEY, "
+                        + "fb_profile_id TEXT, "
+                        + "last_login INTEGER, "
+                        + "created TEXT, "
+                        + "rule_set INTEGER, "
+                        + "is_active BOOLEAN, "
+                        + "first_name TEXT, "
+                        + "last_name TEXT, "
+                        + "email TEXT, "
+                        + "profile_text TEXT, "
+                        + "latitude NUMERIC, "
+                        + "longitude NUMERIC, "
+                        + "city TEXT, "
+                        + "state TEXT, "
+                        + "country TEXT, "
+                        + "birthday TEXT, "
+                        + "gender TEXT, "
+                        + "profile_photo_0 TEXT, "
+                        + "profile_photo_1 TEXT, "
+                        + "profile_photo_2 TEXT)";
+    }
+}

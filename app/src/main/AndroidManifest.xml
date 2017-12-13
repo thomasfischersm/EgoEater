@@ -31,6 +31,11 @@
             android:authorities="com.playposse.egoeater.provider"
             android:exported="false"/>
 
+        <provider
+            android:authorities="com.playposse.egoeater.provider.admin"
+            android:name=".contentprovider.admin.AdminContentProvider"
+            android:exported="false" />
+
         <service
             android:name=".services.PopulatePipelineService"
             android:exported="false"/>
