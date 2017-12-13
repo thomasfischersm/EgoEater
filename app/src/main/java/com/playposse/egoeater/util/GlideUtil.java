@@ -7,6 +7,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.playposse.egoeater.glide.GlideApp;
 
@@ -35,6 +36,19 @@ public final class GlideUtil {
             GlideApp.with(imageView.getContext())
                     .load(imageUrl)
                     .placeholder(placeHolderResId)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontTransform()
+                    .into(imageView);
+        } else {
+            imageView.setImageBitmap(null);
+        }
+    }
+
+    public static void loadWithoutHardwareAcceleration(ImageView imageView, String imageUrl) {
+        if (imageUrl != null) {
+            GlideApp.with(imageView.getContext())
+                    .applyDefaultRequestOptions(new RequestOptions().disallowHardwareConfig())
+                    .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontTransform()
                     .into(imageView);

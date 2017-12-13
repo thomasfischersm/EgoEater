@@ -124,7 +124,7 @@ public class ViewOwnProfileFragment extends Fragment {
             String photoUrl) {
 
         if (photoUrl != null) {
-            GlideUtil.load(imageView, photoUrl);
+            GlideUtil.loadWithoutHardwareAcceleration(imageView, photoUrl);
             imageView.setVisibility(VISIBLE);
             if (emptyView != null) {
                 emptyView.setVisibility(GONE);
