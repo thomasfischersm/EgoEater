@@ -149,6 +149,8 @@
         </activity>
         <activity android:name=".activity.ReactivateAccountActivity">
         </activity>
+        <activity android:name=".activity.admin.AdminStatisticsActivity">
+        </activity>
     </application>
 
 </manifest>

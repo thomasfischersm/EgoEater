@@ -4,6 +4,7 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.condition.IfTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class EgoEaterUser {
     private String birthday;
     // FB stores this as 'male', 'female', or a custom value.
     @Index private String gender;
+    @Index(IfTrue.class) private boolean isAdmin = false;
     private List<ProfilePhoto> profilePhotos = new ArrayList<>();
     private List<Long> fuckOffList = new ArrayList<>();
     private List<Long> pissedOffList = new ArrayList<>();
@@ -210,6 +212,10 @@ public class EgoEaterUser {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     public List<Long> getFuckOffList() {

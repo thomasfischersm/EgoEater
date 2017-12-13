@@ -1,6 +1,7 @@
 package com.playposse.egoeater.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -174,7 +175,17 @@ public abstract class ParentWithLocationCheckActivity
 
         try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
+            List<Address> addresses =
+                    geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
+
+            if ((addresses == null) || (addresses.size() == 0)) {
+                String errorMsg = "checkLocationSync: The location service returned no result " +
+                        "for " + currentLatitude + ", " + currentLongitude + ".";
+                Log.i(LOG_TAG, errorMsg);
+                Crashlytics.logException(new IllegalStateException(errorMsg));
+                return;
+            }
+
             String city = addresses.get(0).getLocality();
             String state = addresses.get(0).getAdminArea();
             String country = addresses.get(0).getCountryName();
@@ -209,6 +220,7 @@ public abstract class ParentWithLocationCheckActivity
                 + connectionResult.getErrorCode() + " - " + connectionResult.getErrorMessage());
     }
 
+    @SuppressLint("MissingPermission")
     private void requestLocation() {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setNumUpdates(1);

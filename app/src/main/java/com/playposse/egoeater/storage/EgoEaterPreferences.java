@@ -27,6 +27,7 @@ public final class EgoEaterPreferences {
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String FB_PROFILE_ID_KEY = "fbProfileId";
     private static final String IS_ACTIVE_KEY = "isActive";
+    private static final String IS_ADMIN_KEY = "isAdmin";
     private static final String FIRST_NAME_KEY = "firstName";
     private static final String LAST_NAME_KEY = "lastName";
     private static final String NAME_KEY = "name";
@@ -51,6 +52,7 @@ public final class EgoEaterPreferences {
     private static final String HAS_FIRST_PROFILE_BEEN_SELECTED_KEY = "hasFirstProfileBeenSelected";
 
     private static final boolean IS_ACTIVE_DEFAULT_VALUE = true;
+    private static final boolean IS_ADMIN_DEFAULT_VALUE = false;
     private static final boolean HAS_FIRST_PROFILE_PHOTO_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE = false;
@@ -66,6 +68,7 @@ public final class EgoEaterPreferences {
         setLong(context, SESSION_ID_KEY, userBean.getSessionId());
         setString(context, FB_PROFILE_ID_KEY, userBean.getFbProfileId());
         setBoolean(context, IS_ACTIVE_KEY, userBean.getActive());
+        setBoolean(context, IS_ADMIN_KEY, userBean.getAdmin());
         setString(context, FIRST_NAME_KEY, userBean.getFirstName());
         setString(context, LAST_NAME_KEY, userBean.getFirstName());
         setString(context, NAME_KEY, userBean.getFirstName());
@@ -102,6 +105,7 @@ public final class EgoEaterPreferences {
                 .setSessionId(getLong(context, SESSION_ID_KEY))
                 .setFbProfileId(getString(context, FB_PROFILE_ID_KEY))
                 .setActive(isActive(context))
+                .setAdmin(isAdmin(context))
                 .setFirstName(getString(context, FIRST_NAME_KEY))
                 .setLastName(getString(context, LAST_NAME_KEY))
                 .setName(getString(context, NAME_KEY))
@@ -154,6 +158,10 @@ public final class EgoEaterPreferences {
 
     public static boolean isActive(Context context) {
         return getBoolean(context, IS_ACTIVE_KEY, IS_ACTIVE_DEFAULT_VALUE);
+    }
+
+    public static boolean isAdmin(Context context) {
+        return getBoolean(context, IS_ADMIN_KEY, IS_ADMIN_DEFAULT_VALUE);
     }
 
     public static String getProfilePhotoUrl0(Context context) {

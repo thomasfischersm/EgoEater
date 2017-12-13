@@ -4,9 +4,7 @@ import com.google.api.server.spi.response.BadRequestException;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Ref;
-import com.googlecode.objectify.cmd.QueryKeys;
 import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.Match;
@@ -53,6 +51,29 @@ public abstract class AbstractServerAction {
         }
 
         return user;
+    }
+
+    protected static EgoEaterUser loadAdmin(long sessionId) throws BadRequestException {
+        List<EgoEaterUser> egoEaterUsers =
+                ofy()
+                        .load()
+                        .type(EgoEaterUser.class)
+                        .filter("sessionId", sessionId)
+                        .list();
+
+        if (egoEaterUsers.size() != 1) {
+            throw new BadRequestException("The session id " + sessionId +
+                    " resulted in an unexpected number of users: " + egoEaterUsers.size());
+        }
+
+        EgoEaterUser egoEaterUser = egoEaterUsers.get(0);
+
+        if (!egoEaterUser.isAdmin()) {
+            throw new BadRequestException("The user with session id " + sessionId + " and user id "
+                    + egoEaterUser.getId() + " is not an admin!");
+        }
+
+        return egoEaterUser;
     }
 
     protected static List<ProfilePhoto> deleteProfilePhoto(

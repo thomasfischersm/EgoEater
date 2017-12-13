@@ -254,6 +254,15 @@
     <string name="reactivate_account_welcome">I\'m glad to you are giving Beeline another try.\n\nLet me know if I can do anything to make your experience better this time. You can use the send feedback link in the navigation drawer to contact me. I personally read those messages.</string>
     <string name="reactivate_account_button">Reactivate</string>
 
+
+    <!-- Admin statistics activity -->
+    <string name="total_user_count">Total user count</string>
+    <string name="active_user_count">Active user count</string>
+    <string name="rating_count">Ratings count</string>
+    <string name="match_count">Matches count</string>
+    <string name="conversation_count">Conversations count</string>
+    <string name="admin_statistics_report_duration">Report generation duration (ms)</string>
+
     <!-- Profile Builder -->
     <string name="profile_builder_title">Profile builder</string>
     <string name="reset_link">Reset</string>
@@ -411,6 +420,7 @@
     <string name="not_logged_in_notification_title">Matches were recalculated!</string>
     <string name="not_logged_in_notification_text">Please, log in to check if there is someone new for you!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Admin menu -->
+    <string name="admin_menu_statistics">Statistics</string>
 </resources>

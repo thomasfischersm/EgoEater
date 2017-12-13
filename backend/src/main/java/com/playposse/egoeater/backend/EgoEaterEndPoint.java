@@ -10,6 +10,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
+import com.playposse.egoeater.backend.beans.AdminStatisticsBean;
 import com.playposse.egoeater.backend.beans.MatchBean;
 import com.playposse.egoeater.backend.beans.MaxMessageIndexResponseBean;
 import com.playposse.egoeater.backend.beans.MessageBean;
@@ -17,6 +18,7 @@ import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.beans.UserBean;
+import com.playposse.egoeater.backend.serveractions.GetAdminStatisticsServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateAccountStatusServerAction;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
 import com.playposse.egoeater.backend.serveractions.FuckOffServerAction;
@@ -242,5 +244,12 @@ public class EgoEaterEndPoint {
             throws BadRequestException, IOException {
 
         return UpdateAccountStatusServerAction.reactivateAccount(sessionId);
+    }
+
+    @ApiMethod(name = "getAdminStatistics")
+    public AdminStatisticsBean getAdminStatistics(@Named("sessionId") long sessionId)
+            throws BadRequestException {
+
+        return GetAdminStatisticsServerAction.getAdminStatistics(sessionId);
     }
 }

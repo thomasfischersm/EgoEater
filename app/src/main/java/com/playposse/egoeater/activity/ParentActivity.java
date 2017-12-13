@@ -16,6 +16,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.admin.AdminStatisticsActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
@@ -116,6 +119,20 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         return 0;
     }
 
+    /**
+     * Show an admin menu only for admin users.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!EgoEaterPreferences.isAdmin(this)) {
+            return super.onCreateOptionsMenu(menu);
+        } else {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.admin_menu, menu);
+            return true;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if ((drawerToggle != null) && drawerToggle.onOptionsItemSelected(item)) {
@@ -156,6 +173,11 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             case R.id.logout_menu_item:
                 drawerLayout.closeDrawers();
                 LogoutUtil.logout(this);
+                return true;
+            case R.id.admin_statistics_action:
+                Intent intent = new Intent(this, AdminStatisticsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
