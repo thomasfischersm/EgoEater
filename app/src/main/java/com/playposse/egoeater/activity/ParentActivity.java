@@ -157,7 +157,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             case R.id.rating_menu_item:
                 drawerLayout.closeDrawers();
                 finish();
-                startActivity(new Intent(this, RatingActivity.class));
+                GlobalRouting.onStartComparing(this);
                 return true;
             case R.id.matches_menu_item:
                 drawerLayout.closeDrawers();
@@ -320,7 +320,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
                     break;
                 case 1:
                     finish();
-                    startActivity(new Intent(ParentActivity.this, RatingActivity.class));
+                    GlobalRouting.onStartComparing(ParentActivity.this);
                     break;
                 case 2:
                     finish();

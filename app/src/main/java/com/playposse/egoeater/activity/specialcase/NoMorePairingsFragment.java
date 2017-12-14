@@ -1,4 +1,4 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.specialcase;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

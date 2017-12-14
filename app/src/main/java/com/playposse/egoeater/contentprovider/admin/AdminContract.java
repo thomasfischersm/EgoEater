@@ -48,6 +48,7 @@ public class AdminContract {
         public static final String STATE_COLUMN = "state";
         public static final String COUNTRY_COLUMN = "country";
         public static final String BIRTHDAY_COLUMN = "birthday";
+        public static final String BIRTHDAY_OVERRIDE_COLUMN = "birthday_override";
         public static final String GENDER_COLUMN = "gender";
         public static final String PROFILE_PHOTO_0_COLUMN = "profile_photo_0";
         public static final String PROFILE_PHOTO_1_COLUMN = "profile_photo_1";
@@ -94,6 +95,7 @@ public class AdminContract {
                         + "state TEXT, "
                         + "country TEXT, "
                         + "birthday TEXT, "
+                        + "birthday_override TEXT, "
                         + "gender TEXT, "
                         + "profile_photo_0 TEXT, "
                         + "profile_photo_1 TEXT, "

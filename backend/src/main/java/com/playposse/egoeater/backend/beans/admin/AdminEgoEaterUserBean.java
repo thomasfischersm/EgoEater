@@ -23,6 +23,7 @@ public class AdminEgoEaterUserBean {
     private String country;
     // FB stores the birthday as mm/dd/yyyy, yyyy, or mm/dd depending on privacy settings.
     private String birthday;
+    private String birthdayOverride;
     // FB stores this as 'male', 'female', or a custom value.
     private String gender;
     private String profilePhoto0;
@@ -48,6 +49,7 @@ public class AdminEgoEaterUserBean {
         state = egoEaterUser.getState();
         country = egoEaterUser.getCountry();
         birthday = egoEaterUser.getBirthday();
+        birthday = egoEaterUser.getBirthdayOverride();
         gender = egoEaterUser.getGender();
 
         if (egoEaterUser.getProfilePhotos() != null) {
@@ -121,6 +123,10 @@ public class AdminEgoEaterUserBean {
 
     public String getBirthday() {
         return birthday;
+    }
+
+    public String getBirthdayOverride() {
+        return birthdayOverride;
     }
 
     public String getGender() {

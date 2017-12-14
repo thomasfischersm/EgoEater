@@ -8,7 +8,6 @@ import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.contentprovider.admin.AdminContract.EgoEaterUserTable;
 import com.playposse.egoeater.util.DataMunchUtil;
-import com.playposse.egoeater.util.IntegerUtil;
 import com.playposse.egoeater.util.SmartCursor;
 import com.playposse.egoeater.util.StringUtil;
 
@@ -20,8 +19,6 @@ import static com.playposse.egoeater.contentprovider.EgoEaterContract.ProfileTab
  * A {@link Parcelable} that contains the profile information.
  */
 public class ProfileParcelable implements Parcelable {
-
-    private static final int NULL_AGE = 0;
 
     private long profileId;
     private boolean isActive;
@@ -80,7 +77,7 @@ public class ProfileParcelable implements Parcelable {
         city = userBean.getCity();
         state = userBean.getState();
         country = userBean.getCountry();
-        age = IntegerUtil.get(DataMunchUtil.getAge(userBean.getBirthday()), NULL_AGE);
+        age = DataMunchUtil.getAge(userBean);
         gender = userBean.getGender();
         if (userBean.getProfilePhotoUrls() != null) {
             if (userBean.getProfilePhotoUrls().size() > 0) {
@@ -110,7 +107,7 @@ public class ProfileParcelable implements Parcelable {
         city = smartCursor.getString(EgoEaterUserTable.CITY_COLUMN);
         state = smartCursor.getString(EgoEaterUserTable.STATE_COLUMN);
         country = smartCursor.getString(EgoEaterUserTable.COUNTRY_COLUMN);
-        age = IntegerUtil.get(DataMunchUtil.getAge(smartCursor.getString(EgoEaterUserTable.BIRTHDAY_COLUMN)), NULL_AGE);
+        age = DataMunchUtil.getAgeFromEgoEaterUserTable(smartCursor);
         gender = smartCursor.getString(EgoEaterUserTable.GENDER_COLUMN);
         photoUrl0 = smartCursor.getString(EgoEaterUserTable.PROFILE_PHOTO_0_COLUMN);
         photoUrl1 = smartCursor.getString(EgoEaterUserTable.PROFILE_PHOTO_1_COLUMN);

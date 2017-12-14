@@ -1,9 +1,10 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.specialcase;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
+import com.playposse.egoeater.GlobalRouting;
+import com.playposse.egoeater.activity.ParentActivity;
 import com.playposse.egoeater.util.ProfileUtil;
 
 /**
@@ -26,7 +27,7 @@ public class ProfileNotReadyActivity extends ParentActivity {
         super.onResume();
 
         if (ProfileUtil.isReady(this)) {
-            startActivity(new Intent(this, RatingActivity.class));
+            GlobalRouting.onStartComparing(this);
         }
     }
 }

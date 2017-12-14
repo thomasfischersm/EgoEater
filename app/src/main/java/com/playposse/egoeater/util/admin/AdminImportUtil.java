@@ -68,6 +68,7 @@ public final class AdminImportUtil {
             contentValues.put(EgoEaterUserTable.STATE_COLUMN, egoEaterUser.getState());
             contentValues.put(EgoEaterUserTable.COUNTRY_COLUMN, egoEaterUser.getCountry());
             contentValues.put(EgoEaterUserTable.BIRTHDAY_COLUMN, egoEaterUser.getBirthday());
+            contentValues.put(EgoEaterUserTable.BIRTHDAY_OVERRIDE_COLUMN, egoEaterUser.getBirthdayOverride());
             contentValues.put(EgoEaterUserTable.GENDER_COLUMN, egoEaterUser.getGender());
             contentValues.put(EgoEaterUserTable.PROFILE_PHOTO_0_COLUMN, egoEaterUser.getProfilePhoto0());
             contentValues.put(EgoEaterUserTable.PROFILE_PHOTO_1_COLUMN, egoEaterUser.getProfilePhoto1());

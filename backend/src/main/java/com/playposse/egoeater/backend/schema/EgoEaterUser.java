@@ -35,6 +35,7 @@ public class EgoEaterUser {
     private String country;
     // FB stores the birthday as mm/dd/yyyy, yyyy, or mm/dd depending on privacy settings.
     private String birthday;
+    private String birthdayOverride;
     // FB stores this as 'male', 'female', or a custom value.
     @Index private String gender;
     @Index(IfTrue.class) private boolean isAdmin = false;
@@ -204,6 +205,14 @@ public class EgoEaterUser {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public String getBirthdayOverride() {
+        return birthdayOverride;
+    }
+
+    public void setBirthdayOverride(String birthdayOverride) {
+        this.birthdayOverride = birthdayOverride;
     }
 
     public String getGender() {

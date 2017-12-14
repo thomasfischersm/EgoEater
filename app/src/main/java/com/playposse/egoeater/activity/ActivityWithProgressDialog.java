@@ -26,7 +26,7 @@ public abstract class ActivityWithProgressDialog extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
     }
 
-    protected void showLoadingProgress() {
+    public void showLoadingProgress() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -39,7 +39,7 @@ public abstract class ActivityWithProgressDialog extends AppCompatActivity {
         });
     }
 
-    protected void dismissLoadingProgress() {
+    public void dismissLoadingProgress() {
         if (progressDialog != null) {
             runOnUiThread(new Runnable() {
                 @Override

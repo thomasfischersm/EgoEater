@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.contentprovider.admin.AdminContract.EgoEaterUserTable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,8 @@ import java.util.Locale;
 public class DataMunchUtil {
 
     private static final String LOG_TAG = DataMunchUtil.class.getSimpleName();
+
+    public static final int NULL_AGE = 0;
 
     private static final String FULL_FB_DATE_FORMAT = "MM/dd/yyyy";
     private static final char DATE_SEPARATOR = '/';
@@ -63,5 +67,25 @@ public class DataMunchUtil {
             Crashlytics.logException(ex);
             return null;
         }
+    }
+
+    public static int getAgeFromEgoEaterUserTable(SmartCursor smartCursor) {
+        Integer age = getAge(smartCursor.getString(EgoEaterUserTable.BIRTHDAY_OVERRIDE_COLUMN));
+
+        if (age == null) {
+            age = getAge(smartCursor.getString(EgoEaterUserTable.BIRTHDAY_COLUMN));
+        }
+
+        return IntegerUtil.get(age, NULL_AGE);
+    }
+
+    public static int getAge(UserBean userBean) {
+        Integer age = getAge(userBean.getBirthdayOverride());
+
+        if (age == null) {
+            age = getAge(userBean.getBirthday());
+        }
+
+        return IntegerUtil.get(age, NULL_AGE);
     }
 }

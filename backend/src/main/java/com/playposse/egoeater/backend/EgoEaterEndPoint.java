@@ -19,6 +19,7 @@ import com.playposse.egoeater.backend.beans.PhotoBean;
 import com.playposse.egoeater.backend.beans.ProfileBean;
 import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.beans.UserBean;
+import com.playposse.egoeater.backend.serveractions.UpdateBirthdayOverrideServerAction;
 import com.playposse.egoeater.backend.serveractions.admin.GetAdminDumpEgoEaterUserServerAction;
 import com.playposse.egoeater.backend.serveractions.admin.GetAdminStatisticsServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateAccountStatusServerAction;
@@ -113,7 +114,7 @@ public class EgoEaterEndPoint {
             @Named("longitude") double longitude,
             @Nullable @Named("city") String city,
             @Nullable @Named("state") String state,
-            @Named("country") String country) throws BadRequestException {
+            @Named("country") String country) throws BadRequestException, IOException {
 
         return UpdateLocationServerAction.updateLocation(
                 sessionId,
@@ -260,5 +261,16 @@ public class EgoEaterEndPoint {
             throws BadRequestException {
 
         return GetAdminDumpEgoEaterUserServerAction.getAdminEgoEateruserDump(sessionId);
+    }
+
+    @ApiMethod(name = "updateBirthdayOverride")
+    public UserBean updateBirthdayOverride(
+            @Named("sessionId") long sessionId,
+            @Named("birthdayOverride") String birthdayOverride)
+            throws BadRequestException, IOException {
+
+        return UpdateBirthdayOverrideServerAction.updateBirthdayOverride(
+                sessionId,
+                birthdayOverride);
     }
 }

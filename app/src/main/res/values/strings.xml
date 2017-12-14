@@ -255,6 +255,15 @@
     <string name="reactivate_account_button">Reactivate</string>
 
 
+    <!-- Age request activity -->
+    <string name="age_request_title">How old are you?</string>
+    <string name="age_request_message">Inquiring minds want to know.\n\nTogether with gender and distance, it\'s a key decision factor for romantic partners.</string>
+    <string name="age_request_legend">month/day/year</string>
+    <string name="age_request_button">Save and continue</string>
+    <string name="age_request_required_error">Cannot parse. Please, format as \'month/day/year.\'</string>
+    <string name="age_request_future_error">So, you say you are from the future! I don\'t think so.</string>
+    <string name="age_request_super_old_error">Old is sexy. But go ahead tell us your true age.</string>
+
     <!-- Admin statistics activity -->
     <string name="total_user_count">Total user count</string>
     <string name="active_user_count">Active user count</string>

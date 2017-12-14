@@ -8,7 +8,7 @@ import android.content.Intent;
 import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.activity.CurrentActivity;
-import com.playposse.egoeater.activity.NoConnectivityActivity;
+import com.playposse.egoeater.activity.specialcase.NoConnectivityActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 

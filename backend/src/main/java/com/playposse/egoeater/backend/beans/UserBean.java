@@ -26,6 +26,7 @@ public class UserBean {
     private String state;
     private String country;
     private String birthday;
+    private String birthdayOverride;
     private String gender;
     private List<String> profilePhotoUrls = new ArrayList<>();
 
@@ -48,6 +49,7 @@ public class UserBean {
         state = egoEaterUser.getState();
         country = egoEaterUser.getCountry();
         birthday = egoEaterUser.getBirthday();
+        birthdayOverride = egoEaterUser.getBirthdayOverride();
         gender = egoEaterUser.getGender();
 
         for (ProfilePhoto profilePhoto : egoEaterUser.getProfilePhotos()) {
@@ -117,6 +119,10 @@ public class UserBean {
 
     public String getBirthday() {
         return birthday;
+    }
+
+    public String getBirthdayOverride() {
+        return birthdayOverride;
     }
 
     public String getGender() {

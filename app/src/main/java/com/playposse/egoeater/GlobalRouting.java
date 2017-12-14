@@ -11,8 +11,12 @@ import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.activity.RatingActivity;
 import com.playposse.egoeater.activity.ReactivateAccountActivity;
 import com.playposse.egoeater.activity.ViewOwnProfileActivity;
+import com.playposse.egoeater.activity.specialcase.MissingAgeActivity;
+import com.playposse.egoeater.activity.specialcase.ProfileNotReadyActivity;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.AnalyticsUtil;
+import com.playposse.egoeater.util.ProfileUtil;
 import com.playposse.egoeater.util.StringUtil;
 
 /**
@@ -56,7 +60,7 @@ public class GlobalRouting {
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
             context.startActivity(new Intent(context, ViewOwnProfileActivity.class));
         } else {
-            context.startActivity(new Intent(context, RatingActivity.class));
+            onStartComparing(context);
         }
     }
 
@@ -93,5 +97,21 @@ public class GlobalRouting {
         Intent intent = new Intent(context, ReactivateAccountActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
+    }
+
+    /**
+     * Starts the comparing activity. This is an important hook point for checks to be made that
+     * should potentially stop a user from being able to compare profiles.
+     */
+    public static void onStartComparing(Context context) {
+        if (!ProfileUtil.isReady(context)) {
+            context.startActivity(new Intent(context, ProfileNotReadyActivity.class));
+            AnalyticsUtil.reportUserBlockedForIncompleteProfile(context);
+        } else if (ProfileUtil.isAgeMissing(context)) {
+            context.startActivity(new Intent(context, MissingAgeActivity.class));
+            AnalyticsUtil.reportUserBlockedForMissingBirthday(context);
+        } else {
+            context.startActivity(new Intent(context, RatingActivity.class));
+        }
     }
 }

@@ -24,6 +24,9 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profil
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reactivateAccountEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.updateBirthdayOverrideEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForIncompleteProfileEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForMissingBirthdayEvent;
 
 /**
  * Helper class to make reporting information to Google Analytics less verbose.
@@ -50,6 +53,9 @@ public class AnalyticsUtil {
         photoUploadedEvent,
         deactivateAccountEvent,
         reactivateAccountEvent,
+        updateBirthdayOverrideEvent,
+        userBlockedForIncompleteProfileEvent,
+        userBlockedForMissingBirthdayEvent,
     }
 
     private static void reportEvent(
@@ -135,9 +141,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportMessageSent(Context context, Long senderId, long recipientId) {
-        Application app = (Application) context.getApplicationContext();
-
-        AnalyticsUtil.reportEvent(app, messageSentEvent, "");
+        AnalyticsUtil.reportEvent(getApp(context), messageSentEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(messageSentEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
@@ -151,9 +155,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportPhotoUploaded(Context context, int photoIndex) {
-        Application app = (Application) context.getApplicationContext();
-
-        AnalyticsUtil.reportEvent(app, photoUploadedEvent, "");
+        AnalyticsUtil.reportEvent(getApp(context), photoUploadedEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(photoUploadedEvent.name())
                 .putCustomAttribute(PHOTO_INDEX_ATTRIBUTE, photoIndex));
@@ -169,5 +171,27 @@ public class AnalyticsUtil {
         AnalyticsUtil.reportEvent(app, reactivateAccountEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(reactivateAccountEvent.name()));
+    }
+
+    public static void reportUpdateBirthdayOverride(Context context) {
+        AnalyticsUtil.reportEvent(getApp(context), updateBirthdayOverrideEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(updateBirthdayOverrideEvent.name()));
+    }
+
+    public static void reportUserBlockedForIncompleteProfile(Context context) {
+        AnalyticsUtil.reportEvent(getApp(context), userBlockedForIncompleteProfileEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(userBlockedForIncompleteProfileEvent.name()));
+    }
+
+    public static void reportUserBlockedForMissingBirthday(Context context) {
+        AnalyticsUtil.reportEvent(getApp(context), userBlockedForMissingBirthdayEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(userBlockedForMissingBirthdayEvent.name()));
+    }
+
+    private static Application getApp(Context context) {
+        return (Application) context.getApplicationContext();
     }
 }

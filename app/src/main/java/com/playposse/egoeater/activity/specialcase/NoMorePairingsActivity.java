@@ -1,11 +1,12 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.specialcase;
 
-import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.playposse.egoeater.BuildConfig;
+import com.playposse.egoeater.GlobalRouting;
+import com.playposse.egoeater.activity.ParentWithLocationCheckActivity;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
@@ -69,7 +70,7 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
     private void checkIfPipelineIsRefreshed() {
         if (QueryUtil.getNextPairing(this, false) != null) {
             // The pipeline has a new pairing. Send the user back to the RatingActivity.
-            startActivity(new Intent(this, RatingActivity.class));
+            GlobalRouting.onStartComparing(this);
         }
     }
 }

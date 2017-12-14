@@ -1,10 +1,11 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.specialcase;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.ParentActivity;
 import com.playposse.egoeater.util.NetworkConnectivityBroadcastReceiver;
 
 /**

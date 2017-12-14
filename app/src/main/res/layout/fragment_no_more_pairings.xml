@@ -8,7 +8,7 @@
     android:layout_margin="16dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    tools:context="com.playposse.egoeater.activity.NoMorePairingsFragment">
+    tools:context="com.playposse.egoeater.activity.specialcase.NoMorePairingsFragment">
 
     <TextView
         style="@style/title"

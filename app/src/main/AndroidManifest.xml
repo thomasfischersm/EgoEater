@@ -120,7 +120,7 @@
             android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.NoMorePairingsActivity"
+            android:name=".activity.specialcase.NoMorePairingsActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.MatchesActivity"
@@ -142,7 +142,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/IntroAppTheme"/>
         <activity
-            android:name=".activity.NoConnectivityActivity"
+            android:name=".activity.specialcase.NoConnectivityActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ProfileBuilderActivity"
@@ -150,7 +150,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".activity.ProfileNotReadyActivity"
+            android:name=".activity.specialcase.ProfileNotReadyActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.DeactivateAccountActivity"
@@ -164,6 +164,8 @@
         <activity
             android:name=".activity.admin.AdminViewProfilesActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.specialcase.MissingAgeActivity"
+            android:screenOrientation="portrait"/>
     </application>
-
 </manifest>
