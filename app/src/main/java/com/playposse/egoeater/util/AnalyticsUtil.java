@@ -2,6 +2,8 @@ package com.playposse.egoeater.util;
 
 import android.app.Application;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.RatingEvent;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.playposse.egoeater.EgoEaterApplication;
@@ -21,6 +23,7 @@ public class AnalyticsUtil {
         connectivityLost,
         connectivityRestored,
         enteredOtherProfileOption,
+        loginEvent,
     }
 
     public static void reportEvent(
@@ -46,7 +49,10 @@ public class AnalyticsUtil {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    public static void reportRating(Application app) {
+    public static void reportRating(Application app, long winnerId) {
         AnalyticsUtil.reportEvent(app, ratingEvent, "");
+
+        Answers.getInstance().logRating(new RatingEvent()
+                .putContentId(Long.toString(winnerId)));
     }
 }

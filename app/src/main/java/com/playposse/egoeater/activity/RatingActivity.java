@@ -223,7 +223,7 @@ public class RatingActivity
                 }
             });
 
-            AnalyticsUtil.reportRating(getApplication());
+            AnalyticsUtil.reportRating(getApplication(), winnerId);
 
             if (BuildConfig.DEBUG) {
                 DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
