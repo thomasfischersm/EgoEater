@@ -19,8 +19,6 @@ import com.playposse.egoeater.util.AnalyticsUtil;
 
 import java.util.Map;
 
-import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
-
 /**
  * An implementation of {@link FirebaseMessagingService} that receives messages from AppEngine. The
  * messages initiate the pairing process of a student and buddy.
@@ -93,9 +91,8 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
         Log.i(LOG_CAT, "Executed Firebase action " + action.getClass().getSimpleName());
 
         // Report action to Analytics
-        AnalyticsUtil.reportEvent(
+        AnalyticsUtil.reportFirebaseMessageReceived(
                 getApplication(),
-                firebaseEvent,
                 action.getClass().getSimpleName());
     }
 

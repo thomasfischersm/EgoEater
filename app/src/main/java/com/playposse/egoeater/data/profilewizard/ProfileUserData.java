@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.util.AnalyticsUtil;
-import com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory;
 import com.playposse.egoeater.util.StringUtil;
 
 import org.json.JSONArray;
@@ -190,10 +189,7 @@ public class ProfileUserData {
         for (ProfileAnswer answer : questionIndexToAnswerMap.values()) {
             String otherAnswer = answer.getOtherAnswer();
             if (!StringUtil.isEmpty(otherAnswer)) {
-                AnalyticsUtil.reportEvent(
-                        activity.getApplication(),
-                        AnalyticsCategory.enteredOtherProfileOption,
-                        otherAnswer);
+                AnalyticsUtil.reportOtherProfileOption(activity.getApplication(), otherAnswer);
             }
         }
     }

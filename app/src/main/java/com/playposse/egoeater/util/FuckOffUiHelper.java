@@ -45,6 +45,7 @@ public class FuckOffUiHelper {
 
         context.startActivity(new Intent(context, MatchesActivity.class));
 
-        AnalyticsUtil.reportEvent(application, fuckOffEvent, "");
+        Long userId = EgoEaterPreferences.getUser(context).getUserId();
+        AnalyticsUtil.reportFuckOffEvent(application, userId, partnerId);
     }
 }

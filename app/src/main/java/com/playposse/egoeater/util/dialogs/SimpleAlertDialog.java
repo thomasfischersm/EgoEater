@@ -14,10 +14,9 @@ import android.widget.LinearLayout;
 
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.ReportAbuseClientAction;
+import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.StringUtil;
-
-import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
 /**
  * Utility that shows a simple alert dialog.
@@ -203,7 +202,8 @@ public final class SimpleAlertDialog {
                                                 note);
                                 reportAbuseClientAction.execute();
 
-                                AnalyticsUtil.reportEvent(application, reportAbuseEvent, "");
+                                Long userId = EgoEaterPreferences.getUser(context).getUserId();
+                                AnalyticsUtil.reportAbuseEvent(application, userId, abuserId);
                             }
                         }
                 )

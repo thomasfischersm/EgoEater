@@ -9,7 +9,6 @@ import com.playposse.egoeater.EgoEaterApplication;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.activity.NoConnectivityActivity;
-import com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -31,10 +30,10 @@ public class NetworkConnectivityBroadcastReceiver extends BroadcastReceiver {
             Intent newActivityIntent = new Intent(context, NoConnectivityActivity.class);
             newActivityIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(newActivityIntent);
-            AnalyticsUtil.reportEvent(application, AnalyticsCategory.connectivityLost, "");
+            AnalyticsUtil.reportConnectivityLost(application);
         } else if (isOnNoConnectivityActivity && !noConnectivity) {
             GlobalRouting.onNetworkAvailable(context);
-            AnalyticsUtil.reportEvent(application, AnalyticsCategory.connectivityRestored, "");
+            AnalyticsUtil.reportConnectivityRestored(application);
         }
     }
 }
