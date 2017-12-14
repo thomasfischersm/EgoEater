@@ -171,6 +171,8 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
                         startActivity(
                                 new Intent(getApplicationContext(),
                                         ProfileBuilderActivity.class));
+
+                        AnalyticsUtil.reportProfileBuilderOpened(getApplication());
                     }
                 });
         profileBuilderSnackbar.show();

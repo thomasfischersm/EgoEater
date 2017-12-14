@@ -18,6 +18,7 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fireba
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderOpened;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
@@ -41,6 +42,7 @@ public class AnalyticsUtil {
         enteredOtherProfileOption,
         loginEvent,
         messageSentEvent,
+        profileBuilderOpened,
     }
 
     private static void reportEvent(
@@ -133,5 +135,11 @@ public class AnalyticsUtil {
         Answers.getInstance().logCustom(new CustomEvent(messageSentEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
                 .putCustomAttribute(RECIPIENT_ID_ATTRIBUTE, recipientId));
+    }
+
+    public static void reportProfileBuilderOpened(Application app) {
+        AnalyticsUtil.reportEvent(app, profileBuilderOpened, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(profileBuilderOpened.name()));
     }
 }
