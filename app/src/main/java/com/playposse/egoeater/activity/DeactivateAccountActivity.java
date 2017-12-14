@@ -13,6 +13,7 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UpdateAccountStatusClientAction;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,5 +72,7 @@ public class DeactivateAccountActivity extends ParentActivity {
 
         preDeactivationLayout.setVisibility(View.GONE);
         confirmationTextView.setVisibility(View.VISIBLE);
+
+        AnalyticsUtil.reportDeactivateAccount(getApplication());
     }
 }

@@ -13,6 +13,7 @@ import com.playposse.egoeater.EgoEaterApplication;
 
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.connectivityLost;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.connectivityRestored;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.deactivateAccountEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.enteredOtherProfileOption;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
@@ -21,6 +22,7 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messag
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.photoUploadedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderOpenedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reactivateAccountEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
 /**
@@ -46,6 +48,8 @@ public class AnalyticsUtil {
         messageSentEvent,
         profileBuilderOpenedEvent,
         photoUploadedEvent,
+        deactivateAccountEvent,
+        reactivateAccountEvent,
     }
 
     private static void reportEvent(
@@ -153,5 +157,17 @@ public class AnalyticsUtil {
 
         Answers.getInstance().logCustom(new CustomEvent(photoUploadedEvent.name())
                 .putCustomAttribute(PHOTO_INDEX_ATTRIBUTE, photoIndex));
+    }
+
+    public static void reportDeactivateAccount(Application app) {
+        AnalyticsUtil.reportEvent(app, deactivateAccountEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(deactivateAccountEvent.name()));
+    }
+
+    public static void reportReactivateAccount(Application app) {
+        AnalyticsUtil.reportEvent(app, reactivateAccountEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(reactivateAccountEvent.name()));
     }
 }

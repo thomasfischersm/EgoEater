@@ -8,6 +8,7 @@ import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UpdateAccountStatusClientAction;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,5 +52,7 @@ public class ReactivateAccountActivity extends ParentActivity {
         dismissLoadingProgress();
 
         GlobalRouting.onStartup(this);
+
+        AnalyticsUtil.reportReactivateAccount(getApplication());
     }
 }
