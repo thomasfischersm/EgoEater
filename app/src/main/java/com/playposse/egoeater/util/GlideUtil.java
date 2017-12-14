@@ -20,7 +20,7 @@ public final class GlideUtil {
     }
 
     public static void load(ImageView imageView, String imageUrl) {
-        if (imageUrl != null) {
+        if (!StringUtil.isEmpty(imageUrl)) {
             GlideApp.with(imageView.getContext())
                     .load(imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -32,7 +32,7 @@ public final class GlideUtil {
     }
 
     public static void load(ImageView imageView, String imageUrl, int placeHolderResId) {
-        if (imageUrl != null) {
+        if (!StringUtil.isEmpty(imageUrl)) {
             GlideApp.with(imageView.getContext())
                     .load(imageUrl)
                     .placeholder(placeHolderResId)
@@ -45,7 +45,7 @@ public final class GlideUtil {
     }
 
     public static void loadWithoutHardwareAcceleration(ImageView imageView, String imageUrl) {
-        if (imageUrl != null) {
+        if (!StringUtil.isEmpty(imageUrl)) {
             GlideApp.with(imageView.getContext())
                     .applyDefaultRequestOptions(new RequestOptions().disallowHardwareConfig())
                     .load(imageUrl)

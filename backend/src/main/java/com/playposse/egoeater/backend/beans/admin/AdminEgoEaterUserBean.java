@@ -55,10 +55,10 @@ public class AdminEgoEaterUserBean {
                 profilePhoto0 = egoEaterUser.getProfilePhotos().get(0).getUrl();
             }
             if (egoEaterUser.getProfilePhotos().size() > 1) {
-                profilePhoto0 = egoEaterUser.getProfilePhotos().get(1).getUrl();
+                profilePhoto1 = egoEaterUser.getProfilePhotos().get(1).getUrl();
             }
             if (egoEaterUser.getProfilePhotos().size() > 2) {
-                profilePhoto0 = egoEaterUser.getProfilePhotos().get(2).getUrl();
+                profilePhoto2 = egoEaterUser.getProfilePhotos().get(2).getUrl();
             }
         }
     }

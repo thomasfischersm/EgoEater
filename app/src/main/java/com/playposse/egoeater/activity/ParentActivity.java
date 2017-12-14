@@ -24,12 +24,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.activity.admin.AdminStatisticsActivity;
+import com.playposse.egoeater.activity.admin.AdminViewProfilesActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.storage.ProfileParcelable;
@@ -183,6 +183,11 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
                 return true;
             case R.id.admin_refresh_action:
                 AdminImportUtil.refresh(this);
+                return true;
+            case R.id.admin_browse_users_action:
+                Intent intent2 = new Intent(this, AdminViewProfilesActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);

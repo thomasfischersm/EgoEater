@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;
@@ -18,8 +19,6 @@ import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 
 /**
  * An {@link android.app.Activity} that shows two profiles side by side. The user should choose the
@@ -224,9 +223,11 @@ public class RatingActivity
                 }
             });
 
-            AnalyticsUtil.reportEvent(getApplication(), ratingEvent, "");
+            AnalyticsUtil.reportRating(getApplication());
 
-            DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+            if (BuildConfig.DEBUG) {
+                DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+            }
 
             return null;
         }

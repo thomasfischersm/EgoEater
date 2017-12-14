@@ -76,8 +76,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="start|bottom"
-            >
+            android:gravity="start|bottom">
 
             <TextView
                 android:id="@+id/headlineTextView"
@@ -98,9 +97,7 @@
                 android:layout_marginTop="5dp"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@color/secondaryScrimTextDark" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <View
@@ -115,7 +112,7 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:contentDescription="@string/love_icon_content_description"
-        android:src="@drawable/ic_favorite_black_24dp"
+        app:srcCompat="@drawable/ic_favorite_black_24dp"
         android:tint="@color/primaryTextColorDark"
         android:visibility="gone" />
 </FrameLayout>

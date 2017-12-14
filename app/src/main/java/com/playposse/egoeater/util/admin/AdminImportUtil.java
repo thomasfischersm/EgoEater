@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.AdminEgoEaterUserBean;
 import com.playposse.egoeater.clientactions.admin.GetAdminDumpEgoEaterUserClientAction;
@@ -52,7 +53,7 @@ public final class AdminImportUtil {
         for (int i = 0; i < egoEaterUsers.size(); i++) {
             AdminEgoEaterUserBean egoEaterUser = egoEaterUsers.get(i);
             ContentValues contentValues = new ContentValues();
-            contentValues.put(EgoEaterUserTable.ID_COLUMN, egoEaterUser.getId());
+            contentValues.put(EgoEaterUserTable.EGO_EATER_USER_ID, egoEaterUser.getId());
             contentValues.put(EgoEaterUserTable.FB_PROFILE_ID_COLUMN, egoEaterUser.getFbProfileId());
             contentValues.put(EgoEaterUserTable.LAST_LOGIN_COLUMN, egoEaterUser.getLastLogin());
             contentValues.put(EgoEaterUserTable.CREATED_COLUMN, egoEaterUser.getCreated());
@@ -102,7 +103,9 @@ public final class AdminImportUtil {
                 Crashlytics.logException(ex);
             }
 
-            DatabaseDumper.dumpTables(new AdminDatabaseHelper(context));
+            if (BuildConfig.DEBUG) {
+                DatabaseDumper.dumpTables(new AdminDatabaseHelper(context));
+            }
 
             return null;
         }

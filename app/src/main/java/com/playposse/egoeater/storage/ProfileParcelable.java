@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
+import com.playposse.egoeater.contentprovider.admin.AdminContract.EgoEaterUserTable;
 import com.playposse.egoeater.util.DataMunchUtil;
 import com.playposse.egoeater.util.IntegerUtil;
 import com.playposse.egoeater.util.SmartCursor;
@@ -95,6 +96,25 @@ public class ProfileParcelable implements Parcelable {
         wins = 0;
         losses = 0;
         winsLossesSum = 0;
+    }
+
+    /**
+     * Converts an EgoEaterUser table entry into a {@link ProfileParcelable).
+     * @param markAsAdmin A trick to get another constructor that takes a {@link SmartCursor}.
+     */
+    public ProfileParcelable(SmartCursor smartCursor, boolean markAsAdmin) {
+        profileId = smartCursor.getLong(EgoEaterUserTable.EGO_EATER_USER_ID);
+        isActive = smartCursor.getBoolean(EgoEaterUserTable.IS_ACTIVE_COLUMN);
+        firstName = smartCursor.getString(EgoEaterUserTable.FIRST_NAME_COLUMN);
+        profileText = smartCursor.getString(EgoEaterUserTable.PROFILE_TEXT_COLUMN);
+        city = smartCursor.getString(EgoEaterUserTable.CITY_COLUMN);
+        state = smartCursor.getString(EgoEaterUserTable.STATE_COLUMN);
+        country = smartCursor.getString(EgoEaterUserTable.COUNTRY_COLUMN);
+        age = IntegerUtil.get(DataMunchUtil.getAge(smartCursor.getString(EgoEaterUserTable.BIRTHDAY_COLUMN)), NULL_AGE);
+        gender = smartCursor.getString(EgoEaterUserTable.GENDER_COLUMN);
+        photoUrl0 = smartCursor.getString(EgoEaterUserTable.PROFILE_PHOTO_0_COLUMN);
+        photoUrl1 = smartCursor.getString(EgoEaterUserTable.PROFILE_PHOTO_1_COLUMN);
+        photoUrl2 = smartCursor.getString(EgoEaterUserTable.PROFILE_PHOTO_2_COLUMN);
     }
 
     private ProfileParcelable(Parcel source) {

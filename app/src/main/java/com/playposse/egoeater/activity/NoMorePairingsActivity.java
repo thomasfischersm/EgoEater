@@ -2,10 +2,10 @@ package com.playposse.egoeater.activity;
 
 import android.content.Intent;
 import android.database.ContentObserver;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 
-import com.playposse.egoeater.R;
+import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
@@ -51,7 +51,9 @@ public class NoMorePairingsActivity extends ParentWithLocationCheckActivity {
                 true,
                 contentObserver);
 
-        DatabaseDumper.dumpTables(new MainDatabaseHelper(this));
+        if (BuildConfig.DEBUG) {
+            DatabaseDumper.dumpTables(new MainDatabaseHelper(this));
+        }
     }
 
     @Override

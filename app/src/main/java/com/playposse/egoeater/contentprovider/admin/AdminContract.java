@@ -32,7 +32,8 @@ public class AdminContract {
         public static final Uri CONTENT_URI = createContentUri(PATH);
         public static final String TABLE_NAME = "ego_eater_user";
 
-        public static final String ID_COLUMN = _ID;
+        public static final String ID_COLUMN = _ID.toUpperCase();
+        public static final String EGO_EATER_USER_ID = "ego_eater_user_id";
         public static final String FB_PROFILE_ID_COLUMN = "fb_profile_id";
         public static final String LAST_LOGIN_COLUMN = "last_login";
         public static final String CREATED_COLUMN = "created";
@@ -54,6 +55,7 @@ public class AdminContract {
 
         public static final String[] COLUMN_NAMES = new String[]{
                 ID_COLUMN,
+                EGO_EATER_USER_ID,
                 FB_PROFILE_ID_COLUMN,
                 LAST_LOGIN_COLUMN,
                 CREATED_COLUMN,
@@ -75,7 +77,8 @@ public class AdminContract {
 
         static final String SQL_CREATE_TABLE =
                 "CREATE TABLE ego_eater_user "
-                        + "(_id INTEGER PRIMARY KEY, "
+                        + "(_ID INTEGER PRIMARY KEY, "
+                        + "ego_eater_user_id INTEGER, "
                         + "fb_profile_id TEXT, "
                         + "last_login INTEGER, "
                         + "created TEXT, "

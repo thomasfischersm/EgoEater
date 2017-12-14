@@ -14,6 +14,7 @@ import android.util.Log;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.crashlytics.android.Crashlytics;
+import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;
 import com.playposse.egoeater.clientactions.GetProfileIdsByDistanceClientAction;
 import com.playposse.egoeater.clientactions.GetProfilesByIdClientAction;
@@ -92,7 +93,12 @@ public class PopulatePipelineService extends IntentService {
             long end = System.currentTimeMillis();
             long duration = end - start;
             logExecution(intent, duration);
-            DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+
+            if (BuildConfig.DEBUG) {
+                DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+            }
+
+
             Log.i(LOG_TAG, "*** Done rebuilding pipeline in " + duration + "ms");
             isActive = false;
         } catch (InterruptedException | RemoteException | OperationApplicationException ex) {

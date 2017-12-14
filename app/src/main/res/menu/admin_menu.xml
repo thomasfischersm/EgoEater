@@ -11,4 +11,9 @@
         android:id="@+id/admin_refresh_action"
         android:title="@string/admin_menu_refresh"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/admin_browse_users_action"
+        android:title="@string/admin_browse_users"
+        app:showAsAction="never"/>
 </menu>

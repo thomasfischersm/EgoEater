@@ -1,8 +1,6 @@
 package com.playposse.egoeater.activity;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -71,15 +69,15 @@ public class RatingProfileFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_rating_profile, container, false);
 
-        profilePhoto0ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto0ImageView);
-        photo1CardView = (CardView) rootView.findViewById(R.id.photo1CardView);
-        profilePhoto1ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto1ImageView);
-        photo2CardView = (CardView) rootView.findViewById(R.id.photo2CardView);
-        profilePhoto2ImageView = (ImageView) rootView.findViewById(R.id.profilePhoto2ImageView);
-        heartImageView = (ImageView) rootView.findViewById(R.id.heartImageView);
-        headlineTextView = (TextView) rootView.findViewById(R.id.headlineTextView);
-        subHeadTextView = (TextView) rootView.findViewById(R.id.subHeadTextView);
-        rippleView = (View) rootView.findViewById(R.id.rippleView);
+        profilePhoto0ImageView = rootView.findViewById(R.id.profilePhoto0ImageView);
+        photo1CardView = rootView.findViewById(R.id.photo1CardView);
+        profilePhoto1ImageView = rootView.findViewById(R.id.profilePhoto1ImageView);
+        photo2CardView = rootView.findViewById(R.id.photo2CardView);
+        profilePhoto2ImageView = rootView.findViewById(R.id.profilePhoto2ImageView);
+        heartImageView = rootView.findViewById(R.id.heartImageView);
+        headlineTextView = rootView.findViewById(R.id.headlineTextView);
+        subHeadTextView = rootView.findViewById(R.id.subHeadTextView);
+        rippleView = rootView.findViewById(R.id.rippleView);
 
         refreshView();
 

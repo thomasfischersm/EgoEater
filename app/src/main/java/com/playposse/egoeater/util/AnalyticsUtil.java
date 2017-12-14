@@ -6,6 +6,8 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.playposse.egoeater.EgoEaterApplication;
 
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
+
 /**
  * Helper class to make reporting information to Google Analytics less verbose.
  */
@@ -42,5 +44,9 @@ public class AnalyticsUtil {
         Tracker tracker = app.getDefaultTracker();
         tracker.setScreenName(screenName);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    public static void reportRating(Application app) {
+        AnalyticsUtil.reportEvent(app, ratingEvent, "");
     }
 }

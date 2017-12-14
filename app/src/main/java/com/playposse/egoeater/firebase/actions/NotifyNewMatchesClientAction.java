@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.RemoteMessage;
+import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.activity.CurrentActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.MatchBean;
@@ -61,7 +62,11 @@ public class NotifyNewMatchesClientAction extends FirebaseClientAction {
 
         sendNotification(updateState);
         long end = System.currentTimeMillis();
-        DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+
+        if (BuildConfig.DEBUG) {
+            DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
+        }
+
         Log.i(LOG_TAG, "execute: Processed new match notification in " + (end - start) + "ms.");
     }
 
