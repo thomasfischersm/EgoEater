@@ -3,11 +3,13 @@ package com.playposse.egoeater.util;
 import android.app.Application;
 
 import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.RatingEvent;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.playposse.egoeater.EgoEaterApplication;
 
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 
 /**
@@ -54,5 +56,12 @@ public class AnalyticsUtil {
 
         Answers.getInstance().logRating(new RatingEvent()
                 .putContentId(Long.toString(winnerId)));
+    }
+
+    public static void reportLogin(Application app) {
+        AnalyticsUtil.reportEvent(app, loginEvent, "");
+
+        Answers.getInstance().logLogin(new LoginEvent()
+                .putSuccess(true));
     }
 }
