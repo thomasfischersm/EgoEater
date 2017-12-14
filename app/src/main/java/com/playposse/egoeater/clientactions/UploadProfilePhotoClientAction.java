@@ -8,9 +8,9 @@ import android.util.Log;
 import com.playposse.egoeater.backend.egoEaterApi.model.PhotoBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.ImageUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -50,6 +50,8 @@ public class UploadProfilePhotoClientAction extends ApiClientAction<Void> {
         // Update the preferences with the new profile photo.
         EgoEaterPreferences.setUser(getContext(), userBean);
         EgoEaterPreferences.setHasFirstProfilePhoto(getContext(), true);
+
+        AnalyticsUtil.reportPhotoUploaded(getContext(), photoIndex);
 
         return null;
     }

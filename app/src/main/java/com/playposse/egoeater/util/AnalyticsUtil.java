@@ -18,7 +18,8 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fireba
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
-import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderOpened;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.photoUploadedEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderOpenedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
@@ -31,6 +32,7 @@ public class AnalyticsUtil {
     private static final String RECIPIENT_ID_ATTRIBUTE = "recipientId";
     private static final String OTHER_ANSWER_ATTRIBUTE = "otherAnswer";
     private static final String MESSAGE_NAME_ATTRIBUTE = "messageName";
+    private static final String PHOTO_INDEX_ATTRIBUTE = "photoIndex";
 
     enum AnalyticsCategory {
         firebaseEvent,
@@ -42,7 +44,8 @@ public class AnalyticsUtil {
         enteredOtherProfileOption,
         loginEvent,
         messageSentEvent,
-        profileBuilderOpened,
+        profileBuilderOpenedEvent,
+        photoUploadedEvent,
     }
 
     private static void reportEvent(
@@ -138,8 +141,17 @@ public class AnalyticsUtil {
     }
 
     public static void reportProfileBuilderOpened(Application app) {
-        AnalyticsUtil.reportEvent(app, profileBuilderOpened, "");
+        AnalyticsUtil.reportEvent(app, profileBuilderOpenedEvent, "");
 
-        Answers.getInstance().logCustom(new CustomEvent(profileBuilderOpened.name()));
+        Answers.getInstance().logCustom(new CustomEvent(profileBuilderOpenedEvent.name()));
+    }
+
+    public static void reportPhotoUploaded(Context context, int photoIndex) {
+        Application app = (Application) context.getApplicationContext();
+
+        AnalyticsUtil.reportEvent(app, photoUploadedEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(photoUploadedEvent.name())
+                .putCustomAttribute(PHOTO_INDEX_ATTRIBUTE, photoIndex));
     }
 }
