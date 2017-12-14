@@ -7,6 +7,7 @@ import android.content.Context;
 import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
+import com.playposse.egoeater.util.AnalyticsUtil;
 
 import java.io.IOException;
 
@@ -64,6 +65,8 @@ public class SendMessageClientAction extends ApiClientAction<Void> {
         contentValues.put(EgoEaterContract.MessageTable.MESSAGE_CONTENT_COLUMN, messageContent);
 
         contentResolver.insert(EgoEaterContract.MessageTable.CONTENT_URI, contentValues);
+
+        AnalyticsUtil.reportMessageSent(getContext(), senderId, recipientId);
         return messageIndex;
     }
 

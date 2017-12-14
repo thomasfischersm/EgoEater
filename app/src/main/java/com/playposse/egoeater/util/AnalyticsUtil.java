@@ -1,6 +1,7 @@
 package com.playposse.egoeater.util;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -16,6 +17,7 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.entere
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
 
@@ -23,6 +25,11 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.report
  * Helper class to make reporting information to Google Analytics less verbose.
  */
 public class AnalyticsUtil {
+
+    private static final String SENDER_ID_ATTRIBUTE = "senderId";
+    private static final String RECIPIENT_ID_ATTRIBUTE = "recipientId";
+    private static final String OTHER_ANSWER_ATTRIBUTE = "otherAnswer";
+    private static final String MESSAGE_NAME_ATTRIBUTE = "messageName";
 
     enum AnalyticsCategory {
         firebaseEvent,
@@ -33,6 +40,7 @@ public class AnalyticsUtil {
         connectivityRestored,
         enteredOtherProfileOption,
         loginEvent,
+        messageSentEvent,
     }
 
     private static void reportEvent(
@@ -76,23 +84,23 @@ public class AnalyticsUtil {
         AnalyticsUtil.reportEvent(app, firebaseEvent, messageName);
 
         Answers.getInstance().logCustom(new CustomEvent(firebaseEvent.name())
-                .putCustomAttribute("messageName", messageName));
+                .putCustomAttribute(MESSAGE_NAME_ATTRIBUTE, messageName));
     }
 
     public static void reportFuckOffEvent(Application app, Long senderId, long recipientId) {
         AnalyticsUtil.reportEvent(app, fuckOffEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(fuckOffEvent.name())
-                .putCustomAttribute("senderId", senderId)
-                .putCustomAttribute("recipientId", recipientId));
+                .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
+                .putCustomAttribute(RECIPIENT_ID_ATTRIBUTE, recipientId));
     }
 
     public static void reportAbuseEvent(Application app, Long senderId, long recipientId) {
         AnalyticsUtil.reportEvent(app, reportAbuseEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(reportAbuseEvent.name())
-                .putCustomAttribute("senderId", senderId)
-                .putCustomAttribute("recipientId", recipientId));
+                .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
+                .putCustomAttribute(RECIPIENT_ID_ATTRIBUTE, recipientId));
     }
 
     public static void reportOtherProfileOption(Application app, String otherAnswer) {
@@ -102,7 +110,7 @@ public class AnalyticsUtil {
                 otherAnswer);
 
         Answers.getInstance().logCustom(new CustomEvent(enteredOtherProfileOption.name())
-                .putCustomAttribute("otherAnswer", otherAnswer));
+                .putCustomAttribute(OTHER_ANSWER_ATTRIBUTE, otherAnswer));
     }
 
     public static void reportConnectivityLost(Application app) {
@@ -115,5 +123,15 @@ public class AnalyticsUtil {
         AnalyticsUtil.reportEvent(app, connectivityRestored, "");
 
         Answers.getInstance().logCustom(new CustomEvent(connectivityRestored.name()));
+    }
+
+    public static void reportMessageSent(Context context, Long senderId, long recipientId) {
+        Application app = (Application) context.getApplicationContext();
+
+        AnalyticsUtil.reportEvent(app, messageSentEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(messageSentEvent.name())
+                .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
+                .putCustomAttribute(RECIPIENT_ID_ATTRIBUTE, recipientId));
     }
 }
