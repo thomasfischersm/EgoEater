@@ -32,7 +32,7 @@ public class GetAdminDumpEgoEaterUserClientAction
         }
 
         AdminEgoEaterUserBeanCollection result =
-                getApi().getAdminEgoEateruserDump(getSessionId()).execute();
+                getApi().getAdminEgoEaterUserDump(getSessionId()).execute();
         return result.getItems();
     }
 }

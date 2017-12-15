@@ -49,7 +49,7 @@ public class AdminEgoEaterUserBean {
         state = egoEaterUser.getState();
         country = egoEaterUser.getCountry();
         birthday = egoEaterUser.getBirthday();
-        birthday = egoEaterUser.getBirthdayOverride();
+        birthdayOverride = egoEaterUser.getBirthdayOverride();
         gender = egoEaterUser.getGender();
 
         if (egoEaterUser.getProfilePhotos() != null) {

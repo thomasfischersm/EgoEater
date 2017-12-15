@@ -256,8 +256,8 @@ public class EgoEaterEndPoint {
         return GetAdminStatisticsServerAction.getAdminStatistics(sessionId);
     }
 
-    @ApiMethod(name = "getAdminEgoEateruserDump")
-    public List<AdminEgoEaterUserBean> getAdminEgoEateruserDump(@Named("sessionId") long sessionId)
+    @ApiMethod(name = "getAdminEgoEaterUserDump")
+    public List<AdminEgoEaterUserBean> getAdminEgoEaterUserDump(@Named("sessionId") long sessionId)
             throws BadRequestException {
 
         return GetAdminDumpEgoEaterUserServerAction.getAdminEgoEateruserDump(sessionId);
