@@ -71,6 +71,7 @@ public class AdminContract {
                 STATE_COLUMN,
                 COUNTRY_COLUMN,
                 BIRTHDAY_COLUMN,
+                BIRTHDAY_OVERRIDE_COLUMN,
                 GENDER_COLUMN,
                 PROFILE_PHOTO_0_COLUMN,
                 PROFILE_PHOTO_1_COLUMN,
