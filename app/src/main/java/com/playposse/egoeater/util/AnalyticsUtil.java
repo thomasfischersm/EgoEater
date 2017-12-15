@@ -95,7 +95,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportRating(Application app, long winnerId) {
-        AnalyticsUtil.reportEvent(app, ratingEvent, "");
+        AnalyticsUtil.reportEvent(app, ratingEvent, ratingEvent.name());
 
         Answers.getInstance().logRating(new RatingEvent()
                 .putContentId(Long.toString(winnerId)));
@@ -104,7 +104,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportLogin(Application app) {
-        AnalyticsUtil.reportEvent(app, loginEvent, "");
+        AnalyticsUtil.reportEvent(app, loginEvent, loginEvent.name());
 
         Answers.getInstance().logLogin(new LoginEvent()
                 .putSuccess(true));
@@ -121,7 +121,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportFuckOffEvent(Application app, Long senderId, long recipientId) {
-        AnalyticsUtil.reportEvent(app, fuckOffEvent, "");
+        AnalyticsUtil.reportEvent(app, fuckOffEvent, fuckOffEvent.name());
 
         Answers.getInstance().logCustom(new CustomEvent(fuckOffEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
@@ -129,7 +129,7 @@ public class AnalyticsUtil {
     }
 
     public static void reportAbuseEvent(Application app, Long senderId, long recipientId) {
-        AnalyticsUtil.reportEvent(app, reportAbuseEvent, "");
+        AnalyticsUtil.reportEvent(app, reportAbuseEvent, reportAbuseEvent.name());
 
         Answers.getInstance().logCustom(new CustomEvent(reportAbuseEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
@@ -147,19 +147,19 @@ public class AnalyticsUtil {
     }
 
     public static void reportConnectivityLost(Application app) {
-        AnalyticsUtil.reportEvent(app, connectivityLost, "");
+        AnalyticsUtil.reportEvent(app, connectivityLost, connectivityLost.name());
 
         Answers.getInstance().logCustom(new CustomEvent(connectivityLost.name()));
     }
 
     public static void reportConnectivityRestored(Application app) {
-        AnalyticsUtil.reportEvent(app, connectivityRestored, "");
+        AnalyticsUtil.reportEvent(app, connectivityRestored, connectivityRestored.name());
 
         Answers.getInstance().logCustom(new CustomEvent(connectivityRestored.name()));
     }
 
     public static void reportMessageSent(Context context, Long senderId, long recipientId) {
-        AnalyticsUtil.reportEvent(getApp(context), messageSentEvent, "");
+        AnalyticsUtil.reportEvent(getApp(context), messageSentEvent, messageSentEvent.name());
 
         Answers.getInstance().logCustom(new CustomEvent(messageSentEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
@@ -169,20 +169,16 @@ public class AnalyticsUtil {
     }
 
     public static void reportProfileBuilderOpened(Application app) {
-        AnalyticsUtil.reportEvent(app, profileBuilderOpenedEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(profileBuilderOpenedEvent.name()));
+        report(app, profileBuilderOpenedEvent);
     }
 
     public static void reportProfileBuilderSaved(Application app) {
-        AnalyticsUtil.reportEvent(app, profileBuilderSavedEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(profileBuilderSavedEvent.name()));
+        report(app, profileBuilderSavedEvent);
 
         setUserProperties(app.getApplicationContext(), UserProperty.hasProfileFilledOut, true);
     }
     public static void reportPhotoUploaded(Context context, int photoIndex) {
-        AnalyticsUtil.reportEvent(getApp(context), photoUploadedEvent, "");
+        AnalyticsUtil.reportEvent(getApp(context), photoUploadedEvent, photoUploadedEvent.name());
 
         Answers.getInstance().logCustom(new CustomEvent(photoUploadedEvent.name())
                 .putCustomAttribute(PHOTO_INDEX_ATTRIBUTE, photoIndex));
@@ -191,39 +187,27 @@ public class AnalyticsUtil {
     }
 
     public static void reportDeactivateAccount(Application app) {
-        AnalyticsUtil.reportEvent(app, deactivateAccountEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(deactivateAccountEvent.name()));
+        report(app, deactivateAccountEvent);
     }
 
     public static void reportReactivateAccount(Application app) {
-        AnalyticsUtil.reportEvent(app, reactivateAccountEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(reactivateAccountEvent.name()));
+        report(app, reactivateAccountEvent);
     }
 
     public static void reportUpdateBirthdayOverride(Context context) {
-        AnalyticsUtil.reportEvent(getApp(context), updateBirthdayOverrideEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(updateBirthdayOverrideEvent.name()));
+        report(context, updateBirthdayOverrideEvent);
     }
 
     public static void reportUserBlockedForIncompleteProfile(Context context) {
-        AnalyticsUtil.reportEvent(getApp(context), userBlockedForIncompleteProfileEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(userBlockedForIncompleteProfileEvent.name()));
+        report(context, userBlockedForIncompleteProfileEvent);
     }
 
     public static void reportUserBlockedForMissingBirthday(Context context) {
-        AnalyticsUtil.reportEvent(getApp(context), userBlockedForMissingBirthdayEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(userBlockedForMissingBirthdayEvent.name()));
+        report(context, userBlockedForMissingBirthdayEvent);
     }
 
     public static void reportSavedProfile(Application app) {
-        AnalyticsUtil.reportEvent(app, savedProfileEvent, "");
-
-        Answers.getInstance().logCustom(new CustomEvent(savedProfileEvent.name()));
+        report(app, savedProfileEvent);
 
         setUserProperties(app.getApplicationContext(), UserProperty.hasProfileFilledOut, true);
     }
@@ -231,6 +215,16 @@ public class AnalyticsUtil {
     public static void setUserProperties(Context context, UserProperty property, boolean value) {
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
         firebaseAnalytics.setUserProperty(property.name(), Boolean.toString(value));
+    }
+
+    private static void report(Application app, AnalyticsCategory category) {
+        AnalyticsUtil.reportEvent(app, category, category.name());
+
+        Answers.getInstance().logCustom(new CustomEvent(category.name()));
+    }
+
+    private static void report(Context context, AnalyticsCategory category) {
+        report(getApp(context), category);
     }
 
     private static Application getApp(Context context) {

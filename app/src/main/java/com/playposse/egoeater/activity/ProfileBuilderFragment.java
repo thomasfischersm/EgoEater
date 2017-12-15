@@ -247,6 +247,8 @@ public class ProfileBuilderFragment extends Fragment {
 
         ((ActivityWithProgressDialog) getActivity()).dismissLoadingProgress();
         startEditProfileActivity();
+
+        AnalyticsUtil.reportProfileBuilderSaved(getActivity().getApplication());
     }
 
     private void startEditProfileActivity() {
