@@ -94,7 +94,15 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
 
                 showLoadingProgress();
 
-                Bitmap croppedImage = cropImageView.getCroppedImage();
+                Bitmap croppedImage = null;
+                try {
+                    croppedImage = cropImageView.getCroppedImage();
+                } catch (IllegalArgumentException ex) {
+                    // Log more information to Crashlytics.
+                    Crashlytics.log("Failed to get cropped image: "
+                            + cropImageView.getCropRect());
+                    throw ex;
+                }
 
                 if (croppedImage != null) {
                     new UploadProfilePhotoToServletClientAction(
@@ -170,6 +178,11 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
                     getContentResolver(),
                     uri);
             cropImageView.setImageBitmap(bitmap);
+
+            if (bitmap != null) {
+                Crashlytics.log("Trying to crop user provided profile photo: "
+                        + bitmap.getWidth() + " " + bitmap.getHeight());
+            }
         } catch (IOException ex) {
             Log.e(LOG_TAG, "loadImageFromLocalUri: Failed to get photo from gallery.", ex);
             Crashlytics.logException(ex);
@@ -221,6 +234,11 @@ public class CropPhotoActivity extends ActivityWithProgressDialog {
                         // For the cropping to work, the maximum resolution (not the screen
                         // resolution) has to be used.
                         cropImageView.setImageBitmap(bitmap);
+
+                        if (bitmap != null) {
+                            Crashlytics.log("Trying to crop Facebook profile photo: "
+                                    + bitmap.getWidth() + " " + bitmap.getHeight());
+                        }
                     }
                 });
 
