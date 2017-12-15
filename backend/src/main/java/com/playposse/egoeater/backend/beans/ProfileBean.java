@@ -43,7 +43,7 @@ public class ProfileBean {
         city = egoEaterProfile.getCity();
         state = egoEaterProfile.getState();
         country = egoEaterProfile.getCountry();
-        age = DataMunchUtil.getAge(egoEaterProfile.getBirthday());
+        age = DataMunchUtil.getAge(egoEaterProfile);
         gender = egoEaterProfile.getGender();
 
         for (ProfilePhoto profilePhoto : egoEaterProfile.getProfilePhotos()) {

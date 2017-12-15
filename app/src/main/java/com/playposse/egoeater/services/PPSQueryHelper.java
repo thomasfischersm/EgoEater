@@ -83,7 +83,8 @@ public class PPSQueryHelper {
         String where = ProfileTable.PROFILE_TEXT_COLUMN + " is not null "
                 + " and " + ProfileTable.PROFILE_TEXT_COLUMN + " !='' "
                 + " and " + ProfileTable.PHOTO_URL_0_COLUMN + " is not null"
-                + " and " + ProfileTable.IS_ACTIVE_COLUMN;
+                + " and " + ProfileTable.IS_ACTIVE_COLUMN
+                + " and " + ProfileTable.AGE_COLUMN + " is not null";
 
         // Query the profile ranking status.
         Cursor cursor = contentResolver.query(

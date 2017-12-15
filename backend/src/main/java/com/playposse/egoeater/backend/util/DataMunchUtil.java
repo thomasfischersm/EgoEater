@@ -1,6 +1,6 @@
 package com.playposse.egoeater.backend.util;
 
-import com.playposse.egoeater.backend.EgoEaterEndPoint;
+import com.playposse.egoeater.backend.schema.EgoEaterUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.Nullable;
 
 /**
  * Utility that transforms raw data from Facebook and other sources into privacy sensitive data
@@ -23,10 +25,22 @@ public class DataMunchUtil {
     private static final String MALE_GENDER = "male";
     private static final String FEMALE_GENDER = "female";
 
+    @Nullable
+    public static Integer getAge(EgoEaterUser user) {
+        Integer age = getAge(user.getBirthdayOverride());
+
+        if (age == null) {
+            age = getAge(user.getBirthday());
+        }
+
+        return age;
+    }
+
     /**
      * Calculates the birthday based on the FB provided information. If it cannot be determined,
      * null is returned.
      */
+    @Nullable
     public static Integer getAge(String birthday) {
         if (StringUtil.isEmpty(birthday)) {
             return null;
