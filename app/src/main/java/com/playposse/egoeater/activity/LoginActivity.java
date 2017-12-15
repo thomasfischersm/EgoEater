@@ -27,6 +27,7 @@ import com.playposse.egoeater.clientactions.SignInClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.util.AnalyticsUtil;
+import com.playposse.egoeater.util.AnalyticsUtil.UserProperty;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 import com.playposse.egoeater.util.dialogs.WaitingForConnectionDialog;
 import com.playposse.egoeater.util.dialogs.WaitingForFirebaseIdDialog;
@@ -123,6 +124,8 @@ public class LoginActivity extends ParentActivity {
                 R.string.login_connectivity_dialog_message);
 
         showSessionExpiredDialogIfRequested(savedInstanceState);
+
+        AnalyticsUtil.setUserProperties(this, UserProperty.isLoggedIn, false);
     }
 
     @Override
@@ -224,7 +227,6 @@ public class LoginActivity extends ParentActivity {
 
         // Record event to analytics.
         AnalyticsUtil.reportLogin(getApplication());
-
     }
 
     public static void debug() {

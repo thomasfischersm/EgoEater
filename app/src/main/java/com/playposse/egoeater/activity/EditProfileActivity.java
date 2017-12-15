@@ -192,6 +192,8 @@ public class EditProfileActivity extends ActivityWithProgressDialog {
                         exit();
                     }
                 }).execute();
+
+        AnalyticsUtil.reportSavedProfile(getApplication());
     }
 
     private void discardAndExit() {

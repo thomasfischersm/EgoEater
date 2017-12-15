@@ -9,6 +9,7 @@ import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.RatingEvent;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.playposse.egoeater.EgoEaterApplication;
 
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.connectivityLost;
@@ -21,9 +22,11 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginE
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.photoUploadedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderOpenedEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderSavedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reactivateAccountEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.savedProfileEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.updateBirthdayOverrideEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForIncompleteProfileEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForMissingBirthdayEvent;
@@ -50,12 +53,22 @@ public class AnalyticsUtil {
         loginEvent,
         messageSentEvent,
         profileBuilderOpenedEvent,
+        profileBuilderSavedEvent,
         photoUploadedEvent,
         deactivateAccountEvent,
         reactivateAccountEvent,
         updateBirthdayOverrideEvent,
         userBlockedForIncompleteProfileEvent,
         userBlockedForMissingBirthdayEvent,
+        savedProfileEvent,
+    }
+
+    public enum UserProperty {
+        isLoggedIn,
+        hasPhotoUploaded,
+        hasProfileFilledOut,
+        hasRated,
+        hasMessaged,
     }
 
     private static void reportEvent(
@@ -86,6 +99,8 @@ public class AnalyticsUtil {
 
         Answers.getInstance().logRating(new RatingEvent()
                 .putContentId(Long.toString(winnerId)));
+
+        setUserProperties(app.getApplicationContext(), UserProperty.hasRated, true);
     }
 
     public static void reportLogin(Application app) {
@@ -93,6 +108,9 @@ public class AnalyticsUtil {
 
         Answers.getInstance().logLogin(new LoginEvent()
                 .putSuccess(true));
+
+        Context context = app.getApplicationContext();
+        AnalyticsUtil.setUserProperties(context, UserProperty.isLoggedIn, true);
     }
 
     public static void reportFirebaseMessageReceived(Application app, String messageName) {
@@ -146,6 +164,8 @@ public class AnalyticsUtil {
         Answers.getInstance().logCustom(new CustomEvent(messageSentEvent.name())
                 .putCustomAttribute(SENDER_ID_ATTRIBUTE, senderId)
                 .putCustomAttribute(RECIPIENT_ID_ATTRIBUTE, recipientId));
+
+        setUserProperties(context, UserProperty.hasMessaged, true);
     }
 
     public static void reportProfileBuilderOpened(Application app) {
@@ -154,11 +174,20 @@ public class AnalyticsUtil {
         Answers.getInstance().logCustom(new CustomEvent(profileBuilderOpenedEvent.name()));
     }
 
+    public static void reportProfileBuilderSaved(Application app) {
+        AnalyticsUtil.reportEvent(app, profileBuilderSavedEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(profileBuilderSavedEvent.name()));
+
+        setUserProperties(app.getApplicationContext(), UserProperty.hasProfileFilledOut, true);
+    }
     public static void reportPhotoUploaded(Context context, int photoIndex) {
         AnalyticsUtil.reportEvent(getApp(context), photoUploadedEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(photoUploadedEvent.name())
                 .putCustomAttribute(PHOTO_INDEX_ATTRIBUTE, photoIndex));
+
+        setUserProperties(context, UserProperty.hasPhotoUploaded, true);
     }
 
     public static void reportDeactivateAccount(Application app) {
@@ -189,6 +218,19 @@ public class AnalyticsUtil {
         AnalyticsUtil.reportEvent(getApp(context), userBlockedForMissingBirthdayEvent, "");
 
         Answers.getInstance().logCustom(new CustomEvent(userBlockedForMissingBirthdayEvent.name()));
+    }
+
+    public static void reportSavedProfile(Application app) {
+        AnalyticsUtil.reportEvent(app, savedProfileEvent, "");
+
+        Answers.getInstance().logCustom(new CustomEvent(savedProfileEvent.name()));
+
+        setUserProperties(app.getApplicationContext(), UserProperty.hasProfileFilledOut, true);
+    }
+
+    public static void setUserProperties(Context context, UserProperty property, boolean value) {
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
+        firebaseAnalytics.setUserProperty(property.name(), Boolean.toString(value));
     }
 
     private static Application getApp(Context context) {
