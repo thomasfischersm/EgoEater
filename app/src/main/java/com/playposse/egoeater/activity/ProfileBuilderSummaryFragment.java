@@ -77,7 +77,7 @@ public class ProfileBuilderSummaryFragment extends Fragment {
         profileSummaryAdapter = new ProfileSummaryAdapter();
         summaryRecyclerView.setAdapter(profileSummaryAdapter);
 
-        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl1(getActivity());
+        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl0(getActivity());
         GlideUtil.load(profilePhotoImageView, photoUrl);
 
         refreshPreview();
