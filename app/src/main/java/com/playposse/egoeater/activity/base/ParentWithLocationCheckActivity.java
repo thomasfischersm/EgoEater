@@ -69,14 +69,18 @@ public abstract class ParentWithLocationCheckActivity
     protected void onStart() {
         super.onStart();
 
-        googleApiClient.connect();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        googleApiClient.disconnect();
+        if (googleApiClient != null) {
+            googleApiClient.disconnect();
+        }
     }
 
     @Override
@@ -145,6 +149,7 @@ public abstract class ParentWithLocationCheckActivity
     @WorkerThread
     private void checkLocationSync() {
         //noinspection MissingPermission
+        @SuppressLint("MissingPermission")
         Location lastLocation =
                 LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (lastLocation == null) {
