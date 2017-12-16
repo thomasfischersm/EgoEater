@@ -4,8 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -18,7 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -29,10 +26,9 @@ import com.playposse.egoeater.clientactions.UpdateLocationClientAction;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import com.playposse.egoeater.util.geocoder.AndroidGeoCoder;
+import com.playposse.egoeater.util.geocoder.GoogleMapsGeoCoder;
+import com.playposse.egoeater.util.geocoder.Locale;
 
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
@@ -175,40 +171,37 @@ public abstract class ParentWithLocationCheckActivity
             }
         }
 
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses =
-                    geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
-
-            if ((addresses == null) || (addresses.size() == 0)) {
-                String errorMsg = "checkLocationSync: The location service returned no result " +
-                        "for " + currentLatitude + ", " + currentLongitude + ".";
-                Log.i(LOG_TAG, errorMsg);
-                Crashlytics.logException(new IllegalStateException(errorMsg));
-                return;
-            }
-
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-
-            new UpdateLocationClientAction(
-                    getApplicationContext(),
-                    currentLatitude,
-                    currentLongitude,
-                    city,
-                    state,
-                    country)
-                    .execute();
-
-            // Kick off pipeline to rebuild.
-            PopulatePipelineService.startService(this, PipelineLogTable.LOCATION_UPDATE_TRIGGER);
-
-            // TODO: We could call the cloud to get the updated distance to each profile.
-        } catch (IOException ex) {
-            Log.e(LOG_TAG, "checkLocationSync: Failed to update location information.", ex);
-            Crashlytics.logException(ex);
+        Locale locale = AndroidGeoCoder.getLocaleFromGeoCoder(
+                this,
+                currentLatitude,
+                currentLongitude);
+        if ((locale == null) || (locale.hasEmptyValue())) {
+            Log.i(LOG_TAG, "checkLocationSync: Failed to get local from Android geo coder: "
+                    + locale);
+            // Try Google Maps API as a backup.
+            locale = GoogleMapsGeoCoder.reverseLookup(this);
+            Log.i(LOG_TAG, "checkLocationSync: Got locale from Google maps geo coder: "
+                    + locale);
         }
+
+        if (locale == null) {
+            // Give Up. We failed.
+            return;
+        }
+
+        new UpdateLocationClientAction(
+                getApplicationContext(),
+                currentLatitude,
+                currentLongitude,
+                locale.getCity(),
+                locale.getState(),
+                locale.getCountry())
+                .execute();
+
+        // Kick off pipeline to rebuild.
+        PopulatePipelineService.startService(this, PipelineLogTable.LOCATION_UPDATE_TRIGGER);
+
+        // TODO: We could call the cloud to get the updated distance to each profile.
     }
 
     @Override

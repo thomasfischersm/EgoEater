@@ -4,8 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -31,11 +29,9 @@ import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.StringUtil;
+import com.playposse.egoeater.util.geocoder.AndroidGeoCoder;
 import com.playposse.egoeater.util.geocoder.GoogleMapsGeoCoder;
 import com.playposse.egoeater.util.geocoder.Locale;
-
-import java.io.IOException;
-import java.util.List;
 
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
@@ -278,41 +274,7 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
         double latitude = EgoEaterPreferences.getLatitude(this);
         double longitude = EgoEaterPreferences.getLongitude(this);
 
-        try {
-            Geocoder geocoder = new Geocoder(this, java.util.Locale.getDefault());
-            List<Address> addresses =
-                    geocoder.getFromLocation(latitude, longitude, 1);
-
-            if ((addresses == null) || (addresses.size() == 0)) {
-                String errorMsg = "checkLocationSync: The location service returned no result " +
-                        "for " + latitude + ", " + longitude + ".";
-                Log.i(LOG_TAG, errorMsg);
-                Crashlytics.logException(new IllegalStateException(errorMsg));
-                AnalyticsUtil.reportAndroidGeoCoderResult(
-                        getApplication(),
-                        false,
-                        false);
-                return null;
-            }
-
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-            Locale locale = new Locale(city, state, country);
-
-            AnalyticsUtil.reportAndroidGeoCoderResult(
-                    getApplication(),
-                    true,
-                    !locale.hasEmptyValue());
-            return locale;
-        } catch (IOException ex) {
-            String msg = "getLocaleFromGeoCoder: Failed to look up location from GeoCoder for: "
-                    + latitude + ", " + longitude;
-            Log.e(LOG_TAG, msg, ex);
-            Crashlytics.logException(new Exception(msg, ex));
-            AnalyticsUtil.reportAndroidGeoCoderResult(getApplication(), false, false);
-            return null;
-        }
+        return AndroidGeoCoder.getLocaleFromGeoCoder(this, latitude, longitude);
     }
 
     /**

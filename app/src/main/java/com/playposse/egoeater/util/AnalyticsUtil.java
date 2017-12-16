@@ -264,12 +264,12 @@ public class AnalyticsUtil {
     }
 
     public static void reportAndroidGeoCoderResult(
-            Application app,
+            Context context,
             boolean isSuccess,
             boolean isFullResult) {
 
         AnalyticsUtil.reportEvent(
-                app,
+                getApp(context),
                 gotAndroidGeoCoderResultEvent,
                 gotAndroidGeoCoderResultEvent.name());
 
