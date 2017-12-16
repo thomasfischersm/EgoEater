@@ -1,0 +1,74 @@
+package com.playposse.egoeater.activity.specialcase;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.playposse.egoeater.GlobalRouting;
+import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.RatingActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * A {@link Fragment} that blocks the user from getting to the {@link RatingActivity} until the
+ * user's location is identified.
+ */
+public class NoLocationFragment extends Fragment {
+
+    @BindView(R.id.permission_button) Button permissionButton;
+    @BindView(R.id.location_button) Button locationButton;
+
+    @Nullable
+    @Override
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+
+        View rootView =
+                inflater.inflate(R.layout.fragment_no_location, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+        refreshView();
+
+        return rootView;
+    }
+
+    void refreshView() {
+        boolean hasPermission = getNoLocationActivity().hasLocationPermission();
+        permissionButton.setVisibility(hasPermission ? View.GONE : View.VISIBLE);
+
+        boolean hasFullLocation = getNoLocationActivity().hasFullLocation();
+        locationButton.setVisibility(hasPermission && !hasFullLocation ? View.VISIBLE : View.GONE);
+
+        if (hasPermission && hasFullLocation) {
+            // Ready to move on to RatingFragment.
+            GlobalRouting.onStartComparing(getActivity());
+        } else if (hasPermission) {
+            getNoLocationActivity().requestLocation();
+        }
+    }
+
+    @OnClick(R.id.permission_button)
+    public void onPermissionButtonClicked() {
+        getNoLocationActivity().requestPermission();
+    }
+
+    @OnClick(R.id.location_button)
+    public void onLocationButtonClicked() {
+        getNoLocationActivity().requestLocation();
+    }
+
+    private NoLocationActivity getNoLocationActivity() {
+        return (NoLocationActivity) getActivity();
+    }
+}

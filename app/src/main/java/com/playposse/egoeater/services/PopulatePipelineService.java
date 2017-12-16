@@ -98,7 +98,6 @@ public class PopulatePipelineService extends IntentService {
                 DatabaseDumper.dumpTables(new MainDatabaseHelper(getApplicationContext()));
             }
 
-
             Log.i(LOG_TAG, "*** Done rebuilding pipeline in " + duration + "ms");
             isActive = false;
         } catch (InterruptedException | RemoteException | OperationApplicationException ex) {

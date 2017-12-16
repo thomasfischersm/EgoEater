@@ -221,8 +221,28 @@ public final class EgoEaterPreferences {
         return getDouble(context, LONGITUDE_KEY);
     }
 
+    public static void setLongitude(Context context, double longitude) {
+        setDouble(context, LONGITUDE_KEY, longitude);
+    }
+
     public static Double getLatitude(Context context) {
         return getDouble(context, LATITUDE_KEY);
+    }
+
+    public static void setLatitude(Context context, double latitude) {
+        setDouble(context, LATITUDE_KEY, latitude);
+    }
+
+    public static String getCity(Context context) {
+        return getString(context, CITY_KEY);
+    }
+
+    public static String getState(Context context) {
+        return getString(context, STATE_KEY);
+    }
+
+    public static String getCountry(Context context) {
+        return getString(context, COUNTRY_KEY);
     }
 
     public static int getQueryRadius(Context context) {

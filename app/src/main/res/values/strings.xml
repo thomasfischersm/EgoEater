@@ -264,6 +264,13 @@
     <string name="age_request_future_error">So, you say you are from the future! I don\'t think so.</string>
     <string name="age_request_super_old_error">Old is sexy. But go ahead tell us your true age.</string>
 
+
+    <!-- No location activity -->
+    <string name="no_location_title">Where are you?</string>
+    <string name="no_location_message">We can\'t match you if we don\'t know where you are.</string>
+    <string name="grant_location_permission_button">Grant permission</string>
+    <string name="check_location_button">Check my location</string>
+
     <!-- Admin statistics activity -->
     <string name="total_user_count">Total user count</string>
     <string name="active_user_count">Active user count</string>

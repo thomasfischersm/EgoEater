@@ -12,6 +12,7 @@ import com.playposse.egoeater.activity.RatingActivity;
 import com.playposse.egoeater.activity.ReactivateAccountActivity;
 import com.playposse.egoeater.activity.ViewOwnProfileActivity;
 import com.playposse.egoeater.activity.specialcase.MissingAgeActivity;
+import com.playposse.egoeater.activity.specialcase.NoLocationActivity;
 import com.playposse.egoeater.activity.specialcase.ProfileNotReadyActivity;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
@@ -55,7 +56,7 @@ public class GlobalRouting {
             context.startActivity(new Intent(context, IntroductionActivity.class));
         } else if (QueryUtil.hasMatches(context.getContentResolver())) {
             context.startActivity(new Intent(context, MatchesActivity.class));
-        }else if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
+        } else if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
             context.startActivity(new Intent(context, CropPhotoActivity.class));
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
             context.startActivity(new Intent(context, ViewOwnProfileActivity.class));
@@ -105,12 +106,21 @@ public class GlobalRouting {
      */
     public static void onStartComparing(Context context) {
         if (!ProfileUtil.isReady(context)) {
+            // Check that bio and profile photo is there.
             context.startActivity(new Intent(context, ProfileNotReadyActivity.class));
             AnalyticsUtil.reportUserBlockedForIncompleteProfile(context);
         } else if (ProfileUtil.isAgeMissing(context)) {
+            // Check that age is there.
             context.startActivity(new Intent(context, MissingAgeActivity.class));
             AnalyticsUtil.reportUserBlockedForMissingBirthday(context);
+        } else if ((EgoEaterPreferences.getLatitude(context) == null)
+                || (EgoEaterPreferences.getLatitude(context) == null)
+                || StringUtil.isEmpty(EgoEaterPreferences.getCountry(context))) {
+            // Check that location is there.
+            context.startActivity(new Intent(context, NoLocationActivity.class));
+            AnalyticsUtil.reportUserBlockedForMissingLocation(context);
         } else {
+            // Go ahead and send the user to compare profiles.
             context.startActivity(new Intent(context, RatingActivity.class));
         }
     }

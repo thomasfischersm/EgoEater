@@ -18,6 +18,7 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.deacti
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.enteredOtherProfileOption;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.gotGoogleMapsGeoCoderResultEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.photoUploadedEvent;
@@ -25,11 +26,14 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profil
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.profileBuilderSavedEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.ratingEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reactivateAccountEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.receivedLocationPermissionResult;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.reportAbuseEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.requestLocationPermission;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.savedProfileEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.updateBirthdayOverrideEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForIncompleteProfileEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForMissingBirthdayEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.userBlockedForMissingLocationEvent;
 
 /**
  * Helper class to make reporting information to Google Analytics less verbose.
@@ -41,6 +45,8 @@ public class AnalyticsUtil {
     private static final String OTHER_ANSWER_ATTRIBUTE = "otherAnswer";
     private static final String MESSAGE_NAME_ATTRIBUTE = "messageName";
     private static final String PHOTO_INDEX_ATTRIBUTE = "photoIndex";
+    private static final String RESULT_SUCCESS = "isSuccees";
+    private static final String FULL_RESULT = "isFullResult";
 
     enum AnalyticsCategory {
         firebaseEvent,
@@ -60,7 +66,11 @@ public class AnalyticsUtil {
         updateBirthdayOverrideEvent,
         userBlockedForIncompleteProfileEvent,
         userBlockedForMissingBirthdayEvent,
+        userBlockedForMissingLocationEvent,
         savedProfileEvent,
+        requestLocationPermission,
+        receivedLocationPermissionResult,
+        gotGoogleMapsGeoCoderResultEvent,
     }
 
     public enum UserProperty {
@@ -177,6 +187,7 @@ public class AnalyticsUtil {
 
         setUserProperties(app.getApplicationContext(), UserProperty.hasProfileFilledOut, true);
     }
+
     public static void reportPhotoUploaded(Context context, int photoIndex) {
         AnalyticsUtil.reportEvent(getApp(context), photoUploadedEvent, photoUploadedEvent.name());
 
@@ -206,6 +217,10 @@ public class AnalyticsUtil {
         report(context, userBlockedForMissingBirthdayEvent);
     }
 
+    public static void reportUserBlockedForMissingLocation(Context context) {
+        report(context, userBlockedForMissingLocationEvent);
+    }
+
     public static void reportSavedProfile(Application app) {
         report(app, savedProfileEvent);
 
@@ -215,6 +230,35 @@ public class AnalyticsUtil {
     public static void setUserProperties(Context context, UserProperty property, boolean value) {
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(context);
         firebaseAnalytics.setUserProperty(property.name(), Boolean.toString(value));
+    }
+
+    public static void reportRequestLocationPermission(Application app) {
+        report(app, requestLocationPermission);
+    }
+
+    public static void reportReceivedPermissionResult(Application app, boolean isSuccess) {
+        AnalyticsUtil.reportEvent(
+                app,
+                receivedLocationPermissionResult,
+                receivedLocationPermissionResult.name());
+
+        Answers.getInstance().logCustom(new CustomEvent(receivedLocationPermissionResult.name())
+                .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess)));
+    }
+
+    public static void reportGoogleMapsGeoCoderResult(
+            Context context,
+            boolean isSuccess,
+            boolean isFullResult) {
+
+        AnalyticsUtil.reportEvent(
+                getApp(context),
+                gotGoogleMapsGeoCoderResultEvent,
+                gotGoogleMapsGeoCoderResultEvent.name());
+
+        Answers.getInstance().logCustom(new CustomEvent(gotGoogleMapsGeoCoderResultEvent.name())
+                .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess))
+                .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult)));
     }
 
     private static void report(Application app, AnalyticsCategory category) {

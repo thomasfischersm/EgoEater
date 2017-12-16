@@ -48,13 +48,15 @@ import com.playposse.egoeater.util.admin.AdminImportUtil;
  * An abstract {@link android.app.Activity} that contains the boilerplate to instantiate the support
  * toolbar.
  */
-public abstract class ParentActivity extends ActivityWithProgressDialog {
+public abstract class ParentActivity<F extends Fragment> extends ActivityWithProgressDialog {
 
     private static final String LOG_TAG = ParentActivity.class.getSimpleName();
 
     protected static final int PROFILE_ACTIVITY_TAB_POSITION = 0;
     protected static final int RATING_ACTIVITY_TAB_POSITION = 1;
     protected static final int MATCHES_ACTIVITY_TAB_POSITION = 2;
+
+    private static final String MAIN_FRAGMENT_TAG = "mainFragment";
 
     private DrawerLayout drawerLayout;
     private LinearLayout mainFragmentContainer;
@@ -237,7 +239,7 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.mainFragmentContainer, mainFragment);
+        fragmentTransaction.add(R.id.mainFragmentContainer, mainFragment, MAIN_FRAGMENT_TAG);
         fragmentTransaction.commit();
     }
 
@@ -367,5 +369,10 @@ public abstract class ParentActivity extends ActivityWithProgressDialog {
             finish();
             GlobalRouting.onRequiresAccountReactivation(this);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected F getContentFragment() {
+        return (F) getSupportFragmentManager().findFragmentByTag(MAIN_FRAGMENT_TAG);
     }
 }
