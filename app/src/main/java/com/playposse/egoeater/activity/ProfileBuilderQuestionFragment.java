@@ -101,7 +101,7 @@ public class ProfileBuilderQuestionFragment extends Fragment {
         optionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Build preview
-        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl1(getActivity());
+        String photoUrl = EgoEaterPreferences.getProfilePhotoUrl0(getActivity());
         GlideUtil.load(profilePhotoImageView, photoUrl);
         refreshPreview();
 
