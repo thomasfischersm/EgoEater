@@ -20,10 +20,10 @@ public class AddressComponent {
     public static final String POSTAL_CODE_TYPE = "postal_code";
     public static final String POSTAL_CODE_SUFFIX_TYPE = "postal_code_suffix";
 
-    @SerializedName("longName")
+    @SerializedName("long_name")
     private String longName;
 
-    @SerializedName("shortName")
+    @SerializedName("short_name")
     private String shortName;
 
     private List<String> types;

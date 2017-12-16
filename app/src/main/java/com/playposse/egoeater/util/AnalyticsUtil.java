@@ -18,6 +18,7 @@ import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.deacti
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.enteredOtherProfileOption;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.firebaseEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.fuckOffEvent;
+import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.gotAndroidGeoCoderResultEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.gotGoogleMapsGeoCoderResultEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.loginEvent;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.messageSentEvent;
@@ -71,6 +72,7 @@ public class AnalyticsUtil {
         requestLocationPermission,
         receivedLocationPermissionResult,
         gotGoogleMapsGeoCoderResultEvent,
+        gotAndroidGeoCoderResultEvent,
     }
 
     public enum UserProperty {
@@ -261,6 +263,20 @@ public class AnalyticsUtil {
                 .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult)));
     }
 
+    public static void reportAndroidGeoCoderResult(
+            Application app,
+            boolean isSuccess,
+            boolean isFullResult) {
+
+        AnalyticsUtil.reportEvent(
+                app,
+                gotAndroidGeoCoderResultEvent,
+                gotAndroidGeoCoderResultEvent.name());
+
+        Answers.getInstance().logCustom(new CustomEvent(gotAndroidGeoCoderResultEvent.name())
+                .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess))
+                .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult)));
+    }
     private static void report(Application app, AnalyticsCategory category) {
         AnalyticsUtil.reportEvent(app, category, category.name());
 

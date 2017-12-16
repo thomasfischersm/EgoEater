@@ -8,8 +8,13 @@ import java.util.List;
 public class GeoResultRoot {
 
     private List<Result> results;
+    private String status;
 
     public List<Result> getResults() {
         return results;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

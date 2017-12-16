@@ -114,7 +114,9 @@ public class GlobalRouting {
             context.startActivity(new Intent(context, MissingAgeActivity.class));
             AnalyticsUtil.reportUserBlockedForMissingBirthday(context);
         } else if ((EgoEaterPreferences.getLatitude(context) == null)
-                || (EgoEaterPreferences.getLatitude(context) == null)
+                || (EgoEaterPreferences.getLongitude(context) == null)
+                || (EgoEaterPreferences.getLatitude(context) == 0)
+                || (EgoEaterPreferences.getLongitude(context) == 0)
                 || StringUtil.isEmpty(EgoEaterPreferences.getCountry(context))) {
             // Check that location is there.
             context.startActivity(new Intent(context, NoLocationActivity.class));

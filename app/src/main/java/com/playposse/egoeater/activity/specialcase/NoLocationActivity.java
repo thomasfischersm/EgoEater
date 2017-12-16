@@ -137,42 +137,54 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
         AnalyticsUtil.reportRequestLocationPermission(getApplication());
     }
 
-    void requestLocation() {
+    void requestLocation(final boolean shouldCheckGps) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                requestLocationSync();
+                requestLocationSync(shouldCheckGps);
             }
         }).start();
     }
 
     @WorkerThread
-    private void requestLocationSync() {
+    private void requestLocationSync(boolean shouldCheckGps) {
+        Log.d(LOG_TAG, "requestLocationSync: Starting requestLocationSync, shouldCheckGps: " + shouldCheckGps);
+
         // Request permission if necessary.
         if (!hasLocationPermission()) {
             requestPermission();
+            Log.i(LOG_TAG, "requestLocationSync: Requesting permission.");
             return;
         }
 
         // Try to get the last known location or request a location.
         final Location location;
         if (!hasGpsCoordinates()) {
+            Log.i(LOG_TAG, "requestLocationSync: Checking last location.");
             location = getLastLocation();
             if (location == null) {
                 sendLocationRequest();
+                Log.i(LOG_TAG, "requestLocationSync: Triggering Google Play Services to get " +
+                        "a location.");
                 return;
             }
         }
 
         // Try to get the Locale through GeoCoder.
+        Log.i(LOG_TAG, "requestLocationSync: Trying to get locale from Android geo coder.");
         Locale locale = getLocaleFromGeoCoder();
         if ((locale == null) || (locale.hasEmptyValue())) {
+            Log.i(LOG_TAG, "requestLocationSync: Failed to get local from Android geo coder: "
+                    + locale);
             // Try Google Maps API as a backup.
             locale = GoogleMapsGeoCoder.reverseLookup(this);
+            Log.i(LOG_TAG, "requestLocationSync: Got locale from Google maps geo coder: "
+                    + locale);
         }
 
         // Store the location info in the cloud.
         if ((locale != null) && (!StringUtil.isEmpty(locale.getCountry()))) {
+            Log.i(LOG_TAG, "requestLocationSync: Try to update the location in the cloud.");
             try {
                 new UpdateLocationClientAction(
                         getApplicationContext(),
@@ -182,6 +194,7 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
                         locale.getState(),
                         locale.getCountry())
                         .executeBlocking();
+                Log.i(LOG_TAG, "requestLocationSync: Succeeded updating the cloud.");
             } catch (InterruptedException ex) {
                 Log.e(LOG_TAG, "requestLocation: Failed to update location.", ex);
                 Crashlytics.logException(ex);
@@ -195,6 +208,7 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
 
             if (hasPartialLocation()) {
                 // Has at least a country. Let's continue to the ratings activity.
+                Log.i(LOG_TAG, "requestLocationSync: User is ready to go to RatingActivity.");
                 GlobalRouting.onStartComparing(this);
                 return;
             }
@@ -207,14 +221,26 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
                 getContentFragment().refreshView();
             }
         });
+
+        // Try to get the latest location for good measure.
+        if (shouldCheckGps) {
+            sendLocationRequest();
+            Log.i(LOG_TAG, "requestLocationSync: Turned on antenna for good measure.");
+        }
     }
 
     @SuppressLint("MissingPermission")
     private void sendLocationRequest() {
+        if (!googleApiClient.isConnected()) {
+            Log.i(LOG_TAG, "sendLocationRequest: googleApiClient is not yet connected!");
+            return;
+        }
+
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setNumUpdates(1);
         locationRequest.setInterval(0);
         locationRequest.setPriority(PRIORITY_HIGH_ACCURACY);
+
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 googleApiClient,
                 locationRequest,
@@ -226,7 +252,7 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
                                 googleApiClient,
                                 this);
 
-                        requestLocation();
+                        requestLocation(false);
                     }
                 },
                 Looper.getMainLooper());
@@ -262,18 +288,29 @@ public class NoLocationActivity extends ParentActivity<NoLocationFragment> {
                         "for " + latitude + ", " + longitude + ".";
                 Log.i(LOG_TAG, errorMsg);
                 Crashlytics.logException(new IllegalStateException(errorMsg));
+                AnalyticsUtil.reportAndroidGeoCoderResult(
+                        getApplication(),
+                        false,
+                        false);
                 return null;
             }
 
             String city = addresses.get(0).getLocality();
             String state = addresses.get(0).getAdminArea();
             String country = addresses.get(0).getCountryName();
-            return new Locale(city, state, country);
+            Locale locale = new Locale(city, state, country);
+
+            AnalyticsUtil.reportAndroidGeoCoderResult(
+                    getApplication(),
+                    true,
+                    !locale.hasEmptyValue());
+            return locale;
         } catch (IOException ex) {
             String msg = "getLocaleFromGeoCoder: Failed to look up location from GeoCoder for: "
                     + latitude + ", " + longitude;
             Log.e(LOG_TAG, msg, ex);
             Crashlytics.logException(new Exception(msg, ex));
+            AnalyticsUtil.reportAndroidGeoCoderResult(getApplication(), false, false);
             return null;
         }
     }

@@ -29,8 +29,10 @@ public final class GoogleMapsGeoCoder {
 
     private static final String LOG_TAG = GoogleMapsGeoCoder.class.getSimpleName();
 
-    private static final String GOOGLE_MAPS_BASE_URL = "http://maps.googleapis.com";
+    private static final String GOOGLE_MAPS_BASE_URL = "https://maps.googleapis.com";
+    private static final String GOOGLE_MAPS_API_KEY = "AIzaSyC95I6rrKx99zKHlP8pzyTm9rxDzfIOpOw";
     private static final String LAT_LNG_SEPARATOR = ",";
+    private static final String OK_STATUS = "OK";
 
     private GoogleMapsGeoCoder() {
     }
@@ -56,7 +58,8 @@ public final class GoogleMapsGeoCoder {
         try {
             GoogleMapsGeoService remoteService = retrofit.create(GoogleMapsGeoService.class);
             String latLng = latitude + LAT_LNG_SEPARATOR + longitude;
-            Call<GeoResultRoot> recipeCall = remoteService.get(latLng, language);
+            Call<GeoResultRoot> recipeCall =
+                    remoteService.get(latLng, language, GOOGLE_MAPS_API_KEY);
             Response<GeoResultRoot> response = recipeCall.execute();
             geoResultRoot = response.body();
         } catch (IOException ex) {
@@ -65,6 +68,16 @@ public final class GoogleMapsGeoCoder {
             Log.e(LOG_TAG, msg, ex);
             Crashlytics.logException(new Exception(msg, ex));
             AnalyticsUtil.reportGoogleMapsGeoCoderResult(context, false, false);
+            return null;
+        }
+
+        // Check response status.
+        if ((geoResultRoot == null) || !OK_STATUS.equals(geoResultRoot.getStatus())) {
+            String status = (geoResultRoot != null) ? geoResultRoot.getStatus() : null;
+            String msg = "reverseLookup: Google Maps geocoder failed: " + geoResultRoot
+                    + " status: " + geoResultRoot.getStatus();
+            Log.e(LOG_TAG, msg);
+            Crashlytics.logException(new Exception(msg));
             return null;
         }
 

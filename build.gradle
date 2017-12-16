@@ -4,6 +4,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        google()
     }
     dependencies {
         // V2: Include this dependency when using Endpoints Framework v2
@@ -28,7 +29,7 @@ allprojects {
         maven {
             url 'https://maven.fabric.io/public'
         }
-
+        google()
     }
 }
 

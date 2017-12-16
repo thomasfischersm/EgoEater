@@ -12,5 +12,6 @@ public interface GoogleMapsGeoService {
     @GET("maps/api/geocode/json?sensor=true")
     Call<GeoResultRoot> get(
             @Query("latlng") String latLng,
-            @Query("language") String country);
+            @Query("language") String country,
+            @Query("key") String key);
 }

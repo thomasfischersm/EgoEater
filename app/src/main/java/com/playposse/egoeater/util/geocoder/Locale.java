@@ -1,5 +1,6 @@
 package com.playposse.egoeater.util.geocoder;
 
+import com.google.common.base.MoreObjects;
 import com.playposse.egoeater.util.StringUtil;
 
 /**
@@ -31,5 +32,15 @@ public class Locale {
 
     public boolean hasEmptyValue() {
         return StringUtil.isEmpty(city) || StringUtil.isEmpty(state) || StringUtil.isEmpty(country);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("city", city)
+                .add("state", state)
+                .add("country", country)
+                .add("hasEmptyValue", hasEmptyValue())
+                .toString();
     }
 }
