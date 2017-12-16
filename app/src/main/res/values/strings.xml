@@ -305,7 +305,7 @@
     <string name="profile_builder_other_hint">e.g. adventurous barefoot doctor</string>
     <string name="profile_text_reorder_instruction">Rearrange the items in desired order.</string>
     <string name="profile_options_separator">,\u0020</string>
-    <string name="profile_questions_separator">\u0020/\u0020</string>
+    <string name="profile_questions_separator">\u0020|\u0020</string>
     <string name="other_option_label">Other:\u0020</string>
     <string name="confirm_save_profile_title">Confirm</string>
     <string name="confirm_save_profile_body">Replace profile?</string>
