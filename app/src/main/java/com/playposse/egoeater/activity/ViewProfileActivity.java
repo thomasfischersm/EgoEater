@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ParentActivity;
 import com.playposse.egoeater.contentprovider.QueryUtil;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.FuckOffUiHelper;

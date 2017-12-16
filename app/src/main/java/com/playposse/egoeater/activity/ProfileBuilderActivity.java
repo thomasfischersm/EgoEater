@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ActivityWithProgressDialog;
 
 /**
  * An {@link Activity} that consists of a wizard. The wizard gives the user a series of choices to

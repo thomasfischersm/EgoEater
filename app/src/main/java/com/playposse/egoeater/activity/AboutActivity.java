@@ -1,11 +1,8 @@
 package com.playposse.egoeater.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.view.MenuItem;
 
-import com.playposse.egoeater.R;
-import com.playposse.egoeater.util.AnalyticsUtil;
+import com.playposse.egoeater.activity.base.ParentActivity;
 
 /**
  * An informative {@link android.app.Activity} that tells the user about the app.

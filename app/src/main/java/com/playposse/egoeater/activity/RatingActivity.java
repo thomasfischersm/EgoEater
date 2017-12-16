@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ParentActivity;
 import com.playposse.egoeater.activity.specialcase.NoMorePairingsActivity;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;
 import com.playposse.egoeater.contentprovider.QueryUtil;

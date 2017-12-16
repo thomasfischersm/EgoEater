@@ -2,6 +2,8 @@ package com.playposse.egoeater.activity;
 
 import android.os.Bundle;
 
+import com.playposse.egoeater.activity.base.ParentWithLocationCheckActivity;
+
 /**
  * An {@link android.app.Activity} to edit the profile.
  */

@@ -1,4 +1,4 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

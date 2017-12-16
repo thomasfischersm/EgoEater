@@ -21,6 +21,7 @@ import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ActivityWithProgressDialog;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.playposse.egoeater.glide.GlideApp;

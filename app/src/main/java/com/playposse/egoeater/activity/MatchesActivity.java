@@ -3,6 +3,7 @@ package com.playposse.egoeater.activity;
 import android.os.Bundle;
 
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ParentActivity;
 
 public class MatchesActivity extends ParentActivity {
 

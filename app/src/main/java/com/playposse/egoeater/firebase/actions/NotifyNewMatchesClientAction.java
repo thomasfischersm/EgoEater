@@ -12,7 +12,7 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.RemoteMessage;
 import com.playposse.egoeater.BuildConfig;
-import com.playposse.egoeater.activity.CurrentActivity;
+import com.playposse.egoeater.activity.base.CurrentActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.MatchBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;

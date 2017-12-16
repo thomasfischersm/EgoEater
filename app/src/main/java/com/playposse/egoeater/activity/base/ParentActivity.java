@@ -1,4 +1,4 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.base;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -28,6 +28,11 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.AboutActivity;
+import com.playposse.egoeater.activity.LoginActivity;
+import com.playposse.egoeater.activity.MatchesActivity;
+import com.playposse.egoeater.activity.ReactivateAccountActivity;
+import com.playposse.egoeater.activity.ViewOwnProfileActivity;
 import com.playposse.egoeater.activity.admin.AdminStatisticsActivity;
 import com.playposse.egoeater.activity.admin.AdminViewProfilesActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;

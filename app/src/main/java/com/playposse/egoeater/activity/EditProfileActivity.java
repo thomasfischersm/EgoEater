@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ActivityWithProgressDialog;
+import com.playposse.egoeater.activity.base.CurrentActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;

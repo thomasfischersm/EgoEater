@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
-import com.playposse.egoeater.activity.ParentActivity;
+import com.playposse.egoeater.activity.base.ParentActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.UpdateBirthdayOverrideClientAction;

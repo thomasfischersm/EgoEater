@@ -1,10 +1,8 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.base;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,7 +26,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.clientactions.UpdateLocationClientAction;
-import com.playposse.egoeater.contentprovider.EgoEaterContract;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.services.PopulatePipelineService;
 import com.playposse.egoeater.storage.EgoEaterPreferences;

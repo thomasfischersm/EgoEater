@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.playposse.egoeater.GlobalRouting;
-import com.playposse.egoeater.activity.ParentActivity;
+import com.playposse.egoeater.activity.base.ParentActivity;
 import com.playposse.egoeater.util.ProfileUtil;
 
 /**

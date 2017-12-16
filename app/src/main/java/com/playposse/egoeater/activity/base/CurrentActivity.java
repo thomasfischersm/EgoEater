@@ -1,4 +1,4 @@
-package com.playposse.egoeater.activity;
+package com.playposse.egoeater.activity.base;
 
 import android.app.Activity;
 import android.support.annotation.Nullable;
@@ -24,11 +24,11 @@ public final class CurrentActivity {
         return currentActivity;
     }
 
-    static void setCurrentActivity(Class<? extends Activity> currentActivity) {
+    public static void setCurrentActivity(Class<? extends Activity> currentActivity) {
         CurrentActivity.currentActivity = currentActivity;
     }
 
-    static void clearActivity() {
+    public static void clearActivity() {
         currentActivity = null;
         messagingPartnerId = null;
     }
@@ -37,7 +37,7 @@ public final class CurrentActivity {
         return messagingPartnerId;
     }
 
-    static void setMessagingPartnerId(Long messagingPartnerId) {
+    public static void setMessagingPartnerId(Long messagingPartnerId) {
         CurrentActivity.messagingPartnerId = messagingPartnerId;
     }
 }

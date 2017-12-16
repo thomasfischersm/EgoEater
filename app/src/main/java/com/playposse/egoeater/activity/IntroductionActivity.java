@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ActivityWithProgressDialog;
 import com.playposse.egoeater.storage.EgoEaterPreferences;
 import com.playposse.egoeater.util.AnalyticsUtil;
 

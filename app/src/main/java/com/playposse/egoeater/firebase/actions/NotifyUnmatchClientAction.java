@@ -4,9 +4,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 
 import com.google.firebase.messaging.RemoteMessage;
-import com.playposse.egoeater.activity.CurrentActivity;
+import com.playposse.egoeater.activity.base.CurrentActivity;
 import com.playposse.egoeater.activity.MatchesActivity;
-import com.playposse.egoeater.clientactions.FuckOffClientAction;
 import com.playposse.egoeater.contentprovider.FuckOffUtil;
 import com.playposse.egoeater.firebase.FirebaseMessage;
 import com.playposse.egoeater.storage.EgoEaterPreferences;

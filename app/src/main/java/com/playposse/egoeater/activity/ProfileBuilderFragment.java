@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ActivityWithProgressDialog;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SaveProfileClientAction;
 import com.playposse.egoeater.data.profilewizard.ProfileBuilderConfiguration;

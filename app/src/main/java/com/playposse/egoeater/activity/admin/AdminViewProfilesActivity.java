@@ -3,7 +3,7 @@ package com.playposse.egoeater.activity.admin;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.playposse.egoeater.activity.ParentActivity;
+import com.playposse.egoeater.activity.base.ParentActivity;
 
 /**
  * An {@link Activity} that shows an admin all the users.

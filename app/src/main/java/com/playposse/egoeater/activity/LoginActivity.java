@@ -21,6 +21,7 @@ import com.facebook.login.LoginResult;
 import com.playposse.egoeater.ExtraConstants;
 import com.playposse.egoeater.GlobalRouting;
 import com.playposse.egoeater.R;
+import com.playposse.egoeater.activity.base.ParentActivity;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.ApiClientAction;
 import com.playposse.egoeater.clientactions.SignInClientAction;

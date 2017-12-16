@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.GlobalRouting;
-import com.playposse.egoeater.activity.ParentWithLocationCheckActivity;
+import com.playposse.egoeater.activity.base.ParentWithLocationCheckActivity;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineLogTable;
 import com.playposse.egoeater.contentprovider.EgoEaterContract.PipelineTable;
 import com.playposse.egoeater.contentprovider.MainDatabaseHelper;

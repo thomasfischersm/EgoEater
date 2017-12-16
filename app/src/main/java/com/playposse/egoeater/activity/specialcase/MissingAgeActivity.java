@@ -3,7 +3,7 @@ package com.playposse.egoeater.activity.specialcase;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.playposse.egoeater.activity.ParentActivity;
+import com.playposse.egoeater.activity.base.ParentActivity;
 
 /**
  * An {@link Activity} that is shown to a user to request the age. Most users have the age imported
