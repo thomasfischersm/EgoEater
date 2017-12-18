@@ -83,7 +83,7 @@ public class AnalyticsUtil {
         hasMessaged,
     }
 
-    private static void reportEvent(
+    private synchronized static void reportEvent(
             Application defaultApp,
             AnalyticsCategory category,
             String action) {
