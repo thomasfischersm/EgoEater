@@ -11,6 +11,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.playposse.egoeater.EgoEaterApplication;
+import com.playposse.egoeater.util.geocoder.Locale;
 
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.connectivityLost;
 import static com.playposse.egoeater.util.AnalyticsUtil.AnalyticsCategory.connectivityRestored;
@@ -48,6 +49,7 @@ public class AnalyticsUtil {
     private static final String PHOTO_INDEX_ATTRIBUTE = "photoIndex";
     private static final String RESULT_SUCCESS = "isSuccees";
     private static final String FULL_RESULT = "isFullResult";
+    private static final String LOCALE_RESULT = "lcoale";
 
     enum AnalyticsCategory {
         firebaseEvent,
@@ -251,7 +253,8 @@ public class AnalyticsUtil {
     public static void reportGoogleMapsGeoCoderResult(
             Context context,
             boolean isSuccess,
-            boolean isFullResult) {
+            boolean isFullResult,
+            Locale locale) {
 
         AnalyticsUtil.reportEvent(
                 getApp(context),
@@ -260,7 +263,8 @@ public class AnalyticsUtil {
 
         Answers.getInstance().logCustom(new CustomEvent(gotGoogleMapsGeoCoderResultEvent.name())
                 .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess))
-                .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult)));
+                .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult))
+                .putCustomAttribute(LOCALE_RESULT, locale.toString()));
     }
 
     public static void reportAndroidGeoCoderResult(
@@ -277,6 +281,7 @@ public class AnalyticsUtil {
                 .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess))
                 .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult)));
     }
+
     private static void report(Application app, AnalyticsCategory category) {
         AnalyticsUtil.reportEvent(app, category, category.name());
 
