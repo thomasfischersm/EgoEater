@@ -35,7 +35,7 @@ public class EgoEaterFirebaseMessagingService extends FirebaseMessagingService {
     private static final String NOTIFY_PROFILE_UPDATED_DATA_TYPE = "notifyProfileUpdated";
 
     private static final String ALL_DEVICES_TOPIC = "allDevices";
-    private static final String PROFILE_UPDATE_TOPIC_PREFIX = "/topics/profile-";
+    private static final String PROFILE_UPDATE_TOPIC_PREFIX = "profile-";
 
 
     @Override
