@@ -18,7 +18,7 @@ public class UpdateLocationClientAction extends ApiClientAction<Void> {
     private final String state;
     private final String country;
 
-    public UpdateLocationClientAction(
+    public  UpdateLocationClientAction(
             Context context,
             double latitude,
             double longitude,

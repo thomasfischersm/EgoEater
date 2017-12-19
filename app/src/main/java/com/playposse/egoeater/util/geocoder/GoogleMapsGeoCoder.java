@@ -40,9 +40,16 @@ public final class GoogleMapsGeoCoder {
     @Nullable
     @WorkerThread
     public static Locale reverseLookup(Context context) {
-        String language = java.util.Locale.getDefault().getCountry();
         Double latitude = EgoEaterPreferences.getLatitude(context);
         Double longitude = EgoEaterPreferences.getLongitude(context);
+
+        return reverseLookup(context, latitude, longitude);
+    }
+
+    @Nullable
+    @WorkerThread
+    public static Locale reverseLookup(Context context, Double latitude, Double longitude) {
+        String language = java.util.Locale.getDefault().getCountry();
         if ((latitude == null) || (longitude == null)) {
             return null;
         }

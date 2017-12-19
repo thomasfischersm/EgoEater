@@ -42,7 +42,7 @@ public abstract class ParentWithLocationCheckActivity
     private static final String LOG_TAG = ParentWithLocationCheckActivity.class.getSimpleName();
 
     private static final int PERMISSION_REQUEST = 1;
-    private static final int MINIMUM_DISTANCE_TO_UPDATE_LOCATION = 1;
+    private static final int MINIMUM_DISTANCE_TO_UPDATE_LOCATION = 1_000;
 
     @Nullable
     private GoogleApiClient googleApiClient;
@@ -179,7 +179,10 @@ public abstract class ParentWithLocationCheckActivity
             Log.i(LOG_TAG, "checkLocationSync: Failed to get local from Android geo coder: "
                     + locale);
             // Try Google Maps API as a backup.
-            locale = GoogleMapsGeoCoder.reverseLookup(this);
+            locale = GoogleMapsGeoCoder.reverseLookup(
+                    this,
+                    currentLatitude,
+                    currentLongitude);
             Log.i(LOG_TAG, "checkLocationSync: Got locale from Google maps geo coder: "
                     + locale);
         }
