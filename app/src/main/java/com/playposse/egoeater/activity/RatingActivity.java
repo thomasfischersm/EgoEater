@@ -3,6 +3,8 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.util.Log;
 
 import com.playposse.egoeater.BuildConfig;
@@ -16,6 +18,7 @@ import com.playposse.egoeater.storage.PairingParcelable;
 import com.playposse.egoeater.storage.ProfileParcelable;
 import com.playposse.egoeater.util.AnalyticsUtil;
 import com.playposse.egoeater.util.DatabaseDumper;
+import com.playposse.egoeater.util.SurveyUtil;
 import com.playposse.egoeater.util.dialogs.SimpleAlertDialog;
 
 import java.util.concurrent.ExecutorService;
@@ -26,7 +29,7 @@ import java.util.concurrent.Executors;
  * preferred profile.
  */
 public class RatingActivity
-        extends ParentActivity
+        extends ParentActivity<RatingFragment>
         implements RatingProfileFragment.ProfileSelectionListener {
 
     private static final String LOG_TAG = RatingActivity.class.getSimpleName();
@@ -53,6 +56,19 @@ public class RatingActivity
         addMainFragment(ratingFragment);
 
         selectActivityTab(RATING_ACTIVITY_TAB_POSITION);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Try to show a snackbar with a survey prompt.
+        RatingFragment contentFragment = getContentFragment();
+        if ((contentFragment != null) && (contentFragment.getView() != null)) {
+            CoordinatorLayout coordinatorLayout =
+                    contentFragment.getView().findViewById(R.id.root_view);
+            SurveyUtil.showSurveyNudge(coordinatorLayout);
+        }
     }
 
     @Override

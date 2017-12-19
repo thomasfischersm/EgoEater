@@ -67,7 +67,11 @@ public final class GoogleMapsGeoCoder {
                     + latitude + ", " + longitude;
             Log.e(LOG_TAG, msg, ex);
             Crashlytics.logException(new Exception(msg, ex));
-            AnalyticsUtil.reportGoogleMapsGeoCoderResult(context, false, false);
+            AnalyticsUtil.reportGoogleMapsGeoCoderResult(
+                    context,
+                    false,
+                    false,
+                    null);
             return null;
         }
 
@@ -94,7 +98,8 @@ public final class GoogleMapsGeoCoder {
         AnalyticsUtil.reportGoogleMapsGeoCoderResult(
                 context,
                 true,
-                !locale.hasEmptyValue());
+                !locale.hasEmptyValue(),
+                locale);
 
         return locale;
     }

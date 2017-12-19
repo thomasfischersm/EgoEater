@@ -51,6 +51,8 @@ public final class EgoEaterPreferences {
     private static final String PROFILE_BUILDER_LAST_PROFILE_TEXT = "profileBuilderlastProfileText";
     private static final String HAS_SEEN_COMPARISON_INFO_KEY = "hasSeenComparisonInfo";
     private static final String HAS_FIRST_PROFILE_BEEN_SELECTED_KEY = "hasFirstProfileBeenSelected";
+    private static final String HAS_SURVEY_BEEN_CLICKED_KEY = "hasSurveyBeenClicked";
+    private static final String SURVEY_NUDGE_COUNTER = "surveyNudgeCounter";
 
     private static final boolean IS_ACTIVE_DEFAULT_VALUE = true;
     private static final boolean IS_ADMIN_DEFAULT_VALUE = false;
@@ -58,6 +60,8 @@ public final class EgoEaterPreferences {
     private static final boolean HAS_SEEN_INTRO_DECK_DEFAULT_VALUE = false;
     private static final boolean HAS_SEEN_COMPARISON_INFO_DEFAULT_VALUE = false;
     private static final boolean HAS_FIRST_PROFILE_BEEN_SELECTED_KEY_DEFAULT_VALUE = false;
+    private static final boolean HAS_SURVEY_BEEN_CLICKED_DEFAULT_VALUE = false;
+    private static final int SURVEY_NUDGE_COUNTER_DEFAULT = 0;
     private static final int MAX_PROFILE_PHOTO_COUNT = 3;
     private static final int QUERY_RADIUS_DEFAULT = 0;
 
@@ -322,6 +326,33 @@ public final class EgoEaterPreferences {
         setBoolean(context, HAS_FIRST_PROFILE_BEEN_SELECTED_KEY, hasFirstProfileBeenSelected);
     }
 
+    public static boolean hasSurveyBeenClicked(Context context) {
+        return getBoolean(
+                context,
+                HAS_SURVEY_BEEN_CLICKED_KEY,
+                HAS_SURVEY_BEEN_CLICKED_DEFAULT_VALUE);
+    }
+
+    public static void setHasSurveyBeenClicked(Context context, boolean value) {
+        setBoolean(context, HAS_SURVEY_BEEN_CLICKED_KEY, value);
+    }
+
+    /**
+     * Returns the number of times that the app considered showing a snack bar to nudge the user to
+     * fill out a survey about the app. The app shows the snack bar progressively less frequently to
+     * avoid annoying the user.
+     */
+    public static int getSurveyNudgeCounter(Context context) {
+        return getInt(context, SURVEY_NUDGE_COUNTER, SURVEY_NUDGE_COUNTER_DEFAULT);
+    }
+
+    public static int incrementSurveyNudgeCounter(Context context) {
+        int count = getSurveyNudgeCounter(context);
+        count++;
+        setInt(context, SURVEY_NUDGE_COUNTER, count);
+        return count;
+    }
+
     private static String getString(Context context, String key) {
         SharedPreferences sharedPreferences =
                 context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -354,6 +385,11 @@ public final class EgoEaterPreferences {
         } else {
             sharedPreferences.edit().remove(key).commit();
         }
+    }
+
+    private static int getInt(Context context, String key, int defaultValue) {
+        Integer result = getInt(context, key);
+        return (result != null) ? result : defaultValue;
     }
 
     private static boolean getBoolean(Context context, String key, boolean defaultValue) {

@@ -1,5 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.playposse.egoeater.activity.RatingFragment">
@@ -15,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_rating_profile" />
+            tools:layout="@layout/fragment_rating_profile"/>
 
         <fragment
             android:id="@+id/rightProfileFragment"
@@ -23,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            tools:layout="@layout/fragment_rating_profile" />
+            tools:layout="@layout/fragment_rating_profile"/>
     </LinearLayout>
 
     <TextView
@@ -37,5 +39,5 @@
         android:gravity="center"
         android:text="@string/choose_hint"
         android:textAllCaps="true"
-        android:textColor="@color/primaryTextColorDark" />
-</FrameLayout>
+        android:textColor="@color/primaryTextColorDark"/>
+</android.support.design.widget.CoordinatorLayout>

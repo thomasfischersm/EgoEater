@@ -437,6 +437,11 @@
     <string name="not_logged_in_notification_text">Please, log in to check if there is someone new for you!</string>
 
 
+    <!-- Survey snackbar -->
+    <string name="survey_snack_bar_prompt">Help me improve the app!</string>
+    <string name="survey_snack_bar_action">Take survey</string>
+
+
     <!-- Admin menu -->
     <string name="admin_menu_statistics">Statistics</string>
     <string name="admin_menu_refresh">Refresh</string>

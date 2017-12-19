@@ -2,6 +2,7 @@ package com.playposse.egoeater.util;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -254,7 +255,7 @@ public class AnalyticsUtil {
             Context context,
             boolean isSuccess,
             boolean isFullResult,
-            Locale locale) {
+            @Nullable Locale locale) {
 
         AnalyticsUtil.reportEvent(
                 getApp(context),
@@ -264,7 +265,7 @@ public class AnalyticsUtil {
         Answers.getInstance().logCustom(new CustomEvent(gotGoogleMapsGeoCoderResultEvent.name())
                 .putCustomAttribute(RESULT_SUCCESS, Boolean.toString(isSuccess))
                 .putCustomAttribute(FULL_RESULT, Boolean.toString(isFullResult))
-                .putCustomAttribute(LOCALE_RESULT, locale.toString()));
+                .putCustomAttribute(LOCALE_RESULT, (locale != null) ? locale.toString() : null));
     }
 
     public static void reportAndroidGeoCoderResult(
