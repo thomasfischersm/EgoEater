@@ -52,6 +52,7 @@ public class GlobalRouting {
      */
     public static void onLoginComplete(Context context) {
         Log.i(LOG_TAG, "onLoginComplete: GlobalRouting.onLoginComplete has been called.");
+        context = context.getApplicationContext();
         if (!EgoEaterPreferences.hasSeenIntroDeck(context)) {
             context.startActivity(new Intent(context, IntroductionActivity.class));
         } else if (QueryUtil.hasMatches(context.getContentResolver())) {
