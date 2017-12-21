@@ -24,7 +24,7 @@ public class AdminContract {
     }
 
     /**
-     * Stores rule sets
+     * Stores users
      */
     public static class EgoEaterUserTable implements BaseColumns {
 
@@ -101,5 +101,49 @@ public class AdminContract {
                         + "profile_photo_0 TEXT, "
                         + "profile_photo_1 TEXT, "
                         + "profile_photo_2 TEXT)";
+    }
+
+
+    /**
+     * Stores messages
+     */
+    public static class MessageTable implements BaseColumns {
+
+        public static final String PATH = "message";
+        public static final Uri CONTENT_URI = createContentUri(PATH);
+        public static final String TABLE_NAME = "message";
+
+        public static final String ID_COLUMN = _ID.toUpperCase();
+        public static final String CONVERSATION_ID = "conversation_id";
+        public static final String SENDER_PROFILE_ID_COLUMN = "sender_profile_id";
+        public static final String RECIPIENT_PROFILE_ID_COLUMN = "recipient_profile_id";
+        public static final String MESSAGE_INDEX_COLUMN = "message_index";
+        public static final String MESSAGE_CONTENT_COLUMN = "message_content";
+        public static final String RECEIVED_COLUMN = "received";
+        public static final String CREATED_COLUMN = "created";
+
+
+        public static final String[] COLUMN_NAMES = new String[]{
+                ID_COLUMN,
+                CONVERSATION_ID,
+                SENDER_PROFILE_ID_COLUMN,
+                RECIPIENT_PROFILE_ID_COLUMN,
+                MESSAGE_INDEX_COLUMN,
+                MESSAGE_CONTENT_COLUMN,
+                RECEIVED_COLUMN,
+                CREATED_COLUMN};
+
+        static final String SQL_CREATE_TABLE =
+                "CREATE TABLE message "
+                        + "(_ID INTEGER PRIMARY KEY, "
+                        + "conversation_id INTEGER, "
+                        + "sender_profile_id INTEGER, "
+                        + "recipient_profile_id INTEGER, "
+                        + "message_index INTEGER, "
+                        + "message_content TEXT, "
+                        + "received BOOLEAN, "
+                        + "created INTEGER, "
+                        + "FOREIGN KEY(sender_profile_id) REFERENCES ego_eater_user(ego_eater_user_id),"
+                        + "FOREIGN KEY(recipient_profile_id) REFERENCES ego_eater_user(ego_eater_user_id))";
     }
 }

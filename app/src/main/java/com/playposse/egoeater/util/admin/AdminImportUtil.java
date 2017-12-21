@@ -11,8 +11,11 @@ import com.crashlytics.android.Crashlytics;
 import com.playposse.egoeater.BuildConfig;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.model.AdminEgoEaterUserBean;
+import com.playposse.egoeater.backend.egoEaterApi.model.AdminMessageBean;
 import com.playposse.egoeater.clientactions.admin.GetAdminDumpEgoEaterUserClientAction;
+import com.playposse.egoeater.clientactions.admin.GetAdminDumpMessageClientAction;
 import com.playposse.egoeater.contentprovider.admin.AdminContract.EgoEaterUserTable;
+import com.playposse.egoeater.contentprovider.admin.AdminContract.MessageTable;
 import com.playposse.egoeater.contentprovider.admin.AdminDatabaseHelper;
 import com.playposse.egoeater.util.DatabaseDumper;
 
@@ -37,6 +40,7 @@ public final class AdminImportUtil {
 
         // Truncate all admin tables.
         contentResolver.delete(EgoEaterUserTable.CONTENT_URI, null, null);
+        contentResolver.delete(MessageTable.CONTENT_URI, null, null);
     }
 
     private static void importEgoEaterUser(Context context) throws InterruptedException {
@@ -82,6 +86,36 @@ public final class AdminImportUtil {
         contentResolver.bulkInsert(EgoEaterUserTable.CONTENT_URI, contentValuesArray);
     }
 
+    private static void importMessage(Context context) throws InterruptedException {
+        // Call the cloud.
+        List<AdminMessageBean> messages =
+                new GetAdminDumpMessageClientAction(context, null).executeBlocking();
+        if (messages == null) {
+            // Nothing to do.
+            return;
+        }
+
+        // Prepare bulk import.
+        ContentValues[] contentValuesArray = new ContentValues[messages.size()];
+        for (int i = 0; i < messages.size(); i++) {
+            AdminMessageBean message = messages.get(i);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MessageTable.CONVERSATION_ID, message.getConversationId());
+            contentValues.put(MessageTable.SENDER_PROFILE_ID_COLUMN, message.getSenderProfileId());
+            contentValues.put(MessageTable.RECIPIENT_PROFILE_ID_COLUMN, message.getRecipientProfileId());
+            contentValues.put(MessageTable.MESSAGE_INDEX_COLUMN, message.getMessageIndex());
+            contentValues.put(MessageTable.MESSAGE_CONTENT_COLUMN, message.getMessageContent());
+            contentValues.put(MessageTable.RECEIVED_COLUMN, message.getReceived());
+            contentValues.put(MessageTable.CREATED_COLUMN, message.getCreated());
+
+            contentValuesArray[i] = contentValues;
+        }
+
+        // Execute bulk import.
+        ContentResolver contentResolver = context.getContentResolver();
+        contentResolver.bulkInsert(MessageTable.CONTENT_URI, contentValuesArray);
+    }
+
     /**
      * An {@link AsyncTask} that executes the database refresh.
      */
@@ -99,6 +133,7 @@ public final class AdminImportUtil {
 
             try {
                 importEgoEaterUser(context);
+                importMessage(context);
             } catch (InterruptedException ex) {
                 Log.e(LOG_TAG, "onOptionsItemSelected: ", ex);
                 Crashlytics.logException(ex);

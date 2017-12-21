@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.playposse.egoeater.contentprovider.admin.AdminContract.EgoEaterUserTable;
+import com.playposse.egoeater.contentprovider.admin.AdminContract.MessageTable;
 
 /**
  * A helper class that manages the SQLLite database.
@@ -22,6 +23,7 @@ public class AdminDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(EgoEaterUserTable.SQL_CREATE_TABLE);
+        db.execSQL(MessageTable.SQL_CREATE_TABLE);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.BadRequestException;
 import com.playposse.egoeater.backend.beans.admin.AdminEgoEaterUserBean;
+import com.playposse.egoeater.backend.beans.admin.AdminMessageBean;
 import com.playposse.egoeater.backend.beans.admin.AdminStatisticsBean;
 import com.playposse.egoeater.backend.beans.MatchBean;
 import com.playposse.egoeater.backend.beans.MaxMessageIndexResponseBean;
@@ -21,6 +22,7 @@ import com.playposse.egoeater.backend.beans.ProfileIdList;
 import com.playposse.egoeater.backend.beans.UserBean;
 import com.playposse.egoeater.backend.serveractions.UpdateBirthdayOverrideServerAction;
 import com.playposse.egoeater.backend.serveractions.admin.GetAdminDumpEgoEaterUserServerAction;
+import com.playposse.egoeater.backend.serveractions.admin.GetAdminDumpMessageServerAction;
 import com.playposse.egoeater.backend.serveractions.admin.GetAdminStatisticsServerAction;
 import com.playposse.egoeater.backend.serveractions.UpdateAccountStatusServerAction;
 import com.playposse.egoeater.backend.serveractions.DeleteProfilePhotoServerAction;
@@ -261,6 +263,13 @@ public class EgoEaterEndPoint {
             throws BadRequestException {
 
         return GetAdminDumpEgoEaterUserServerAction.getAdminEgoEateruserDump(sessionId);
+    }
+
+    @ApiMethod(name = "getAdminMessageDump")
+    public List<AdminMessageBean> getAdminMessageDump(@Named("sessionId") long sessionId)
+            throws BadRequestException {
+
+        return GetAdminDumpMessageServerAction.getAdminMessageDump(sessionId);
     }
 
     @ApiMethod(name = "updateBirthdayOverride")
