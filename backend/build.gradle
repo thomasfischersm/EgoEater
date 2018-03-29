@@ -7,13 +7,15 @@ buildscript {
     }
     dependencies {
         // V2: Add the new App Engine and Endpoints Frameworks plugin dependencies
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.0'
-        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.2'
+        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.3'
     }
 }
 
 repositories {
-    jcenter();
+    jcenter()
+    mavenCentral()
+    google()
 }
 
 apply plugin: 'java'
@@ -29,14 +31,14 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     // V2: Endpoints Framework v2 migration
-    compile 'com.google.endpoints:endpoints-framework:2.0.7'
+    compile 'com.google.endpoints:endpoints-framework:2.0.13'
 
 //    compile 'com.google.appengine:appengine-endpoints:1.9.42'
 //    compile 'com.google.appengine:appengine-endpoints-deps:1.9.42'
     compile 'javax.inject:javax.inject:1'
     compile 'javax.servlet:servlet-api:2.5'
     compile 'com.googlecode.objectify:objectify:5.1.17'
-    compile group: 'com.restfb', name: 'restfb', version: '1.34.0'
+    compile group: 'com.restfb', name: 'restfb', version: '1.49.0'
     compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '0.11.0-beta'
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.2'
 
