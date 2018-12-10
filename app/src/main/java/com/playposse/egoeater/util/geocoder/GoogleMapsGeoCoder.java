@@ -2,8 +2,8 @@ package com.playposse.egoeater.util.geocoder;
 
 import android.content.Context;
 import android.location.Geocoder;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;

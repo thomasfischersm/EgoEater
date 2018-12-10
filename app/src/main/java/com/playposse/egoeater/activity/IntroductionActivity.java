@@ -2,10 +2,10 @@ package com.playposse.egoeater.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
@@ -79,7 +79,7 @@ public class IntroductionActivity extends ActivityWithProgressDialog {
     }
 
     /**
-     * A {@link android.support.v4.view.ViewPager.OnPageChangeListener} that reports to Analytics
+     * A {@link ViewPager.OnPageChangeListener} that reports to Analytics
      * when a new fragment is selected.
      */
     private class AnalyticsPageChangeListener implements ViewPager.OnPageChangeListener {

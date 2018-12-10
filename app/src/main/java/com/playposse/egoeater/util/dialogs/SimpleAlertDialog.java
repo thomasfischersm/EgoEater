@@ -3,7 +3,7 @@ package com.playposse.egoeater.util.dialogs;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;

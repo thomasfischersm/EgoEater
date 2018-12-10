@@ -54,13 +54,13 @@ public class GlobalRouting {
         Log.i(LOG_TAG, "onLoginComplete: GlobalRouting.onLoginComplete has been called.");
         context = context.getApplicationContext();
         if (!EgoEaterPreferences.hasSeenIntroDeck(context)) {
-            context.startActivity(new Intent(context, IntroductionActivity.class));
+            startNewTask(context, IntroductionActivity.class);
         } else if (QueryUtil.hasMatches(context.getContentResolver())) {
-            context.startActivity(new Intent(context, MatchesActivity.class));
+            startNewTask(context, MatchesActivity.class);
         } else if (!EgoEaterPreferences.hasFirstProfilePhoto(context)) {
-            context.startActivity(new Intent(context, CropPhotoActivity.class));
+            startNewTask(context, CropPhotoActivity.class);
         } else if (StringUtil.isEmpty(EgoEaterPreferences.getProfileText(context))) {
-            context.startActivity(new Intent(context, ViewOwnProfileActivity.class));
+            startNewTask(context, ViewOwnProfileActivity.class);
         } else {
             onStartComparing(context);
         }
@@ -108,11 +108,11 @@ public class GlobalRouting {
     public static void onStartComparing(Context context) {
         if (!ProfileUtil.isReady(context)) {
             // Check that bio and profile photo is there.
-            context.startActivity(new Intent(context, ProfileNotReadyActivity.class));
+            startNewTask(context, ProfileNotReadyActivity.class);
             AnalyticsUtil.reportUserBlockedForIncompleteProfile(context);
         } else if (ProfileUtil.isAgeMissing(context)) {
             // Check that age is there.
-            context.startActivity(new Intent(context, MissingAgeActivity.class));
+            startNewTask(context, MissingAgeActivity.class);
             AnalyticsUtil.reportUserBlockedForMissingBirthday(context);
         } else if ((EgoEaterPreferences.getLatitude(context) == null)
                 || (EgoEaterPreferences.getLongitude(context) == null)
@@ -120,11 +120,17 @@ public class GlobalRouting {
                 || (EgoEaterPreferences.getLongitude(context) == 0)
                 || StringUtil.isEmpty(EgoEaterPreferences.getCountry(context))) {
             // Check that location is there.
-            context.startActivity(new Intent(context, NoLocationActivity.class));
+            startNewTask(context, NoLocationActivity.class);
             AnalyticsUtil.reportUserBlockedForMissingLocation(context);
         } else {
             // Go ahead and send the user to compare profiles.
-            context.startActivity(new Intent(context, RatingActivity.class));
+            startNewTask(context, RatingActivity.class);
         }
+    }
+
+    private static void startNewTask(Context context, Class<?> activityClass) {
+        Intent intent = new Intent(context, activityClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

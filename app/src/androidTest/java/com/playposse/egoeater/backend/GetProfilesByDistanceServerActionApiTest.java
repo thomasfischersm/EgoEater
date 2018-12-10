@@ -1,6 +1,6 @@
 package com.playposse.egoeater.backend;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 import android.util.Log;
 
 import com.playposse.egoeater.backend.egoEaterApi.model.ProfileBean;

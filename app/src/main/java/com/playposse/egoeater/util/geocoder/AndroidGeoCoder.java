@@ -3,7 +3,7 @@ package com.playposse.egoeater.util.geocoder;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;

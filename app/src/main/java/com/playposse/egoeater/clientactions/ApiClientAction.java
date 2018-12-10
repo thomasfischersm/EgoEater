@@ -2,9 +2,9 @@ package com.playposse.egoeater.clientactions;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
+import androidx.annotation.WorkerThread;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;

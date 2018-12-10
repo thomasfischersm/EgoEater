@@ -7,9 +7,9 @@ import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.util.Base64;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -18,7 +18,6 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.playposse.egoeater.R;
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
-import com.playposse.egoeater.backend.egoEaterApi.model.PhotoBean;
 import com.playposse.egoeater.backend.egoEaterApi.model.UserBean;
 import com.playposse.egoeater.clientactions.UploadProfilePhotoToServletClientAction;
 import com.restfb.DefaultFacebookClient;
@@ -30,10 +29,8 @@ import com.restfb.json.JsonObject;
 import com.restfb.types.TestUser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

@@ -1,6 +1,6 @@
 package com.playposse.egoeater.scripts;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.playposse.egoeater.backend.egoEaterApi.EgoEaterApi;
 import com.playposse.egoeater.util.ApiTestUtil;

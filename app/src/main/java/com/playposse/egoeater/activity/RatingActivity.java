@@ -3,8 +3,8 @@ package com.playposse.egoeater.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.util.Log;
 
 import com.playposse.egoeater.BuildConfig;

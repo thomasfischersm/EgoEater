@@ -2,7 +2,7 @@ package com.playposse.egoeater.util;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;

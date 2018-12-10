@@ -1,6 +1,6 @@
 package com.playposse.egoeater.util;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.widget.EditText;
 import android.widget.TextView;

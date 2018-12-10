@@ -1,7 +1,7 @@
 package com.playposse.egoeater.activity.base;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Static place to remember what the current activity is. Android doesn't support knowing the

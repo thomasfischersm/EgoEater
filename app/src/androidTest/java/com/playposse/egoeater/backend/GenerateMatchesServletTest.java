@@ -3,9 +3,6 @@ package com.playposse.egoeater.backend;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
 import com.playposse.egoeater.util.ApiTestUtil;
 import com.playposse.egoeater.util.FakeUser;
@@ -15,6 +12,10 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+
+import androidx.annotation.RequiresApi;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 /**
  * A JUnit test that generates data for a male test user.
