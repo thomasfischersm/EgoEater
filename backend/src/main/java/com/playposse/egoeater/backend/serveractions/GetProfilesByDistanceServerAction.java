@@ -88,13 +88,24 @@ public class GetProfilesByDistanceServerAction extends AbstractServerAction {
             return new ArrayList<>();
         }
 
-        List<Key<EgoEaterUser>> egoEaterUsers = ofy().load()
-                .type(EgoEaterUser.class)
-                .filterKey("IN", intermediateKeys)
-                .filter("latitude >", minLatitude)
-                .filter("latitude <", maxLatitude)
-                .keys()
-                .list();
+        List<Key<EgoEaterUser>> egoEaterUsers = new ArrayList<>();
+        for (Key<EgoEaterUser> intermediateKey :intermediateKeys) {
+            egoEaterUsers.addAll(ofy().load()
+                    .type(EgoEaterUser.class)
+                    .filterKey("=", intermediateKey)
+                    .filter("latitude >", minLatitude)
+                    .filter("latitude <", maxLatitude)
+                    .keys()
+                    .list());
+        }
+        // Mind-blowing Objectify disabled IN operator.
+//        List<Key<EgoEaterUser>> egoEaterUsers = ofy().load()
+//                .type(EgoEaterUser.class)
+//                .filterKey("IN", intermediateKeys)
+//                .filter("latitude >", minLatitude)
+//                .filter("latitude <", maxLatitude)
+//                .keys()
+//                .list();
         log.info("Got0 " + egoEaterUsers.size() + " profiles.");
 
         // Check for max result size.
