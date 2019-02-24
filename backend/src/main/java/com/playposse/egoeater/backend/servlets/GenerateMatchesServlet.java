@@ -1,9 +1,9 @@
 package com.playposse.egoeater.backend.servlets;
 
-import com.google.appengine.api.datastore.QueryResultIterable;
-import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.cloud.datastore.QueryResults;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.cmd.QueryResultIterable;
 import com.playposse.egoeater.backend.firebase.NotifyNewMatchesFirebaseServerAction;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
@@ -121,7 +121,7 @@ public class GenerateMatchesServlet extends HttpServlet {
      */
     private static void populateIntermediateFirstPass(ObjectifyWaiter waiter) {
         log.info("*** First pass");
-        QueryResultIterator<Ranking> iterator = ofy().load()
+        QueryResults<Ranking> iterator = ofy().load()
                 .type(Ranking.class)
                 .order("profileId")
                 .order("-winsLossesSum")

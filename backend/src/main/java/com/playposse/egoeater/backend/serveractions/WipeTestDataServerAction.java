@@ -1,10 +1,10 @@
 package com.playposse.egoeater.backend.serveractions;
 
 import com.google.api.server.spi.response.BadRequestException;
-import com.google.appengine.api.datastore.QueryResultIterable;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.QueryKeys;
+import com.googlecode.objectify.cmd.QueryResultIterable;
 import com.playposse.egoeater.backend.schema.Conversation;
 import com.playposse.egoeater.backend.schema.EgoEaterUser;
 import com.playposse.egoeater.backend.schema.IntermediateMatching;
