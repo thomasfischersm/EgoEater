@@ -10,7 +10,7 @@ buildscript {
         // V2: Include this dependency when using Endpoints Framework v2
         classpath 'com.google.guava:guava:24.1-jre'
 
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath 'io.fabric.tools:gradle:1.+'
 
