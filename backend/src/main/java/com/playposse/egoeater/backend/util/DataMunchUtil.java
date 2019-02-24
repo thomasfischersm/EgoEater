@@ -111,6 +111,10 @@ public class DataMunchUtil {
     }
 
     public static String getOppositeGender(String gender) {
+        if (gender == null) {
+            return null;
+        }
+
         switch (gender) {
             case MALE_GENDER:
                 return FEMALE_GENDER;
