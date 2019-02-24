@@ -23,6 +23,7 @@ public class ObjectifyRegistrationServletContextListener implements ServletConte
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        ObjectifyService.init();
         ObjectifyService.register(AbuseReport.class);
         ObjectifyService.register(Conversation.class);
         ObjectifyService.register(DeactivationLog.class);
